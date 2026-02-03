@@ -1,0 +1,1001 @@
+id_gato,id_tutor_hash,data_coleta,sexo,idade_anos,peso_kg,energia_0a100,vacinado,castrado,pelagem,cor,temperamento,alimentacao,visitas_vet_ult_ano,gosta_caixa,score_saude_0a100
+G00001,T9736282219,2025-03-30,M,7,4.4,54,True,True,longa,cinza,caçador,ração seca,1,True,75
+G00002,T5239865855,2025-05-31,M,6,4.4,63,True,False,longa,laranja,arisco,ração úmida,0,True,79
+G00003,T9038090091,2025-01-28,M,9,5.2,43,True,True,média,tigrado,arisco,ração seca,3,False,66
+G00004,T8494103764,2025-10-17,M,9,4.9,57,True,True,curta,cinza,caçador,ração seca,2,True,70
+G00005,T8326183461,2025-08-26,M,18,4.6,29,True,True,média,tricolor,carinhoso,ração seca,1,True,49
+G00006,T8448680547,2025-01-31,M,18,5.1,35,True,True,curta,preto,brincalhão,ração seca,2,False,48
+G00007,T1204408658,2025-03-23,F,7,4.2,64,True,True,média,tigrado,brincalhão,ração seca,2,True,75
+G00008,T6794786080,2025-07-22,F,1,3.6,79,True,True,curta,tigrado,carinhoso,ração seca,2,False,89
+G00009,T4190733713,2025-07-17,F,10,4.5,46,True,True,longa,laranja,calmo,ração seca,3,True,64
+G00010,T3105455372,2025-10-20,F,16,5.7,33,False,True,curta,tigrado,calmo,ração seca,3,True,48
+G00011,T9657078980,2025-04-08,F,4,4.4,77,True,True,curta,tricolor,calmo,ração seca,3,True,81
+G00012,T4190733713,2025-12-04,M,6,6.8,50,False,True,longa,siamês,carinhoso,ração seca,0,True,76
+G00013,T5281344336,2025-06-12,F,5,4.5,53,True,True,curta,branco,arisco,ração seca,0,True,80
+G00014,T8709528556,2025-10-28,F,0,3.8,77,True,True,média,laranja,calmo,ração seca,2,False,91
+G00015,T4742266619,2025-03-29,F,9,4.6,55,False,True,longa,laranja,carinhoso,ração úmida,3,False,66
+G00016,T8680627659,2025-01-14,F,4,4.5,54,True,True,curta,cinza,carinhoso,mista,2,False,79
+G00017,T8026561279,2025-01-21,M,11,5.7,43,True,True,curta,siamês,carinhoso,ração úmida,1,True,65
+G00018,T3811299772,2025-05-17,F,12,6.3,40,False,True,curta,laranja,calmo,ração seca,1,True,60
+G00019,T3642343819,2025-12-14,F,12,4.2,15,True,True,média,tigrado,caçador,mista,2,True,57
+G00020,T3105455372,2025-01-18,M,5,5.6,58,True,True,longa,branco,calmo,mista,0,True,81
+G00021,T2169293548,2025-05-15,F,4,4.4,62,False,True,curta,cinza,arisco,ração seca,1,True,80
+G00022,T8727381279,2025-02-09,M,10,4.2,45,False,True,média,tigrado,arisco,ração seca,2,True,64
+G00023,T8448680547,2025-12-07,F,11,5.3,61,True,True,curta,cinza,brincalhão,mista,1,True,68
+G00024,T6645779566,2025-09-04,F,6,5.3,44,True,True,curta,tricolor,brincalhão,mista,3,True,72
+G00025,T8082319397,2025-10-06,M,13,4.8,29,False,True,média,preto,calmo,mista,3,True,54
+G00026,T7015626656,2025-09-18,F,2,4.1,38,True,False,longa,branco,arisco,ração úmida,4,True,78
+G00027,T2258172983,2025-08-28,M,13,4.2,33,True,True,curta,cinza,carinhoso,ração úmida,3,True,56
+G00028,T1788849273,2025-10-10,F,1,3.2,67,True,True,curta,cinza,brincalhão,mista,3,False,86
+G00029,T2153022694,2025-01-03,F,2,4.9,63,True,True,curta,tricolor,arisco,ração seca,0,True,87
+G00030,T4337182218,2025-11-12,F,7,4.2,69,True,True,curta,siamês,caçador,ração seca,3,True,74
+G00031,T5226002301,2025-09-28,F,1,3.3,83,True,True,curta,laranja,brincalhão,mista,3,True,88
+G00032,T7015626656,2025-09-27,M,0,4.8,76,True,True,média,laranja,brincalhão,ração seca,1,True,92
+G00033,T2502756279,2025-05-24,M,0,4.2,71,True,True,curta,cinza,calmo,ração seca,1,True,91
+G00034,T5239865855,2025-10-20,M,5,4.6,73,False,True,curta,laranja,arisco,ração seca,4,False,75
+G00035,T8026561279,2025-05-20,M,11,5.9,44,True,True,média,tigrado,brincalhão,ração seca,3,True,62
+G00036,T7475166603,2025-01-18,M,0,3.8,65,True,False,curta,tricolor,caçador,ração seca,3,True,87
+G00037,T7822789660,2025-11-28,M,9,4.6,29,True,True,curta,siamês,brincalhão,ração úmida,0,True,68
+G00038,T4676757793,2025-03-27,M,12,5.5,36,True,True,longa,tigrado,carinhoso,ração seca,1,True,62
+G00039,T3735550882,2025-02-07,M,2,5.4,78,False,True,curta,cinza,calmo,ração úmida,3,False,83
+G00040,T2030770661,2025-08-15,F,2,5.0,97,False,True,curta,preto,brincalhão,ração seca,1,False,89
+G00041,T9177226216,2025-03-27,M,13,5.0,39,True,True,curta,tigrado,calmo,mista,3,True,57
+G00042,T4334137354,2025-11-10,F,12,5.5,32,True,True,curta,tricolor,arisco,ração úmida,3,True,58
+G00043,T6645779566,2025-06-11,M,7,4.5,41,True,True,curta,laranja,calmo,mista,5,True,67
+G00044,T8494103764,2025-01-02,M,12,6.7,48,True,True,curta,siamês,calmo,ração seca,2,True,62
+G00045,T1277360511,2025-12-14,F,1,3.3,51,True,True,curta,cinza,arisco,ração seca,1,False,86
+G00046,T5982214605,2025-07-07,M,5,5.9,68,True,True,longa,preto,arisco,mista,1,True,81
+G00047,T5044253519,2025-04-06,M,10,4.8,57,True,True,curta,tigrado,brincalhão,mista,2,False,68
+G00048,T7346488407,2025-09-05,F,3,5.6,72,True,True,curta,preto,arisco,ração seca,1,True,85
+G00049,T2705242231,2025-07-13,M,10,5.7,44,True,True,curta,preto,arisco,ração úmida,4,True,63
+G00050,T8727381279,2025-01-11,M,6,4.3,65,True,True,longa,tigrado,carinhoso,ração úmida,0,True,80
+G00051,T8242879217,2025-10-05,F,10,4.3,49,True,True,curta,laranja,arisco,ração seca,3,False,65
+G00052,T9722587396,2025-05-27,M,6,5.6,49,True,True,média,tigrado,caçador,ração úmida,2,True,74
+G00053,T4949905957,2025-09-13,F,4,5.0,86,True,True,curta,tricolor,brincalhão,ração seca,1,True,85
+G00054,T3753609617,2025-11-23,M,2,4.7,65,True,True,longa,cinza,calmo,ração seca,2,True,85
+G00055,T3735550882,2025-08-11,F,2,4.2,79,True,True,curta,tigrado,arisco,mista,2,True,87
+G00056,T1574355304,2025-09-03,F,10,5.2,18,True,True,curta,laranja,calmo,ração seca,1,True,63
+G00057,T5281344336,2025-04-03,F,1,4.2,88,True,False,curta,tigrado,carinhoso,mista,2,True,90
+G00058,T4930456503,2025-03-28,F,1,3.2,90,False,True,curta,tigrado,brincalhão,mista,1,True,90
+G00059,T7028325952,2025-06-01,M,2,4.2,70,True,False,média,cinza,brincalhão,mista,1,True,87
+G00060,T8404854519,2025-11-08,F,2,4.3,76,True,True,média,laranja,arisco,ração seca,1,True,88
+G00061,T2502756279,2025-07-11,M,12,6.3,48,False,True,média,tigrado,calmo,ração seca,1,True,62
+G00062,T1204408658,2025-05-08,F,5,5.5,53,True,True,curta,preto,brincalhão,ração seca,0,True,80
+G00063,T4990727789,2025-10-12,F,18,5.4,31,True,True,média,branco,caçador,ração úmida,3,False,46
+G00064,T2705242231,2025-11-08,M,2,4.9,60,True,True,curta,preto,carinhoso,ração seca,2,True,84
+G00065,T7702859403,2025-11-26,F,9,5.2,42,True,True,longa,branco,arisco,mista,2,True,67
+G00066,T8326183461,2025-04-20,M,5,4.5,75,True,True,média,laranja,arisco,ração seca,3,True,79
+G00067,T7266883375,2025-09-17,F,5,4.2,73,True,True,curta,siamês,arisco,ração seca,0,False,83
+G00068,T2370808924,2025-08-04,F,13,4.3,30,True,True,média,siamês,caçador,mista,4,True,54
+G00069,T7475166603,2025-06-13,M,16,4.6,21,True,True,curta,tricolor,caçador,mista,4,True,47
+G00070,T4256313494,2025-05-25,F,13,5.1,31,True,True,curta,laranja,arisco,ração seca,1,True,59
+G00071,T4934367269,2025-02-11,F,2,4.3,78,True,True,curta,branco,caçador,ração úmida,1,True,88
+G00072,T8404854519,2025-04-11,M,2,5.2,57,True,True,média,cinza,calmo,ração seca,1,True,85
+G00073,T3642343819,2025-07-20,F,9,5.0,54,True,False,curta,tricolor,brincalhão,mista,1,True,71
+G00074,T2590955046,2025-11-20,M,3,5.0,76,True,False,curta,siamês,brincalhão,ração seca,0,False,87
+G00075,T6848619413,2025-11-13,F,10,5.1,46,True,True,média,siamês,carinhoso,ração seca,2,True,66
+G00076,T2388605428,2025-03-10,M,7,5.1,68,False,True,curta,cinza,carinhoso,ração seca,0,True,76
+G00077,T7147440579,2025-09-05,F,7,4.8,52,True,False,média,laranja,arisco,ração seca,1,False,74
+G00078,T1847596130,2025-01-31,F,12,4.3,39,True,True,curta,laranja,brincalhão,mista,0,True,64
+G00079,T1574355304,2025-09-04,M,10,5.6,35,True,True,curta,preto,arisco,ração seca,4,True,61
+G00080,T4930456503,2025-05-05,M,0,5.1,87,True,True,média,preto,brincalhão,ração seca,2,False,92
+G00081,T1277360511,2025-06-14,F,0,3.5,66,True,False,curta,preto,arisco,ração seca,1,True,90
+G00082,T4487305411,2025-09-19,F,8,4.6,57,False,False,média,tricolor,brincalhão,ração seca,2,False,70
+G00083,T3042184141,2025-06-05,M,6,4.6,57,True,True,curta,branco,caçador,mista,0,True,79
+G00084,T9722587396,2025-10-22,M,3,4.4,54,True,True,média,tigrado,carinhoso,ração seca,3,True,80
+G00085,T6118670763,2025-07-14,M,5,4.2,54,True,True,curta,cinza,calmo,mista,2,True,77
+G00086,T7297364204,2025-12-31,F,11,5.7,61,True,True,média,tricolor,caçador,mista,3,True,65
+G00087,T6256881720,2025-08-21,M,12,6.2,44,False,False,curta,preto,carinhoso,ração seca,2,False,60
+G00088,T7028325952,2025-04-19,F,7,4.9,43,True,True,curta,cinza,brincalhão,mista,0,False,74
+G00089,T2751748370,2025-10-10,F,5,5.7,65,True,True,curta,branco,arisco,ração seca,1,True,80
+G00090,T6645779566,2025-05-29,F,3,4.1,65,False,True,curta,laranja,calmo,ração seca,2,True,81
+G00091,T8055083881,2025-07-14,M,7,7.2,97,True,True,curta,laranja,calmo,ração seca,2,True,80
+G00092,T2169293548,2025-02-19,M,4,4.7,67,True,False,curta,branco,arisco,ração seca,4,True,78
+G00093,T6957248632,2025-02-13,F,7,4.7,51,True,True,curta,tigrado,carinhoso,ração seca,0,False,76
+G00094,T6712464880,2025-07-29,F,9,4.4,67,False,True,média,siamês,brincalhão,ração seca,1,True,71
+G00095,T6212976120,2025-03-10,M,1,4.9,50,False,True,curta,preto,brincalhão,mista,1,True,84
+G00096,T9707587591,2025-12-31,M,0,5.2,76,True,True,curta,preto,caçador,ração seca,4,False,87
+G00097,T4742266619,2025-11-09,M,2,4.7,93,False,True,curta,siamês,caçador,mista,0,True,90
+G00098,T7475166603,2025-09-13,M,13,6.7,37,False,True,curta,tigrado,arisco,ração seca,3,True,55
+G00099,T9736282219,2025-09-26,M,9,5.4,29,False,True,média,siamês,calmo,ração úmida,1,True,65
+G00100,T7822789660,2025-08-06,F,2,4.3,65,False,True,longa,tigrado,carinhoso,ração seca,1,True,84
+G00101,T6032864446,2025-01-23,M,13,4.8,56,True,True,curta,tricolor,carinhoso,ração seca,5,True,57
+G00102,T9780601164,2025-05-24,F,6,4.7,63,False,True,média,branco,caçador,ração seca,2,True,74
+G00103,T5281344336,2025-06-30,M,6,4.9,48,True,True,curta,laranja,caçador,mista,0,True,77
+G00104,T7346488407,2025-12-01,M,15,5.0,25,False,True,longa,cinza,carinhoso,mista,2,True,51
+G00105,T6848619413,2025-03-22,F,0,3.5,68,True,True,curta,tricolor,calmo,ração seca,0,True,92
+G00106,T1374527564,2025-07-01,M,2,6.6,74,True,True,curta,preto,brincalhão,ração úmida,0,True,89
+G00107,T8448680547,2025-05-06,F,8,4.4,69,False,True,curta,preto,carinhoso,ração úmida,2,False,71
+G00108,T2821270283,2025-02-19,M,2,3.7,82,True,True,curta,laranja,carinhoso,ração úmida,2,True,87
+G00109,T9340884899,2025-02-07,F,9,4.1,55,False,True,média,siamês,arisco,ração seca,2,True,67
+G00110,T4429191034,2025-05-14,F,2,4.1,53,True,True,curta,siamês,arisco,ração úmida,1,False,84
+G00111,T7452011702,2025-01-31,F,1,4.5,56,True,False,curta,tigrado,carinhoso,mista,3,True,84
+G00112,T2821270283,2025-01-25,M,2,5.1,76,True,True,curta,laranja,arisco,ração seca,1,True,88
+G00113,T1394233892,2025-05-09,M,5,5.4,45,False,True,longa,branco,calmo,ração seca,1,False,75
+G00114,T2821270283,2025-03-15,M,2,4.3,67,True,False,média,siamês,caçador,ração seca,0,True,88
+G00115,T4990727789,2025-07-22,F,1,4.3,76,True,True,longa,branco,brincalhão,mista,0,True,91
+G00116,T6712464880,2025-01-07,M,13,4.8,25,False,False,média,preto,brincalhão,ração seca,0,True,58
+G00117,T2258172983,2025-04-21,M,4,4.4,52,True,True,longa,laranja,calmo,ração seca,3,True,77
+G00118,T7028325952,2025-06-15,M,4,4.2,63,True,False,curta,cinza,arisco,ração seca,3,True,79
+G00119,T8727381279,2025-12-18,M,0,3.8,81,False,False,curta,laranja,caçador,mista,1,True,91
+G00120,T4256313494,2025-08-20,M,4,5.6,77,True,False,curta,siamês,calmo,mista,2,True,83
+G00121,T8494103764,2025-11-18,M,3,5.3,74,True,True,curta,branco,brincalhão,ração seca,2,False,84
+G00122,T8326183461,2025-05-06,M,8,5.8,53,True,True,média,siamês,calmo,ração seca,5,True,66
+G00123,T1066260427,2025-06-14,F,2,4.2,60,False,False,curta,branco,calmo,mista,0,True,85
+G00124,T4487305411,2025-06-03,M,13,6.0,26,True,True,curta,cinza,carinhoso,ração seca,5,True,52
+G00125,T5101986608,2025-11-20,M,15,4.2,27,True,True,média,preto,brincalhão,ração seca,0,False,56
+G00126,T9340884899,2025-12-17,F,1,4.7,77,True,False,curta,tigrado,carinhoso,mista,0,True,92
+G00127,T5015406480,2025-12-18,F,1,4.2,76,True,True,curta,siamês,arisco,ração seca,1,True,90
+G00128,T4429191034,2025-10-02,M,1,5.1,47,True,True,curta,siamês,carinhoso,ração seca,0,True,87
+G00129,T3594952935,2025-07-03,F,8,4.8,43,False,True,média,branco,calmo,ração seca,1,True,69
+G00130,T3932428223,2025-07-17,F,1,3.4,87,True,True,curta,tricolor,brincalhão,mista,2,True,90
+G00131,T7965604437,2025-12-24,F,12,3.8,42,True,True,curta,preto,arisco,mista,1,False,63
+G00132,T7475166603,2025-04-14,F,10,4.2,30,True,True,curta,tigrado,calmo,ração seca,0,True,66
+G00133,T4888837357,2025-05-07,F,12,5.2,70,False,True,média,tigrado,arisco,ração úmida,1,True,65
+G00134,T7702859403,2025-11-24,M,7,5.6,55,True,False,curta,branco,arisco,mista,3,True,72
+G00135,T7276312261,2025-05-22,M,18,4.5,29,True,True,curta,preto,arisco,mista,1,True,49
+G00136,T3045148496,2025-03-27,F,0,3.3,80,True,True,longa,preto,arisco,ração seca,2,True,91
+G00137,T2153022694,2025-07-24,F,5,3.8,57,True,True,média,tigrado,carinhoso,ração seca,2,True,78
+G00138,T9722587396,2025-04-29,M,4,4.6,55,True,False,curta,tigrado,carinhoso,mista,1,True,81
+G00139,T2821270283,2025-11-22,M,15,4.5,58,True,False,curta,preto,calmo,ração seca,1,True,59
+G00140,T6684979592,2025-11-28,F,7,3.5,67,True,True,curta,laranja,carinhoso,ração seca,3,True,74
+G00141,T4429191034,2025-04-22,M,11,4.8,54,True,True,média,tricolor,caçador,ração seca,3,True,64
+G00142,T9736282219,2025-07-13,F,2,4.2,76,True,True,curta,branco,caçador,mista,3,True,85
+G00143,T8242879217,2025-12-26,F,16,4.0,18,True,True,longa,tigrado,brincalhão,ração seca,1,True,51
+G00144,T1524724675,2025-09-28,F,6,4.3,74,False,True,média,cinza,carinhoso,ração seca,2,True,76
+G00145,T5509402975,2025-03-20,F,6,5.2,48,True,True,curta,branco,caçador,ração úmida,5,False,70
+G00146,T9123421568,2025-08-04,F,16,3.9,34,True,True,curta,cinza,brincalhão,ração seca,1,False,54
+G00147,T9780601164,2025-08-15,F,5,4.2,41,True,True,longa,cinza,caçador,ração seca,2,False,75
+G00148,T8005451473,2025-08-27,F,5,5.1,37,True,True,média,laranja,carinhoso,ração seca,0,False,78
+G00149,T2705242231,2025-01-10,F,8,4.3,56,False,False,média,branco,carinhoso,ração seca,1,True,71
+G00150,T3042184141,2025-04-20,F,1,3.7,62,True,True,curta,cinza,carinhoso,mista,1,True,88
+G00151,T1374527564,2025-11-08,M,4,5.7,40,True,True,média,tigrado,carinhoso,ração seca,2,True,77
+G00152,T1788849273,2025-03-30,F,2,3.9,76,True,True,média,cinza,caçador,mista,0,False,89
+G00153,T4934367269,2025-04-20,M,1,5.4,98,True,False,longa,tigrado,caçador,ração seca,3,True,90
+G00154,T6848619413,2025-04-28,F,13,5.1,55,False,True,curta,preto,arisco,ração seca,5,True,55
+G00155,T6087124958,2025-03-06,F,8,4.3,50,True,True,curta,preto,arisco,ração seca,5,True,66
+G00156,T6087124958,2025-02-26,M,4,5.2,64,True,True,curta,siamês,carinhoso,ração seca,4,True,78
+G00157,T7346488407,2025-05-07,M,5,5.2,72,False,True,média,laranja,caçador,ração seca,2,True,78
+G00158,T1574355304,2025-11-16,M,5,5.7,74,True,False,longa,tigrado,brincalhão,ração seca,3,True,79
+G00159,T7826675768,2025-01-01,F,8,4.2,48,True,True,curta,tricolor,brincalhão,mista,3,True,69
+G00160,T4949905957,2025-04-14,M,15,5.5,33,True,True,curta,branco,carinhoso,ração seca,3,False,52
+G00161,T4190733713,2025-01-23,M,15,5.4,37,True,True,curta,siamês,caçador,mista,1,True,56
+G00162,T2388605428,2025-07-24,F,5,4.8,68,False,True,curta,cinza,caçador,ração seca,0,True,80
+G00163,T5226002301,2025-04-02,F,4,3.6,62,True,True,média,siamês,calmo,ração seca,2,True,80
+G00164,T5991263083,2025-10-17,M,5,5.7,60,True,True,curta,cinza,caçador,ração úmida,4,True,75
+G00165,T8727381279,2025-08-02,M,7,5.4,72,False,True,curta,cinza,carinhoso,ração seca,0,True,77
+G00166,T1204408658,2025-10-14,F,6,3.5,73,True,True,longa,tigrado,calmo,ração seca,0,True,81
+G00167,T6848619413,2025-08-20,F,9,5.5,56,True,False,curta,branco,calmo,ração seca,3,True,68
+G00168,T3045148496,2025-06-10,F,7,6.1,76,True,False,curta,tigrado,brincalhão,ração seca,0,True,79
+G00169,T5281344336,2025-11-11,M,4,5.6,59,False,False,curta,siamês,caçador,mista,2,True,78
+G00170,T7884989716,2025-06-23,M,4,5.9,83,True,True,curta,tigrado,carinhoso,ração seca,1,False,85
+G00171,T8709528556,2025-12-13,M,4,4.9,70,True,True,curta,preto,arisco,mista,0,True,84
+G00172,T7501234155,2025-12-30,F,1,2.9,100,True,True,média,tigrado,carinhoso,ração seca,1,True,94
+G00173,T6672543338,2025-08-03,M,2,3.4,55,True,False,curta,preto,arisco,ração seca,2,True,83
+G00174,T8680627659,2025-09-04,M,10,5.5,39,False,True,média,preto,caçador,ração seca,1,True,64
+G00175,T8082319397,2025-04-04,F,5,3.9,66,True,True,curta,branco,calmo,ração seca,1,False,80
+G00176,T8005451473,2025-10-25,F,2,3.5,74,True,True,curta,cinza,brincalhão,mista,2,True,86
+G00177,T1867518659,2025-09-03,F,7,4.4,79,False,True,curta,preto,brincalhão,mista,3,True,73
+G00178,T9177226216,2025-11-26,M,10,5.7,39,False,False,curta,preto,caçador,ração seca,2,True,63
+G00179,T7276312261,2025-04-08,F,3,3.2,77,True,True,curta,tricolor,arisco,ração seca,2,True,85
+G00180,T5509402975,2025-10-15,M,12,5.1,55,False,True,média,laranja,carinhoso,mista,2,True,61
+G00181,T4337182218,2025-06-21,M,15,6.5,41,False,True,curta,branco,caçador,ração seca,4,True,50
+G00182,T5015406480,2025-03-09,F,8,3.8,41,False,True,média,laranja,calmo,ração seca,7,True,60
+G00183,T9722587396,2025-03-04,M,9,5.8,67,True,True,curta,tigrado,caçador,ração seca,3,True,70
+G00184,T5991263083,2025-07-25,F,0,3.7,90,True,False,curta,tricolor,calmo,ração seca,1,True,94
+G00185,T7346488407,2025-04-27,F,15,5.2,40,True,True,curta,cinza,carinhoso,ração seca,2,True,55
+G00186,T3045148496,2025-02-07,F,5,5.1,63,False,True,curta,branco,carinhoso,ração seca,1,True,78
+G00187,T2931262055,2025-06-05,M,14,6.0,39,False,True,média,siamês,caçador,mista,2,True,55
+G00188,T8709528556,2025-08-27,M,8,5.8,52,True,True,média,tigrado,calmo,ração seca,1,True,72
+G00189,T4337182218,2025-04-27,M,0,3.8,83,True,True,curta,siamês,caçador,mista,2,True,91
+G00190,T2257772352,2025-12-15,M,0,5.4,75,False,True,curta,cinza,carinhoso,mista,1,True,90
+G00191,T6848619413,2025-10-12,M,9,4.6,40,False,False,média,preto,calmo,ração seca,1,True,66
+G00192,T5281344336,2025-07-07,M,7,5.3,43,False,True,curta,cinza,arisco,ração seca,2,True,69
+G00193,T5991263083,2025-12-08,F,0,4.2,66,True,True,curta,cinza,caçador,ração seca,2,True,89
+G00194,T5239865855,2025-06-08,F,10,5.0,50,False,True,curta,tricolor,arisco,mista,1,True,66
+G00195,T7884989716,2025-02-20,F,12,5.1,41,False,True,curta,tricolor,brincalhão,ração seca,4,True,56
+G00196,T8326183461,2025-01-14,M,6,4.4,61,True,True,longa,preto,brincalhão,mista,1,True,78
+G00197,T7028325952,2025-12-09,M,6,4.1,64,True,False,curta,tigrado,arisco,ração úmida,2,True,77
+G00198,T6645779566,2025-12-17,M,0,5.2,67,False,True,curta,cinza,caçador,ração úmida,0,True,90
+G00199,T5982214605,2025-09-27,M,11,5.5,62,True,False,média,tigrado,carinhoso,ração seca,2,True,66
+G00200,T2705242231,2025-02-07,M,4,5.7,61,True,True,curta,cinza,carinhoso,ração úmida,2,True,80
+G00201,T6256881720,2025-04-18,F,13,4.8,33,False,True,média,laranja,carinhoso,ração úmida,2,True,56
+G00202,T8709528556,2025-01-15,M,4,3.9,70,True,True,curta,tricolor,carinhoso,ração úmida,2,True,82
+G00203,T6087124958,2025-01-19,M,7,5.8,33,True,True,curta,cinza,arisco,ração seca,2,True,70
+G00204,T7276312261,2025-03-31,F,3,4.0,57,True,False,curta,branco,carinhoso,ração úmida,4,True,79
+G00205,T1524724675,2025-07-28,F,2,4.4,81,True,True,curta,tigrado,brincalhão,ração seca,1,True,89
+G00206,T4930456503,2025-01-24,F,11,4.3,23,False,True,curta,siamês,arisco,ração úmida,5,True,54
+G00207,T8448680547,2025-12-26,M,6,6.2,72,True,True,média,laranja,brincalhão,ração seca,1,True,79
+G00208,T8055083881,2025-06-16,F,7,3.9,74,True,False,média,siamês,caçador,ração seca,0,True,79
+G00209,T7452011702,2025-04-07,M,16,5.2,26,False,True,média,branco,carinhoso,mista,2,True,49
+G00210,T8404854519,2025-07-08,M,16,5.5,34,True,True,curta,tricolor,arisco,ração seca,3,True,51
+G00211,T2370808924,2025-10-16,F,13,4.1,52,True,True,longa,siamês,arisco,ração úmida,0,True,64
+G00212,T1574355304,2025-04-25,F,2,4.4,64,True,False,curta,cinza,arisco,ração úmida,3,True,83
+G00213,T4429191034,2025-01-18,M,8,6.3,63,True,True,média,branco,carinhoso,ração úmida,0,True,75
+G00214,T8082319397,2025-01-19,F,13,4.5,31,True,True,média,tigrado,brincalhão,mista,1,True,59
+G00215,T7965604437,2025-11-07,M,4,5.2,58,True,False,curta,siamês,caçador,ração seca,3,True,78
+G00216,T6256881720,2025-02-10,M,1,2.7,63,False,True,curta,preto,brincalhão,ração seca,1,False,86
+G00217,T7822789660,2025-08-20,M,12,5.4,46,True,True,média,tigrado,calmo,ração úmida,3,True,60
+G00218,T1524724675,2025-05-21,F,6,4.2,72,True,True,média,siamês,carinhoso,ração seca,1,True,79
+G00219,T9736282219,2025-10-11,M,7,4.5,53,False,True,curta,preto,carinhoso,ração seca,4,True,68
+G00220,T7826675768,2025-01-23,F,17,5.6,12,True,True,média,laranja,brincalhão,ração seca,3,True,45
+G00221,T5015406480,2025-11-24,M,8,4.9,40,True,True,curta,preto,carinhoso,ração seca,2,True,69
+G00222,T9177226216,2025-09-12,F,5,4.2,66,True,True,curta,branco,carinhoso,mista,2,True,79
+G00223,T7346488407,2025-06-13,F,4,4.0,86,True,False,média,laranja,carinhoso,ração seca,1,True,85
+G00224,T2258172983,2025-03-17,M,5,3.6,66,True,True,média,cinza,caçador,ração seca,1,True,80
+G00225,T8055083881,2025-12-23,M,1,3.9,68,True,True,curta,preto,caçador,mista,0,True,90
+G00226,T2062053119,2025-04-21,M,11,6.0,53,True,True,curta,tricolor,arisco,mista,4,True,62
+G00227,T7452011702,2025-06-29,F,12,3.4,39,False,True,curta,branco,brincalhão,ração seca,1,True,60
+G00228,T8727381279,2025-05-24,M,3,4.3,62,True,True,curta,siamês,calmo,mista,1,True,84
+G00229,T8326183461,2025-03-26,F,3,3.9,55,True,True,curta,branco,arisco,ração seca,1,False,83
+G00230,T8404854519,2025-06-02,M,13,6.7,56,True,True,curta,laranja,carinhoso,mista,5,True,57
+G00231,T2705242231,2025-02-25,F,0,4.5,45,True,True,média,tricolor,carinhoso,ração seca,1,False,87
+G00232,T9722587396,2025-01-01,F,7,4.1,65,False,True,curta,laranja,calmo,ração seca,2,False,73
+G00233,T9707587591,2025-04-16,F,6,5.3,53,True,False,curta,cinza,carinhoso,ração seca,0,True,78
+G00234,T9657078980,2025-02-10,F,9,4.1,45,True,True,curta,tricolor,carinhoso,mista,3,True,66
+G00235,T6118670763,2025-06-01,M,2,5.4,90,True,True,curta,preto,carinhoso,ração seca,0,True,92
+G00236,T7147440579,2025-11-11,F,9,3.7,41,False,True,curta,tricolor,arisco,ração seca,2,False,65
+G00237,T8494103764,2025-03-01,M,4,5.6,56,True,True,curta,tigrado,calmo,ração úmida,1,True,81
+G00238,T6032864446,2025-01-01,M,8,4.9,51,False,True,curta,tricolor,arisco,ração seca,3,True,67
+G00239,T6672543338,2025-02-10,F,0,3.3,80,True,True,curta,cinza,carinhoso,mista,0,False,94
+G00240,T3532455028,2025-07-05,F,6,4.3,53,True,False,curta,cinza,arisco,ração seca,1,False,76
+G00241,T7826675768,2025-04-11,F,7,4.7,37,False,True,média,tigrado,arisco,ração seca,1,False,70
+G00242,T1867518659,2025-06-28,M,2,4.4,59,True,True,curta,tigrado,arisco,ração seca,1,True,85
+G00243,T3713608802,2025-01-11,M,2,5.1,85,True,True,curta,siamês,arisco,ração seca,3,True,86
+G00244,T3532455028,2025-05-02,M,2,4.3,70,False,True,curta,siamês,brincalhão,ração seca,1,True,85
+G00245,T2169293548,2025-05-30,F,4,4.7,69,True,False,curta,preto,carinhoso,ração seca,1,True,83
+G00246,T1066260427,2025-06-07,M,1,5.0,69,True,True,curta,branco,brincalhão,ração úmida,0,True,90
+G00247,T4990727789,2025-07-21,M,15,5.4,25,True,True,média,siamês,arisco,ração seca,3,True,51
+G00248,T4487305411,2025-10-12,M,5,4.6,81,True,True,curta,cinza,arisco,ração seca,0,True,84
+G00249,T8709528556,2025-06-20,M,11,5.5,42,False,True,curta,tigrado,carinhoso,mista,3,True,60
+G00250,T6983657709,2025-11-04,M,16,5.8,25,True,True,curta,preto,caçador,ração seca,3,True,49
+G00251,T4990727789,2025-07-13,M,1,6.1,85,False,True,curta,preto,carinhoso,ração úmida,0,False,91
+G00252,T4657481752,2025-04-06,F,9,5.3,41,True,True,longa,cinza,calmo,mista,1,True,69
+G00253,T6256881720,2025-03-25,F,13,5.5,31,False,True,curta,tricolor,carinhoso,ração seca,1,True,57
+G00254,T1867518659,2025-04-28,M,8,7.3,53,False,True,curta,tricolor,brincalhão,ração úmida,4,True,66
+G00255,T5226002301,2025-08-07,F,5,4.7,61,False,True,curta,siamês,calmo,mista,0,True,79
+G00256,T5130241979,2025-03-30,F,5,4.7,64,True,True,curta,branco,calmo,ração seca,2,True,79
+G00257,T6032864446,2025-11-30,M,0,5.1,100,True,True,curta,branco,caçador,mista,1,True,96
+G00258,T7702859403,2025-06-25,M,7,4.4,59,True,True,curta,laranja,arisco,ração seca,2,True,74
+G00259,T4334137354,2025-11-12,M,18,5.1,5,False,True,curta,laranja,brincalhão,ração úmida,2,False,42
+G00260,T7147440579,2025-09-07,M,16,5.1,34,True,False,curta,preto,calmo,ração seca,1,True,54
+G00261,T1374527564,2025-05-02,F,0,4.5,75,True,True,curta,laranja,carinhoso,ração seca,2,False,90
+G00262,T4429191034,2025-03-25,F,10,4.6,48,True,True,curta,siamês,carinhoso,mista,2,True,66
+G00263,T7452011702,2025-09-29,M,3,4.9,70,False,True,curta,branco,brincalhão,ração seca,4,False,78
+G00264,T3392829653,2025-05-01,F,14,5.6,35,True,True,média,tricolor,calmo,mista,5,True,52
+G00265,T6645779566,2025-04-01,M,0,5.2,74,False,False,curta,laranja,brincalhão,ração úmida,1,True,90
+G00266,T8404854519,2025-12-06,F,15,4.7,40,True,True,longa,laranja,carinhoso,mista,3,False,54
+G00267,T5101986608,2025-06-26,F,12,4.4,35,True,True,longa,tigrado,calmo,mista,4,False,57
+G00268,T2153022694,2025-01-18,M,1,5.5,61,True,False,curta,tigrado,brincalhão,ração úmida,2,True,86
+G00269,T2030770661,2025-06-30,M,0,5.1,100,True,False,curta,tigrado,calmo,mista,0,True,97
+G00270,T1524724675,2025-06-18,F,12,3.7,33,False,True,média,preto,arisco,mista,1,True,59
+G00271,T8490338212,2025-11-12,F,2,3.9,71,False,True,curta,cinza,calmo,ração seca,1,True,85
+G00272,T8448680547,2025-09-17,M,7,5.2,37,True,True,curta,tricolor,calmo,ração úmida,1,False,72
+G00273,T8005451473,2025-03-11,M,14,6.0,37,False,True,curta,preto,calmo,ração seca,2,True,55
+G00274,T9722587396,2025-02-24,M,7,5.7,44,True,True,curta,tricolor,carinhoso,ração seca,1,True,73
+G00275,T7028325952,2025-08-09,F,5,4.5,56,True,True,média,laranja,arisco,ração seca,1,True,79
+G00276,T3042184141,2025-01-18,F,5,4.8,74,True,True,média,preto,caçador,ração seca,0,True,83
+G00277,T8709528556,2025-04-27,F,0,4.0,81,True,True,média,preto,brincalhão,ração seca,1,True,93
+G00278,T1574355304,2025-02-20,F,16,4.4,37,False,True,média,siamês,brincalhão,ração seca,3,True,49
+G00279,T2590955046,2025-01-08,F,4,4.1,43,True,True,média,preto,brincalhão,ração úmida,1,False,79
+G00280,T8709528556,2025-12-02,F,2,4.2,91,True,True,curta,preto,caçador,ração úmida,4,True,86
+G00281,T1524724675,2025-02-02,M,3,4.8,52,False,True,longa,preto,arisco,mista,2,True,79
+G00282,T7822789660,2025-01-04,F,16,3.5,49,True,True,longa,tigrado,brincalhão,mista,1,True,56
+G00283,T6684979592,2025-12-07,M,1,4.4,84,True,True,média,siamês,carinhoso,mista,1,True,91
+G00284,T2705242231,2025-03-10,M,13,5.5,46,False,True,média,branco,arisco,ração úmida,3,False,56
+G00285,T8680627659,2025-10-26,F,10,4.5,37,True,True,curta,tricolor,calmo,ração seca,3,True,63
+G00286,T6684979592,2025-01-12,F,12,4.7,43,True,True,curta,tricolor,carinhoso,mista,0,True,64
+G00287,T5130241979,2025-02-26,F,16,5.2,25,False,True,média,branco,calmo,ração seca,2,True,49
+G00288,T4990727789,2025-02-10,M,12,4.7,42,True,True,curta,preto,calmo,ração seca,0,True,64
+G00289,T3735550882,2025-09-15,F,15,3.7,30,True,True,curta,laranja,carinhoso,ração seca,8,True,44
+G00290,T8727381279,2025-08-15,F,1,3.8,48,True,True,curta,preto,arisco,ração úmida,0,True,87
+G00291,T2451446011,2025-06-23,M,11,5.9,58,True,True,curta,preto,brincalhão,ração úmida,6,True,60
+G00292,T7850257317,2025-03-30,M,7,6.3,54,False,False,curta,laranja,calmo,ração seca,1,True,73
+G00293,T8005451473,2025-02-02,F,7,5.0,50,False,True,curta,tricolor,arisco,mista,1,False,72
+G00294,T4190733713,2025-07-27,M,14,4.4,29,True,True,curta,siamês,carinhoso,ração seca,3,True,54
+G00295,T9722587396,2025-03-26,F,16,4.7,35,True,False,curta,tigrado,brincalhão,ração seca,2,False,52
+G00296,T7850257317,2025-08-04,M,9,5.4,39,True,False,curta,branco,arisco,ração seca,6,True,61
+G00297,T6983657709,2025-09-08,M,6,5.1,31,True,True,curta,cinza,brincalhão,ração seca,3,True,70
+G00298,T3105455372,2025-11-07,F,6,4.8,63,True,True,média,tigrado,caçador,mista,2,False,76
+G00299,T6712464880,2025-06-30,M,5,4.3,67,False,False,curta,branco,carinhoso,ração seca,1,True,79
+G00300,T1810430746,2025-01-02,F,4,4.3,61,True,True,curta,laranja,brincalhão,ração seca,1,True,82
+G00301,T9177226216,2025-04-13,F,5,4.6,47,True,True,curta,tricolor,arisco,ração seca,2,True,76
+G00302,T2257772352,2025-11-08,M,1,5.2,73,True,True,curta,tricolor,caçador,mista,1,True,89
+G00303,T9722587396,2025-07-14,F,1,3.5,55,True,False,média,preto,brincalhão,mista,3,True,84
+G00304,T7028325952,2025-08-14,F,11,4.5,32,True,True,curta,cinza,calmo,ração úmida,2,True,62
+G00305,T4742266619,2025-06-17,F,5,2.5,52,True,True,curta,branco,brincalhão,ração úmida,0,True,80
+G00306,T7884989716,2025-03-01,F,15,4.4,43,False,True,média,laranja,carinhoso,mista,3,True,52
+G00307,T5015406480,2025-11-24,F,8,4.2,48,True,True,curta,branco,caçador,ração seca,2,True,70
+G00308,T9123421568,2025-10-10,F,0,3.3,70,True,True,média,siamês,brincalhão,ração seca,3,True,88
+G00309,T9657078980,2025-12-30,M,2,4.9,93,True,False,longa,siamês,calmo,ração seca,4,False,86
+G00310,T5044253519,2025-11-09,F,2,4.1,74,True,True,curta,cinza,calmo,ração seca,5,True,82
+G00311,T3735550882,2025-04-17,F,16,3.3,34,False,False,longa,cinza,arisco,ração seca,4,False,47
+G00312,T9780601164,2025-04-03,F,2,4.3,65,False,False,curta,laranja,calmo,ração seca,3,True,81
+G00313,T5239865855,2025-04-01,F,6,3.8,51,False,True,curta,preto,calmo,ração seca,0,True,76
+G00314,T9736282219,2025-12-02,M,15,5.8,7,True,True,curta,siamês,carinhoso,ração seca,1,True,52
+G00315,T2821270283,2025-07-23,F,16,3.9,42,True,True,curta,tricolor,caçador,ração seca,3,False,52
+G00316,T7147440579,2025-06-15,F,3,4.2,72,True,False,curta,cinza,brincalhão,ração seca,3,True,82
+G00317,T2388605428,2025-12-20,M,0,4.4,73,True,True,curta,laranja,arisco,mista,0,False,93
+G00318,T9707587591,2025-08-09,M,2,5.0,68,True,True,curta,cinza,arisco,mista,2,True,85
+G00319,T6978821862,2025-11-28,F,1,4.2,81,True,False,curta,branco,carinhoso,ração seca,1,True,91
+G00320,T4676757793,2025-12-26,F,2,4.0,51,True,True,curta,cinza,caçador,ração seca,1,True,84
+G00321,T4888837357,2025-01-29,F,7,3.4,48,False,False,curta,preto,caçador,ração seca,2,False,70
+G00322,T8082319397,2025-05-12,M,14,4.4,22,True,True,curta,tricolor,brincalhão,ração seca,1,True,56
+G00323,T2705242231,2025-09-25,M,7,4.7,77,False,True,curta,tigrado,caçador,ração seca,1,False,76
+G00324,T7850257317,2025-10-24,F,8,4.6,63,True,True,média,siamês,calmo,ração seca,2,True,72
+G00325,T7965604437,2025-02-24,F,2,3.7,43,True,True,curta,preto,caçador,mista,1,False,83
+G00326,T4487305411,2025-04-27,F,11,5.2,26,True,True,média,tigrado,calmo,mista,3,True,59
+G00327,T8709528556,2025-07-20,F,8,4.4,51,True,False,curta,laranja,calmo,mista,2,True,71
+G00328,T5982214605,2025-10-19,F,13,4.2,33,True,True,curta,tigrado,calmo,ração úmida,1,True,59
+G00329,T2821270283,2025-02-11,F,15,4.6,17,True,True,longa,siamês,calmo,mista,4,False,49
+G00330,T6794786080,2025-08-08,F,4,4.4,87,True,False,curta,cinza,arisco,mista,2,True,84
+G00331,T9340884899,2025-04-19,F,1,4.3,76,False,False,curta,preto,carinhoso,mista,0,True,89
+G00332,T8008758135,2025-03-20,F,3,5.5,72,True,True,curta,preto,carinhoso,mista,2,True,84
+G00333,T8404854519,2025-07-08,M,5,4.5,53,True,False,curta,laranja,calmo,mista,2,True,77
+G00334,T7850257317,2025-06-01,M,15,5.4,42,True,True,curta,branco,brincalhão,mista,4,True,52
+G00335,T2799173822,2025-08-21,F,4,4.6,59,False,True,curta,preto,calmo,ração úmida,2,True,78
+G00336,T8709528556,2025-04-26,F,11,4.8,41,True,True,curta,branco,calmo,ração seca,5,True,59
+G00337,T7501234155,2025-10-28,F,7,4.1,63,True,True,longa,branco,carinhoso,ração seca,2,True,74
+G00338,T6794786080,2025-01-29,M,2,3.7,50,True,True,curta,preto,carinhoso,ração seca,2,True,82
+G00339,T8008758135,2025-11-11,F,4,3.9,83,True,True,curta,laranja,brincalhão,ração seca,1,True,85
+G00340,T7452011702,2025-01-11,M,9,4.5,52,True,True,média,tigrado,brincalhão,ração seca,3,False,67
+G00341,T9177226216,2025-09-26,F,9,3.4,65,True,True,curta,cinza,caçador,ração seca,2,True,71
+G00342,T3753609617,2025-05-07,F,5,3.8,48,False,True,longa,preto,arisco,ração seca,2,True,74
+G00343,T7147440579,2025-05-20,F,3,3.5,56,True,True,curta,tigrado,brincalhão,mista,4,True,78
+G00344,T1759998890,2025-01-07,F,10,5.1,33,True,True,média,preto,caçador,ração seca,1,True,65
+G00345,T4934367269,2025-09-14,M,2,5.2,72,True,True,longa,tricolor,calmo,ração seca,1,True,87
+G00346,T9177226216,2025-03-02,M,15,4.8,34,False,True,curta,cinza,brincalhão,ração seca,1,True,54
+G00347,T8680627659,2025-08-29,F,2,4.0,64,True,False,média,cinza,carinhoso,ração seca,2,True,85
+G00348,T1788849273,2025-09-22,F,1,2.8,60,True,True,média,branco,arisco,ração úmida,1,True,88
+G00349,T6013289371,2025-11-05,F,6,4.1,43,True,True,média,branco,calmo,ração úmida,3,False,72
+G00350,T6978821862,2025-09-16,M,7,5.4,55,True,True,curta,branco,caçador,ração seca,1,True,75
+G00351,T6957248632,2025-04-21,M,6,5.6,53,True,True,curta,laranja,brincalhão,ração seca,4,True,72
+G00352,T1788849273,2025-09-27,M,5,4.5,53,False,False,curta,branco,carinhoso,ração seca,1,True,76
+G00353,T5015406480,2025-10-29,M,18,6.2,43,True,True,longa,tigrado,brincalhão,ração úmida,1,True,51
+G00354,T5991263083,2025-04-26,M,6,4.0,57,True,True,curta,branco,carinhoso,mista,2,True,76
+G00355,T9722587396,2025-02-15,F,6,3.5,73,False,True,curta,laranja,caçador,mista,3,True,74
+G00356,T3735550882,2025-11-21,F,5,4.8,55,False,True,longa,laranja,carinhoso,ração seca,1,True,77
+G00357,T4934367269,2025-02-23,M,1,5.8,75,True,True,curta,tigrado,caçador,mista,4,True,85
+G00358,T6712464880,2025-08-05,M,8,5.5,52,False,False,curta,tricolor,arisco,mista,1,True,70
+G00359,T6256881720,2025-03-28,M,3,4.8,46,True,True,curta,laranja,calmo,mista,0,True,83
+G00360,T3450174056,2025-02-15,F,8,3.0,70,True,True,média,tricolor,arisco,ração seca,3,True,72
+G00361,T8008758135,2025-10-11,M,0,3.2,73,True,True,curta,branco,arisco,ração seca,1,True,91
+G00362,T6118670763,2025-02-22,F,17,4.9,36,False,True,curta,tricolor,carinhoso,ração seca,5,True,44
+G00363,T2062053119,2025-09-02,F,6,4.2,49,True,True,curta,cinza,brincalhão,ração seca,1,True,76
+G00364,T7142459535,2025-09-10,M,14,4.7,34,False,True,curta,tigrado,carinhoso,ração úmida,0,True,57
+G00365,T1810430746,2025-01-22,F,6,4.5,48,True,True,curta,laranja,arisco,ração seca,4,True,71
+G00366,T8055083881,2025-03-05,F,0,4.1,90,True,True,curta,siamês,carinhoso,ração seca,1,True,94
+G00367,T9707587591,2025-10-17,M,12,6.1,45,False,False,média,branco,arisco,mista,2,True,60
+G00368,T4334137354,2025-07-05,M,9,5.3,54,True,True,curta,laranja,brincalhão,ração seca,1,True,71
+G00369,T8074578747,2025-02-14,F,11,5.6,60,True,False,curta,branco,brincalhão,mista,3,True,64
+G00370,T1574355304,2025-12-28,F,5,4.4,75,True,True,curta,tigrado,caçador,mista,3,True,79
+G00371,T7346488407,2025-04-07,F,8,4.5,62,True,True,curta,preto,calmo,mista,3,False,71
+G00372,T2030770661,2025-01-02,F,13,5.6,22,True,True,média,cinza,brincalhão,mista,0,True,59
+G00373,T7822789660,2025-12-04,M,8,4.5,44,False,True,curta,preto,arisco,ração seca,4,True,65
+G00374,T8082319397,2025-01-07,F,4,6.3,52,True,True,média,cinza,calmo,ração seca,0,True,82
+G00375,T3532455028,2025-07-21,F,9,4.9,59,False,True,média,laranja,caçador,mista,0,True,71
+G00376,T7147440579,2025-12-29,M,9,5.5,52,True,True,média,cinza,brincalhão,ração seca,1,True,70
+G00377,T7302385918,2025-07-30,F,16,5.2,14,True,True,média,cinza,brincalhão,ração seca,1,True,51
+G00378,T8242879217,2025-08-02,F,4,5.6,62,True,True,curta,branco,brincalhão,ração úmida,3,False,79
+G00379,T7884989716,2025-05-22,F,5,4.9,43,True,False,longa,tricolor,calmo,ração seca,2,True,75
+G00380,T8242879217,2025-02-16,M,12,4.3,41,True,True,média,tricolor,carinhoso,ração seca,2,False,61
+G00381,T5015406480,2025-07-29,M,6,6.0,38,True,True,curta,laranja,arisco,ração seca,5,True,68
+G00382,T4934367269,2025-11-24,F,10,4.5,53,False,True,curta,preto,brincalhão,ração seca,2,True,65
+G00383,T7346488407,2025-02-03,F,6,4.5,63,True,False,curta,preto,caçador,ração úmida,0,True,79
+G00384,T3594952935,2025-11-18,F,2,3.2,92,True,True,curta,tigrado,carinhoso,ração seca,2,True,89
+G00385,T9736282219,2025-06-01,F,10,5.1,57,False,False,curta,siamês,arisco,ração seca,2,True,66
+G00386,T1810430746,2025-07-15,M,1,4.2,67,True,True,média,siamês,arisco,ração seca,2,True,87
+G00387,T7147440579,2025-03-02,M,2,4.8,79,False,True,curta,cinza,carinhoso,ração úmida,1,True,86
+G00388,T5281344336,2025-08-15,M,8,5.0,36,True,True,curta,laranja,calmo,ração seca,1,True,70
+G00389,T9657078980,2025-03-08,M,10,6.6,35,True,True,curta,branco,caçador,ração seca,1,True,66
+G00390,T4888837357,2025-04-10,M,13,6.8,43,True,False,curta,preto,brincalhão,mista,3,True,58
+G00391,T2502756279,2025-09-21,F,3,4.2,41,False,True,curta,tricolor,calmo,ração seca,2,True,77
+G00392,T2590955046,2025-01-19,M,1,4.7,72,True,True,média,cinza,arisco,mista,2,True,88
+G00393,T5044253519,2025-06-13,M,15,5.2,21,False,True,curta,laranja,caçador,ração seca,1,True,52
+G00394,T7015626656,2025-08-06,F,2,4.9,71,True,True,longa,cinza,carinhoso,ração seca,2,True,86
+G00395,T4256313494,2025-02-18,M,2,4.5,56,True,True,média,cinza,brincalhão,ração seca,0,False,86
+G00396,T8494103764,2025-04-18,M,3,4.5,72,False,False,média,siamês,brincalhão,mista,2,True,82
+G00397,T6118670763,2025-05-06,F,7,5.2,56,True,True,curta,tricolor,arisco,ração seca,5,True,69
+G00398,T6032864446,2025-08-31,M,13,5.1,55,True,True,média,tigrado,brincalhão,ração seca,0,True,64
+G00399,T6256881720,2025-12-23,F,11,4.7,44,True,True,longa,cinza,caçador,ração seca,1,True,65
+G00400,T5044253519,2025-11-02,F,10,3.6,38,False,True,média,tricolor,brincalhão,ração seca,3,True,61
+G00401,T5239865855,2025-03-11,M,2,5.2,66,True,True,curta,cinza,brincalhão,mista,1,True,86
+G00402,T4657481752,2025-01-07,F,4,5.6,48,True,True,média,laranja,calmo,mista,1,True,80
+G00403,T2751748370,2025-01-19,F,6,4.9,63,False,True,curta,branco,carinhoso,ração seca,2,True,74
+G00404,T9177226216,2025-08-06,F,2,5.2,76,True,True,curta,tigrado,calmo,ração seca,3,True,85
+G00405,T4930456503,2025-02-27,F,3,3.6,96,False,False,média,preto,caçador,ração seca,0,True,88
+G00406,T6032864446,2025-03-26,F,4,4.4,56,True,False,média,tricolor,caçador,mista,1,True,81
+G00407,T6672543338,2025-11-06,F,1,3.4,69,True,False,curta,tigrado,calmo,ração seca,1,True,89
+G00408,T8055083881,2025-11-15,F,7,4.3,48,True,True,curta,preto,calmo,ração seca,2,True,72
+G00409,T5053473441,2025-11-03,M,9,5.8,52,True,True,longa,laranja,caçador,mista,2,True,69
+G00410,T2169293548,2025-04-03,F,1,4.1,77,True,True,curta,branco,calmo,mista,2,True,89
+G00411,T9736282219,2025-08-15,F,6,3.4,58,True,True,curta,laranja,arisco,ração seca,3,True,74
+G00412,T7266883375,2025-08-11,F,11,3.8,57,False,True,média,preto,caçador,ração seca,0,True,67
+G00413,T1847596130,2025-03-09,M,10,4.3,40,True,True,média,tricolor,calmo,ração úmida,0,True,68
+G00414,T2751748370,2025-07-22,M,12,5.8,53,True,False,curta,laranja,carinhoso,mista,4,True,60
+G00415,T1524724675,2025-07-11,F,5,5.8,67,True,False,curta,cinza,brincalhão,ração seca,2,False,79
+G00416,T7501234155,2025-05-25,F,12,5.8,41,False,True,curta,siamês,arisco,ração seca,2,True,59
+G00417,T6087124958,2025-10-02,M,3,3.5,63,True,True,curta,tigrado,caçador,ração seca,2,False,82
+G00418,T3450174056,2025-09-05,M,4,5.9,93,False,True,média,tigrado,carinhoso,ração seca,2,False,83
+G00419,T2590955046,2025-07-14,M,2,5.4,60,True,True,média,branco,brincalhão,ração seca,2,True,84
+G00420,T5991263083,2025-09-22,F,6,3.3,62,True,True,curta,laranja,caçador,mista,2,True,76
+G00421,T6645779566,2025-10-06,M,5,4.7,52,True,False,curta,tigrado,arisco,ração seca,2,True,77
+G00422,T3642343819,2025-07-26,F,3,5.0,88,True,True,curta,siamês,calmo,ração seca,3,False,85
+G00423,T8055083881,2025-04-08,M,10,5.7,58,False,True,curta,tigrado,brincalhão,mista,2,True,66
+G00424,T9340884899,2025-10-04,M,4,4.0,56,True,True,curta,branco,brincalhão,ração seca,1,True,81
+G00425,T6957248632,2025-09-19,M,3,5.2,73,True,True,curta,tigrado,carinhoso,ração seca,3,True,82
+G00426,T2370808924,2025-12-25,F,1,2.6,75,True,True,média,preto,caçador,mista,2,False,88
+G00427,T8680627659,2025-02-24,F,5,4.2,55,True,True,curta,cinza,calmo,ração seca,2,True,77
+G00428,T4337182218,2025-06-03,F,3,5.0,76,True,True,média,siamês,carinhoso,mista,4,True,81
+G00429,T5982214605,2025-12-04,F,4,4.3,68,False,True,curta,tricolor,caçador,ração seca,1,True,81
+G00430,T7826675768,2025-07-07,M,3,4.5,69,False,True,média,siamês,caçador,ração seca,4,True,78
+G00431,T2370808924,2025-12-11,F,11,5.4,44,True,True,longa,cinza,carinhoso,ração úmida,5,False,59
+G00432,T1574355304,2025-01-05,M,15,6.1,38,False,True,curta,tigrado,brincalhão,ração seca,1,True,54
+G00433,T6645779566,2025-01-13,M,6,5.9,61,True,False,curta,tigrado,calmo,ração seca,4,True,73
+G00434,T6645779566,2025-10-18,M,9,5.8,51,True,True,média,branco,caçador,ração seca,4,True,66
+G00435,T4190733713,2025-05-11,M,13,6.2,31,True,True,curta,siamês,arisco,ração úmida,4,True,55
+G00436,T9177226216,2025-07-09,F,18,5.4,45,False,True,curta,siamês,brincalhão,ração seca,0,True,51
+G00437,T2799173822,2025-06-06,F,8,4.7,40,True,True,curta,preto,carinhoso,mista,0,True,72
+G00438,T1524724675,2025-05-29,F,13,4.9,44,False,True,longa,tricolor,carinhoso,ração úmida,7,True,50
+G00439,T8026561279,2025-12-09,F,14,4.7,32,True,True,curta,laranja,caçador,ração seca,3,True,54
+G00440,T1788849273,2025-02-04,F,11,3.9,65,False,True,curta,tigrado,caçador,ração seca,1,False,66
+G00441,T1374527564,2025-10-09,M,6,4.4,47,True,False,curta,laranja,caçador,ração seca,2,True,74
+G00442,T9657078980,2025-11-21,M,1,4.5,63,True,True,média,branco,calmo,ração úmida,2,True,86
+G00443,T7826675768,2025-08-28,M,0,4.8,63,True,True,curta,preto,calmo,ração seca,0,True,91
+G00444,T4888837357,2025-05-25,F,6,5.4,62,False,False,média,laranja,brincalhão,ração úmida,1,True,76
+G00445,T9340884899,2025-02-28,F,6,4.4,42,True,True,média,tricolor,carinhoso,ração seca,0,False,76
+G00446,T9707587591,2025-09-07,M,5,5.7,55,True,True,curta,tricolor,arisco,ração seca,6,True,71
+G00447,T2370808924,2025-06-21,F,7,5.2,30,True,True,curta,branco,caçador,mista,3,True,68
+G00448,T3105455372,2025-02-24,F,7,4.3,58,True,True,média,siamês,caçador,ração seca,2,True,74
+G00449,T7850257317,2025-05-12,F,12,5.3,35,False,True,média,cinza,caçador,ração seca,3,True,57
+G00450,T9340884899,2025-12-17,F,1,3.9,54,True,True,curta,laranja,calmo,ração úmida,1,True,87
+G00451,T5982214605,2025-04-07,F,3,5.1,80,True,True,curta,cinza,carinhoso,mista,2,True,85
+G00452,T6957248632,2025-03-07,F,11,5.2,29,True,False,curta,laranja,caçador,ração seca,1,True,63
+G00453,T7822789660,2025-09-06,F,12,4.0,51,False,True,curta,laranja,caçador,ração seca,2,False,61
+G00454,T4190733713,2025-03-14,M,18,5.6,16,False,True,curta,tigrado,brincalhão,ração seca,3,True,42
+G00455,T5991263083,2025-12-02,F,13,6.0,58,True,True,curta,laranja,carinhoso,ração úmida,4,True,59
+G00456,T2931262055,2025-11-10,M,13,5.3,48,True,True,curta,laranja,arisco,ração seca,3,True,59
+G00457,T7965604437,2025-12-25,F,4,4.6,52,True,True,média,tigrado,calmo,ração úmida,2,True,79
+G00458,T4676757793,2025-11-30,M,5,5.3,50,True,True,média,cinza,brincalhão,mista,0,True,80
+G00459,T2030770661,2025-03-30,M,3,4.1,74,True,False,média,laranja,brincalhão,mista,1,False,86
+G00460,T2258172983,2025-03-19,M,8,5.5,49,True,True,média,preto,caçador,ração seca,2,False,70
+G00461,T1204408658,2025-05-06,M,15,4.5,31,True,True,média,siamês,calmo,ração seca,4,True,51
+G00462,T5982214605,2025-06-21,M,4,4.4,79,True,True,curta,preto,calmo,ração seca,3,True,81
+G00463,T2370808924,2025-11-18,M,7,5.8,46,True,True,média,siamês,arisco,ração seca,2,True,72
+G00464,T6672543338,2025-09-25,M,3,5.1,68,True,True,curta,tricolor,arisco,ração seca,1,True,85
+G00465,T8709528556,2025-08-24,M,2,4.5,81,True,False,curta,siamês,arisco,mista,1,True,89
+G00466,T9657078980,2025-11-17,F,2,4.5,79,True,True,longa,preto,calmo,ração seca,2,True,87
+G00467,T6712464880,2025-08-24,F,0,4.0,73,True,True,média,branco,arisco,ração seca,4,True,87
+G00468,T5239865855,2025-05-19,F,15,4.8,30,False,True,curta,preto,caçador,ração seca,1,False,53
+G00469,T7147440579,2025-05-31,M,5,5.4,40,False,True,média,cinza,calmo,mista,0,True,76
+G00470,T1524724675,2025-07-08,M,12,4.9,29,True,True,curta,siamês,carinhoso,ração seca,3,True,58
+G00471,T1574355304,2025-02-02,F,9,4.7,54,True,True,curta,tricolor,calmo,mista,1,True,71
+G00472,T7826675768,2025-09-28,M,2,4.5,68,True,True,curta,tigrado,brincalhão,mista,1,False,87
+G00473,T7452011702,2025-08-27,M,2,3.6,70,True,True,curta,tricolor,caçador,ração seca,0,True,88
+G00474,T4990727789,2025-09-24,F,12,4.2,54,True,True,média,preto,brincalhão,ração úmida,3,False,62
+G00475,T2062053119,2025-07-14,F,3,5.3,52,True,False,curta,tricolor,arisco,ração seca,3,False,79
+G00476,T4990727789,2025-10-13,M,14,5.7,33,True,True,curta,cinza,brincalhão,ração seca,5,True,51
+G00477,T2370808924,2025-12-13,F,2,3.2,72,False,True,longa,tigrado,carinhoso,ração seca,2,True,84
+G00478,T4337182218,2025-07-28,M,9,4.2,41,True,False,curta,tricolor,arisco,ração seca,2,True,67
+G00479,T5239865855,2025-06-12,F,12,4.8,59,True,True,curta,tigrado,arisco,mista,3,True,62
+G00480,T8326183461,2025-02-08,M,3,5.9,78,True,True,curta,cinza,caçador,mista,4,True,82
+G00481,T7266883375,2025-10-12,M,3,4.7,70,True,True,curta,tigrado,arisco,ração seca,4,True,80
+G00482,T8082319397,2025-11-26,F,16,5.8,52,True,True,curta,laranja,arisco,ração úmida,0,True,58
+G00483,T8709528556,2025-09-13,M,3,5.1,49,False,True,curta,tigrado,caçador,ração seca,0,True,81
+G00484,T4256313494,2025-11-12,F,5,4.7,61,False,False,longa,laranja,arisco,ração seca,1,True,78
+G00485,T5200489033,2025-11-11,M,5,4.0,65,True,True,curta,cinza,caçador,ração úmida,2,True,79
+G00486,T2502756279,2025-10-19,F,3,4.9,56,True,True,curta,branco,carinhoso,ração seca,0,True,84
+G00487,T7266883375,2025-07-03,F,11,4.5,48,True,True,curta,cinza,caçador,mista,2,True,64
+G00488,T8494103764,2025-02-06,F,11,5.4,31,True,False,média,tricolor,arisco,ração seca,3,True,60
+G00489,T5015406480,2025-01-02,F,4,3.7,72,True,True,curta,siamês,arisco,mista,0,True,85
+G00490,T3753609617,2025-03-16,M,12,5.6,54,True,True,curta,preto,calmo,ração seca,2,True,63
+G00491,T3392829653,2025-06-07,F,2,4.4,73,True,True,longa,branco,calmo,ração seca,3,True,84
+G00492,T6672543338,2025-09-29,M,0,4.5,53,True,True,curta,laranja,calmo,mista,1,True,88
+G00493,T8055083881,2025-06-16,F,7,4.8,44,True,True,curta,tigrado,carinhoso,ração seca,0,True,75
+G00494,T4334137354,2025-01-09,F,18,4.7,31,False,True,curta,branco,brincalhão,ração seca,4,False,43
+G00495,T9657078980,2025-03-18,F,0,3.5,75,True,True,curta,cinza,brincalhão,mista,1,True,92
+G00496,T8242879217,2025-12-24,F,2,5.3,37,False,False,longa,preto,carinhoso,ração seca,0,True,82
+G00497,T6032864446,2025-12-27,F,7,5.2,70,True,True,curta,preto,brincalhão,ração seca,1,True,77
+G00498,T7028325952,2025-05-18,M,11,4.8,46,False,True,curta,branco,calmo,ração seca,1,True,63
+G00499,T7028325952,2025-10-21,F,1,4.5,62,True,True,curta,tricolor,arisco,ração úmida,0,False,89
+G00500,T6684979592,2025-09-20,F,5,3.8,73,True,True,curta,siamês,arisco,ração úmida,3,False,78
+G00501,T6256881720,2025-12-06,M,10,4.5,39,True,True,curta,laranja,calmo,mista,3,True,63
+G00502,T8448680547,2025-11-20,F,4,5.0,56,False,True,média,branco,brincalhão,ração seca,1,True,79
+G00503,T4337182218,2025-08-18,M,2,3.5,74,True,True,curta,siamês,brincalhão,ração seca,0,True,89
+G00504,T7475166603,2025-05-25,M,2,5.4,91,True,False,longa,branco,carinhoso,ração seca,2,False,89
+G00505,T4930456503,2025-08-17,M,5,4.8,80,False,True,média,branco,brincalhão,ração seca,3,True,78
+G00506,T7346488407,2025-04-27,M,6,4.9,63,True,True,curta,preto,calmo,mista,1,False,78
+G00507,T5015406480,2025-05-08,F,13,5.1,44,False,True,média,cinza,brincalhão,ração seca,2,True,58
+G00508,T3594952935,2025-08-11,F,9,5.0,59,True,False,média,tricolor,arisco,ração úmida,1,True,71
+G00509,T3045148496,2025-07-28,F,9,4.1,35,True,True,curta,cinza,carinhoso,ração úmida,2,True,66
+G00510,T7266883375,2025-08-01,F,17,5.3,35,False,True,curta,laranja,calmo,mista,2,True,48
+G00511,T4190733713,2025-05-21,M,5,5.0,52,True,True,curta,cinza,caçador,ração seca,1,True,78
+G00512,T4930456503,2025-05-30,M,5,4.1,65,True,True,curta,siamês,brincalhão,ração seca,2,True,79
+G00513,T4888837357,2025-01-04,M,14,5.3,33,True,False,média,tigrado,brincalhão,mista,3,True,54
+G00514,T7475166603,2025-08-08,F,3,5.2,73,True,False,curta,tigrado,calmo,ração úmida,0,True,87
+G00515,T8242879217,2025-07-30,M,10,6.5,48,False,True,curta,laranja,brincalhão,ração seca,1,True,66
+G00516,T1788849273,2025-12-08,F,10,5.2,10,False,True,curta,laranja,arisco,mista,2,True,58
+G00517,T3642343819,2025-07-04,F,1,3.2,74,True,True,curta,siamês,carinhoso,mista,2,True,88
+G00518,T2030770661,2025-06-20,F,6,4.8,66,True,True,média,tigrado,carinhoso,ração seca,0,True,80
+G00519,T1574355304,2025-01-25,F,2,4.7,75,True,False,média,tricolor,arisco,mista,2,False,86
+G00520,T3594952935,2025-03-13,M,2,5.2,68,False,False,média,preto,calmo,ração seca,2,False,83
+G00521,T4657481752,2025-05-04,F,6,5.0,78,False,True,curta,siamês,brincalhão,mista,2,True,77
+G00522,T4742266619,2025-05-18,F,3,4.5,70,True,True,curta,siamês,carinhoso,ração seca,0,True,86
+G00523,T7965604437,2025-05-13,F,11,4.7,49,True,True,média,tigrado,carinhoso,ração seca,5,True,60
+G00524,T5509402975,2025-05-24,F,14,4.4,48,False,True,curta,siamês,arisco,ração seca,4,True,53
+G00525,T7452011702,2025-10-08,F,11,3.4,49,False,True,média,laranja,arisco,mista,2,False,62
+G00526,T4888837357,2025-02-17,F,3,4.4,56,True,True,curta,branco,arisco,mista,2,True,81
+G00527,T8082319397,2025-05-02,M,3,4.9,37,False,True,curta,tigrado,caçador,ração seca,0,True,80
+G00528,T4990727789,2025-03-01,F,3,4.6,61,True,True,curta,tigrado,arisco,ração seca,0,True,85
+G00529,T4334137354,2025-04-23,F,1,3.1,81,True,False,média,branco,arisco,ração seca,2,True,89
+G00530,T5044253519,2025-09-07,M,15,5.9,29,False,True,curta,branco,brincalhão,ração seca,1,False,53
+G00531,T9123421568,2025-01-18,F,5,5.8,71,True,True,média,cinza,arisco,mista,0,True,83
+G00532,T8055083881,2025-05-04,M,3,4.9,68,True,True,curta,laranja,carinhoso,ração seca,1,False,85
+G00533,T3045148496,2025-01-09,F,12,4.8,57,False,True,curta,branco,caçador,mista,1,True,63
+G00534,T3045148496,2025-12-15,M,5,5.2,57,False,True,média,tricolor,carinhoso,mista,1,True,77
+G00535,T2030770661,2025-09-23,M,0,6.0,81,True,True,curta,preto,carinhoso,ração seca,0,False,94
+G00536,T3105455372,2025-03-30,F,2,3.4,75,True,True,curta,siamês,carinhoso,ração seca,0,True,89
+G00537,T1847596130,2025-03-14,M,8,5.3,71,False,True,longa,tigrado,calmo,mista,0,True,75
+G00538,T1810430746,2025-02-06,M,11,4.8,24,True,True,média,cinza,brincalhão,mista,2,True,61
+G00539,T1277360511,2025-06-22,M,2,4.4,64,False,True,curta,cinza,brincalhão,mista,2,False,83
+G00540,T4949905957,2025-10-03,F,14,4.8,46,False,True,média,tigrado,carinhoso,ração seca,0,True,59
+G00541,T9340884899,2025-08-02,F,12,5.8,60,True,True,curta,preto,carinhoso,ração seca,1,True,66
+G00542,T5130241979,2025-11-18,F,12,6.1,44,True,True,curta,tricolor,calmo,mista,1,True,63
+G00543,T2370808924,2025-05-06,M,3,5.1,63,False,True,curta,laranja,calmo,ração seca,3,True,79
+G00544,T9722587396,2025-04-12,F,0,3.7,84,False,False,curta,branco,arisco,ração úmida,3,True,88
+G00545,T6983657709,2025-06-24,M,13,7.2,49,True,True,curta,siamês,caçador,mista,1,True,62
+G00546,T2169293548,2025-03-15,F,4,4.0,59,True,True,curta,tigrado,calmo,ração seca,1,True,81
+G00547,T6848619413,2025-12-23,M,8,4.8,57,False,True,média,branco,caçador,ração seca,2,False,70
+G00548,T6118670763,2025-03-09,M,11,4.1,58,True,True,curta,tigrado,calmo,ração seca,2,True,66
+G00549,T7028325952,2025-06-24,M,1,5.6,95,True,True,curta,cinza,brincalhão,mista,2,False,91
+G00550,T8026561279,2025-07-10,F,11,5.4,53,False,True,média,tricolor,carinhoso,ração seca,1,True,64
+G00551,T4949905957,2025-01-21,F,15,6.5,34,False,True,longa,laranja,carinhoso,ração seca,5,True,48
+G00552,T5281344336,2025-06-20,M,10,4.3,46,False,True,curta,siamês,caçador,mista,3,True,62
+G00553,T6712464880,2025-06-15,F,5,5.4,68,True,True,longa,siamês,calmo,ração úmida,1,True,81
+G00554,T2590955046,2025-04-05,F,13,4.9,37,True,True,média,preto,calmo,ração seca,1,True,60
+G00555,T5015406480,2025-02-16,M,7,5.7,58,False,True,curta,cinza,arisco,mista,0,True,75
+G00556,T1788849273,2025-01-17,F,10,3.5,34,True,True,curta,branco,arisco,ração seca,1,True,66
+G00557,T1277360511,2025-01-04,F,12,5.9,57,True,True,curta,laranja,brincalhão,mista,1,True,65
+G00558,T8404854519,2025-06-25,M,10,5.9,33,False,True,média,branco,carinhoso,mista,2,True,62
+G00559,T7142459535,2025-02-02,F,3,4.2,61,True,False,curta,laranja,brincalhão,ração seca,3,True,81
+G00560,T1374527564,2025-12-17,M,1,5.1,73,False,False,curta,branco,caçador,ração seca,0,True,89
+G00561,T9780601164,2025-03-31,F,3,3.7,90,True,True,média,tigrado,calmo,ração seca,0,True,90
+G00562,T9123421568,2025-08-27,M,6,4.6,53,False,False,curta,laranja,carinhoso,ração úmida,4,True,70
+G00563,T1810430746,2025-09-03,F,6,4.1,50,True,True,curta,siamês,arisco,ração úmida,3,True,73
+G00564,T2705242231,2025-06-30,M,8,3.9,46,True,True,média,siamês,calmo,ração seca,1,True,71
+G00565,T1788849273,2025-11-19,F,5,5.0,81,False,True,longa,tigrado,carinhoso,mista,2,True,79
+G00566,T8008758135,2025-02-10,F,11,5.6,10,True,True,média,laranja,calmo,ração seca,2,True,58
+G00567,T9780601164,2025-03-27,M,14,4.9,24,False,True,curta,tricolor,arisco,mista,4,False,50
+G00568,T8404854519,2025-04-03,F,3,4.5,99,True,True,curta,tigrado,carinhoso,ração úmida,3,True,86
+G00569,T2502756279,2025-02-19,F,10,4.5,54,False,True,curta,preto,calmo,ração seca,1,True,67
+G00570,T1374527564,2025-04-18,F,9,4.9,37,False,True,curta,cinza,brincalhão,ração seca,1,True,66
+G00571,T8727381279,2025-04-25,M,7,4.7,55,True,True,curta,siamês,brincalhão,ração úmida,1,True,75
+G00572,T2502756279,2025-10-07,F,2,3.5,70,True,True,longa,cinza,caçador,ração úmida,0,True,88
+G00573,T1574355304,2025-04-21,M,11,6.1,54,True,True,média,preto,brincalhão,ração seca,2,True,65
+G00574,T4657481752,2025-11-16,M,16,5.4,52,False,True,curta,tricolor,caçador,mista,8,True,44
+G00575,T6957248632,2025-10-10,F,10,6.1,52,False,True,curta,siamês,arisco,ração seca,3,True,63
+G00576,T9340884899,2025-11-26,F,14,4.9,29,False,True,curta,tigrado,caçador,ração seca,6,True,47
+G00577,T1810430746,2025-02-08,F,17,4.2,37,True,True,curta,tigrado,caçador,mista,2,True,51
+G00578,T3753609617,2025-12-26,M,4,5.7,55,True,True,média,cinza,brincalhão,ração seca,0,True,82
+G00579,T3450174056,2025-08-13,F,8,5.0,40,False,True,curta,cinza,arisco,ração úmida,2,False,67
+G00580,T7276312261,2025-12-25,F,6,4.9,37,False,False,média,siamês,carinhoso,ração úmida,2,True,71
+G00581,T7702859403,2025-05-10,M,17,6.3,9,True,True,curta,siamês,calmo,ração seca,2,True,46
+G00582,T7702859403,2025-12-14,F,1,3.6,61,True,True,curta,laranja,carinhoso,ração seca,0,False,89
+G00583,T5130241979,2025-08-03,M,5,4.9,47,True,True,longa,cinza,arisco,ração seca,4,True,73
+G00584,T1574355304,2025-01-27,M,13,5.3,42,True,False,curta,branco,calmo,ração seca,3,True,58
+G00585,T5044253519,2025-05-30,F,3,3.3,52,True,True,curta,preto,caçador,ração úmida,0,True,84
+G00586,T1788849273,2025-02-20,F,11,4.6,6,True,True,média,laranja,brincalhão,ração seca,2,True,58
+G00587,T7297364204,2025-12-10,M,5,5.9,48,True,True,curta,laranja,caçador,mista,3,False,75
+G00588,T8005451473,2025-04-22,M,17,5.6,22,False,True,curta,tigrado,brincalhão,ração seca,3,False,45
+G00589,T4949905957,2025-03-23,M,13,4.5,31,False,False,curta,tricolor,arisco,ração seca,0,True,59
+G00590,T6212976120,2025-07-21,F,3,3.1,85,False,True,curta,cinza,brincalhão,mista,1,True,85
+G00591,T2169293548,2025-06-05,M,11,6.5,37,True,True,curta,branco,caçador,ração seca,3,True,61
+G00592,T8326183461,2025-02-05,F,4,4.2,74,True,True,curta,tricolor,caçador,ração úmida,1,False,84
+G00593,T6212976120,2025-10-26,F,8,4.1,52,True,False,média,tricolor,carinhoso,ração úmida,1,True,72
+G00594,T1847596130,2025-11-05,M,9,5.0,49,True,True,média,laranja,caçador,mista,3,True,67
+G00595,T7965604437,2025-09-29,F,12,3.8,31,True,True,curta,preto,carinhoso,ração seca,4,True,57
+G00596,T7965604437,2025-08-14,F,0,5.0,74,True,True,curta,laranja,brincalhão,ração seca,1,True,92
+G00597,T6684979592,2025-05-27,F,2,3.9,60,True,True,curta,tigrado,caçador,mista,0,True,87
+G00598,T7850257317,2025-07-17,M,10,6.3,49,False,True,curta,siamês,arisco,ração seca,2,False,64
+G00599,T3392829653,2025-07-10,M,7,5.1,53,True,True,curta,laranja,brincalhão,mista,3,True,71
+G00600,T3532455028,2025-03-02,M,6,6.0,47,True,False,média,laranja,calmo,ração úmida,1,True,76
+G00601,T1759998890,2025-01-30,F,0,4.2,87,True,True,curta,cinza,carinhoso,ração úmida,0,True,95
+G00602,T9177226216,2025-04-03,F,4,4.9,69,True,True,curta,cinza,brincalhão,mista,1,False,83
+G00603,T6256881720,2025-06-15,M,13,5.9,33,False,True,média,preto,carinhoso,mista,1,True,57
+G00604,T7147440579,2025-02-28,M,0,5.0,77,True,True,média,preto,calmo,ração seca,2,True,91
+G00605,T2705242231,2025-02-08,F,5,4.6,60,True,True,curta,tricolor,carinhoso,ração úmida,2,True,78
+G00606,T5044253519,2025-11-07,M,15,5.3,23,True,True,curta,cinza,carinhoso,mista,3,True,51
+G00607,T7702859403,2025-05-17,M,0,5.9,76,False,True,longa,tricolor,arisco,ração seca,1,True,90
+G00608,T8074578747,2025-08-02,F,10,4.1,40,False,True,curta,cinza,carinhoso,mista,2,False,63
+G00609,T2502756279,2025-07-11,M,3,4.8,55,True,True,média,siamês,caçador,ração seca,1,True,83
+G00610,T9177226216,2025-09-26,M,13,5.5,19,False,True,média,branco,caçador,ração seca,4,True,51
+G00611,T6848619413,2025-09-28,M,10,5.6,43,True,True,curta,branco,arisco,mista,2,True,65
+G00612,T8709528556,2025-04-19,M,13,5.1,45,False,True,curta,tigrado,caçador,mista,3,False,56
+G00613,T3045148496,2025-11-06,F,2,4.4,61,False,True,curta,tricolor,caçador,ração seca,1,True,84
+G00614,T4256313494,2025-05-16,F,7,4.4,86,False,True,curta,branco,calmo,mista,0,True,79
+G00615,T7452011702,2025-11-01,F,11,3.7,55,False,True,curta,laranja,brincalhão,ração seca,4,True,60
+G00616,T5156895072,2025-05-28,M,3,4.8,82,True,False,média,branco,carinhoso,ração seca,2,False,85
+G00617,T3392829653,2025-02-10,F,3,3.4,76,False,True,média,tricolor,arisco,ração seca,0,False,85
+G00618,T8008758135,2025-10-05,M,0,3.4,97,True,True,longa,laranja,calmo,mista,0,True,97
+G00619,T8026561279,2025-01-12,F,16,4.9,21,True,True,longa,tigrado,arisco,ração seca,3,True,49
+G00620,T9780601164,2025-10-09,M,10,5.6,16,True,True,média,branco,brincalhão,ração seca,2,True,61
+G00621,T6118670763,2025-01-16,F,8,4.9,47,False,True,curta,cinza,carinhoso,mista,1,False,70
+G00622,T2751748370,2025-03-17,M,10,5.7,54,True,True,curta,tigrado,arisco,ração seca,3,True,66
+G00623,T4990727789,2025-08-09,M,7,3.7,57,True,True,curta,cinza,calmo,ração seca,2,False,74
+G00624,T3045148496,2025-12-10,F,6,3.5,62,False,True,curta,tigrado,calmo,ração seca,1,True,76
+G00625,T5156895072,2025-05-30,M,5,6.3,77,True,True,curta,branco,brincalhão,mista,2,True,81
+G00626,T7884989716,2025-02-14,M,8,4.4,57,True,True,curta,cinza,calmo,ração úmida,1,True,73
+G00627,T3735550882,2025-03-27,F,2,4.6,79,True,True,curta,preto,caçador,mista,1,True,88
+G00628,T4429191034,2025-11-24,F,13,4.4,27,False,True,curta,preto,brincalhão,ração seca,5,True,51
+G00629,T1277360511,2025-09-23,M,12,5.5,28,False,True,média,branco,carinhoso,ração seca,1,True,59
+G00630,T6013289371,2025-02-06,F,4,3.8,83,True,True,curta,laranja,calmo,mista,0,True,86
+G00631,T4337182218,2025-05-21,F,7,4.9,57,True,False,curta,branco,arisco,ração seca,4,True,71
+G00632,T5044253519,2025-04-07,F,2,4.2,62,True,False,curta,preto,caçador,ração seca,4,True,81
+G00633,T5130241979,2025-03-06,F,16,4.5,23,False,True,curta,siamês,carinhoso,ração seca,1,True,50
+G00634,T6684979592,2025-11-05,F,14,4.1,28,False,False,curta,laranja,brincalhão,ração seca,2,True,53
+G00635,T7297364204,2025-08-14,F,14,5.0,27,True,True,curta,tricolor,carinhoso,ração seca,1,True,57
+G00636,T7266883375,2025-03-07,F,4,3.4,48,True,True,curta,tricolor,arisco,mista,3,True,77
+G00637,T7850257317,2025-08-26,F,2,4.4,51,True,True,média,preto,brincalhão,ração seca,3,True,81
+G00638,T8005451473,2025-05-31,M,2,6.6,67,True,True,curta,tigrado,caçador,ração úmida,1,True,87
+G00639,T4949905957,2025-01-23,M,1,5.6,65,True,True,longa,siamês,caçador,ração seca,0,True,90
+G00640,T4334137354,2025-06-14,M,1,5.2,85,True,True,média,laranja,arisco,ração úmida,1,True,91
+G00641,T6794786080,2025-03-09,F,1,4.0,76,True,True,curta,siamês,calmo,ração úmida,2,True,88
+G00642,T2451446011,2025-03-31,M,18,4.1,28,False,True,curta,siamês,arisco,mista,6,False,39
+G00643,T5982214605,2025-11-17,F,1,3.1,63,True,True,curta,laranja,arisco,ração seca,2,True,86
+G00644,T1759998890,2025-09-17,F,1,5.0,71,True,True,média,preto,caçador,mista,3,True,86
+G00645,T4429191034,2025-02-18,F,12,4.3,46,True,True,média,tigrado,carinhoso,ração seca,4,True,59
+G00646,T3642343819,2025-11-07,M,8,4.7,61,True,False,média,siamês,brincalhão,ração úmida,0,True,75
+G00647,T7884989716,2025-07-29,F,11,4.7,43,False,True,longa,tigrado,arisco,mista,3,True,60
+G00648,T7850257317,2025-11-16,F,8,3.8,66,False,False,curta,tricolor,calmo,ração úmida,1,True,72
+G00649,T2153022694,2025-09-30,M,13,4.6,39,False,True,média,laranja,arisco,mista,3,True,55
+G00650,T6957248632,2025-05-04,F,8,4.5,62,True,True,curta,cinza,arisco,mista,0,True,75
+G00651,T7965604437,2025-07-15,M,7,4.5,50,True,True,média,siamês,arisco,mista,0,True,76
+G00652,T9780601164,2025-07-13,F,10,4.2,25,True,True,curta,branco,arisco,ração seca,2,True,63
+G00653,T1394233892,2025-09-20,F,5,3.8,64,True,True,média,laranja,arisco,ração seca,0,True,82
+G00654,T5101986608,2025-04-01,M,4,5.2,73,True,False,curta,branco,carinhoso,ração úmida,1,False,83
+G00655,T6118670763,2025-05-02,M,6,4.9,65,True,True,curta,tigrado,arisco,mista,2,True,77
+G00656,T2451446011,2025-03-31,M,2,4.6,74,True,True,curta,siamês,calmo,ração seca,5,True,82
+G00657,T1066260427,2025-04-19,M,11,5.8,40,False,True,longa,siamês,carinhoso,ração seca,1,True,62
+G00658,T4190733713,2025-02-28,F,3,4.1,57,True,True,curta,branco,carinhoso,ração seca,5,True,77
+G00659,T4487305411,2025-01-14,M,2,4.5,76,True,True,curta,tricolor,carinhoso,ração seca,1,True,88
+G00660,T9340884899,2025-12-10,M,3,5.1,72,True,False,curta,siamês,carinhoso,ração seca,2,True,84
+G00661,T4256313494,2025-01-28,F,12,5.3,35,True,True,curta,tricolor,calmo,ração seca,1,False,62
+G00662,T9736282219,2025-11-21,F,4,4.2,77,True,True,média,laranja,caçador,ração seca,3,True,81
+G00663,T3594952935,2025-01-02,F,9,4.7,39,False,True,longa,branco,caçador,mista,2,False,65
+G00664,T1759998890,2025-10-11,F,13,4.3,32,True,True,média,laranja,calmo,ração seca,2,True,58
+G00665,T3105455372,2025-04-30,M,1,4.1,92,True,False,média,tricolor,brincalhão,ração seca,0,True,94
+G00666,T6118670763,2025-07-08,F,11,5.3,55,True,False,curta,tigrado,brincalhão,ração seca,1,False,67
+G00667,T3735550882,2025-04-14,M,4,5.2,60,True,True,curta,cinza,caçador,ração seca,0,False,83
+G00668,T2062053119,2025-06-29,F,2,4.5,73,True,False,curta,branco,caçador,ração seca,1,True,87
+G00669,T9707587591,2025-06-14,F,9,4.8,52,True,True,média,tigrado,brincalhão,ração seca,3,False,67
+G00670,T8055083881,2025-07-13,F,14,4.9,5,True,True,curta,cinza,carinhoso,ração seca,1,False,53
+G00671,T9123421568,2025-05-24,F,3,4.7,56,True,True,média,laranja,brincalhão,ração úmida,1,True,83
+G00672,T4676757793,2025-07-15,F,7,5.1,55,False,True,curta,siamês,calmo,ração seca,1,True,73
+G00673,T8026561279,2025-10-29,M,3,5.4,62,False,True,curta,preto,brincalhão,ração seca,2,True,80
+G00674,T8448680547,2025-06-08,F,7,4.4,58,True,True,curta,branco,calmo,ração seca,3,True,72
+G00675,T9707587591,2025-05-12,F,8,5.5,66,True,True,média,siamês,caçador,ração seca,2,True,73
+G00676,T4888837357,2025-02-18,F,8,4.7,49,False,False,média,siamês,carinhoso,ração seca,3,True,67
+G00677,T3735550882,2025-05-12,F,8,5.0,40,False,False,curta,cinza,calmo,ração seca,2,True,67
+G00678,T5281344336,2025-02-15,M,1,4.9,76,False,True,média,siamês,arisco,ração seca,1,False,88
+G00679,T8082319397,2025-03-08,F,9,4.8,46,True,True,média,branco,brincalhão,ração seca,6,False,62
+G00680,T8680627659,2025-12-14,M,9,4.7,48,True,True,curta,preto,arisco,mista,4,True,65
+G00681,T3735550882,2025-02-02,M,9,5.7,46,True,True,média,cinza,caçador,ração seca,1,True,69
+G00682,T5156895072,2025-06-25,M,1,6.7,99,True,True,curta,laranja,caçador,ração seca,2,True,92
+G00683,T3932428223,2025-11-01,F,5,4.1,34,True,True,curta,preto,caçador,ração seca,0,True,77
+G00684,T4657481752,2025-12-14,M,5,5.0,56,True,True,curta,branco,brincalhão,ração seca,3,True,76
+G00685,T8026561279,2025-02-23,M,1,4.4,72,True,True,curta,tricolor,calmo,mista,0,True,91
+G00686,T7475166603,2025-03-01,M,3,4.5,57,True,True,curta,tigrado,calmo,ração seca,2,False,82
+G00687,T6684979592,2025-05-16,F,5,5.4,72,True,True,curta,tigrado,calmo,ração seca,1,True,81
+G00688,T8448680547,2025-07-22,F,10,4.2,57,True,False,curta,siamês,carinhoso,mista,2,True,68
+G00689,T6118670763,2025-12-17,M,3,4.5,66,True,True,média,branco,carinhoso,ração seca,1,True,84
+G00690,T7884989716,2025-03-17,M,12,4.3,38,False,True,curta,siamês,caçador,ração seca,2,False,59
+G00691,T7501234155,2025-03-02,F,7,4.0,54,True,True,curta,cinza,calmo,ração úmida,4,True,70
+G00692,T2799173822,2025-04-03,M,11,4.2,43,True,True,curta,siamês,brincalhão,mista,1,True,65
+G00693,T2590955046,2025-11-16,F,6,4.9,57,False,True,curta,tricolor,carinhoso,ração seca,2,True,74
+G00694,T2030770661,2025-01-11,M,6,7.0,56,True,True,média,branco,carinhoso,ração úmida,2,True,75
+G00695,T5991263083,2025-05-19,F,8,4.3,56,True,True,média,branco,arisco,ração seca,1,True,73
+G00696,T4990727789,2025-02-13,M,15,4.3,42,True,True,curta,laranja,calmo,ração úmida,1,True,57
+G00697,T6848619413,2025-02-27,F,6,5.0,43,True,True,média,laranja,arisco,ração seca,1,True,75
+G00698,T5991263083,2025-12-01,M,7,4.6,43,True,True,curta,branco,calmo,ração úmida,0,True,74
+G00699,T4888837357,2025-01-01,F,8,5.5,32,True,True,longa,branco,arisco,ração seca,3,True,66
+G00700,T5226002301,2025-04-28,F,10,4.5,57,True,True,curta,siamês,caçador,ração seca,2,True,68
+G00701,T9340884899,2025-12-01,F,1,3.6,75,True,True,curta,tricolor,calmo,ração seca,1,True,90
+G00702,T3042184141,2025-08-10,M,6,4.9,64,True,True,curta,branco,calmo,ração úmida,5,True,72
+G00703,T3642343819,2025-01-27,M,6,5.6,41,True,True,curta,tricolor,carinhoso,mista,3,True,72
+G00704,T6983657709,2025-06-19,F,14,4.7,57,True,True,curta,branco,calmo,mista,2,False,60
+G00705,T2062053119,2025-12-21,F,6,4.1,51,True,True,curta,laranja,caçador,mista,0,False,78
+G00706,T3642343819,2025-05-27,M,6,4.9,60,True,True,curta,preto,carinhoso,ração seca,1,True,78
+G00707,T2799173822,2025-07-12,M,16,4.5,40,True,True,média,tigrado,arisco,ração úmida,2,True,53
+G00708,T8055083881,2025-07-14,M,5,5.2,49,True,True,média,branco,brincalhão,ração seca,2,True,76
+G00709,T6848619413,2025-08-30,F,2,2.9,63,True,True,curta,branco,brincalhão,mista,0,False,87
+G00710,T1066260427,2025-03-10,F,2,3.8,72,False,False,média,branco,brincalhão,ração úmida,2,True,84
+G00711,T6684979592,2025-11-03,F,1,4.6,100,True,False,curta,branco,caçador,ração seca,0,True,95
+G00712,T1066260427,2025-12-27,F,0,4.2,79,True,False,longa,preto,carinhoso,ração seca,2,True,91
+G00713,T7452011702,2025-02-22,M,5,5.4,80,True,True,curta,laranja,brincalhão,mista,0,False,84
+G00714,T1394233892,2025-10-26,M,11,5.3,59,True,True,média,siamês,calmo,mista,1,True,67
+G00715,T4888837357,2025-10-26,M,10,6.1,51,False,True,longa,cinza,arisco,mista,4,True,62
+G00716,T3105455372,2025-09-28,F,0,4.6,63,True,True,média,tricolor,carinhoso,ração seca,2,True,88
+G00717,T3532455028,2025-05-16,M,7,5.4,68,False,True,média,laranja,carinhoso,ração seca,1,True,75
+G00718,T7028325952,2025-06-21,M,2,5.4,51,True,True,curta,branco,brincalhão,mista,4,True,80
+G00719,T8709528556,2025-11-03,M,15,6.0,52,True,True,média,preto,arisco,ração úmida,1,True,58
+G00720,T1847596130,2025-02-25,M,2,4.4,72,False,True,curta,tricolor,calmo,ração seca,2,False,84
+G00721,T5281344336,2025-10-30,F,8,3.6,21,True,True,curta,preto,arisco,ração úmida,1,True,68
+G00722,T8082319397,2025-12-03,M,4,5.2,60,False,True,longa,cinza,carinhoso,ração úmida,3,True,76
+G00723,T2030770661,2025-09-06,M,8,5.5,60,True,False,curta,preto,brincalhão,mista,1,True,74
+G00724,T2030770661,2025-05-05,F,5,5.1,58,False,True,curta,tricolor,brincalhão,ração úmida,1,True,77
+G00725,T8448680547,2025-07-24,M,11,4.7,53,True,True,longa,siamês,arisco,mista,3,True,63
+G00726,T2388605428,2025-01-19,M,3,4.2,56,True,False,curta,cinza,caçador,mista,1,True,83
+G00727,T9340884899,2025-12-07,M,14,5.8,20,False,True,curta,cinza,carinhoso,ração seca,4,False,49
+G00728,T4676757793,2025-05-05,F,6,4.4,57,True,True,curta,laranja,caçador,ração seca,3,True,74
+G00729,T3811299772,2025-01-21,M,10,4.0,47,True,True,média,laranja,calmo,ração úmida,2,True,66
+G00730,T2931262055,2025-10-17,F,12,5.1,37,False,True,média,cinza,caçador,ração úmida,2,True,59
+G00731,T3105455372,2025-08-29,F,18,3.5,39,True,True,curta,cinza,calmo,ração seca,4,True,46
+G00732,T5156895072,2025-08-16,F,3,3.5,56,False,False,média,branco,brincalhão,mista,3,True,78
+G00733,T1277360511,2025-01-20,M,3,5.8,70,True,True,curta,branco,arisco,ração seca,0,True,86
+G00734,T6978821862,2025-10-02,F,3,5.5,67,True,False,média,tigrado,brincalhão,ração seca,1,True,85
+G00735,T3105455372,2025-08-21,M,3,4.0,48,True,False,média,tricolor,caçador,mista,4,True,77
+G00736,T4657481752,2025-10-17,M,8,4.9,37,True,True,longa,tricolor,caçador,mista,1,False,70
+G00737,T6957248632,2025-10-29,F,18,4.9,25,False,True,curta,laranja,arisco,ração seca,2,True,45
+G00738,T7028325952,2025-03-19,M,18,6.7,48,True,True,curta,tricolor,arisco,ração seca,1,False,52
+G00739,T7702859403,2025-03-18,M,7,4.7,62,True,True,curta,tigrado,carinhoso,ração seca,3,False,73
+G00740,T2062053119,2025-12-04,M,8,4.8,32,True,True,curta,cinza,carinhoso,ração seca,1,True,69
+G00741,T7302385918,2025-07-13,M,13,6.5,5,True,True,curta,cinza,arisco,ração seca,2,True,54
+G00742,T1277360511,2025-06-09,M,15,5.2,42,False,True,curta,laranja,caçador,ração seca,1,True,55
+G00743,T8005451473,2025-04-15,F,2,4.6,68,True,True,curta,cinza,calmo,ração seca,1,False,87
+G00744,T6983657709,2025-08-22,F,7,3.5,69,False,True,longa,tricolor,brincalhão,ração úmida,1,True,75
+G00745,T6032864446,2025-10-03,M,12,5.3,31,False,True,curta,branco,calmo,ração úmida,4,True,55
+G00746,T6013289371,2025-01-01,F,3,3.0,71,True,True,curta,preto,calmo,ração úmida,1,True,85
+G00747,T5982214605,2025-07-21,M,5,4.2,71,True,True,média,laranja,calmo,ração seca,1,True,81
+G00748,T8242879217,2025-12-29,M,17,6.0,22,True,True,curta,preto,carinhoso,ração seca,3,True,47
+G00749,T6256881720,2025-04-13,M,17,5.4,22,False,True,curta,branco,caçador,ração seca,2,True,46
+G00750,T6712464880,2025-04-13,M,14,5.2,36,True,True,curta,cinza,arisco,mista,1,True,58
+G00751,T7297364204,2025-11-17,M,11,4.8,51,True,True,curta,preto,arisco,ração seca,3,True,63
+G00752,T5015406480,2025-01-23,M,3,4.7,66,True,True,curta,branco,brincalhão,ração úmida,0,True,86
+G00753,T4930456503,2025-05-26,M,4,5.1,75,False,True,média,laranja,calmo,ração seca,0,True,83
+G00754,T5101986608,2025-06-17,F,7,5.2,50,False,False,curta,cinza,arisco,mista,2,True,70
+G00755,T5991263083,2025-10-19,M,7,3.3,39,False,True,curta,siamês,calmo,ração seca,2,True,69
+G00756,T8709528556,2025-02-17,M,6,4.4,82,True,False,curta,preto,carinhoso,ração seca,3,False,78
+G00757,T5044253519,2025-06-08,M,8,5.3,45,False,True,curta,tricolor,arisco,mista,1,True,69
+G00758,T6087124958,2025-02-25,F,5,4.3,54,True,True,curta,tigrado,brincalhão,ração seca,0,True,80
+G00759,T7266883375,2025-10-15,M,10,5.6,46,True,True,longa,tigrado,calmo,ração úmida,3,True,64
+G00760,T5982214605,2025-08-19,F,4,4.5,65,True,True,curta,tigrado,brincalhão,ração seca,3,True,79
+G00761,T4334137354,2025-07-01,M,4,4.7,59,True,True,curta,preto,calmo,mista,2,True,80
+G00762,T9657078980,2025-05-24,M,1,4.3,72,True,True,curta,tricolor,carinhoso,mista,2,True,88
+G00763,T7702859403,2025-02-25,F,2,4.0,69,True,False,média,cinza,arisco,ração seca,3,True,84
+G00764,T7028325952,2025-12-03,M,12,6.2,43,True,True,média,tigrado,carinhoso,mista,2,False,61
+G00765,T6712464880,2025-08-25,M,5,4.4,33,True,True,curta,cinza,arisco,mista,2,False,74
+G00766,T8008758135,2025-04-27,M,3,4.8,89,False,True,média,cinza,caçador,ração úmida,5,True,80
+G00767,T3594952935,2025-06-01,F,11,4.9,42,False,True,curta,tigrado,carinhoso,ração seca,3,True,60
+G00768,T5239865855,2025-09-23,F,7,5.6,62,True,True,média,siamês,calmo,ração seca,2,True,74
+G00769,T9780601164,2025-09-20,F,0,3.8,58,True,True,curta,siamês,calmo,ração úmida,0,True,91
+G00770,T4990727789,2025-06-18,F,4,5.0,58,False,True,média,tricolor,caçador,ração seca,1,False,79
+G00771,T7850257317,2025-04-21,M,2,5.6,61,True,True,média,laranja,brincalhão,mista,2,True,84
+G00772,T5053473441,2025-08-29,F,9,4.6,67,True,True,média,laranja,carinhoso,ração seca,3,True,70
+G00773,T1867518659,2025-08-29,M,3,4.7,60,True,True,curta,siamês,carinhoso,ração úmida,0,False,85
+G00774,T7452011702,2025-08-07,F,1,3.8,81,True,True,média,branco,carinhoso,ração seca,3,True,88
+G00775,T3392829653,2025-01-27,M,0,4.4,67,True,True,média,siamês,brincalhão,ração úmida,2,True,89
+G00776,T7850257317,2025-06-22,M,8,5.8,47,True,False,curta,tigrado,brincalhão,ração seca,5,True,66
+G00777,T5053473441,2025-08-13,F,0,4.2,72,True,True,curta,tigrado,arisco,ração seca,2,True,90
+G00778,T2705242231,2025-12-13,M,12,5.6,57,True,False,curta,tigrado,calmo,ração seca,1,False,65
+G00779,T2931262055,2025-07-11,F,2,3.4,47,True,True,curta,tricolor,brincalhão,ração úmida,2,False,82
+G00780,T8494103764,2025-05-06,M,8,4.5,37,True,True,média,tigrado,arisco,ração seca,1,True,70
+G00781,T7015626656,2025-07-22,F,5,5.9,38,True,True,curta,preto,brincalhão,mista,4,True,72
+G00782,T4190733713,2025-03-06,F,5,4.2,48,True,True,média,tricolor,brincalhão,ração seca,2,True,76
+G00783,T7266883375,2025-02-03,M,1,4.1,62,True,True,média,tricolor,caçador,ração úmida,0,True,89
+G00784,T7028325952,2025-09-05,F,11,5.8,25,True,True,média,siamês,brincalhão,ração úmida,2,True,61
+G00785,T2153022694,2025-12-26,F,13,5.0,30,False,True,média,siamês,caçador,ração seca,2,True,56
+G00786,T5015406480,2025-11-05,F,0,4.4,51,True,False,curta,siamês,caçador,ração seca,2,True,87
+G00787,T3753609617,2025-08-02,M,2,4.6,57,True,True,curta,preto,carinhoso,ração seca,0,True,87
+G00788,T4949905957,2025-01-15,F,14,4.6,50,True,True,curta,tigrado,calmo,ração úmida,4,True,56
+G00789,T7346488407,2025-12-27,F,7,4.4,60,True,True,média,siamês,brincalhão,mista,2,False,74
+G00790,T9722587396,2025-06-14,M,2,3.8,72,True,True,longa,siamês,caçador,ração seca,3,True,84
+G00791,T2451446011,2025-04-16,M,2,4.7,57,True,True,curta,laranja,calmo,mista,1,True,85
+G00792,T3450174056,2025-11-22,M,9,5.4,31,True,True,longa,siamês,arisco,ração úmida,2,True,66
+G00793,T1066260427,2025-09-30,F,10,6.0,33,False,True,longa,siamês,arisco,ração úmida,2,True,62
+G00794,T4487305411,2025-10-01,M,8,5.2,52,True,True,curta,preto,caçador,ração seca,3,True,69
+G00795,T2451446011,2025-04-12,F,15,3.2,43,False,True,média,siamês,caçador,mista,1,True,55
+G00796,T6684979592,2025-12-29,F,6,4.4,69,False,True,média,tigrado,brincalhão,ração seca,3,True,74
+G00797,T7147440579,2025-06-15,M,3,6.7,74,True,True,curta,tigrado,arisco,mista,1,True,86
+G00798,T3532455028,2025-07-13,M,6,5.6,49,True,True,curta,branco,carinhoso,ração seca,2,True,74
+G00799,T2502756279,2025-10-02,F,4,3.7,64,True,True,curta,siamês,caçador,mista,2,True,81
+G00800,T4990727789,2025-08-29,M,3,5.2,63,False,False,média,cinza,arisco,mista,1,False,82
+G00801,T7884989716,2025-03-04,F,0,3.5,73,False,True,curta,cinza,calmo,mista,0,True,91
+G00802,T8242879217,2025-04-21,F,4,3.3,88,True,True,média,cinza,caçador,ração seca,0,True,87
+G00803,T6087124958,2025-05-12,F,10,4.5,26,False,True,média,siamês,arisco,mista,4,True,58
+G00804,T6645779566,2025-12-12,M,0,4.7,72,True,True,média,laranja,calmo,ração seca,2,True,90
+G00805,T5053473441,2025-09-18,F,5,3.0,76,True,True,curta,preto,calmo,ração úmida,3,True,79
+G00806,T1374527564,2025-05-14,F,9,3.8,32,True,True,curta,preto,brincalhão,ração seca,4,True,63
+G00807,T5130241979,2025-09-26,M,8,5.2,45,True,False,curta,siamês,carinhoso,ração úmida,3,True,68
+G00808,T4256313494,2025-09-27,F,11,4.5,38,True,False,curta,branco,caçador,ração seca,1,True,64
+G00809,T6983657709,2025-05-24,F,11,5.0,42,False,True,curta,tricolor,arisco,ração seca,0,True,64
+G00810,T3042184141,2025-05-28,F,10,3.8,28,True,True,curta,preto,calmo,ração seca,3,True,62
+G00811,T4256313494,2025-11-23,M,1,5.2,79,True,True,curta,siamês,caçador,ração seca,1,True,90
+G00812,T1810430746,2025-07-25,M,6,4.2,66,True,True,curta,tigrado,carinhoso,ração seca,3,True,75
+G00813,T8448680547,2025-02-24,M,8,6.3,59,True,True,curta,branco,arisco,mista,1,True,73
+G00814,T2451446011,2025-09-20,M,3,3.6,56,True,True,curta,siamês,calmo,mista,2,True,81
+G00815,T3713608802,2025-08-04,M,0,3.8,76,False,True,média,cinza,caçador,mista,1,True,90
+G00816,T7142459535,2025-07-05,F,3,4.5,56,True,True,curta,siamês,calmo,mista,3,True,80
+G00817,T8709528556,2025-09-22,M,6,6.2,54,True,True,longa,tigrado,carinhoso,ração seca,0,True,78
+G00818,T6978821862,2025-11-28,F,5,4.6,87,True,True,média,laranja,arisco,ração seca,2,True,82
+G00819,T8494103764,2025-05-01,M,2,5.1,71,False,False,curta,preto,arisco,ração seca,1,True,85
+G00820,T4949905957,2025-06-03,M,12,5.5,27,False,True,longa,branco,arisco,ração seca,2,True,57
+G00821,T1204408658,2025-03-11,M,14,4.7,38,False,True,média,preto,brincalhão,ração úmida,3,True,53
+G00822,T5200489033,2025-08-25,M,2,4.4,53,True,False,média,tricolor,arisco,mista,3,True,81
+G00823,T3713608802,2025-05-27,F,15,4.0,19,False,True,curta,preto,brincalhão,ração úmida,3,True,48
+G00824,T5982214605,2025-05-05,F,0,3.1,63,True,True,curta,preto,arisco,mista,3,True,87
+G00825,T2258172983,2025-09-12,F,14,5.1,30,False,True,curta,preto,carinhoso,ração seca,3,False,52
+G00826,T7822789660,2025-05-29,M,15,4.7,44,False,True,média,siamês,carinhoso,mista,1,True,55
+G00827,T2451446011,2025-06-19,F,0,4.2,82,True,True,curta,siamês,calmo,ração seca,1,True,93
+G00828,T7822789660,2025-06-10,M,11,4.5,50,True,False,curta,tricolor,caçador,mista,1,True,66
+G00829,T8082319397,2025-04-05,F,16,5.0,17,False,True,curta,preto,calmo,ração seca,1,True,49
+G00830,T8008758135,2025-02-15,F,14,4.5,29,True,True,curta,laranja,brincalhão,ração seca,4,True,52
+G00831,T8709528556,2025-10-29,M,16,6.4,33,True,True,curta,siamês,brincalhão,ração seca,1,True,53
+G00832,T4742266619,2025-02-03,M,7,5.3,48,True,True,curta,preto,brincalhão,ração seca,3,True,71
+G00833,T6645779566,2025-04-29,M,1,5.5,69,True,False,longa,tricolor,brincalhão,ração seca,1,True,89
+G00834,T4930456503,2025-09-01,M,12,4.9,47,False,True,curta,preto,brincalhão,ração seca,1,False,62
+G00835,T2751748370,2025-02-17,F,8,4.6,48,False,True,curta,tricolor,arisco,ração úmida,3,True,67
+G00836,T8008758135,2025-08-28,F,8,3.9,55,False,True,curta,laranja,carinhoso,mista,1,True,71
+G00837,T9177226216,2025-09-25,F,5,4.1,80,False,True,curta,siamês,caçador,ração seca,1,True,80
+G00838,T4742266619,2025-08-30,M,7,4.9,53,True,False,curta,cinza,brincalhão,ração seca,0,True,76
+G00839,T4657481752,2025-04-22,F,2,3.6,84,True,True,curta,tricolor,brincalhão,mista,1,True,89
+G00840,T1574355304,2025-01-08,M,10,4.4,54,True,True,longa,tricolor,carinhoso,ração seca,4,True,64
+G00841,T6087124958,2025-11-20,F,1,3.1,55,True,True,longa,cinza,calmo,mista,2,True,85
+G00842,T5130241979,2025-04-30,M,10,3.7,34,True,False,média,tigrado,arisco,ração seca,1,True,66
+G00843,T7452011702,2025-10-21,M,12,4.7,31,True,True,média,laranja,brincalhão,ração seca,4,True,57
+G00844,T2257772352,2025-03-14,F,6,4.9,48,False,True,curta,laranja,carinhoso,ração seca,2,True,72
+G00845,T8494103764,2025-03-01,M,6,3.9,57,False,True,curta,tricolor,calmo,ração seca,1,True,75
+G00846,T4337182218,2025-10-12,M,4,3.9,71,False,True,curta,branco,caçador,ração úmida,2,True,80
+G00847,T8008758135,2025-12-10,F,16,6.1,45,False,False,média,preto,brincalhão,mista,6,True,46
+G00848,T3713608802,2025-11-11,M,10,4.9,51,False,False,curta,laranja,arisco,ração seca,2,True,65
+G00849,T9780601164,2025-10-02,F,4,4.5,58,True,True,curta,tricolor,arisco,mista,1,False,81
+G00850,T7346488407,2025-04-01,F,2,4.6,44,False,True,curta,branco,arisco,ração seca,0,True,83
+G00851,T2030770661,2025-11-30,F,2,4.6,70,False,True,curta,cinza,arisco,ração seca,2,True,84
+G00852,T2258172983,2025-09-01,F,6,3.4,59,False,True,média,tigrado,brincalhão,mista,5,True,69
+G00853,T2590955046,2025-03-04,F,15,4.7,35,True,True,curta,laranja,carinhoso,mista,5,True,50
+G00854,T8448680547,2025-02-17,F,10,3.6,72,True,True,curta,tigrado,arisco,ração seca,2,False,70
+G00855,T3042184141,2025-11-14,F,2,5.9,84,False,True,curta,laranja,brincalhão,ração seca,2,True,86
+G00856,T9736282219,2025-04-11,F,13,3.7,48,True,False,média,tricolor,brincalhão,ração seca,2,True,60
+G00857,T7702859403,2025-10-07,M,4,4.1,52,True,True,curta,siamês,arisco,ração seca,1,True,80
+G00858,T6212976120,2025-02-20,M,12,4.7,35,True,True,curta,laranja,caçador,mista,4,True,57
+G00859,T7475166603,2025-04-13,F,3,3.2,65,True,True,média,laranja,caçador,ração seca,3,True,81
+G00860,T9780601164,2025-04-14,M,8,6.1,43,True,True,curta,branco,brincalhão,ração úmida,4,True,66
+G00861,T8055083881,2025-04-13,M,15,7.1,39,False,True,média,laranja,brincalhão,ração seca,4,False,50
+G00862,T7147440579,2025-09-04,M,3,4.5,71,False,True,curta,tricolor,calmo,ração seca,1,True,83
+G00863,T8005451473,2025-11-30,F,9,3.7,37,False,True,longa,laranja,arisco,ração seca,7,False,57
+G00864,T2169293548,2025-11-29,M,17,3.9,42,True,True,curta,tigrado,brincalhão,ração seca,2,False,51
+G00865,T8005451473,2025-09-28,F,2,4.0,71,True,False,curta,cinza,caçador,ração úmida,2,True,86
+G00866,T5239865855,2025-03-15,F,1,3.8,51,True,False,longa,tigrado,arisco,mista,1,True,86
+G00867,T1374527564,2025-12-17,F,9,4.2,49,True,True,curta,tigrado,brincalhão,mista,0,False,71
+G00868,T3105455372,2025-07-17,M,4,5.0,67,True,True,média,laranja,caçador,ração úmida,2,True,81
+G00869,T2370808924,2025-07-19,F,1,4.3,84,True,True,curta,siamês,caçador,ração seca,0,True,93
+G00870,T5239865855,2025-09-14,F,6,4.6,54,False,True,curta,siamês,brincalhão,mista,2,True,73
+G00871,T4949905957,2025-10-08,M,10,5.1,57,True,False,curta,branco,calmo,mista,1,True,69
+G00872,T4337182218,2025-12-14,F,3,3.4,69,True,False,curta,branco,brincalhão,mista,0,False,86
+G00873,T4334137354,2025-08-01,M,4,5.3,48,True,True,média,siamês,brincalhão,ração seca,1,True,80
+G00874,T7702859403,2025-08-11,F,12,4.8,24,True,True,curta,cinza,arisco,ração seca,3,True,57
+G00875,T7452011702,2025-09-30,M,7,5.7,69,True,True,curta,cinza,caçador,mista,1,False,77
+G00876,T7452011702,2025-04-04,F,12,5.4,56,True,True,curta,tricolor,caçador,ração seca,0,True,66
+G00877,T5044253519,2025-04-23,F,5,3.4,65,True,False,curta,tigrado,carinhoso,ração seca,0,True,82
+G00878,T8055083881,2025-08-17,M,15,4.4,51,True,True,curta,preto,caçador,ração seca,3,True,55
+G00879,T4930456503,2025-01-24,F,9,4.1,62,False,True,longa,preto,calmo,ração úmida,5,True,64
+G00880,T4657481752,2025-04-27,M,1,3.9,80,True,True,curta,tricolor,calmo,ração seca,2,True,89
+G00881,T2799173822,2025-09-20,F,13,5.4,28,True,True,curta,tricolor,caçador,ração úmida,2,True,57
+G00882,T2502756279,2025-12-23,F,6,4.7,79,True,True,curta,cinza,carinhoso,ração úmida,1,True,80
+G00883,T9657078980,2025-07-09,M,2,5.5,76,True,False,curta,siamês,brincalhão,ração seca,3,True,85
+G00884,T6672543338,2025-05-26,M,2,5.0,65,True,True,curta,preto,carinhoso,ração seca,2,True,85
+G00885,T3642343819,2025-06-10,F,9,4.8,42,False,True,média,siamês,calmo,mista,2,True,65
+G00886,T8074578747,2025-09-08,M,0,5.4,78,False,True,curta,preto,carinhoso,ração seca,0,True,92
+G00887,T2370808924,2025-07-18,F,3,4.5,47,True,True,média,tigrado,caçador,ração seca,2,True,80
+G00888,T8242879217,2025-01-09,F,2,4.2,78,True,True,curta,tricolor,arisco,ração seca,0,True,90
+G00889,T5015406480,2025-07-16,F,5,5.4,50,True,True,curta,tigrado,carinhoso,ração seca,1,False,78
+G00890,T3735550882,2025-05-27,M,5,5.0,65,True,True,longa,tricolor,carinhoso,ração úmida,1,True,80
+G00891,T5101986608,2025-09-13,F,7,4.3,49,True,True,média,cinza,caçador,ração seca,2,True,72
+G00892,T7302385918,2025-11-16,F,3,3.6,63,False,False,longa,cinza,arisco,mista,3,True,79
+G00893,T7826675768,2025-12-18,M,0,5.1,66,True,True,curta,branco,brincalhão,ração seca,3,True,87
+G00894,T7452011702,2025-08-11,M,8,6.0,51,True,False,longa,preto,brincalhão,mista,3,False,69
+G00895,T8494103764,2025-05-13,M,4,4.8,86,True,True,média,branco,brincalhão,ração úmida,3,False,82
+G00896,T7015626656,2025-06-12,M,9,6.1,66,True,True,média,branco,calmo,ração seca,0,True,74
+G00897,T6032864446,2025-03-06,F,1,2.7,76,False,True,média,tricolor,carinhoso,ração úmida,0,True,89
+G00898,T4256313494,2025-12-08,M,0,4.6,75,True,True,longa,branco,brincalhão,ração seca,1,True,92
+G00899,T7501234155,2025-11-06,F,3,4.2,77,True,True,curta,branco,carinhoso,mista,2,True,85
+G00900,T5044253519,2025-11-08,M,6,4.5,72,True,True,média,tricolor,calmo,mista,1,True,79
+G00901,T4487305411,2025-04-30,M,5,6.6,51,False,True,média,laranja,brincalhão,ração seca,2,True,75
+G00902,T7884989716,2025-04-28,M,11,5.3,43,True,True,média,branco,brincalhão,ração seca,4,True,60
+G00903,T6983657709,2025-11-09,F,4,4.0,42,True,True,média,tigrado,calmo,mista,0,True,80
+G00904,T6212976120,2025-07-18,F,7,4.5,69,True,False,curta,branco,caçador,ração úmida,0,True,78
+G00905,T3042184141,2025-09-15,M,8,3.8,77,True,True,curta,tricolor,arisco,ração seca,3,True,73
+G00906,T3105455372,2025-06-28,F,0,3.5,76,False,False,curta,preto,caçador,ração seca,1,True,90
+G00907,T3045148496,2025-06-11,M,6,5.7,33,True,True,média,tigrado,caçador,ração seca,1,False,73
+G00908,T5044253519,2025-08-19,M,4,4.4,71,True,False,média,tigrado,calmo,mista,1,False,83
+G00909,T7142459535,2025-10-24,M,5,4.4,50,True,True,média,cinza,caçador,ração úmida,1,True,78
+G00910,T7302385918,2025-05-02,F,1,5.0,64,True,True,média,tigrado,calmo,mista,1,True,88
+G00911,T8680627659,2025-10-23,F,11,5.7,52,True,True,curta,cinza,caçador,ração úmida,1,True,66
+G00912,T6087124958,2025-03-31,F,15,5.2,36,False,True,curta,tigrado,carinhoso,ração úmida,0,True,55
+G00913,T7452011702,2025-05-28,M,0,4.3,69,True,True,média,branco,caçador,ração seca,0,True,92
+G00914,T6032864446,2025-11-30,M,8,5.0,45,True,True,longa,laranja,arisco,mista,1,True,71
+G00915,T6712464880,2025-12-15,F,11,4.2,46,True,True,média,tricolor,calmo,ração seca,1,True,65
+G00916,T8404854519,2025-12-04,M,3,4.1,62,True,True,longa,siamês,calmo,mista,1,True,84
+G00917,T8727381279,2025-04-26,F,11,4.0,31,True,True,longa,cinza,calmo,ração seca,3,True,60
+G00918,T2257772352,2025-11-04,F,8,4.1,49,True,True,curta,laranja,caçador,ração úmida,2,True,70
+G00919,T1374527564,2025-12-08,M,15,4.7,37,False,True,média,laranja,arisco,mista,3,False,51
+G00920,T2590955046,2025-12-24,F,17,3.7,25,False,True,curta,siamês,brincalhão,mista,1,True,48
+G00921,T6013289371,2025-01-08,F,0,4.2,58,False,True,curta,siamês,calmo,ração seca,1,False,87
+G00922,T6013289371,2025-09-29,M,5,5.1,73,True,True,curta,tigrado,calmo,mista,0,True,83
+G00923,T7142459535,2025-12-30,F,7,5.7,23,True,True,curta,tricolor,brincalhão,ração seca,0,True,71
+G00924,T9736282219,2025-10-07,F,2,3.7,64,True,True,curta,preto,carinhoso,ração seca,4,False,82
+G00925,T4949905957,2025-03-27,M,4,5.1,56,True,True,média,tricolor,caçador,mista,1,False,81
+G00926,T7302385918,2025-10-06,F,17,5.1,29,True,True,curta,tricolor,carinhoso,mista,0,False,52
+G00927,T7028325952,2025-02-08,M,0,4.4,82,True,True,curta,tricolor,caçador,ração seca,2,True,91
+G00928,T9038090091,2025-06-25,F,5,4.9,75,True,True,curta,tigrado,brincalhão,mista,2,True,80
+G00929,T3932428223,2025-08-17,F,12,5.4,33,False,True,curta,siamês,brincalhão,ração seca,3,True,56
+G00930,T7276312261,2025-06-16,F,4,4.5,71,False,True,média,tigrado,carinhoso,mista,0,True,83
+G00931,T3532455028,2025-09-13,F,6,4.2,61,True,True,curta,tricolor,calmo,mista,4,False,73
+G00932,T8709528556,2025-03-29,F,16,4.6,10,False,True,curta,branco,caçador,mista,2,True,46
+G00933,T7501234155,2025-08-10,M,6,4.1,81,False,True,longa,tigrado,carinhoso,mista,2,True,77
+G00934,T5130241979,2025-08-24,M,1,4.1,55,True,True,média,laranja,calmo,mista,1,False,87
+G00935,T8082319397,2025-08-20,M,0,4.2,80,True,True,média,siamês,calmo,ração úmida,0,False,94
+G00936,T3042184141,2025-04-16,F,15,4.1,38,False,True,média,siamês,carinhoso,ração seca,2,False,53
+G00937,T1574355304,2025-04-22,M,3,5.1,70,True,False,curta,tricolor,carinhoso,ração seca,0,True,86
+G00938,T1524724675,2025-04-05,M,6,5.9,52,True,True,média,branco,brincalhão,mista,0,True,78
+G00939,T2931262055,2025-06-18,F,1,3.4,82,True,True,curta,laranja,carinhoso,ração seca,2,False,89
+G00940,T7965604437,2025-08-02,M,5,5.1,42,False,True,curta,preto,arisco,mista,1,True,75
+G00941,T1066260427,2025-05-13,M,15,4.7,32,True,True,curta,siamês,carinhoso,ração seca,1,True,55
+G00942,T5226002301,2025-05-30,M,6,4.8,51,False,False,média,branco,arisco,mista,1,False,74
+G00943,T4190733713,2025-04-15,M,16,5.0,22,True,True,curta,tigrado,arisco,ração seca,1,True,52
+G00944,T5156895072,2025-03-21,F,3,4.6,72,True,True,curta,laranja,brincalhão,mista,1,True,85
+G00945,T5982214605,2025-08-28,M,6,4.5,71,False,True,curta,siamês,calmo,mista,1,True,77
+G00946,T8055083881,2025-10-25,M,13,6.1,34,True,True,média,tricolor,calmo,ração seca,3,True,57
+G00947,T5509402975,2025-04-17,F,5,4.2,70,True,True,curta,tricolor,calmo,ração úmida,3,False,78
+G00948,T1759998890,2025-11-11,F,3,3.8,67,True,True,curta,tigrado,caçador,ração seca,1,True,85
+G00949,T9177226216,2025-07-28,F,13,4.0,28,False,False,curta,preto,arisco,mista,1,True,57
+G00950,T6957248632,2025-03-03,F,5,4.5,58,True,False,média,siamês,brincalhão,mista,1,True,79
+G00951,T9123421568,2025-05-14,F,7,5.1,52,True,True,curta,preto,caçador,ração seca,3,False,71
+G00952,T2030770661,2025-01-03,M,16,5.6,22,True,False,longa,laranja,caçador,ração seca,3,False,49
+G00953,T4742266619,2025-01-15,F,2,5.7,75,True,True,curta,cinza,brincalhão,ração seca,4,True,83
+G00954,T6672543338,2025-05-03,F,3,5.2,69,True,True,curta,cinza,brincalhão,ração seca,2,True,83
+G00955,T4657481752,2025-06-15,M,0,4.4,56,True,False,curta,siamês,arisco,mista,0,True,90
+G00956,T3753609617,2025-10-19,M,5,4.7,41,True,True,curta,branco,caçador,ração seca,3,True,74
+G00957,T6712464880,2025-02-19,M,2,5.1,74,True,True,curta,tigrado,carinhoso,mista,2,True,86
+G00958,T2370808924,2025-11-03,F,9,4.0,40,True,True,curta,branco,arisco,mista,1,True,68
+G00959,T2705242231,2025-03-27,F,2,5.0,73,True,True,longa,siamês,brincalhão,mista,2,True,86
+G00960,T6256881720,2025-02-20,F,9,4.9,59,True,True,curta,tricolor,brincalhão,ração úmida,1,True,71
+G00961,T6957248632,2025-09-13,M,3,5.0,51,True,True,curta,cinza,calmo,ração seca,2,True,81
+G00962,T1788849273,2025-10-10,M,4,5.4,47,True,True,curta,preto,carinhoso,mista,1,True,80
+G00963,T6118670763,2025-08-09,M,4,6.1,84,False,True,curta,branco,caçador,mista,2,True,82
+G00964,T1867518659,2025-02-12,F,10,4.8,51,True,True,curta,branco,carinhoso,mista,0,True,70
+G00965,T5053473441,2025-02-12,F,6,4.3,53,True,True,curta,cinza,brincalhão,ração seca,2,True,75
+G00966,T4990727789,2025-05-23,F,4,5.3,53,True,True,curta,siamês,arisco,ração seca,2,True,79
+G00967,T7884989716,2025-06-14,F,12,5.5,35,True,True,curta,preto,caçador,mista,2,False,60
+G00968,T7266883375,2025-12-31,F,7,4.3,41,True,True,longa,tigrado,arisco,mista,2,True,71
+G00969,T7297364204,2025-04-15,F,2,4.1,80,True,True,média,cinza,caçador,ração seca,1,False,88
+G00970,T8026561279,2025-03-12,M,14,5.6,26,False,True,longa,preto,arisco,mista,4,True,50
+G00971,T4657481752,2025-12-12,M,4,5.1,77,True,False,curta,tigrado,arisco,ração seca,1,True,84
+G00972,T4930456503,2025-02-26,M,0,3.7,70,True,True,média,tigrado,arisco,ração úmida,1,True,91
+G00973,T6256881720,2025-01-10,M,6,3.9,46,False,True,curta,siamês,brincalhão,ração seca,2,True,72
+G00974,T4657481752,2025-06-04,M,1,4.0,67,True,False,curta,laranja,arisco,ração seca,4,False,84
+G00975,T8082319397,2025-05-27,M,3,4.1,35,False,True,média,cinza,brincalhão,ração seca,1,False,78
+G00976,T6848619413,2025-08-15,F,10,4.2,46,False,True,curta,tricolor,carinhoso,ração seca,2,True,64
+G00977,T8404854519,2025-11-17,M,1,5.1,70,True,True,curta,branco,carinhoso,ração seca,1,True,89
+G00978,T4742266619,2025-12-07,F,11,4.7,54,False,True,média,tigrado,brincalhão,ração seca,1,True,65
+G00979,T6684979592,2025-04-16,F,15,5.0,10,True,False,curta,siamês,caçador,ração seca,0,False,54
+G00980,T2169293548,2025-12-24,F,8,3.7,67,True,True,curta,preto,arisco,ração úmida,2,True,73
+G00981,T3392829653,2025-08-19,F,10,4.4,57,True,True,curta,siamês,caçador,mista,2,True,68
+G00982,T7266883375,2025-01-26,M,10,5.7,62,True,True,curta,branco,carinhoso,ração úmida,3,False,67
+G00983,T6848619413,2025-12-09,F,18,5.3,24,True,True,longa,laranja,caçador,ração seca,3,False,45
+G00984,T4429191034,2025-02-20,M,4,4.4,76,True,False,curta,branco,caçador,ração seca,1,True,84
+G00985,T8055083881,2025-08-03,F,2,4.3,52,True,True,curta,branco,brincalhão,mista,5,True,78
+G00986,T3811299772,2025-10-16,M,7,6.6,64,False,True,curta,tigrado,brincalhão,mista,1,True,74
+G00987,T7965604437,2025-04-02,M,7,5.1,46,True,True,longa,laranja,caçador,mista,1,True,73
+G00988,T3045148496,2025-04-09,F,2,3.7,50,True,True,média,laranja,brincalhão,mista,1,True,84
+G00989,T5281344336,2025-06-23,F,8,4.4,39,True,True,curta,laranja,carinhoso,ração úmida,2,False,69
+G00990,T9780601164,2025-11-19,M,0,4.7,75,True,False,longa,tricolor,calmo,mista,0,True,93
+G00991,T7884989716,2025-03-23,F,15,4.7,23,False,False,curta,siamês,caçador,ração seca,4,False,47
+G00992,T1788849273,2025-08-31,M,3,4.8,71,True,True,longa,laranja,carinhoso,mista,0,True,87
+G00993,T6256881720,2025-06-15,F,0,3.0,53,True,True,curta,branco,arisco,mista,1,True,88
+G00994,T5239865855,2025-02-10,M,1,4.0,47,True,True,curta,cinza,arisco,mista,2,False,84
+G00995,T9123421568,2025-09-17,M,3,4.7,83,True,True,curta,laranja,carinhoso,ração seca,2,True,85
+G00996,T4742266619,2025-10-31,M,3,4.7,77,True,True,longa,preto,brincalhão,ração seca,0,True,88
+G00997,T3450174056,2025-07-30,M,0,4.2,62,False,True,longa,branco,brincalhão,ração seca,0,True,89
+G00998,T2258172983,2025-03-06,M,3,4.7,67,True,True,curta,branco,brincalhão,ração seca,1,True,85
+G00999,T4934367269,2025-02-26,M,2,4.8,82,True,True,curta,siamês,calmo,mista,2,True,87
+G01000,T1759998890,2025-06-04,M,4,5.5,69,True,True,curta,cinza,caçador,mista,1,True,83
