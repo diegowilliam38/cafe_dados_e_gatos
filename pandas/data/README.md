@@ -28,7 +28,7 @@ ls
 ls data
 ```
 
-2) Leia os arquivos da pasta data/:
+2) Leia os arquivos da pasta \data/`:`
 ```python
 import pandas as pd
 from pathlib import Path
@@ -38,24 +38,22 @@ df = pd.read_csv(ARQ)
 df.head()
 ```
 
-Opção B — Rodar local (VS Code / Jupyter)
+### Opção B — Rodar local (VS Code / Jupyter)
 
 Clone o repositório:
 ```bash
 git clone https://github.com/djeannie29/cafe_dados_e_gatos.git
 cd cafe_dados_e_gatos
-
 ```
-Dica: rode sempre com o diretório atual na raiz do projeto (onde existe a pasta data/).
+> Dica: rode sempre com o diretório atual na raiz do projeto (onde existe a pasta data/).
 
-🧩 Dicas rápidas (bugs comuns de CSV do Excel)
+## 🧩 Dicas rápidas (bugs comuns de CSV do Excel)
 1) “Virou uma coluna só” (separador ; vs ,)
 ```python
 from pathlib import Path
 import pandas as pd
 
 df = pd.read_csv(Path("data") / "arquivo.csv", sep=";")  # ou sep=","
-
 ```
 2) “3,14 virou texto” (decimal com vírgula)
 ```python
@@ -63,7 +61,6 @@ from pathlib import Path
 import pandas as pd
 
 df = pd.read_csv(Path("data") / "arquivo.csv", sep=";", decimal=",")
-
 ```
 3) Acentos quebrados / UnicodeDecodeError (encoding)
 ```python
@@ -73,7 +70,6 @@ import pandas as pd
 df = pd.read_csv(Path("data") / "arquivo.csv", sep=";", encoding="utf-8")
 # se precisar:
 df = pd.read_csv(Path("data") / "arquivo.csv", sep=";", encoding="latin-1")
-
 ```
 4) Zero à esquerda sumiu (CEP/ID)
 ```python
@@ -81,7 +77,6 @@ from pathlib import Path
 import pandas as pd
 
 df = pd.read_csv(Path("data") / "arquivo.csv", sep=";", dtype={"cep": str})
-
 ```
 5) Datas invertendo dia/mês
 ```python
@@ -89,14 +84,48 @@ from pathlib import Path
 import pandas as pd
 
 df = pd.read_csv(Path("data") / "arquivo.csv", sep=";", parse_dates=["data"], dayfirst=True)
-
 ```
-🔒 Privacidade
-Todos os dados são sintéticos e usados apenas para fins didáticos.
+---
+---
+
+## 📦 Arquivos disponíveis (pasta `data/`)
+
+### 🐱 Datasets de gatos (para Shorts de Pandas)
+- `dataset_small_gatos.csv` → base pequena (boa para `loc`, `iloc`, `sort_values`)
+- `dataset_big_gatos.csv` → base maior (boa para exemplos mais “realistas”)
+- `dataset_gatos_com_nans.csv` → base com valores ausentes (boa para `isnull().sum()` e `fillna()`)
+
+### 💉 Datasets para exemplos de `merge`
+- `dataset_vacinas_para_merge.csv` → tabela auxiliar com `id_gato` e `data_ultima_vacina`
+- `dataset_gatos_vacina_small.csv` → base pequena com coluna `vacinado` (boa para merge rápido)
+- `dataset_gatos_vacina_big.csv` → base maior com coluna `vacinado`
+
+### 🧩 Datasets de “bugs do Excel” (CSV/XLSX)
+- `bugs_excel_1000.xlsx` → arquivo Excel base
+- `bugs_excel_1000_utf8sig.csv` → CSV exportado (útil para testar separador/encoding)
+- `bugs_excel_1000_latin1.csv` → CSV exportado em latin-1 (útil para simular problema de acentos)
+
+---
+
+## 🧪 Exemplos rápidos
+
+### Ler um dataset “normal” (gatos)
+```python
+import pandas as pd
+from pathlib import Path
+
+df = pd.read_csv(Path("data") / "dataset_small_gatos.csv")
+df.head()
 
 
-✨ Créditos
-Conteúdo e datasets: Café com Dados & Gatos
-YouTube: @CafecomDadoseGatos
+## 🔒 Privacidade
+Todos os dados são **sintéticos** e usados apenas para fins didáticos.
+
+---
+
+## ✨ Créditos
+Conteúdo e datasets: **Café com Dados & Gatos**  
+YouTube: **@CafecomDadoseGatos**
+
 
    
