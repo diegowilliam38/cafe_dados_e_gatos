@@ -1,3 +1,4 @@
+
 # Remover OpenClaw (Docker) / Remove OpenClaw (Docker)
 
 Guia rápido em PDF para:
@@ -12,5 +13,5 @@ PDF quick guide to:
 pt-BR/remover_docker_desktop.pdf
 
 ## en-US (PDF)
-en-US/COLOQUE_AQUI_O_NOME_EXATO_DO_SEU_PDF.pdf
+en-US/remove_openclaw_docker_desktop_en.pdf
 
