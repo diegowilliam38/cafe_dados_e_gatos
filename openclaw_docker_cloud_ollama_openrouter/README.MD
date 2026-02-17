@@ -1,23 +1,15 @@
-# ☕ OpenClaw FULL (Docker + WSL2) + Clouds: Ollama + OpenRouter
-
 ## 🇧🇷 Português (PT-BR)
 
 Passo a passo do vídeo:  
-**OpenClaw FULL rodando no Docker (Windows + WSL2) usando duas clouds/provedores: Ollama + OpenRouter**
+**OpenClaw FULL no Docker (Windows + WSL2) com OpenRouter + Ollama Cloud**
 
-Este repositório contém o guia completo para rodar o OpenClaw FULL localmente, com provedores cloud funcionando juntos.
+Este repositório contém o guia completo para rodar o OpenClaw FULL localmente (Docker/WSL2), usando provedores/modelos na nuvem (OpenRouter + Ollama Cloud).
 
 ---
-
 
 ## 🇺🇸 English (EN)
 
 Step-by-step from the video:  
-**OpenClaw FULL running on Docker (Windows + WSL2) using two AI clouds/providers: Ollama + OpenRouter**
+**OpenClaw FULL on Docker (Windows + WSL2) with OpenRouter + Ollama Cloud**
 
-This repository contains the complete setup guide to run OpenClaw FULL locally, with cloud providers working together.
-
----
-
-
-
+This repository contains the complete setup guide to run OpenClaw FULL locally (Docker/WSL2) while using cloud providers/models (OpenRouter + Ollama Cloud).
