@@ -1,4 +1,5 @@
-## ☕ OpenClaw FULL (Docker + WSL2) + Clouds: Ollama e OpenRouter
+# ☕ OpenClaw FULL (Docker + WSL2) + OpenRouter + Ollama Cloud
+
 ## 🇧🇷 Português (PT-BR)
 
 Passo a passo do vídeo:  
