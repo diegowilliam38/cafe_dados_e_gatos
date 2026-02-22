@@ -1,5 +1,5 @@
 # 🚀 Instalando OpenClaw com o LM Studio Local (sem Cloud)  
-## com ajustes FIX ERRO 1008
+## Com ajustes FIX ERRO 1008
 
 Guia completo para instalar e configurar o **OpenClaw com LM Studio rodando localmente (sem cloud)**, incluindo ajustes para correção do **erro 1008**.
 
