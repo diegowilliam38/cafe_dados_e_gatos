@@ -46,9 +46,11 @@ Este material foi criado para:
 
 ## ⚠️ Observações importantes
 
+- **Versão:** este guia foi testado com **OpenClaw v2026.2.24**. Como o projeto atualiza com frequência, algumas telas/comandos podem mudar.
 - Neste guia eu usei acesso por **senha (root)** para ser mais simples e rápido na demonstração do vídeo.
 - **Em produção, o ideal é usar SSH keys**, pois é mais seguro do que login por senha.
 - A interface do OpenClaw **não fica exposta publicamente**: o acesso é feito via **túnel SSH local**.
+- **Transparência:** o canal não recebe pagamento da Hetzner/OpenClaw para realizar estes testes. Todo o conteúdo é feito com fins educativos.
 
 ---
 
@@ -67,6 +69,8 @@ GitHub: https://github.com/djeannie29
 Se este material te ajudou:
 - ⭐ Favorite o repositório
 - 👍 Compartilhe com quem estuda IA
-- ☕ Inscreva-se no canal
+- ☕ Inscreva-se no canal **Café com Dados & Gatos**
+
+Isso me ajuda a continuar testando setups e trazendo tutoriais práticos para a comunidade.
 
 Vamos levar IA prática para mais gente.
