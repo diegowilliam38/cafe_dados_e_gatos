@@ -1,13 +1,14 @@
-#🦞 OpenClaw na Hetzner (VPS) — Guia Completo
+# 🦞 OpenClaw na Hetzner (VPS) — Guia Completo
 
 Instalação do OpenClaw em VPS Hetzner com acesso seguro via túnel e configuração inicial do ambiente.
 
 Este repositório contém o passo a passo completo para quem deseja rodar o OpenClaw fora do PC local, em um servidor VPS.
 
 📂 Documentação disponível
-🇧🇷 Português 
 
-Guia completo passo a passo:
+# 🇧🇷 Português 
+
+## Guia completo passo a passo:
 
 OpenClaw na Hetzner (PT-BR)
 Inclui:
@@ -21,7 +22,7 @@ Inclui:
 - Configuração Telegram
 - Troubleshooting básico
 
-🇺🇸 English version
+# 🇺🇸 English version
 
 Full installation guide:
 
@@ -37,7 +38,7 @@ Includes:
 - Telegram configuration
 - Basic troubleshooting
 
-#🎯 Objetivo deste guia
+# 🎯 Objetivo deste guia
 
 Este material foi criado para:
 Rodar OpenClaw em VPS na Hetzner
@@ -45,7 +46,7 @@ Rodar OpenClaw em VPS na Hetzner
 Evitar sobrecarga no PC local
 Explorar IA local + cloud com mais estabilidade
 
-⚠️ Observações importantes
+## ⚠️ Observações importantes
 
 Este guia usa acesso por senha root (mais simples para iniciantes)
 
@@ -54,7 +55,7 @@ Este guia usa acesso por senha root (mais simples para iniciantes)
 
 Ideal para quem quer estudar e testar automações
 
-#☕ Sobre o projeto
+# ☕ Sobre o projeto
 
 Criado por Café com Dados & Gatos
 Conteúdo prático sobre IA, automações e Data Science sem complicação.
@@ -65,14 +66,14 @@ https://youtube.com/@cafecomdadosegatos
 GitHub:
 https://github.com/djeannie29
 
-💛 Apoie o projeto
+## 💛 Apoie o projeto
 
 Se este material te ajudou:
 
-⭐ Favorite o repositório
+## ⭐ Favorite o repositório
 
-👍 Compartilhe com quem estuda IA
+## 👍 Compartilhe com quem estuda IA
 
-☕ Inscreva-se no canal
+## ☕ Inscreva-se no canal
 
 Vamos levar IA prática para mais gente.
