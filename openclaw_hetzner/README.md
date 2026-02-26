@@ -2,7 +2,7 @@
 
 Instalação do OpenClaw em VPS Hetzner com acesso seguro via túnel e configuração inicial do ambiente.
 
-Este repositório contém o passo a passo completo para quem deseja rodar o OpenClaw fora do PC local na Hetzner, em um servidor VPS.
+Este repositório contém o passo a passo completo para quem deseja rodar o OpenClaw fora do PC local, em um servidor VPS na Hetzner.
 
 📂 Documentação disponível
 
