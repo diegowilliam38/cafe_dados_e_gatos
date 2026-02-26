@@ -4,15 +4,13 @@ Instalação do OpenClaw em VPS Hetzner com acesso seguro via túnel e configura
 
 Este repositório contém o passo a passo completo para quem deseja rodar o OpenClaw fora do PC local, em um servidor VPS na Hetzner.
 
-📂 Documentação disponível
+---
 
-# 🇧🇷 Português 
+## 📂 Documentação disponível
 
-## Guia completo passo a passo:
-
-OpenClaw na Hetzner (PT-BR)
+### 🇧🇷 Português (PT-BR)
+**Guia completo passo a passo: OpenClaw na Hetzner (PT-BR)**  
 Inclui:
-
 - Criação da VPS
 - Acesso com senha root
 - Preparação do Ubuntu
@@ -22,13 +20,9 @@ Inclui:
 - Configuração Telegram
 - Troubleshooting básico
 
-# 🇺🇸 English version
-
-Full installation guide:
-
-OpenClaw on Hetzner (EN-US)
+### 🇺🇸 English (EN-US)
+**Full installation guide: OpenClaw on Hetzner (EN-US)**  
 Includes:
-
 - VPS creation
 - Root password access
 - Ubuntu preparation
@@ -38,42 +32,41 @@ Includes:
 - Telegram configuration
 - Basic troubleshooting
 
-# 🎯 Objetivo deste guia
+---
+
+## 🎯 Objetivo deste guia
 
 Este material foi criado para:
-Rodar OpenClaw em VPS na Hetzner
+- Rodar OpenClaw em VPS na Hetzner
 - Usar bots (Telegram/WhatsApp)
-Evitar sobrecarga no PC local
-Explorar IA local + cloud com mais estabilidade
+- Evitar sobrecarga no PC local
+- Explorar IA local + cloud com mais estabilidade
+
+---
 
 ## ⚠️ Observações importantes
 
-Este guia usa acesso por senha root (mais simples para iniciantes)
+- Neste guia eu usei acesso por **senha (root)** para ser mais simples e rápido na demonstração do vídeo.
+- **Em produção, o ideal é usar SSH keys**, pois é mais seguro do que login por senha.
+- A interface do OpenClaw **não fica exposta publicamente**: o acesso é feito via **túnel SSH local**.
 
-- Interface do OpenClaw não fica exposta publicamente
-- Acesso feito via túnel local seguro
+---
 
-Ideal para quem quer estudar e testar automações
+## ☕ Sobre o projeto
 
-# ☕ Sobre o projeto
-
-Criado por Café com Dados & Gatos
+Criado por **Café com Dados & Gatos**  
 Conteúdo prático sobre IA, automações e Data Science sem complicação.
 
-YouTube:
-https://youtube.com/@cafecomdadosegatos
+YouTube: https://youtube.com/@cafecomdadosegatos  
+GitHub: https://github.com/djeannie29  
 
-GitHub:
-https://github.com/djeannie29
+---
 
 ## 💛 Apoie o projeto
 
 Se este material te ajudou:
-
-## ⭐ Favorite o repositório
-
-## 👍 Compartilhe com quem estuda IA
-
-## ☕ Inscreva-se no canal
+- ⭐ Favorite o repositório
+- 👍 Compartilhe com quem estuda IA
+- ☕ Inscreva-se no canal
 
 Vamos levar IA prática para mais gente.
