@@ -35,6 +35,14 @@ Os códigos são referentes aos **vídeos do canal**.
 ## ✨ Contribuições
 Este projeto está em desenvolvimento contínuo. Sugestões e feedbacks são sempre bem-vindos!
 
+## ☕ Apoie o Café com Dados & Gatos
+
+Este projeto faz parte do conteúdo do canal **Café com Dados & Gatos**, onde compartilho tutoriais práticos sobre IA, Ciência de Dados, automações e ferramentas open source.
+
+Se este material te ajudou, você pode apoiar o projeto com um cafezinho:
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/X8X21YHIM2)
+
 ---
 
 📌 **Criado e mantido por [Denise Marti](https://github.com/djeannie29)**  
