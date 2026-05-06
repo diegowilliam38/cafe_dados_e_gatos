@@ -1,21 +1,6 @@
 # Hermes Agent + Browser Harness no Ubuntu VM
 
-## Objetivo
-
-Instalar Hermes Agent e Browser Harness em uma VM Ubuntu de forma simples para testes e gravação de vídeo.
-
-Sem:
-- ambientes isolados
-- múltiplos perfis
-- configurações avançadas
-- pastas extras de projeto
-
-Navegador utilizado:
-- Brave Browser
-
----
-
-# 1. Instalar dependências básicas
+## Instalar dependências
 
 ```bash
 sudo apt update
@@ -24,14 +9,16 @@ sudo apt install -y curl git python3 python3-pip pipx
 
 ---
 
-# 2. Instalar uv
+## Instalar uv
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source ~/.bashrc
 ```
 
-Verificar:
+---
+
+## Verificar uv
 
 ```bash
 uv --version
@@ -39,39 +26,55 @@ uv --version
 
 ---
 
-# 3. Instalar Hermes Agent
-
-Instalação oficial:
+## Instalar Hermes Agent
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
 ```
 
-Atualizar terminal:
+---
+
+## Atualizar terminal
 
 ```bash
 source ~/.bashrc
 ```
 
-Verificar instalação:
+---
+
+## Verificar Hermes
 
 ```bash
 hermes --version
 ```
 
-Abrir Hermes:
+---
+
+## Abrir Hermes
 
 ```bash
 hermes
 ```
 
-Diagnóstico:
+---
+
+## Configurar Hermes
+
+```bash
+hermes setup
+```
+
+---
+
+## Diagnóstico Hermes
 
 ```bash
 hermes doctor
 ```
 
-Selecionar modelo:
+---
+
+## Escolher modelo
 
 ```bash
 hermes model
@@ -79,34 +82,40 @@ hermes model
 
 ---
 
-# 4. Instalar Browser Harness
-
-Clonar repositório oficial:
+## Clonar Browser Harness
 
 ```bash
 cd ~
 git clone https://github.com/browser-use/browser-harness
 ```
 
-Entrar na pasta:
+---
+
+## Entrar na pasta
 
 ```bash
 cd ~/browser-harness
 ```
 
-Instalar Browser Harness:
+---
+
+## Instalar Browser Harness
 
 ```bash
 uv tool install -e .
 ```
 
-Verificar instalação:
+---
+
+## Verificar Browser Harness
 
 ```bash
 command -v browser-harness
 ```
 
-Diagnóstico:
+---
+
+## Diagnóstico Browser Harness
 
 ```bash
 browser-harness --doctor
@@ -114,11 +123,15 @@ browser-harness --doctor
 
 ---
 
-# 5. Testar Browser Harness
+## Abrir Brave Browser
 
-Abrir Brave Browser normalmente.
+```bash
+brave-browser
+```
 
-Depois testar:
+---
+
+## Testar Browser Harness
 
 ```bash
 browser-harness -c 'print(page_info())'
@@ -126,32 +139,16 @@ browser-harness -c 'print(page_info())'
 
 ---
 
-# 6. Caso o Browser Harness não conecte
-
-Executar:
-
-```bash
-browser-harness --doctor
-```
-
-Se aparecer solicitação no navegador:
-- clicar em "Allow"
-- permitir acesso de debug remoto
-
----
-
-# 7. Verificações finais
-
-Hermes funcionando:
+## Testar Hermes
 
 ```bash
 hermes
 ```
 
-Browser Harness funcionando:
+---
+
+## Testar Browser Harness novamente
 
 ```bash
 browser-harness -c 'print(page_info())'
 ```
-
-Somente depois integrar Hermes + Browser Harness.
