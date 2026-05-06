@@ -121,6 +121,70 @@ Ctrl+C
 
 ---
 
+
+
+---
+
+## 🔎 Por que o comando do Open WebUI é grande?
+
+Quando você roda o Open WebUI usando:
+
+```bash
+DATA_DIR=~/.open-webui uvx --python 3.11 open-webui@latest serve
+```
+
+isso acontece porque você está usando o `uvx`, que executa o pacote diretamente sem instalação tradicional.
+
+Esse comando define três partes importantes:
+
+- `DATA_DIR=~/.open-webui` → define onde os dados (usuários, chats, configs) serão salvos  
+- `uvx` → ferramenta que executa o pacote Python sem instalar globalmente  
+- `--python 3.11 open-webui@latest serve` → define:
+  - versão do Python usada
+  - pacote (`open-webui`)
+  - ação (`serve`, ou seja, iniciar o servidor)
+
+Ou seja: esse comando é o modo **manual e completo** de subir o Open WebUI.
+
+Por isso ele parece grande — ele está declarando tudo explicitamente.
+
+### Como simplificar
+
+Você tem duas opções:
+
+#### 1. Criar um atalho (alias)
+
+```bash
+nano ~/.bashrc
+```
+
+Adicionar no final:
+
+```bash
+alias openwebui='DATA_DIR=~/.open-webui uvx --python 3.11 open-webui@latest serve'
+```
+
+Aplicar:
+
+```bash
+source ~/.bashrc
+```
+
+Agora basta rodar:
+
+```bash
+openwebui
+```
+
+#### 2. Usar systemd (recomendado)
+
+No passo 8 deste guia, você cria um serviço que já executa esse comando automaticamente.
+
+Assim:
+- você não precisa digitar nada
+- o Open WebUI sobe sozinho ao iniciar o Linux
+
+
 ## 5. Rodar em outra porta, se necessário
 
 Por padrão, o Open WebUI roda na porta `8080`.
