@@ -36,27 +36,6 @@ Para dados sensíveis, use modelo local, infraestrutura privada ou ambiente cont
 
 ---
 
-# Limpeza antes de recomeçar
-
-Se você já apagou a pasta `~/petals-teste`, não precisa apagar de novo.
-
-Mas, para limpar caches antigos, rode:
-
-```bash
-rm -rf ~/.cache/huggingface
-rm -rf ~/.cache/torch
-rm -rf ~/.cache/petals
-rm -rf ~/.cache/hivemind
-```
-
-Opcionalmente, limpar cache do pip:
-
-```bash
-python3 -m pip cache purge
-```
-
----
-
 # Versão do Python
 
 Use Python 3.11.
