@@ -67,12 +67,6 @@ Abra o aplicativo Codex no Windows.
 
 Faça login com sua conta ChatGPT/OpenAI.
 
-Crie ou selecione uma pasta de projeto.
-
-Exemplo de pasta:
-
-C:\codex-testes
-
 ---
 
 ## 6. Ativar o plugin do Chrome
