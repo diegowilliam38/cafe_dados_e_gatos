@@ -1,13 +1,67 @@
-# Instalação do Petals no Linux com Llama
+# Instalação do Petals no Linux com BLOOM Petals
 
-## Versão do Python
+## Objetivo
 
-O Petals atualmente funciona melhor com:
+Instalar o Petals no Linux para testar inferência distribuída em rede peer-to-peer.
 
-- Python 3.10
-- Python 3.11
+Neste tutorial, o modelo principal usado será:
 
-Evite usar Python 3.12 neste projeto, porque algumas dependências ainda podem falhar durante a instalação.
+```text
+bigscience/bloom-petals
+```
+
+Esse modelo foi escolhido porque funcionou melhor no teste inicial e não exige aprovação manual da Meta como os modelos Llama.
+
+---
+
+# Aviso importante
+
+O Petals usa uma rede pública peer-to-peer.
+
+Isso significa que partes do processamento podem depender de máquinas de outras pessoas conectadas à rede.
+
+Teste com responsabilidade.
+
+Nunca envie:
+
+- senhas
+- tokens
+- chaves de API
+- dados bancários
+- documentos pessoais
+- informações privadas
+- informações empresariais sensíveis
+
+Para dados sensíveis, use modelo local, infraestrutura privada ou ambiente controlado.
+
+---
+
+# Limpeza antes de recomeçar
+
+Se você já apagou a pasta `~/petals-teste`, não precisa apagar de novo.
+
+Mas, para limpar caches antigos, rode:
+
+```bash
+rm -rf ~/.cache/huggingface
+rm -rf ~/.cache/torch
+rm -rf ~/.cache/petals
+rm -rf ~/.cache/hivemind
+```
+
+Opcionalmente, limpar cache do pip:
+
+```bash
+python3 -m pip cache purge
+```
+
+---
+
+# Versão do Python
+
+Use Python 3.11.
+
+Evite Python 3.12, porque algumas dependências podem falhar durante a instalação.
 
 Verificar versão atual:
 
@@ -17,14 +71,40 @@ python3 --version
 
 ---
 
-# Instalar Python 3.11
+# Instalar suporte para PPA
 
 ```bash
 sudo apt update
+sudo apt install -y software-properties-common
+```
+
+---
+
+# Adicionar repositório Deadsnakes
+
+```bash
+sudo add-apt-repository ppa:deadsnakes/ppa -y
+```
+
+---
+
+# Atualizar repositórios
+
+```bash
+sudo apt update
+```
+
+---
+
+# Instalar Python 3.11
+
+```bash
 sudo apt install -y python3.11 python3.11-venv python3.11-dev
 ```
 
-Verificar instalação:
+---
+
+# Verificar Python 3.11
 
 ```bash
 python3.11 --version
@@ -79,10 +159,29 @@ Python 3.11.x
 
 ---
 
-# Atualizar ferramentas do pip
+# Atualizar ferramentas base
 
 ```bash
-pip install --upgrade pip setuptools wheel
+pip install --upgrade "pip<24" "setuptools<70" wheel
+```
+
+---
+
+# Criar arquivo de constraints
+
+Essa correção evita erro do `hivemind` com `pkg_resources`.
+
+```bash
+echo "setuptools<82" > /tmp/petals-constraints.txt
+echo "wheel" >> /tmp/petals-constraints.txt
+```
+
+---
+
+# Instalar Hivemind
+
+```bash
+PIP_CONSTRAINT=/tmp/petals-constraints.txt pip install hivemind
 ```
 
 ---
@@ -90,7 +189,15 @@ pip install --upgrade pip setuptools wheel
 # Instalar Petals
 
 ```bash
-pip install git+https://github.com/bigscience-workshop/petals
+PIP_CONSTRAINT=/tmp/petals-constraints.txt pip install git+https://github.com/bigscience-workshop/petals
+```
+
+---
+
+# Instalar Transformers e SentencePiece
+
+```bash
+pip install transformers sentencepiece
 ```
 
 ---
@@ -105,57 +212,26 @@ pip install huggingface_hub
 
 # Login na Hugging Face
 
+A CLI nova da Hugging Face usa:
+
 ```bash
-huggingface-cli login
+hf auth login
 ```
 
 Cole o token da Hugging Face quando pedir.
 
-Antes disso:
-
-1. Crie uma conta na Hugging Face
-2. Acesse a página do modelo Llama
-3. Aceite a licença da Meta
-
-Sem isso, o modelo pode retornar erro de permissão.
-
----
-
-# Modelo usado neste exemplo
+Se perguntar se deseja salvar como credencial do Git, pode responder:
 
 ```text
-meta-llama/Meta-Llama-3.1-405B-Instruct
+Y
 ```
 
 ---
 
-# Como fazer perguntas ao modelo
-
-O Petals não funciona exatamente como o Ollama.
-
-No Ollama usamos:
+# Criar teste simples
 
 ```bash
-ollama run modelo
-```
-
-No Petals, normalmente usamos Python com:
-
-- transformers
-- petals
-- AutoTokenizer
-- AutoDistributedModelForCausalLM
-
-Abaixo estão dois modos simples de teste.
-
----
-
-# Modo 1 — Pergunta fixa
-
-## Criar arquivo de teste
-
-```bash
-nano teste_llama_petals.py
+nano teste_petals.py
 ```
 
 Cole:
@@ -164,7 +240,7 @@ Cole:
 from transformers import AutoTokenizer
 from petals import AutoDistributedModelForCausalLM
 
-model_name = "meta-llama/Meta-Llama-3.1-405B-Instruct"
+model_name = "bigscience/bloom-petals"
 
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoDistributedModelForCausalLM.from_pretrained(model_name)
@@ -175,7 +251,7 @@ inputs = tokenizer(prompt, return_tensors="pt")["input_ids"]
 
 outputs = model.generate(
     inputs,
-    max_new_tokens=120,
+    max_new_tokens=80,
     do_sample=True,
     temperature=0.7
 )
@@ -194,14 +270,12 @@ CTRL + X
 Rodar:
 
 ```bash
-python3 teste_llama_petals.py
+python3 teste_petals.py
 ```
 
 ---
 
-# Modo 2 — Chat simples pelo terminal
-
-## Criar arquivo de chat
+# Criar chat simples pelo terminal
 
 ```bash
 nano chat.py
@@ -213,12 +287,12 @@ Cole:
 from transformers import AutoTokenizer
 from petals import AutoDistributedModelForCausalLM
 
-model_name = "meta-llama/Meta-Llama-3.1-405B-Instruct"
+model_name = "bigscience/bloom-petals"
 
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoDistributedModelForCausalLM.from_pretrained(model_name)
 
-print("Chat Petals + Llama iniciado.")
+print("Chat Petals iniciado.")
 print("Digite 'sair' para encerrar.\n")
 
 while True:
@@ -231,14 +305,14 @@ while True:
 
     outputs = model.generate(
         inputs,
-        max_new_tokens=200,
+        max_new_tokens=120,
         do_sample=True,
         temperature=0.7
     )
 
     resposta = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
-    print("\nLlama:")
+    print("\nPetals:")
     print(resposta)
     print()
 ```
@@ -265,14 +339,62 @@ sair
 
 ---
 
+# Observação sobre Llama
+
+Modelos Llama, como:
+
+```text
+meta-llama/Meta-Llama-3.1-405B-Instruct
+meta-llama/Llama-2-70b-chat-hf
+```
+
+podem exigir aprovação manual na Hugging Face.
+
+Se aparecer erro `403 Forbidden` ou `GatedRepoError`, significa que a conta ainda não tem acesso autorizado ao modelo.
+
+Por isso, para o primeiro teste, usamos:
+
+```text
+bigscience/bloom-petals
+```
+
+---
+
+# Observação sobre MissingBlocksError
+
+Se aparecer erro parecido com:
+
+```text
+MissingBlocksError
+No servers holding blocks are online
+```
+
+isso significa que não há peers suficientes online hospedando os blocos daquele modelo no momento.
+
+O Petals depende da rede pública peer-to-peer.
+
+Mesmo que a instalação esteja correta, a inferência pode falhar se não houver servidores ativos para o modelo escolhido.
+
+---
+
+# Monitor público do Petals
+
+Consultar estado da rede:
+
+```text
+https://health.petals.dev
+```
+
+---
+
 # CLI do Petals
 
-A CLI do Petals existe, mas ela é usada principalmente para rodar um servidor/peer e colaborar com a rede.
+A CLI existe, mas é usada principalmente para rodar um servidor/peer e colaborar com a rede.
 
 Exemplo:
 
 ```bash
-python3 -m petals.cli.run_server meta-llama/Meta-Llama-3.1-405B-Instruct
+python3 -m petals.cli.run_server bigscience/bloom-petals
 ```
 
 Esse comando é para participar da rede como peer.
@@ -281,40 +403,7 @@ Para fazer perguntas como cliente, usamos os scripts Python acima.
 
 ---
 
-# Aviso importante
-
-O Petals usa uma rede pública peer-to-peer.
-
-Isso significa que partes do processamento podem passar por máquinas de outras pessoas.
-
-Teste com responsabilidade.
-
-Nunca envie:
-
-- senhas
-- dados bancários
-- documentos pessoais
-- chaves de API
-- informações privadas
-- informações empresariais sensíveis
-
-Para dados sensíveis, prefira:
-
-- modelos locais
-- infraestrutura privada
-- ambientes controlados
-
----
-
-# Monitor público do Petals
-
-Consultar modelos e saúde da rede:
-
-https://github.com/petals-infra/health.petals.dev
-
-
-
-# Limpar instalação do Petals
+# Uninstall / limpeza
 
 ## Sair do ambiente virtual
 
@@ -326,7 +415,7 @@ Se aparecer erro dizendo que `deactivate` não existe, pode ignorar.
 
 ---
 
-# Apagar pasta do projeto
+## Apagar pasta do projeto
 
 ```bash
 rm -rf ~/petals-teste
@@ -334,13 +423,7 @@ rm -rf ~/petals-teste
 
 ---
 
-# Apagar cache do pip
-
-```bash
-pip cache purge
-```
-
-Se estiver fora do ambiente virtual e quiser garantir pelo Python 3:
+## Apagar cache do pip
 
 ```bash
 python3 -m pip cache purge
@@ -348,9 +431,7 @@ python3 -m pip cache purge
 
 ---
 
-# Apagar cache da Hugging Face
-
-Atenção: isso apaga modelos e arquivos baixados pela Hugging Face neste usuário.
+## Apagar cache da Hugging Face
 
 ```bash
 rm -rf ~/.cache/huggingface
@@ -358,7 +439,7 @@ rm -rf ~/.cache/huggingface
 
 ---
 
-# Apagar cache do Torch
+## Apagar cache do Torch
 
 ```bash
 rm -rf ~/.cache/torch
@@ -366,7 +447,7 @@ rm -rf ~/.cache/torch
 
 ---
 
-# Apagar cache do Petals/Hivemind, se existir
+## Apagar cache do Petals e Hivemind
 
 ```bash
 rm -rf ~/.cache/petals
@@ -375,7 +456,7 @@ rm -rf ~/.cache/hivemind
 
 ---
 
-# Remover login salvo da Hugging Face
+## Remover login salvo da Hugging Face
 
 ```bash
 rm -f ~/.cache/huggingface/token
@@ -384,33 +465,25 @@ rm -f ~/.huggingface/token
 
 ---
 
-# Verificar se a pasta foi removida
+## Verificar se a pasta foi removida
 
 ```bash
 ls ~/petals-teste
 ```
 
-Se aparecer:
-
-```text
-Arquivo ou diretório inexistente
-```
-
-a limpeza da pasta principal deu certo.
+Se aparecer erro dizendo que o arquivo ou diretório não existe, a pasta foi removida.
 
 ---
 
-# Observação
+# Observação final
 
 Não é necessário remover o Python 3.11.
 
-O Python 3.11 pode continuar instalado no sistema, porque ele pode ser usado por outros projetos.
+Ele pode continuar instalado para outros testes.
 
-Se quiser remover mesmo assim, use com cuidado:
+Se quiser remover mesmo assim:
 
 ```bash
 sudo apt remove -y python3.11 python3.11-venv python3.11-dev
 sudo apt autoremove -y
 ```
-
-Use essa remoção apenas se tiver certeza de que nenhum outro projeto depende do Python 3.11.
