@@ -310,4 +310,107 @@ Para dados sensíveis, prefira:
 
 Consultar modelos e saúde da rede:
 
-https://health.petals.dev
+https://github.com/petals-infra/health.petals.dev
+
+
+
+# Limpar instalação do Petals
+
+## Sair do ambiente virtual
+
+```bash
+deactivate
+```
+
+Se aparecer erro dizendo que `deactivate` não existe, pode ignorar.
+
+---
+
+# Apagar pasta do projeto
+
+```bash
+rm -rf ~/petals-teste
+```
+
+---
+
+# Apagar cache do pip
+
+```bash
+pip cache purge
+```
+
+Se estiver fora do ambiente virtual e quiser garantir pelo Python 3:
+
+```bash
+python3 -m pip cache purge
+```
+
+---
+
+# Apagar cache da Hugging Face
+
+Atenção: isso apaga modelos e arquivos baixados pela Hugging Face neste usuário.
+
+```bash
+rm -rf ~/.cache/huggingface
+```
+
+---
+
+# Apagar cache do Torch
+
+```bash
+rm -rf ~/.cache/torch
+```
+
+---
+
+# Apagar cache do Petals/Hivemind, se existir
+
+```bash
+rm -rf ~/.cache/petals
+rm -rf ~/.cache/hivemind
+```
+
+---
+
+# Remover login salvo da Hugging Face
+
+```bash
+rm -f ~/.cache/huggingface/token
+rm -f ~/.huggingface/token
+```
+
+---
+
+# Verificar se a pasta foi removida
+
+```bash
+ls ~/petals-teste
+```
+
+Se aparecer:
+
+```text
+Arquivo ou diretório inexistente
+```
+
+a limpeza da pasta principal deu certo.
+
+---
+
+# Observação
+
+Não é necessário remover o Python 3.11.
+
+O Python 3.11 pode continuar instalado no sistema, porque ele pode ser usado por outros projetos.
+
+Se quiser remover mesmo assim, use com cuidado:
+
+```bash
+sudo apt remove -y python3.11 python3.11-venv python3.11-dev
+sudo apt autoremove -y
+```
+
+Use essa remoção apenas se tiver certeza de que nenhum outro projeto depende do Python 3.11.
