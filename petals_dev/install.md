@@ -1,15 +1,15 @@
 # Instalação do Petals no Linux com Llama
 
-## Versão mínima do Python
+## Versão do Python
 
-O Petals exige Python 3.8 ou superior.
-
-Recomendado para este teste:
+O Petals atualmente funciona melhor com:
 
 - Python 3.10
 - Python 3.11
 
-Verificar versão instalada:
+Evite usar Python 3.12 neste projeto, porque algumas dependências ainda podem falhar durante a instalação.
+
+Verificar versão atual:
 
 ```bash
 python3 --version
@@ -17,16 +17,30 @@ python3 --version
 
 ---
 
-## Instalar dependências
+# Instalar Python 3.11
 
 ```bash
 sudo apt update
-sudo apt install -y git python3 python3-pip python3-venv
+sudo apt install -y python3.11 python3.11-venv python3.11-dev
+```
+
+Verificar instalação:
+
+```bash
+python3.11 --version
 ```
 
 ---
 
-## Criar pasta do projeto
+# Instalar dependências gerais
+
+```bash
+sudo apt install -y git python3-pip python3-venv
+```
+
+---
+
+# Criar pasta do projeto
 
 ```bash
 mkdir -p ~/petals-teste
@@ -35,15 +49,15 @@ cd ~/petals-teste
 
 ---
 
-## Criar ambiente virtual
+# Criar ambiente virtual com Python 3.11
 
 ```bash
-python3 -m venv .venv
+python3.11 -m venv .venv
 ```
 
 ---
 
-## Ativar ambiente virtual
+# Ativar ambiente virtual
 
 ```bash
 source .venv/bin/activate
@@ -51,15 +65,29 @@ source .venv/bin/activate
 
 ---
 
-## Atualizar pip
+# Confirmar versão ativa
 
 ```bash
-pip install --upgrade pip
+python --version
+```
+
+Deve aparecer algo parecido com:
+
+```text
+Python 3.11.x
 ```
 
 ---
 
-## Instalar Petals
+# Atualizar ferramentas do pip
+
+```bash
+pip install --upgrade pip setuptools wheel
+```
+
+---
+
+# Instalar Petals
 
 ```bash
 pip install git+https://github.com/bigscience-workshop/petals
@@ -67,7 +95,7 @@ pip install git+https://github.com/bigscience-workshop/petals
 
 ---
 
-## Instalar Hugging Face CLI
+# Instalar Hugging Face CLI
 
 ```bash
 pip install huggingface_hub
@@ -75,7 +103,7 @@ pip install huggingface_hub
 
 ---
 
-## Login na Hugging Face
+# Login na Hugging Face
 
 ```bash
 huggingface-cli login
@@ -83,7 +111,21 @@ huggingface-cli login
 
 Cole o token da Hugging Face quando pedir.
 
-Antes disso, verifique se você já aceitou a licença do modelo Llama na Hugging Face.
+Antes disso:
+
+1. Crie uma conta na Hugging Face
+2. Acesse a página do modelo Llama
+3. Aceite a licença da Meta
+
+Sem isso, o modelo pode retornar erro de permissão.
+
+---
+
+# Modelo usado neste exemplo
+
+```text
+meta-llama/Meta-Llama-3.1-405B-Instruct
+```
 
 ---
 
@@ -91,24 +133,24 @@ Antes disso, verifique se você já aceitou a licença do modelo Llama na Huggin
 
 O Petals não funciona exatamente como o Ollama.
 
-No Ollama usamos algo como:
+No Ollama usamos:
 
 ```bash
-ollama run nome-do-modelo
+ollama run modelo
 ```
 
-No Petals, a inferência normalmente é feita via Python, usando:
+No Petals, normalmente usamos Python com:
 
 - transformers
 - petals
 - AutoTokenizer
 - AutoDistributedModelForCausalLM
 
-Abaixo estão dois modos de teste.
+Abaixo estão dois modos simples de teste.
 
 ---
 
-# Modo 1: teste simples com uma pergunta fixa
+# Modo 1 — Pergunta fixa
 
 ## Criar arquivo de teste
 
@@ -157,7 +199,7 @@ python3 teste_llama_petals.py
 
 ---
 
-# Modo 2: chat simples pelo terminal
+# Modo 2 — Chat simples pelo terminal
 
 ## Criar arquivo de chat
 
@@ -225,7 +267,7 @@ sair
 
 # CLI do Petals
 
-A CLI do Petals existe, mas ela é usada principalmente para rodar um servidor e colaborar com a rede.
+A CLI do Petals existe, mas ela é usada principalmente para rodar um servidor/peer e colaborar com a rede.
 
 Exemplo:
 
@@ -233,9 +275,34 @@ Exemplo:
 python3 -m petals.cli.run_server meta-llama/Meta-Llama-3.1-405B-Instruct
 ```
 
-Esse comando é para participar como peer/servidor.
+Esse comando é para participar da rede como peer.
 
 Para fazer perguntas como cliente, usamos os scripts Python acima.
+
+---
+
+# Aviso importante
+
+O Petals usa uma rede pública peer-to-peer.
+
+Isso significa que partes do processamento podem passar por máquinas de outras pessoas.
+
+Teste com responsabilidade.
+
+Nunca envie:
+
+- senhas
+- dados bancários
+- documentos pessoais
+- chaves de API
+- informações privadas
+- informações empresariais sensíveis
+
+Para dados sensíveis, prefira:
+
+- modelos locais
+- infraestrutura privada
+- ambientes controlados
 
 ---
 
