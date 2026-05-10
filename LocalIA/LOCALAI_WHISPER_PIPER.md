@@ -1,15 +1,15 @@
-# Como instalar o LocalAI no Windows com WSL2 + Docker e testar o Phi-2
+# Como instalar o LocalAI no Windows com WSL2 + Docker e testar Phi-2 e TTS
 
 ## 1. Objetivo
 
-Rodar o LocalAI no Windows usando WSL2 + Docker Desktop e validar a instalação usando um modelo local leve.
+Rodar o LocalAI no Windows usando WSL2 + Docker Desktop e validar a instalação usando:
 
-Neste guia vamos usar:
-
-- Phi-2 GGUF
-- CPU-only
-- Docker
-- WSL2
+- Phi-2 GGUF: modelo local leve para texto.
+- vits-ljs-sherpa: modelo TTS leve para texto em voz.
+- qwen3-tts-cpp: modelo TTS mais avançado para texto em voz.
+- CPU-only.
+- Docker.
+- WSL2.
 
 ## 2. Ambiente deste guia
 
@@ -118,7 +118,7 @@ wget -O phi-2.Q4_K_M.gguf \
 https://huggingface.co/TheBloke/phi-2-GGUF/resolve/main/phi-2.Q4_K_M.gguf
 ```
 
-## 11. Criar o arquivo de configuração do modelo
+## 11. Criar o arquivo de configuração do modelo Phi-2
 
 ```bash
 cat > ~/localai-teste/models/phi-2.yaml <<'EOF_PHI'
@@ -151,7 +151,7 @@ O modelo esperado deve aparecer como:
 phi-2
 ```
 
-## 14. Testar chat/completions
+## 14. Testar chat/completions com Phi-2
 
 ```bash
 curl http://localhost:8080/v1/chat/completions \
@@ -168,22 +168,114 @@ curl http://localhost:8080/v1/chat/completions \
   }'
 ```
 
-## 15. Abrir a interface web no navegador
+## 15. Instalar modelos TTS pela galeria
 
-No Windows:
+Na interface web do LocalAI:
 
 ```text
 http://localhost:8080
 ```
 
-## 16. Parar o LocalAI
+Clique no filtro:
+
+```text
+TTS
+```
+
+Instale estes dois modelos pela galeria:
+
+```text
+vits-ljs-sherpa
+```
+
+```text
+qwen3-tts-cpp
+```
+
+Depois confira se eles aparecem na API:
+
+```bash
+curl http://localhost:8080/v1/models
+```
+
+Use exatamente o nome que aparecer na lista.
+
+## 16. Testar TTS com vits-ljs-sherpa
+
+```bash
+cd ~/localai-teste
+curl http://localhost:8080/v1/audio/speech \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "vits-ljs-sherpa",
+    "input": "Hello, this is a local voice test running inside LocalAI."
+  }' \
+  --output voz-vits.mp3
+```
+
+Abrir a pasta no Windows:
+
+```bash
+explorer.exe .
+```
+
+Depois abra o arquivo:
+
+```text
+voz-vits.mp3
+```
+
+## 17. Testar TTS com qwen3-tts-cpp
+
+```bash
+cd ~/localai-teste
+curl http://localhost:8080/v1/audio/speech \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "qwen3-tts-cpp",
+    "input": "Olá, eu sou o Robô Frank falando pelo LocalAI em um teste local de texto para voz."
+  }' \
+  --output voz-qwen3.mp3
+```
+
+Abrir a pasta no Windows:
+
+```bash
+explorer.exe .
+```
+
+Depois abra o arquivo:
+
+```text
+voz-qwen3.mp3
+```
+
+## 18. Se o TTS der erro
+
+Liste os modelos instalados:
+
+```bash
+curl http://localhost:8080/v1/models
+```
+
+Se o nome estiver diferente, troque no comando.
+
+Exemplo:
+
+```text
+qwen3-tts-cpp
+```
+
+pode aparecer com outro nome dependendo da versão da galeria.
+
+## 19. Parar o LocalAI
 
 ```bash
 cd ~/localai-teste
 docker compose down
 ```
 
-## 17. Remover tudo do teste
+## 20. Remover tudo do teste
 
 Atenção: este comando apaga a pasta do teste e os modelos baixados.
 
@@ -194,21 +286,22 @@ docker rm -f local-ai 2>/dev/null || true
 rm -rf ~/localai-teste
 ```
 
-## 18. Fala curta para o vídeo
+## 21. Fala curta para o vídeo
 
 ```text
-Neste teste eu estou usando Windows com WSL2 e Docker Desktop. O LocalAI roda em container, mas os comandos são executados dentro do Ubuntu/WSL. Para validar a instalação, estou usando um modelo pequeno e leve, o Phi-2. A ideia aqui não é competir com modelos gigantes na nuvem, mas mostrar que hoje já existe IA local funcionando em hardware comum e até sem GPU dedicada.
+Neste teste eu estou usando Windows com WSL2 e Docker Desktop. O LocalAI roda em container, mas os comandos são executados dentro do Ubuntu/WSL. Primeiro eu valido o servidor com um modelo pequeno de texto, o Phi-2. Depois eu testo dois modelos de voz pela própria galeria do LocalAI: um TTS mais simples, o vits-ljs-sherpa, e outro mais avançado, o qwen3-tts-cpp. A ideia não é competir com modelos gigantes na nuvem, mas mostrar que hoje já existe IA local multimodal funcionando em hardware comum e até sem GPU dedicada.
 ```
 
-## 19. Observação importante para o vídeo
+## 22. Observação importante para o vídeo
 
 ```text
 Instalar o LocalAI não instala automaticamente modelos. Primeiro o servidor sobe. Depois você baixa e configura os modelos que quer usar. Se chamar um modelo antes de instalar ou configurar, o LocalAI responde que o modelo não foi encontrado. Isso é normal.
 ```
 
-## 20. Fontes oficiais
+## 23. Fontes oficiais
 
 - https://github.com/mudler/LocalAI
 - https://localai.io/installation/
 - https://localai.io/models/
 - https://localai.io/getting-started/models/
+- https://localai.io/features/text-to-audio/
