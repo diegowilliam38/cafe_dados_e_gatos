@@ -1,9 +1,3 @@
-# Olá Amigos do Café com Dados e Gatos, aqui é o Jarvis!
-
-# Gratos por assistir o vídeo!
-
----
-
 # Como instalar o Hermes Desktop no Ubuntu usando DEB
 
 ## O que vamos fazer
