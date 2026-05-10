@@ -1,15 +1,14 @@
-# Como instalar o LocalAI no Windows com WSL2 + Docker e testar Phi-2 e TTS
+# Como instalar o LocalAI no Windows com WSL2 + Docker e testar 3 modelos
 
 ## 1. Objetivo
 
-Rodar o LocalAI no Windows usando WSL2 + Docker Desktop e validar a instalação usando:
+Rodar o LocalAI no Windows usando WSL2 + Docker Desktop e validar a instalação usando 3 modelos instalados pela galeria:
 
-- Phi-2 GGUF: modelo local leve para texto.
-- vits-ljs-sherpa: modelo TTS leve para texto em voz.
-- qwen3-tts-cpp: modelo TTS mais avançado para texto em voz.
-- CPU-only.
-- Docker.
-- WSL2.
+- dolphin3.0-llama3.2-1b: modelo LLM leve para texto.
+- moonshine-tiny: modelo STT para áudio em texto.
+- vibevoice-cpp: modelo TTS para texto em voz.
+
+O foco deste teste é CPU-only, ou seja, sem GPU dedicada.
 
 ## 2. Ambiente deste guia
 
@@ -104,60 +103,49 @@ No navegador do Windows, acesse:
 http://localhost:8080
 ```
 
-A interface web também pode ser usada para procurar, baixar e gerenciar modelos.
+A interface web será usada para instalar os modelos pela galeria.
 
-## 10. Baixar modelo local Phi-2
+## 10. Instalar os 3 modelos pela galeria
 
-Este é o teste mais simples para confirmar que o LocalAI está respondendo como servidor local de IA.
+Na interface web do LocalAI, abra a Model Gallery.
 
-Baixar o modelo Phi-2 em formato GGUF:
+Instale estes 3 modelos:
 
-```bash
-cd ~/localai-teste/models
-wget -O phi-2.Q4_K_M.gguf \
-https://huggingface.co/TheBloke/phi-2-GGUF/resolve/main/phi-2.Q4_K_M.gguf
+```text
+dolphin3.0-llama3.2-1b
 ```
 
-## 11. Criar o arquivo de configuração do modelo Phi-2
-
-```bash
-cat > ~/localai-teste/models/phi-2.yaml <<'EOF_PHI'
-name: phi-2
-parameters:
-  model: phi-2.Q4_K_M.gguf
-  temperature: 0.7
-context_size: 2048
-threads: 4
-backend: llama-cpp
-EOF_PHI
+```text
+moonshine-tiny
 ```
 
-## 12. Reiniciar o LocalAI
-
-```bash
-cd ~/localai-teste
-docker compose restart
+```text
+vibevoice-cpp
 ```
 
-## 13. Conferir se o modelo apareceu
+Depois confira se os modelos aparecem na API:
 
 ```bash
 curl http://localhost:8080/v1/models
 ```
 
-O modelo esperado deve aparecer como:
+O retorno esperado deve conter algo parecido com:
 
 ```text
-phi-2
+dolphin3.0-llama3.2-1b
+moonshine-tiny
+vibevoice-cpp
 ```
 
-## 14. Testar chat/completions com Phi-2
+Use sempre exatamente o nome que aparecer em `/v1/models`.
+
+## 11. Testar o modelo LLM dolphin3.0-llama3.2-1b
 
 ```bash
 curl http://localhost:8080/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "phi-2",
+    "model": "dolphin3.0-llama3.2-1b",
     "messages": [
       {
         "role": "user",
@@ -168,52 +156,52 @@ curl http://localhost:8080/v1/chat/completions \
   }'
 ```
 
-## 15. Instalar modelos TTS pela galeria
+## 12. Baixar áudio de exemplo para testar STT
 
-Na interface web do LocalAI:
+O modelo `moonshine-tiny` transforma áudio em texto.
 
-```text
-http://localhost:8080
+Baixar um áudio de exemplo dentro do Ubuntu/WSL:
+
+```bash
+cd ~/localai-teste
+wget --quiet --show-progress -O gb1.ogg https://upload.wikimedia.org/wikipedia/commons/1/1f/George_W_Bush_Columbia_FINAL.ogg
 ```
 
-Clique no filtro:
+## 13. Testar STT com moonshine-tiny
 
-```text
-TTS
+```bash
+curl http://localhost:8080/v1/audio/transcriptions \
+  -H "Content-Type: multipart/form-data" \
+  -F file="@$PWD/gb1.ogg" \
+  -F model="moonshine-tiny"
 ```
 
-Instale estes dois modelos pela galeria:
-
-```text
-vits-ljs-sherpa
-```
-
-```text
-qwen3-tts-cpp
-```
-
-Depois confira se eles aparecem na API:
+Se der erro de modelo não encontrado, confira o nome exato:
 
 ```bash
 curl http://localhost:8080/v1/models
 ```
 
-Use exatamente o nome que aparecer na lista.
+Depois repita o comando trocando `moonshine-tiny` pelo nome real listado.
 
-## 16. Testar TTS com vits-ljs-sherpa
+## 14. Testar TTS com vibevoice-cpp
+
+O modelo `vibevoice-cpp` transforma texto em voz.
 
 ```bash
 cd ~/localai-teste
 curl http://localhost:8080/v1/audio/speech \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "vits-ljs-sherpa",
-    "input": "Hello, this is a local voice test running inside LocalAI."
+    "model": "vibevoice-cpp",
+    "input": "Olá, eu sou o Robô Frank falando localmente pelo LocalAI."
   }' \
-  --output voz-vits.mp3
+  --output voz-vibevoice.mp3
 ```
 
-Abrir a pasta no Windows:
+## 15. Abrir o áudio gerado no Windows
+
+Como o comando está rodando no WSL, o jeito mais simples é abrir a pasta atual no Windows Explorer:
 
 ```bash
 explorer.exe .
@@ -222,35 +210,10 @@ explorer.exe .
 Depois abra o arquivo:
 
 ```text
-voz-vits.mp3
+voz-vibevoice.mp3
 ```
 
-## 17. Testar TTS com qwen3-tts-cpp
-
-```bash
-cd ~/localai-teste
-curl http://localhost:8080/v1/audio/speech \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "qwen3-tts-cpp",
-    "input": "Olá, eu sou o Robô Frank falando pelo LocalAI em um teste local de texto para voz."
-  }' \
-  --output voz-qwen3.mp3
-```
-
-Abrir a pasta no Windows:
-
-```bash
-explorer.exe .
-```
-
-Depois abra o arquivo:
-
-```text
-voz-qwen3.mp3
-```
-
-## 18. Se o TTS der erro
+## 16. Se algum teste der erro
 
 Liste os modelos instalados:
 
@@ -258,24 +221,26 @@ Liste os modelos instalados:
 curl http://localhost:8080/v1/models
 ```
 
-Se o nome estiver diferente, troque no comando.
+Use exatamente o nome que aparecer no campo `id`.
 
 Exemplo:
 
 ```text
-qwen3-tts-cpp
+dolphin3.0-llama3.2-1b
+moonshine-tiny
+vibevoice-cpp
 ```
 
-pode aparecer com outro nome dependendo da versão da galeria.
+Se o nome estiver diferente, troque no comando.
 
-## 19. Parar o LocalAI
+## 17. Parar o LocalAI
 
 ```bash
 cd ~/localai-teste
 docker compose down
 ```
 
-## 20. Remover tudo do teste
+## 18. Remover tudo do teste
 
 Atenção: este comando apaga a pasta do teste e os modelos baixados.
 
@@ -286,22 +251,23 @@ docker rm -f local-ai 2>/dev/null || true
 rm -rf ~/localai-teste
 ```
 
-## 21. Fala curta para o vídeo
+## 19. Fala curta para o vídeo
 
 ```text
-Neste teste eu estou usando Windows com WSL2 e Docker Desktop. O LocalAI roda em container, mas os comandos são executados dentro do Ubuntu/WSL. Primeiro eu valido o servidor com um modelo pequeno de texto, o Phi-2. Depois eu testo dois modelos de voz pela própria galeria do LocalAI: um TTS mais simples, o vits-ljs-sherpa, e outro mais avançado, o qwen3-tts-cpp. A ideia não é competir com modelos gigantes na nuvem, mas mostrar que hoje já existe IA local multimodal funcionando em hardware comum e até sem GPU dedicada.
+Neste teste eu estou usando Windows com WSL2 e Docker Desktop. O LocalAI roda em container, mas os comandos são executados dentro do Ubuntu/WSL. Primeiro eu instalo um modelo pequeno de texto, o dolphin3.0-llama3.2-1b. Depois testo áudio para texto com moonshine-tiny e texto para voz com vibevoice-cpp. A ideia não é competir com modelos gigantes na nuvem, mas mostrar que hoje já existe IA local multimodal funcionando em hardware comum e até sem GPU dedicada.
 ```
 
-## 22. Observação importante para o vídeo
+## 20. Observação importante para o vídeo
 
 ```text
 Instalar o LocalAI não instala automaticamente modelos. Primeiro o servidor sobe. Depois você baixa e configura os modelos que quer usar. Se chamar um modelo antes de instalar ou configurar, o LocalAI responde que o modelo não foi encontrado. Isso é normal.
 ```
 
-## 23. Fontes oficiais
+## 21. Fontes oficiais
 
 - https://github.com/mudler/LocalAI
 - https://localai.io/installation/
 - https://localai.io/models/
 - https://localai.io/getting-started/models/
+- https://localai.io/features/audio-to-text/
 - https://localai.io/features/text-to-audio/
