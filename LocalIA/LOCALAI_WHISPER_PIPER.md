@@ -1,13 +1,15 @@
-# Como instalar o LocalAI no Windows com WSL2 + Docker e testar Whisper + Piper
+# Como instalar o LocalAI no Windows com WSL2 + Docker e testar o Phi-2
 
 ## 1. Objetivo
 
-Rodar o LocalAI no Windows usando WSL2 + Docker Desktop e testar duas funções de voz:
+Rodar o LocalAI no Windows usando WSL2 + Docker Desktop e validar a instalação usando um modelo local leve.
 
-- Whisper: áudio para texto.
-- Piper: texto para áudio.
+Neste guia vamos usar:
 
-O foco deste teste é CPU-only, ou seja, sem GPU dedicada.
+- Phi-2 GGUF
+- CPU-only
+- Docker
+- WSL2
 
 ## 2. Ambiente deste guia
 
@@ -92,6 +94,8 @@ curl http://localhost:8080/readyz
 curl http://localhost:8080/v1/models
 ```
 
+Se `/v1/models` vier vazio, isso é normal em uma instalação nova. O LocalAI subiu, mas ainda não tem modelos instalados.
+
 ## 9. Abrir a interface web no Windows
 
 No navegador do Windows, acesse:
@@ -100,103 +104,86 @@ No navegador do Windows, acesse:
 http://localhost:8080
 ```
 
-Na aba de modelos, instalar um modelo de transcrição e um modelo de TTS se estiverem disponíveis pela galeria.
+A interface web também pode ser usada para procurar, baixar e gerenciar modelos.
 
-Observação: os nomes dos modelos podem mudar. O próprio LocalAI avisa na documentação que nomes como `whisper-1` e `tts-1` são exemplos e devem ser trocados pelo nome real do modelo instalado.
+## 10. Baixar modelo local Phi-2
 
-## 10. Teste do Whisper: áudio para texto
+Este é o teste mais simples para confirmar que o LocalAI está respondendo como servidor local de IA.
 
-Baixar um áudio de exemplo dentro do Ubuntu/WSL:
+Baixar o modelo Phi-2 em formato GGUF:
+
+```bash
+cd ~/localai-teste/models
+wget -O phi-2.Q4_K_M.gguf \
+https://huggingface.co/TheBloke/phi-2-GGUF/resolve/main/phi-2.Q4_K_M.gguf
+```
+
+## 11. Criar o arquivo de configuração do modelo
+
+```bash
+cat > ~/localai-teste/models/phi-2.yaml <<'EOF_PHI'
+name: phi-2
+parameters:
+  model: phi-2.Q4_K_M.gguf
+  temperature: 0.7
+context_size: 2048
+threads: 4
+backend: llama-cpp
+EOF_PHI
+```
+
+## 12. Reiniciar o LocalAI
 
 ```bash
 cd ~/localai-teste
-wget --quiet --show-progress -O gb1.ogg https://upload.wikimedia.org/wikipedia/commons/1/1f/George_W_Bush_Columbia_FINAL.ogg
+docker compose restart
 ```
 
-Enviar para o endpoint de transcrição:
-
-```bash
-curl http://localhost:8080/v1/audio/transcriptions \
-  -H "Content-Type: multipart/form-data" \
-  -F file="@$PWD/gb1.ogg" \
-  -F model="whisper-1"
-```
-
-Se der erro de modelo não encontrado, listar os modelos disponíveis:
+## 13. Conferir se o modelo apareceu
 
 ```bash
 curl http://localhost:8080/v1/models
 ```
 
-Depois repetir o comando trocando `whisper-1` pelo nome real do modelo instalado.
-
-## 11. Teste do Piper: texto para voz
-
-Baixar uma voz brasileira simples do Piper dentro da pasta de modelos:
-
-```bash
-cd ~/localai-teste/models
-wget -O pt_BR-edresson-low.onnx "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/pt/pt_BR/edresson/low/pt_BR-edresson-low.onnx?download=true"
-wget -O pt_BR-edresson-low.onnx.json "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/pt/pt_BR/edresson/low/pt_BR-edresson-low.onnx.json?download=true"
-cd ~/localai-teste
-```
-
-Testar TTS com endpoint `/tts`:
-
-```bash
-curl http://localhost:8080/tts \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "pt_BR-edresson-low.onnx",
-    "backend": "piper",
-    "input": "Olá, eu sou o Robô Frank falando localmente com Piper e LocalAI."
-  }' \
-  --output frank-piper.wav
-```
-
-## 12. Abrir o áudio gerado no Windows
-
-Como o comando está rodando no WSL, o jeito mais simples é abrir a pasta atual no Windows Explorer:
-
-```bash
-explorer.exe .
-```
-
-Depois abra o arquivo:
+O modelo esperado deve aparecer como:
 
 ```text
-frank-piper.wav
+phi-2
 ```
 
-## 13. Teste do endpoint OpenAI-compatible de TTS
+## 14. Testar chat/completions
 
 ```bash
-curl http://localhost:8080/v1/audio/speech \
+curl http://localhost:8080/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "tts-1",
-    "input": "Teste de voz local usando endpoint compatível com OpenAI.",
-    "voice": "alloy"
-  }' \
-  --output speech.mp3
+    "model": "phi-2",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Explique em português o que é um servidor local de IA em 3 frases simples."
+      }
+    ],
+    "temperature": 0.7
+  }'
 ```
 
-Se der erro de modelo não encontrado, use o teste com `/tts` e Piper manual da etapa anterior.
+## 15. Abrir a interface web no navegador
 
-Para abrir o arquivo gerado no Windows:
+No Windows:
 
-```bash
-explorer.exe .
+```text
+http://localhost:8080
 ```
 
-## 14. Parar o LocalAI
+## 16. Parar o LocalAI
 
 ```bash
 cd ~/localai-teste
 docker compose down
 ```
 
-## 15. Remover tudo do teste
+## 17. Remover tudo do teste
 
 Atenção: este comando apaga a pasta do teste e os modelos baixados.
 
@@ -207,16 +194,21 @@ docker rm -f local-ai 2>/dev/null || true
 rm -rf ~/localai-teste
 ```
 
-## 16. Fala curta para o vídeo
+## 18. Fala curta para o vídeo
 
 ```text
-Neste teste eu estou usando Windows com WSL2 e Docker Desktop. O LocalAI roda em container, mas os comandos são executados dentro do Ubuntu/WSL. A ideia não é transformar o LocalAI no cérebro principal do Robô Frank. No meu caso, com hardware mais limitado, faz mais sentido usar ele como uma peça auxiliar: transcrição com Whisper, voz com Piper e talvez embeddings ou modelos pequenos. O raciocínio pesado pode continuar em outro modelo, mas a parte de voz pode ficar local, privada e sem API paga.
+Neste teste eu estou usando Windows com WSL2 e Docker Desktop. O LocalAI roda em container, mas os comandos são executados dentro do Ubuntu/WSL. Para validar a instalação, estou usando um modelo pequeno e leve, o Phi-2. A ideia aqui não é competir com modelos gigantes na nuvem, mas mostrar que hoje já existe IA local funcionando em hardware comum e até sem GPU dedicada.
 ```
 
-## 17. Fontes oficiais
+## 19. Observação importante para o vídeo
+
+```text
+Instalar o LocalAI não instala automaticamente modelos. Primeiro o servidor sobe. Depois você baixa e configura os modelos que quer usar. Se chamar um modelo antes de instalar ou configurar, o LocalAI responde que o modelo não foi encontrado. Isso é normal.
+```
+
+## 20. Fontes oficiais
 
 - https://github.com/mudler/LocalAI
 - https://localai.io/installation/
-- https://localai.io/features/audio-to-text/
-- https://localai.io/features/text-to-audio/
 - https://localai.io/models/
+- https://localai.io/getting-started/models/
