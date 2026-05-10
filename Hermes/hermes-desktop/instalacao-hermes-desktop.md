@@ -1,16 +1,16 @@
-# Como instalar o Hermes Desktop
+# Como instalar o Hermes Desktop no Ubuntu usando DEB
 
 ## O que vamos fazer
 
-Instalar o Hermes Desktop no Linux.
+Instalar o Hermes Desktop no Ubuntu usando o pacote `.deb`.
+
+Este guia usa apenas um caminho de instalação para evitar confusão.
 
 O Hermes Desktop é a interface visual do Hermes Agent.
 
-Ele serve para usar o Hermes por uma tela gráfica, sem depender apenas do terminal.
+Neste teste, o Hermes Agent já existe no ambiente.
 
-Neste guia, o Hermes Agent já existe no ambiente.
-
-Por isso, não vamos apagar nem alterar os dados persistentes do Hermes Agent.
+Por isso, este guia não instala o Hermes Agent do zero e não apaga os dados persistentes do Hermes Agent.
 
 ## Repositórios
 
@@ -28,20 +28,11 @@ O Hermes Agent guarda dados em:
 
     ~/.hermes
 
-Essa pasta pode conter:
-
-    ~/.hermes/.env
-    ~/.hermes/config.yaml
-    ~/.hermes/hermes-agent
-    ~/.hermes/profiles/
-    ~/.hermes/state.db
-    ~/.hermes/cron/jobs.json
-
 Neste guia, não vamos apagar:
 
     ~/.hermes
 
-A remoção segura deste documento remove apenas o aplicativo Hermes Desktop e dados locais do app desktop, quando existirem.
+Essa pasta pertence ao Hermes Agent, não apenas ao Hermes Desktop.
 
 ---
 
@@ -57,9 +48,10 @@ Se o comando `hermes --help` responder, o Hermes Agent já está disponível no 
 
 ---
 
-# 2. Criar pasta para baixar o Hermes Desktop
+# 2. Criar a pasta de download
 
     mkdir -p ~/Downloads/hermes-desktop
+
     cd ~/Downloads/hermes-desktop
 
 ---
@@ -68,90 +60,71 @@ Se o comando `hermes --help` responder, o Hermes Agent já está disponível no 
 
     xdg-open https://github.com/fathah/hermes-desktop/releases
 
-Na página de releases, baixar uma das opções:
+Na página de releases, baixar o arquivo Linux `.deb`.
 
-    Linux AppImage: arquivo .AppImage
-    Linux Ubuntu/Debian: arquivo .deb
-    Linux Fedora: arquivo .rpm
-    Windows: arquivo .exe
-    macOS: arquivo .dmg
+Exemplo de nome do arquivo:
 
-Para Ubuntu, existem duas opções boas:
+    hermes-desktop_0.3.5_amd64.deb
 
-    .AppImage
+A versão pode mudar.
+
+O importante é baixar o arquivo que termina com:
+
     .deb
 
 ---
 
-# 4. Instalação usando AppImage
+# 4. Confirmar que o arquivo foi baixado
 
-Use esta opção se quiser testar sem instalar pacote no sistema.
-
-Depois de baixar o arquivo `.AppImage`, entre na pasta onde ele foi salvo:
-
-    cd ~/Downloads/hermes-desktop
-
-Dar permissão de execução:
-
-    chmod +x *.AppImage
-
-Executar:
-
-    ./*.AppImage
-
-Se o sistema pedir integração com o menu, aceitar se quiser.
-
----
-
-# 5. Instalação usando DEB
-
-Use esta opção se quiser instalar como aplicativo do sistema no Ubuntu/Debian.
-
-Depois de baixar o arquivo `.deb`, entre na pasta onde ele foi salvo:
-
-    cd ~/Downloads/hermes-desktop
-
-Instalar:
-
-    sudo apt install ./hermes-desktop*.deb
-
-Se o nome do arquivo baixado estiver diferente, listar os arquivos:
+Dentro da pasta `~/Downloads/hermes-desktop`, rodar:
 
     ls -lh
 
-E instalar apontando para o nome correto:
+Você deve ver um arquivo parecido com:
 
-    sudo apt install ./NOME_DO_ARQUIVO.deb
+    hermes-desktop_0.3.5_amd64.deb
+
+Se não aparecer nenhum arquivo `.deb`, o download foi salvo em outra pasta ou ainda não foi feito.
+
+---
+
+# 5. Instalar o Hermes Desktop
+
+Dentro da pasta `~/Downloads/hermes-desktop`, rodar:
+
+    sudo apt install ./*.deb
+
+Se pedir senha, digitar a senha do Ubuntu.
 
 ---
 
 # 6. Abrir o Hermes Desktop
 
-Depois de instalar via `.deb`, procurar no menu de aplicativos por:
+Depois da instalação, procurar no menu de aplicativos por:
+
+    Hermes
+
+ou:
 
     Hermes Agent
 
-Ou tentar abrir pelo terminal:
+Se quiser tentar abrir pelo terminal, testar:
+
+    hermes-desktop
+
+Se esse comando não funcionar, testar:
 
     hermes-agent
 
-Se o comando não existir, abrir pelo menu gráfico.
+Se nenhum dos dois comandos abrir, procurar pelo aplicativo no menu gráfico do Ubuntu.
 
 ---
 
 # 7. Primeiro uso
 
-Na primeira abertura, o Hermes Desktop pode perguntar se você quer:
+Na primeira abertura, o Hermes Desktop pode perguntar se você quer rodar localmente ou conectar em um servidor remoto.
 
-    Run Hermes locally
-
-ou:
-
-    Connect to remote Hermes API server
-
-Para teste local, escolher:
-
-    Run Hermes locally
+Para este teste, escolher o modo local.
 
 O app deve procurar a instalação local do Hermes em:
 
@@ -163,7 +136,7 @@ Como o Hermes Agent já existe no ambiente, o ideal é que o app reconheça a in
 
 # 8. Endereço local usado pelo app
 
-No modo local, o Hermes Desktop usa o Hermes Agent em:
+No modo local, o Hermes Desktop pode usar o Hermes Agent em:
 
     http://127.0.0.1:8642
 
@@ -175,26 +148,25 @@ Se o app não conseguir conectar, verificar se o Hermes está funcionando pelo t
 
 ---
 
-# 9. Funções principais para testar
+# 9. Funções principais para testar no vídeo
 
 ## 1. Chat
 
 Testar se o app consegue conversar com o Hermes Agent pela interface visual.
 
-O que observar:
+Observar:
 
     abre corretamente
     envia mensagem
     recebe resposta
     mostra streaming
     renderiza markdown
-    mostra progresso de ferramentas, se houver
 
 ## 2. Sessions
 
 Testar se o app mostra sessões ou conversas anteriores.
 
-O que observar:
+Observar:
 
     lista histórico
     permite buscar conversas
@@ -203,53 +175,24 @@ O que observar:
 
 ## 3. Memory
 
-Testar se o app mostra ou permite editar a memória.
+Testar se o app mostra ou permite acessar a memória.
 
-O que observar:
+Observar:
 
     mostra entradas de memória
     mostra perfil do usuário
-    mostra capacidade ou estado da memória
-    permite editar sem quebrar o Hermes
+    mostra estado da memória
+    permite visualizar sem quebrar o Hermes
 
 ---
 
-# 10. Principais áreas do Hermes Desktop
+# 10. Comandos úteis para diagnóstico
 
-O app pode ter telas como:
-
-    Chat
-    Sessions
-    Agents / Profiles
-    Skills
-    Models
-    Memory
-    Soul / Persona
-    Tools
-    Schedules
-    Gateway
-    Office
-    Settings
-    Logs
-    Backup
-    Import
-    Debug dump
-
-Algumas telas podem mudar conforme a versão.
-
-O projeto ainda está em desenvolvimento ativo.
-
----
-
-# 11. Principais comandos úteis do Hermes Agent
-
-Mesmo usando o Desktop App, estes comandos ajudam no diagnóstico.
-
-Ver se o Hermes existe:
+Ver se o Hermes Agent existe:
 
     which hermes || true
 
-Ver ajuda:
+Ver ajuda do Hermes:
 
     hermes --help
 
@@ -273,15 +216,19 @@ Ver versão:
 
     hermes --version
 
+Ver pacote instalado do Desktop:
+
+    dpkg -l | grep -i hermes
+
 ---
 
-# 12. Remover Hermes Desktop instalado via DEB
+# 11. Remover o Hermes Desktop instalado via DEB
 
 Primeiro, descobrir o nome do pacote instalado:
 
     dpkg -l | grep -i hermes
 
-Se aparecer `hermes-desktop`, remover:
+Se aparecer `hermes-desktop`, remover com:
 
     sudo apt remove hermes-desktop -y
 
@@ -289,59 +236,31 @@ Remover dependências que não são mais usadas:
 
     sudo apt autoremove -y
 
-Se o nome do pacote for outro, remover usando o nome exibido pelo comando:
+Se o nome do pacote for outro, remover usando o nome exibido pelo comando `dpkg -l | grep -i hermes`.
+
+Exemplo:
 
     sudo apt remove NOME_DO_PACOTE -y
 
 ---
 
-# 13. Remover Hermes Desktop usado como AppImage
+# 12. Ver dados locais do app desktop
 
-Se usou AppImage, basta apagar o arquivo baixado.
-
-    rm -f ~/Downloads/hermes-desktop/*.AppImage
-
-Se criou outro local para o AppImage, apagar o arquivo nesse local.
-
-Exemplo:
-
-    rm -f ~/Aplicativos/*Hermes*.AppImage
-
----
-
-# 14. Remover atalho do AppImage, se existir
-
-Alguns AppImages criam atalhos em `~/.local/share/applications`.
-
-Verificar:
-
-    find ~/.local/share/applications -iname '*hermes*' -print
-
-Remover apenas atalhos do Hermes Desktop:
-
-    find ~/.local/share/applications -iname '*hermes*' -delete
-
----
-
-# 15. Ver dados locais do app desktop
-
-Não vamos apagar `~/.hermes`.
+Não apagar `~/.hermes`.
 
 Antes de remover qualquer dado persistente do app desktop, verificar possíveis pastas do aplicativo:
 
     find ~/.config ~/.cache ~/.local/share -maxdepth 2 -iname '*hermes*' -print 2>/dev/null
 
-Atenção:
+A pasta abaixo não deve ser removida neste guia:
 
     ~/.hermes
 
-não deve ser removido neste guia.
-
 ---
 
-# 16. Remover dados persistentes do Hermes Desktop
+# 13. Remover dados persistentes do Hermes Desktop
 
-O app é um aplicativo Electron.
+O Hermes Desktop é um aplicativo Electron.
 
 Dependendo da versão e do empacotamento, os dados do app desktop podem aparecer em locais como:
 
@@ -363,7 +282,7 @@ Remover apenas dados do app desktop:
 
 ---
 
-# 17. Garantir que os dados do Hermes Agent continuam intactos
+# 14. Garantir que os dados do Hermes Agent continuam intactos
 
 Verificar se `~/.hermes` ainda existe:
 
@@ -375,29 +294,27 @@ Testar o Hermes Agent:
 
 ---
 
-# 18. Remoção completa apenas do Desktop App
+# 15. Remoção completa apenas do Desktop App
 
 Fluxo seguro:
 
     dpkg -l | grep -i hermes || true
 
     sudo apt remove hermes-desktop -y || true
+
     sudo apt autoremove -y
-
-    rm -f ~/Downloads/hermes-desktop/*.AppImage
-
-    find ~/.local/share/applications -iname '*hermes*' -print
 
     rm -rf "$HOME/.config/Hermes Agent"
     rm -rf "$HOME/.cache/Hermes Agent"
     rm -rf "$HOME/.local/share/Hermes Agent"
 
     ls -la ~/.hermes
+
     hermes --help
 
 ---
 
-# 19. O que não apagar
+# 16. O que não apagar
 
 Não apagar:
 
@@ -415,34 +332,44 @@ Não rodar:
 
     rm -rf ~/.hermes/profiles
 
-Esses dados pertencem ao Hermes Agent, não apenas ao Desktop App.
+Esses dados pertencem ao Hermes Agent, não apenas ao Hermes Desktop.
 
 ---
 
-# 20. Resumo rápido
+# 17. Resumo rápido
 
-Para instalar:
+Criar pasta:
 
     mkdir -p ~/Downloads/hermes-desktop
+
     cd ~/Downloads/hermes-desktop
+
+Abrir releases:
+
     xdg-open https://github.com/fathah/hermes-desktop/releases
 
-Baixar `.AppImage` ou `.deb`.
+Baixar o arquivo `.deb`.
 
-AppImage:
+Conferir:
 
-    chmod +x *.AppImage
-    ./*.AppImage
+    ls -lh
 
-DEB:
+Instalar:
 
-    sudo apt install ./hermes-desktop*.deb
+    sudo apt install ./*.deb
 
-Para remover o Desktop App sem apagar o Hermes Agent:
+Remover apenas o Desktop App:
 
     sudo apt remove hermes-desktop -y || true
+
     sudo apt autoremove -y
+
     rm -rf "$HOME/.config/Hermes Agent"
     rm -rf "$HOME/.cache/Hermes Agent"
     rm -rf "$HOME/.local/share/Hermes Agent"
+
+Conferir que o Hermes Agent continua intacto:
+
     ls -la ~/.hermes
+
+    hermes --help
