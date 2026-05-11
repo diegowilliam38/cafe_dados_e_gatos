@@ -39,7 +39,52 @@ wsl --install -d Ubuntu
 
 Se o Windows pedir, reinicie o computador.
 
-## 3. Abrir o Ubuntu
+## 3. Corrigir erro do WSL no Windows 10
+
+Use esta etapa se aparecer erro parecido com:
+
+```text
+WslRegisterDistribution failed with error: 0x80080005
+Error: 0x80080005 Falha na execução do servidor
+```
+
+Onde rodar: PowerShell como Administrador
+
+```powershell
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+```
+
+Depois rode:
+
+```powershell
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+```
+
+Reinicie o computador.
+
+Depois da reinicialização, abra o PowerShell como Administrador novamente e rode:
+
+```powershell
+wsl --set-default-version 2
+```
+
+Tente instalar ou abrir o Ubuntu novamente:
+
+```powershell
+wsl --install -d Ubuntu
+```
+
+Se o comando acima informar que o Ubuntu já está instalado, abra pelo Menu Iniciar.
+
+Se ainda der erro no WSL2, instale o kernel oficial do WSL2 pela Microsoft:
+
+```text
+https://aka.ms/wsl2kernel
+```
+
+Depois reinicie o computador e tente abrir o Ubuntu novamente.
+
+## 4. Abrir o Ubuntu
 
 Onde rodar: Menu Iniciar do Windows
 
@@ -51,7 +96,7 @@ Ubuntu
 
 Na primeira abertura, crie um usuário e uma senha para o Linux.
 
-## 4. Atualizar o Ubuntu
+## 5. Atualizar o Ubuntu
 
 Onde rodar: Ubuntu/WSL
 
@@ -60,7 +105,7 @@ sudo apt update
 sudo apt upgrade -y
 ```
 
-## 5. Instalar dependências básicas
+## 6. Instalar dependências básicas
 
 Onde rodar: Ubuntu/WSL
 
@@ -68,7 +113,7 @@ Onde rodar: Ubuntu/WSL
 sudo apt install -y curl git build-essential ca-certificates
 ```
 
-## 6. Instalar Node.js 22
+## 7. Instalar Node.js 22
 
 Onde rodar: Ubuntu/WSL
 
@@ -84,7 +129,7 @@ node -v
 npm -v
 ```
 
-## 7. Instalar pnpm
+## 8. Instalar pnpm
 
 Onde rodar: Ubuntu/WSL
 
@@ -98,7 +143,7 @@ Verificar:
 pnpm -v
 ```
 
-## 8. Instalar Hermes Agent dentro do WSL
+## 9. Instalar Hermes Agent dentro do WSL
 
 Onde rodar: Ubuntu/WSL
 
@@ -114,7 +159,7 @@ Verificar instalação:
 hermes --version
 ```
 
-## 9. Configurar Hermes Agent
+## 10. Configurar Hermes Agent
 
 Onde rodar: Ubuntu/WSL
 
@@ -124,7 +169,7 @@ hermes setup
 
 Configure o provedor e o modelo que será usado.
 
-## 10. Testar Hermes Agent
+## 11. Testar Hermes Agent
 
 Onde rodar: Ubuntu/WSL
 
@@ -138,7 +183,7 @@ Para sair:
 CTRL + C
 ```
 
-## 11. Iniciar Hermes Gateway
+## 12. Iniciar Hermes Gateway
 
 Onde rodar: Ubuntu/WSL
 
@@ -148,7 +193,7 @@ hermes gateway run
 
 Deixe esse terminal aberto.
 
-## 12. Testar Hermes Gateway
+## 13. Testar Hermes Gateway
 
 Onde rodar: outro terminal Ubuntu/WSL
 
@@ -158,7 +203,7 @@ curl "http://127.0.0.1:8642/health"
 
 Se responder sem erro de conexão, o gateway está ativo.
 
-## 13. Iniciar Hermes Dashboard
+## 14. Iniciar Hermes Dashboard
 
 Onde rodar: outro terminal Ubuntu/WSL
 
@@ -168,7 +213,7 @@ hermes dashboard
 
 Deixe esse terminal aberto.
 
-## 14. Testar Hermes Dashboard
+## 15. Testar Hermes Dashboard
 
 Onde rodar: outro terminal Ubuntu/WSL
 
@@ -178,7 +223,7 @@ curl "http://127.0.0.1:9119/api/status"
 
 Se responder sem erro de conexão, o dashboard está ativo.
 
-## 15. Instalar Hermes Workspace
+## 16. Instalar Hermes Workspace
 
 Onde rodar: Ubuntu/WSL
 
@@ -190,7 +235,7 @@ pnpm install
 cp ".env.example" ".env"
 ```
 
-## 16. Configurar Hermes Workspace
+## 17. Configurar Hermes Workspace
 
 Onde rodar: Ubuntu/WSL dentro da pasta "hermes-workspace"
 
@@ -200,7 +245,7 @@ printf "\nHERMES_API_URL=http://127.0.0.1:8642\n" >> ".env"
 printf "HERMES_DASHBOARD_URL=http://127.0.0.1:9119\n" >> ".env"
 ```
 
-## 17. Iniciar Hermes Workspace
+## 18. Iniciar Hermes Workspace
 
 Onde rodar: Ubuntu/WSL dentro da pasta "hermes-workspace"
 
@@ -211,7 +256,7 @@ pnpm dev
 
 Deixe esse terminal aberto.
 
-## 18. Abrir o Hermes Workspace
+## 19. Abrir o Hermes Workspace
 
 Onde rodar: navegador do Windows
 
@@ -221,7 +266,7 @@ Acesse:
 http://localhost:3000
 ```
 
-## 19. Teste básico no Workspace
+## 20. Teste básico no Workspace
 
 Onde rodar: navegador do Windows
 
@@ -237,7 +282,7 @@ Verificar se skills aparecem
 Verificar se painel funciona como interface do Hermes Agent
 ```
 
-## 20. Instalar Docker Desktop no Windows
+## 21. Instalar Docker Desktop no Windows
 
 Onde rodar: Windows
 
@@ -247,7 +292,7 @@ Durante a instalação, mantenha habilitada a opção de usar WSL2.
 
 Depois de instalar, abra o Docker Desktop.
 
-## 21. Ativar integração do Docker com Ubuntu/WSL
+## 22. Ativar integração do Docker com Ubuntu/WSL
 
 Onde rodar: Docker Desktop no Windows
 
@@ -269,7 +314,7 @@ Clique em:
 Apply & Restart
 ```
 
-## 22. Testar Docker dentro do WSL
+## 23. Testar Docker dentro do WSL
 
 Onde rodar: Ubuntu/WSL
 
@@ -281,7 +326,7 @@ docker ps
 
 Se os comandos responderem sem erro, o Docker está funcionando dentro do WSL.
 
-## 23. Testar container simples
+## 24. Testar container simples
 
 Onde rodar: Ubuntu/WSL
 
@@ -289,7 +334,7 @@ Onde rodar: Ubuntu/WSL
 docker run "hello-world"
 ```
 
-## 24. Parar Hermes Workspace
+## 25. Parar Hermes Workspace
 
 Onde rodar: terminal onde o Workspace está rodando
 
@@ -297,7 +342,7 @@ Onde rodar: terminal onde o Workspace está rodando
 CTRL + C
 ```
 
-## 25. Parar Hermes Dashboard
+## 26. Parar Hermes Dashboard
 
 Onde rodar: terminal onde o Dashboard está rodando
 
@@ -305,7 +350,7 @@ Onde rodar: terminal onde o Dashboard está rodando
 CTRL + C
 ```
 
-## 26. Parar Hermes Gateway
+## 27. Parar Hermes Gateway
 
 Onde rodar: terminal onde o Gateway está rodando
 
@@ -313,7 +358,7 @@ Onde rodar: terminal onde o Gateway está rodando
 CTRL + C
 ```
 
-## 27. Atualizar Hermes Agent
+## 28. Atualizar Hermes Agent
 
 Onde rodar: Ubuntu/WSL
 
@@ -327,7 +372,7 @@ Se esse comando não existir na versão instalada, use novamente o instalador of
 curl -fsSL "https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh" | bash
 ```
 
-## 28. Atualizar Hermes Workspace
+## 29. Atualizar Hermes Workspace
 
 Onde rodar: Ubuntu/WSL
 
@@ -343,7 +388,7 @@ Depois, iniciar novamente:
 pnpm dev
 ```
 
-## 29. Remover somente Hermes Workspace
+## 30. Remover somente Hermes Workspace
 
 Aviso: este comando apaga a pasta do Hermes Workspace.
 
@@ -355,7 +400,7 @@ Onde rodar: Ubuntu/WSL
 rm -rf "$HOME/hermes-workspace"
 ```
 
-## 30. Fazer backup dos dados do Hermes Agent
+## 31. Fazer backup dos dados do Hermes Agent
 
 Aviso: a pasta ".hermes" pode conter configurações, memória, sessões, skills e dados persistentes do Hermes Agent.
 
@@ -365,7 +410,7 @@ Onde rodar: Ubuntu/WSL
 cp -r "$HOME/.hermes" "$HOME/backup-hermes"
 ```
 
-## 31. Remover Hermes Agent e dados persistentes
+## 32. Remover Hermes Agent e dados persistentes
 
 Aviso: este comando pode apagar configurações, memória, sessões, skills e dados persistentes do Hermes Agent.
 
@@ -378,7 +423,7 @@ rm -rf "$HOME/.hermes"
 rm -f "$HOME/.local/bin/hermes"
 ```
 
-## 32. Verificar se Hermes foi removido
+## 33. Verificar se Hermes foi removido
 
 Onde rodar: Ubuntu/WSL
 
@@ -389,7 +434,7 @@ hermes --version
 
 Se o comando não for encontrado, o Hermes foi removido do PATH atual.
 
-## 33. Observação importante
+## 34. Observação importante
 
 Este guia não instala o Hermes como aplicativo nativo puro no Windows.
 
@@ -399,7 +444,7 @@ O Docker Desktop fica integrado ao WSL2.
 
 O navegador do Windows acessa o Workspace usando a porta local.
 
-## 34. Estrutura final esperada
+## 35. Estrutura final esperada
 
 Ao final, o ambiente fica assim:
 
