@@ -21,6 +21,52 @@ Instalar o Hermes Agent dentro do Ubuntu no WSL2 e instalar o Hermes Workspace c
 - Hermes Dashboard: "http://127.0.0.1:9119"
 - Hermes Workspace: "http://localhost:3000"
 
+## Exemplo de arquitetura híbrida com Ollama e Groq
+
+O Hermes Agent pode usar modelos diferentes para agentes diferentes.
+
+Exemplo:
+
+```text
+Hermes Agent
+├── Orchestrator → Ollama / qwen2.5:14b
+├── Coder → Ollama / qwen2.5-coder:7b
+├── Researcher → Groq / llama-3.3-70b-versatile
+└── Fast Agent → Groq / llama-3.1-8b-instant
+```
+
+Neste exemplo:
+
+- Dois agentes usam Ollama local
+- Dois agentes usam Groq cloud
+- Cada agente pode ter função diferente
+- O Hermes pode delegar tarefas entre eles
+
+Exemplo conceitual de configuração:
+
+```yaml
+model:
+  provider: "ollama"
+  model: "qwen2.5:14b"
+
+delegation:
+  provider: "groq"
+  model: "llama-3.3-70b-versatile"
+```
+
+Também é possível usar somente Ollama local.
+
+Exemplo:
+
+```text
+Orchestrator → qwen2.5:14b
+Coder → qwen2.5-coder:7b
+Fast Agent → phi4-mini
+Researcher → gemma3:12b
+```
+
+Neste caso todos os agentes usam Ollama.
+
 ## 1. Verificar se o WSL está instalado
 
 Onde rodar: PowerShell
@@ -280,184 +326,4 @@ Verificar se sessões aparecem
 Verificar se memória aparece
 Verificar se skills aparecem
 Verificar se painel funciona como interface do Hermes Agent
-```
-
-## 21. Instalar Docker Desktop no Windows
-
-Onde rodar: Windows
-
-Baixe e instale o Docker Desktop pelo site oficial.
-
-Durante a instalação, mantenha habilitada a opção de usar WSL2.
-
-Depois de instalar, abra o Docker Desktop.
-
-## 22. Ativar integração do Docker com Ubuntu/WSL
-
-Onde rodar: Docker Desktop no Windows
-
-Acesse:
-
-```text
-Settings > Resources > WSL Integration
-```
-
-Ative a integração para:
-
-```text
-Ubuntu
-```
-
-Clique em:
-
-```text
-Apply & Restart
-```
-
-## 23. Testar Docker dentro do WSL
-
-Onde rodar: Ubuntu/WSL
-
-```bash
-docker --version
-docker compose version
-docker ps
-```
-
-Se os comandos responderem sem erro, o Docker está funcionando dentro do WSL.
-
-## 24. Testar container simples
-
-Onde rodar: Ubuntu/WSL
-
-```bash
-docker run "hello-world"
-```
-
-## 25. Parar Hermes Workspace
-
-Onde rodar: terminal onde o Workspace está rodando
-
-```text
-CTRL + C
-```
-
-## 26. Parar Hermes Dashboard
-
-Onde rodar: terminal onde o Dashboard está rodando
-
-```text
-CTRL + C
-```
-
-## 27. Parar Hermes Gateway
-
-Onde rodar: terminal onde o Gateway está rodando
-
-```text
-CTRL + C
-```
-
-## 28. Atualizar Hermes Agent
-
-Onde rodar: Ubuntu/WSL
-
-```bash
-hermes update
-```
-
-Se esse comando não existir na versão instalada, use novamente o instalador oficial:
-
-```bash
-curl -fsSL "https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh" | bash
-```
-
-## 29. Atualizar Hermes Workspace
-
-Onde rodar: Ubuntu/WSL
-
-```bash
-cd "$HOME/hermes-workspace"
-git pull
-pnpm install
-```
-
-Depois, iniciar novamente:
-
-```bash
-pnpm dev
-```
-
-## 30. Remover somente Hermes Workspace
-
-Aviso: este comando apaga a pasta do Hermes Workspace.
-
-Não apaga a configuração principal do Hermes Agent.
-
-Onde rodar: Ubuntu/WSL
-
-```bash
-rm -rf "$HOME/hermes-workspace"
-```
-
-## 31. Fazer backup dos dados do Hermes Agent
-
-Aviso: a pasta ".hermes" pode conter configurações, memória, sessões, skills e dados persistentes do Hermes Agent.
-
-Onde rodar: Ubuntu/WSL
-
-```bash
-cp -r "$HOME/.hermes" "$HOME/backup-hermes"
-```
-
-## 32. Remover Hermes Agent e dados persistentes
-
-Aviso: este comando pode apagar configurações, memória, sessões, skills e dados persistentes do Hermes Agent.
-
-Faça backup antes.
-
-Onde rodar: Ubuntu/WSL
-
-```bash
-rm -rf "$HOME/.hermes"
-rm -f "$HOME/.local/bin/hermes"
-```
-
-## 33. Verificar se Hermes foi removido
-
-Onde rodar: Ubuntu/WSL
-
-```bash
-which hermes
-hermes --version
-```
-
-Se o comando não for encontrado, o Hermes foi removido do PATH atual.
-
-## 34. Observação importante
-
-Este guia não instala o Hermes como aplicativo nativo puro no Windows.
-
-O Hermes Agent roda dentro do Ubuntu no WSL2.
-
-O Docker Desktop fica integrado ao WSL2.
-
-O navegador do Windows acessa o Workspace usando a porta local.
-
-## 35. Estrutura final esperada
-
-Ao final, o ambiente fica assim:
-
-```text
-Windows
-├── Navegador
-│   └── Acessa "http://localhost:3000"
-├── Docker Desktop
-│   └── Integrado ao Ubuntu/WSL
-└── WSL2
-    └── Ubuntu
-        ├── Hermes Agent
-        ├── Hermes Gateway em "http://127.0.0.1:8642"
-        ├── Hermes Dashboard em "http://127.0.0.1:9119"
-        └── Hermes Workspace em "http://localhost:3000"
 ```
