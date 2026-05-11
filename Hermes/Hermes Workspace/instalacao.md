@@ -1,4 +1,4 @@
-# Como instalar Hermes Agent e Hermes Workspace no Windows 10 com WSL2, Docker e Ollama no Linux
+# Como instalar Hermes Agent e Hermes Workspace no Windows 11 com WSL2, Docker e Ollama no Linux
 
 ## Objetivo
 
@@ -9,7 +9,7 @@ Neste fluxo, o Ollama também fica instalado dentro do Linux/WSL.
 ## Arquitetura usada
 
 ```text
-Windows 10
+Windows 11
 └── Navegador do Windows
     └── Acessa o Hermes Workspace em http://localhost:3000
 
@@ -50,50 +50,25 @@ wsl --install -d Ubuntu
 
 Se o Windows pedir, reinicie o computador.
 
-## 3. Corrigir erro do WSL no Windows 10
+## 3. Confirmar se o Ubuntu está em WSL2
 
-Use esta etapa se aparecer erro parecido com:
-
-```text
-WslRegisterDistribution failed with error: 0x80080005
-Error: 0x80080005 Falha na execução do servidor
-```
-
-Onde rodar: PowerShell como Administrador
+Onde rodar: PowerShell
 
 ```powershell
-dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+wsl -l -v
 ```
 
-Depois rode:
+Se o Ubuntu não estiver como versão 2, rode:
 
 ```powershell
-dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+wsl --set-version Ubuntu 2
 ```
 
-Reinicie o computador.
-
-Depois da reinicialização, abra o PowerShell como Administrador novamente e rode:
+Defina o WSL2 como padrão:
 
 ```powershell
 wsl --set-default-version 2
 ```
-
-Tente instalar ou abrir o Ubuntu novamente:
-
-```powershell
-wsl --install -d Ubuntu
-```
-
-Se o comando acima informar que o Ubuntu já está instalado, abra pelo Menu Iniciar.
-
-Se ainda der erro no WSL2, instale o kernel oficial do WSL2 pela Microsoft:
-
-```text
-https://aka.ms/wsl2kernel
-```
-
-Depois reinicie o computador e tente abrir o Ubuntu novamente.
 
 ## 4. Abrir o Ubuntu
 
