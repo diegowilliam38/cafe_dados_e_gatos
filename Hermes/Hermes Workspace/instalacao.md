@@ -67,6 +67,70 @@ Researcher → gemma3:12b
 
 Neste caso todos os agentes usam Ollama.
 
+## Usar Ollama do Windows no Hermes dentro do WSL sem Docker
+
+Quando o Hermes estiver rodando dentro do WSL/Linux e o Ollama estiver instalado no Windows, o WSL pode não conseguir acessar o Ollama usando "localhost" ou "127.0.0.1".
+
+Teste dentro do WSL:
+
+```bash
+curl "http://localhost:11434/api/tags"
+```
+
+Se aparecer erro de conexão, teste também:
+
+```bash
+curl "http://127.0.0.1:11434/api/tags"
+```
+
+Se também falhar, libere o Ollama no Windows para aceitar conexões fora do "localhost".
+
+Onde rodar: PowerShell do Windows
+
+```powershell
+setx OLLAMA_HOST "0.0.0.0:11434"
+```
+
+Depois faça:
+
+```text
+Feche completamente o Ollama no Windows.
+Feche também o ícone do Ollama na bandeja do sistema.
+Abra o Ollama novamente.
+```
+
+No WSL, descubra o IP do Windows:
+
+```bash
+cat "/etc/resolv.conf" | grep "nameserver"
+```
+
+Exemplo de retorno:
+
+```text
+nameserver 172.27.192.1
+```
+
+Teste o acesso usando o IP que apareceu:
+
+```bash
+curl "http://172.27.192.1:11434/api/tags"
+```
+
+Se aparecer a lista de modelos, use no Hermes:
+
+```text
+http://172.27.192.1:11434
+```
+
+Se o Hermes pedir endpoint OpenAI-compatible, use:
+
+```text
+http://172.27.192.1:11434/v1
+```
+
+Troque "172.27.192.1" pelo IP real que apareceu no seu WSL.
+
 ## 1. Verificar se o WSL está instalado
 
 Onde rodar: PowerShell
