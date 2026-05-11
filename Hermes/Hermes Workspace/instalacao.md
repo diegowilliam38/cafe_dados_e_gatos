@@ -1,482 +1,418 @@
-# Como instalar o Hermes Workspace
+# Como instalar Hermes Agent e Hermes Workspace no Windows com WSL2 e Docker
 
-## Pasta no GitHub
+## Objetivo
 
-Criar a pasta:
+Instalar o Hermes Agent dentro do Ubuntu no WSL2 e instalar o Hermes Workspace como painel web para usar o Hermes pelo navegador do Windows.
 
-```text
-Hermes/Hermes Workspace/
-```
+## Arquitetura usada
 
-Arquivos:
-
-```text
-Hermes/Hermes Workspace/instalacao.md
-```
-
-## O que vamos fazer
-
-```text
-instalar dependências
-baixar o Hermes Workspace
-configurar o arquivo .env
-apontar para o Hermes Gateway
-subir a interface em localhost:3000
-testar o funcionamento
-```
+- Windows como sistema principal
+- Ubuntu rodando dentro do WSL2
+- Hermes Agent instalado dentro do Ubuntu/WSL
+- Hermes Gateway rodando dentro do Ubuntu/WSL
+- Hermes Dashboard rodando dentro do Ubuntu/WSL
+- Hermes Workspace rodando dentro do Ubuntu/WSL
+- Navegador do Windows acessando o Workspace
+- Docker Desktop integrado ao WSL2 quando necessário
 
 ## Portas usadas
 
+- Hermes Gateway: "http://127.0.0.1:8642"
+- Hermes Dashboard: "http://127.0.0.1:9119"
+- Hermes Workspace: "http://localhost:3000"
+
+## 1. Verificar se o WSL está instalado
+
+Onde rodar: PowerShell
+
+```powershell
+wsl --status
+```
+
+## 2. Instalar Ubuntu no WSL2
+
+Onde rodar: PowerShell como Administrador
+
+```powershell
+wsl --install -d Ubuntu
+```
+
+Se o Windows pedir, reinicie o computador.
+
+## 3. Abrir o Ubuntu
+
+Onde rodar: Menu Iniciar do Windows
+
+Procure por:
+
 ```text
-Hermes Workspace  -> http://localhost:3000
-Hermes Gateway    -> http://127.0.0.1:8642
-Hermes Dashboard  -> http://127.0.0.1:9119
-Ollama            -> http://127.0.0.1:11434
+Ubuntu
 ```
 
-## Requisitos
+Na primeira abertura, crie um usuário e uma senha para o Linux.
 
-```text
-Linux, macOS ou WSL2
-Node.js 22+
-pnpm
-git
-curl
-Hermes Agent instalado
-backend compatível com OpenAI
-```
+## 4. Atualizar o Ubuntu
 
-## 1. Entrar no terminal
-
-No Linux ou WSL2:
-
-```bash
-cd ~
-```
-
-## 2. Atualizar o sistema
+Onde rodar: Ubuntu/WSL
 
 ```bash
 sudo apt update
+sudo apt upgrade -y
 ```
 
-## 3. Instalar dependências básicas
+## 5. Instalar dependências básicas
+
+Onde rodar: Ubuntu/WSL
 
 ```bash
-sudo apt install -y git curl python3 python3-pip
+sudo apt install -y curl git build-essential ca-certificates
 ```
 
-## 4. Verificar Node
+## 6. Instalar Node.js 22
+
+Onde rodar: Ubuntu/WSL
 
 ```bash
-node --version
+curl -fsSL "https://deb.nodesource.com/setup_22.x" | sudo -E bash -
+sudo apt install -y nodejs
 ```
 
-Precisa ser Node 22 ou superior.
-
-Se já estiver correto, seguir para o passo do pnpm.
-
-## 5. Instalar Node 22 com NVM
+Verificar:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+node -v
+npm -v
 ```
 
-Fechar e abrir o terminal novamente.
+## 7. Instalar pnpm
 
-Depois:
+Onde rodar: Ubuntu/WSL
 
 ```bash
-nvm install 22
-nvm use 22
-node --version
+sudo npm install -g pnpm
 ```
 
-## 6. Instalar pnpm
+Verificar:
 
 ```bash
-corepack enable
-corepack prepare pnpm@latest --activate
-pnpm --version
+pnpm -v
 ```
 
-## 7. Verificar se o Hermes existe
+## 8. Instalar Hermes Agent dentro do WSL
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+curl -fsSL "https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh" | bash
+```
+
+Feche o terminal Ubuntu e abra novamente.
+
+Verificar instalação:
 
 ```bash
 hermes --version
 ```
 
-Se o comando não existir, instalar o Hermes Agent primeiro.
+## 9. Configurar Hermes Agent
 
-## 8. Backup antes de mexer
-
-```bash
-mkdir -p ~/.hermes/backups
-cp ~/.hermes/config.yaml ~/.hermes/backups/config.yaml.bak 2>/dev/null || true
-cp ~/.hermes/.env ~/.hermes/backups/env.bak 2>/dev/null || true
-```
-
-## 9. Baixar o Hermes Workspace
+Onde rodar: Ubuntu/WSL
 
 ```bash
-cd ~
-git clone https://github.com/outsourc-e/hermes-workspace.git
-cd hermes-workspace
+hermes setup
 ```
 
-## 10. Instalar dependências
+Configure o provedor e o modelo que será usado.
+
+## 10. Testar Hermes Agent
+
+Onde rodar: Ubuntu/WSL
 
 ```bash
-pnpm install
+hermes
 ```
 
-## 11. Criar o arquivo .env
-
-```bash
-cp .env.example .env
-```
-
-## 12. Configurar a URL do Hermes Gateway
-
-```bash
-printf '\nHERMES_API_URL=http://127.0.0.1:8642\n' >> .env
-```
-
-## 13. Conferir o .env
-
-```bash
-cat .env
-```
-
-## 14. Subir o Hermes Gateway
-
-Abrir outro terminal:
-
-```bash
-hermes gateway run
-```
-
-Se for a primeira vez, pode pedir configuração do Hermes.
-
-## 15. Subir o Hermes Workspace
-
-Voltar para o terminal da pasta do Workspace:
-
-```bash
-cd ~/hermes-workspace
-pnpm dev
-```
-
-## 16. Abrir no navegador
-
-```text
-http://localhost:3000
-```
-
-## 17. Teste inicial
-
-No chat do Workspace, enviar:
-
-```text
-Oi, você está conectado ao Hermes Agent?
-```
-
-## 18. Se pedir backend
-
-Usar:
-
-```text
-http://127.0.0.1:8642
-```
-
-## 19. Instalação rápida oficial
-
-O site também mostra um instalador de uma linha:
-
-```bash
-curl -fsSL https://hermes-workspace.com/install.sh | bash
-```
-
-## 20. Instalação rápida pelo GitHub
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/outsourc-e/hermes-workspace/main/install.sh | bash
-```
-
-## 21. O que o instalador faz
-
-Segundo o script do projeto, ele faz:
-
-```text
-verifica Node 22+
-verifica git
-verifica pnpm
-instala Hermes Agent via instalador oficial da Nous, se necessário
-clona o Hermes Workspace
-cria/configura .env
-ativa o Hermes API server
-instala dependências
-linka skills incluídas
-```
-
-## 22. Observação sobre curl | bash
-
-Para vídeo e ambiente de teste, o comando rápido é prático.
-
-Para ambiente principal, prefira clonar o repositório e olhar o script antes:
-
-```bash
-cd ~
-git clone https://github.com/outsourc-e/hermes-workspace.git
-cd hermes-workspace
-less install.sh
-```
-
-## 23. Rodar usando o instalador com pasta personalizada
-
-```bash
-INSTALL_DIR="$HOME/frankenstein-ias/apps/hermes-workspace" bash -c "$(curl -fsSL https://raw.githubusercontent.com/outsourc-e/hermes-workspace/main/install.sh)"
-```
-
-## 24. Rodar manualmente na pasta do Projeto Robô Frank
-
-```bash
-mkdir -p ~/frankenstein-ias/apps
-cd ~/frankenstein-ias/apps
-git clone https://github.com/outsourc-e/hermes-workspace.git
-cd hermes-workspace
-pnpm install
-cp .env.example .env
-printf '\nHERMES_API_URL=http://127.0.0.1:8642\n' >> .env
-pnpm dev
-```
-
-Abrir:
-
-```text
-http://localhost:3000
-```
-
-## 25. Usar com Ollama em modo portátil
-
-Este modo não usa os recursos completos do Hermes Agent.
-
-Ele aponta o Workspace direto para um backend OpenAI-compatible.
-
-Se o Ollama estiver com endpoint OpenAI-compatible ativo:
-
-```bash
-cd ~/hermes-workspace
-HERMES_API_URL=http://127.0.0.1:11434/v1 pnpm dev
-```
-
-Abrir:
-
-```text
-http://localhost:3000
-```
-
-Observação:
-
-```text
-chat pode funcionar
-memória, skills, jobs e sessions podem não funcionar
-isso é esperado no modo portátil
-```
-
-## 26. Usar com Hermes Gateway para recursos completos
-
-O modo mais completo é:
-
-```text
-Hermes Workspace -> Hermes Gateway -> Hermes Agent -> Provedor/modelo
-```
-
-Subir Gateway:
-
-```bash
-hermes gateway run
-```
-
-Subir Workspace:
-
-```bash
-cd ~/hermes-workspace
-pnpm dev
-```
-
-Abrir:
-
-```text
-http://localhost:3000
-```
-
-## 27. Atualizar Hermes Workspace
-
-```bash
-cd ~/hermes-workspace
-git pull
-pnpm install
-pnpm dev
-```
-
-## 28. Parar o Workspace
-
-No terminal onde ele está rodando:
+Para sair:
 
 ```text
 CTRL + C
 ```
 
-## 29. Remover apenas o Hermes Workspace
+## 11. Iniciar Hermes Gateway
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+hermes gateway run
+```
+
+Deixe esse terminal aberto.
+
+## 12. Testar Hermes Gateway
+
+Onde rodar: outro terminal Ubuntu/WSL
+
+```bash
+curl "http://127.0.0.1:8642/health"
+```
+
+Se responder sem erro de conexão, o gateway está ativo.
+
+## 13. Iniciar Hermes Dashboard
+
+Onde rodar: outro terminal Ubuntu/WSL
+
+```bash
+hermes dashboard
+```
+
+Deixe esse terminal aberto.
+
+## 14. Testar Hermes Dashboard
+
+Onde rodar: outro terminal Ubuntu/WSL
+
+```bash
+curl "http://127.0.0.1:9119/api/status"
+```
+
+Se responder sem erro de conexão, o dashboard está ativo.
+
+## 15. Instalar Hermes Workspace
+
+Onde rodar: Ubuntu/WSL
 
 ```bash
 cd ~
-rm -rf ~/hermes-workspace
+git clone "https://github.com/outsourc-e/hermes-workspace.git"
+cd hermes-workspace
+pnpm install
+cp ".env.example" ".env"
 ```
 
-## 30. Remover a versão dentro do Projeto Robô Frank
+## 16. Configurar Hermes Workspace
+
+Onde rodar: Ubuntu/WSL dentro da pasta "hermes-workspace"
 
 ```bash
-rm -rf ~/frankenstein-ias/apps/hermes-workspace
+cd "$HOME/hermes-workspace"
+printf "\nHERMES_API_URL=http://127.0.0.1:8642\n" >> ".env"
+printf "HERMES_DASHBOARD_URL=http://127.0.0.1:9119\n" >> ".env"
 ```
 
-## 31. Restaurar backup da configuração do Hermes
+## 17. Iniciar Hermes Workspace
+
+Onde rodar: Ubuntu/WSL dentro da pasta "hermes-workspace"
 
 ```bash
-cp ~/.hermes/backups/config.yaml.bak ~/.hermes/config.yaml 2>/dev/null || true
-cp ~/.hermes/backups/env.bak ~/.hermes/.env 2>/dev/null || true
-```
-
-## 32. Limpar dependências opcionais
-
-```bash
-rm -rf ~/.cache/pnpm
-```
-
-## 33. O que não remover
-
-Não remover estas pastas se você quer manter o Hermes Agent instalado:
-
-```text
-~/.hermes
-~/.local/bin/hermes
-```
-
-## 34. Remoção total do Hermes Workspace com backups preservados
-
-```bash
-mkdir -p ~/backups-hermes-workspace
-cp -r ~/hermes-workspace ~/backups-hermes-workspace/hermes-workspace-bak 2>/dev/null || true
-rm -rf ~/hermes-workspace
-```
-
-## 35. Teste para saber se a porta 3000 está ocupada
-
-```bash
-ss -ltnp | grep 3000 || true
-```
-
-## 36. Teste para saber se o Gateway está respondendo
-
-```bash
-curl http://127.0.0.1:8642/v1/models
-```
-
-## 37. Teste para saber se o Workspace está rodando
-
-```bash
-curl http://localhost:3000
-```
-
-## 38. Se a porta 3000 estiver ocupada
-
-```bash
-cd ~/hermes-workspace
-PORT=3001 pnpm dev
-```
-
-Abrir:
-
-```text
-http://localhost:3001
-```
-
-## 39. Se der erro de Node
-
-```bash
-node --version
-```
-
-Se for menor que 22:
-
-```bash
-nvm install 22
-nvm use 22
-```
-
-## 40. Se der erro de pnpm
-
-```bash
-corepack enable
-corepack prepare pnpm@latest --activate
-pnpm --version
-```
-
-## 41. Se o Hermes não responder
-
-```bash
-hermes --version
-hermes gateway run
-```
-
-## 42. Se o chat abrir mas recursos avançados não aparecerem
-
-Isso pode acontecer quando o backend é apenas OpenAI-compatible, mas não expõe as APIs extras do Hermes Agent.
-
-Verificar se está usando:
-
-```text
-http://127.0.0.1:8642
-```
-
-e não apenas:
-
-```text
-http://127.0.0.1:11434/v1
-```
-
-## 43. Se mexeu nas configurações e quebrou
-
-Restaurar:
-
-```bash
-cp ~/.hermes/backups/config.yaml.bak ~/.hermes/config.yaml
-```
-
-Depois reiniciar o Gateway:
-
-```bash
-hermes gateway run
-```
-
-## 44. Comandos mínimos para rodar
-
-Terminal 1:
-
-```bash
-hermes gateway run
-```
-
-Terminal 2:
-
-```bash
-cd ~/hermes-workspace
+cd "$HOME/hermes-workspace"
 pnpm dev
 ```
 
-Navegador:
+Deixe esse terminal aberto.
+
+## 18. Abrir o Hermes Workspace
+
+Onde rodar: navegador do Windows
+
+Acesse:
 
 ```text
 http://localhost:3000
+```
+
+## 19. Teste básico no Workspace
+
+Onde rodar: navegador do Windows
+
+Faça estes testes:
+
+```text
+Abrir o Hermes Workspace
+Conferir se conectou ao Hermes Gateway
+Enviar uma mensagem simples
+Verificar se sessões aparecem
+Verificar se memória aparece
+Verificar se skills aparecem
+Verificar se painel funciona como interface do Hermes Agent
+```
+
+## 20. Instalar Docker Desktop no Windows
+
+Onde rodar: Windows
+
+Baixe e instale o Docker Desktop pelo site oficial.
+
+Durante a instalação, mantenha habilitada a opção de usar WSL2.
+
+Depois de instalar, abra o Docker Desktop.
+
+## 21. Ativar integração do Docker com Ubuntu/WSL
+
+Onde rodar: Docker Desktop no Windows
+
+Acesse:
+
+```text
+Settings > Resources > WSL Integration
+```
+
+Ative a integração para:
+
+```text
+Ubuntu
+```
+
+Clique em:
+
+```text
+Apply & Restart
+```
+
+## 22. Testar Docker dentro do WSL
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+docker --version
+docker compose version
+docker ps
+```
+
+Se os comandos responderem sem erro, o Docker está funcionando dentro do WSL.
+
+## 23. Testar container simples
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+docker run "hello-world"
+```
+
+## 24. Parar Hermes Workspace
+
+Onde rodar: terminal onde o Workspace está rodando
+
+```text
+CTRL + C
+```
+
+## 25. Parar Hermes Dashboard
+
+Onde rodar: terminal onde o Dashboard está rodando
+
+```text
+CTRL + C
+```
+
+## 26. Parar Hermes Gateway
+
+Onde rodar: terminal onde o Gateway está rodando
+
+```text
+CTRL + C
+```
+
+## 27. Atualizar Hermes Agent
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+hermes update
+```
+
+Se esse comando não existir na versão instalada, use novamente o instalador oficial:
+
+```bash
+curl -fsSL "https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh" | bash
+```
+
+## 28. Atualizar Hermes Workspace
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+cd "$HOME/hermes-workspace"
+git pull
+pnpm install
+```
+
+Depois, iniciar novamente:
+
+```bash
+pnpm dev
+```
+
+## 29. Remover somente Hermes Workspace
+
+Aviso: este comando apaga a pasta do Hermes Workspace.
+
+Não apaga a configuração principal do Hermes Agent.
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+rm -rf "$HOME/hermes-workspace"
+```
+
+## 30. Fazer backup dos dados do Hermes Agent
+
+Aviso: a pasta ".hermes" pode conter configurações, memória, sessões, skills e dados persistentes do Hermes Agent.
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+cp -r "$HOME/.hermes" "$HOME/backup-hermes"
+```
+
+## 31. Remover Hermes Agent e dados persistentes
+
+Aviso: este comando pode apagar configurações, memória, sessões, skills e dados persistentes do Hermes Agent.
+
+Faça backup antes.
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+rm -rf "$HOME/.hermes"
+rm -f "$HOME/.local/bin/hermes"
+```
+
+## 32. Verificar se Hermes foi removido
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+which hermes
+hermes --version
+```
+
+Se o comando não for encontrado, o Hermes foi removido do PATH atual.
+
+## 33. Observação importante
+
+Este guia não instala o Hermes como aplicativo nativo puro no Windows.
+
+O Hermes Agent roda dentro do Ubuntu no WSL2.
+
+O Docker Desktop fica integrado ao WSL2.
+
+O navegador do Windows acessa o Workspace usando a porta local.
+
+## 34. Estrutura final esperada
+
+Ao final, o ambiente fica assim:
+
+```text
+Windows
+├── Navegador
+│   └── Acessa "http://localhost:3000"
+├── Docker Desktop
+│   └── Integrado ao Ubuntu/WSL
+└── WSL2
+    └── Ubuntu
+        ├── Hermes Agent
+        ├── Hermes Gateway em "http://127.0.0.1:8642"
+        ├── Hermes Dashboard em "http://127.0.0.1:9119"
+        └── Hermes Workspace em "http://localhost:3000"
 ```
