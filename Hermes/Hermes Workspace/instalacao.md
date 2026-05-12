@@ -19,6 +19,10 @@ Ubuntu no WSL2
 ├── Docker
 │   └── Hermes Agent em container
 │       └── Usa o Ollama do WSL
+├── Hermes Gateway/API
+│   └── Porta 8642
+├── Hermes Dashboard
+│   └── Porta 9119
 └── Hermes Workspace
     └── Painel web para usar o Hermes pelo navegador
 ```
@@ -164,12 +168,16 @@ Onde rodar: outro terminal Ubuntu/WSL
 curl "http://127.0.0.1:11434/api/tags"
 ```
 
-## 12. Baixar modelo leve para teste
+```bash
+curl "http://127.0.0.1:11434/v1/models"
+```
+
+## 12. Baixar modelo
 
 Onde rodar: Ubuntu/WSL
 
 ```bash
-ollama pull phi3:mini
+ollama pull gemma4:31b-cloud
 ```
 
 ## 13. Criar pasta do Hermes
@@ -210,17 +218,56 @@ Não use:
 ghcr.io/nousresearch/hermes-agent:latest
 ```
 
-## 15. Rodar configuração inicial do Hermes Agent
+## 15. Configurar modelo do Hermes
 
 Onde rodar: Ubuntu/WSL
 
 ```bash
 docker run -it --rm \
+  --network host \
   -v "$HOME/hermes-docker/data:/opt/data" \
-  nousresearch/hermes-agent:latest setup
+  nousresearch/hermes-agent:latest model
 ```
 
-## 16. Subir Hermes Agent
+## Configuração usada
+
+### API base URL
+
+```text
+http://127.0.0.1:11434/v1
+```
+
+### API key
+
+Deixar vazio.
+
+### Modelo
+
+```text
+gemma4:31b-cloud
+```
+
+### Context length
+
+Deixar vazio para auto-detect.
+
+### Display name
+
+```text
+ollama
+```
+
+## Importante sobre WSL2 + Docker + Ollama
+
+No WSL2 com Docker Engine rodando dentro do Ubuntu:
+
+```bash
+--network host
+```
+
+Sem isso o container do Hermes não consegue acessar corretamente o Ollama local.
+
+## 16. Subir Hermes Gateway/API
 
 Onde rodar: Ubuntu/WSL
 
@@ -230,13 +277,23 @@ docker run -d \
   --restart unless-stopped \
   --network host \
   -v "$HOME/hermes-docker/data:/opt/data" \
-  -e OLLAMA_BASE_URL="http://127.0.0.1:11434" \
-  -e HERMES_HOST="0.0.0.0" \
-  -e HERMES_PORT="8642" \
+  -e API_SERVER_ENABLED=true \
+  -e API_SERVER_HOST=0.0.0.0 \
+  -e API_SERVER_PORT=8642 \
+  -e API_SERVER_KEY=12345678 \
+  -e API_SERVER_CORS_ORIGINS="*" \
   nousresearch/hermes-agent:latest gateway run
 ```
 
-## 17. Ver logs do Hermes
+## 17. Entrar no chat/CLI do Hermes
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+docker exec -it hermes-agent /opt/hermes/.venv/bin/hermes chat
+```
+
+## 18. Ver logs do Hermes
 
 Onde rodar: Ubuntu/WSL
 
@@ -244,7 +301,7 @@ Onde rodar: Ubuntu/WSL
 docker logs -f hermes-agent
 ```
 
-## 18. Testar Hermes Gateway
+## 19. Testar Hermes Gateway
 
 Onde rodar: Ubuntu/WSL
 
@@ -252,7 +309,85 @@ Onde rodar: Ubuntu/WSL
 curl "http://127.0.0.1:8642/health"
 ```
 
-## 19. Instalar Node.js 22
+## 20. Subir Hermes Dashboard
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+docker run -d \
+  --name hermes-dashboard \
+  --restart unless-stopped \
+  --network host \
+  -v "$HOME/hermes-docker/data:/opt/data" \
+  nousresearch/hermes-agent:latest dashboard --host 127.0.0.1 --port 9119 --no-open --tui
+```
+
+## Importante sobre o Dashboard
+
+NÃO usar:
+
+```bash
+--host 0.0.0.0
+```
+
+As versões atuais do Hermes recusam iniciar o dashboard dessa forma por segurança e o container entra em restart infinito.
+
+Erro encontrado:
+
+```text
+Refusing to bind to 0.0.0.0 — the dashboard exposes API keys and config without robust authentication.
+```
+
+## 21. Abrir Hermes Dashboard
+
+Onde rodar: navegador do Windows
+
+```text
+http://localhost:9119
+```
+
+## 22. Ver logs do Dashboard
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+docker logs hermes-dashboard
+```
+
+## 23. Verificar containers
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+docker ps
+```
+
+Containers esperados:
+
+```text
+hermes-agent
+hermes-dashboard
+```
+
+## 24. Reiniciar containers
+
+### Reiniciar Gateway
+
+```bash
+docker rm -f hermes-agent
+```
+
+Depois subir novamente o gateway.
+
+### Reiniciar Dashboard
+
+```bash
+docker rm -f hermes-dashboard
+```
+
+Depois subir novamente o dashboard.
+
+## 25. Instalar Node.js 22
 
 Onde rodar: Ubuntu/WSL
 
@@ -261,7 +396,7 @@ curl -fsSL "https://deb.nodesource.com/setup_22.x" | sudo -E bash -
 sudo apt install -y nodejs
 ```
 
-## 20. Instalar pnpm
+## 26. Instalar pnpm
 
 Onde rodar: Ubuntu/WSL
 
@@ -269,7 +404,7 @@ Onde rodar: Ubuntu/WSL
 sudo npm install -g pnpm
 ```
 
-## 21. Instalar Hermes Workspace
+## 27. Instalar Hermes Workspace
 
 Onde rodar: Ubuntu/WSL
 
@@ -281,7 +416,7 @@ pnpm install
 cp ".env.example" ".env"
 ```
 
-## 22. Configurar Hermes Workspace
+## 28. Configurar Hermes Workspace
 
 Onde rodar: Ubuntu/WSL
 
@@ -291,7 +426,7 @@ printf "\nHERMES_API_URL=http://127.0.0.1:8642\n" >> ".env"
 printf "HERMES_DASHBOARD_URL=http://127.0.0.1:9119\n" >> ".env"
 ```
 
-## 23. Iniciar Hermes Workspace
+## 29. Iniciar Hermes Workspace
 
 Onde rodar: Ubuntu/WSL
 
@@ -300,7 +435,7 @@ cd "$HOME/hermes-workspace"
 pnpm dev
 ```
 
-## 24. Abrir Hermes Workspace
+## 30. Abrir Hermes Workspace
 
 Onde rodar: navegador do Windows
 
