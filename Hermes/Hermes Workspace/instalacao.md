@@ -1,4 +1,4 @@
-# Hermes Agent + Hermes Workspace no Windows 11 com Docker Desktop + WSL2
+# Hermes Agent + Hermes Workspace no Windows 11 com Docker Desktop + WSL2 - em teste ainda, não usar!
 
 ## Arquitetura
 
