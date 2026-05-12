@@ -96,7 +96,7 @@ sudo apt upgrade -y
 Onde rodar: Ubuntu/WSL
 
 ```bash
-sudo apt install -y curl git build-essential ca-certificates gnupg lsb-release
+sudo apt install -y curl git build-essential ca-certificates gnupg lsb-release zstd
 ```
 
 ## 7. Instalar Docker dentro do Ubuntu/WSL
@@ -159,7 +159,16 @@ docker compose version
 docker run --rm hello-world
 ```
 
-## 9. Instalar Ollama no Linux/WSL
+## 9. Instalar dependência zstd antes do Ollama
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+sudo apt update
+sudo apt install -y zstd
+```
+
+## 10. Instalar Ollama no Linux/WSL
 
 Onde rodar: Ubuntu/WSL
 
@@ -167,7 +176,7 @@ Onde rodar: Ubuntu/WSL
 curl -fsSL "https://ollama.com/install.sh" | sh
 ```
 
-## 10. Iniciar o Ollama no WSL
+## 11. Iniciar o Ollama no WSL
 
 Onde rodar: Ubuntu/WSL
 
@@ -177,7 +186,7 @@ ollama serve
 
 Deixe esse terminal aberto.
 
-## 11. Testar o Ollama no WSL
+## 12. Testar o Ollama no WSL
 
 Onde rodar: outro terminal Ubuntu/WSL
 
@@ -187,7 +196,7 @@ curl "http://127.0.0.1:11434/api/tags"
 
 Se responder sem erro de conexão, o Ollama está ativo.
 
-## 12. Baixar um modelo no Ollama
+## 13. Baixar um modelo no Ollama
 
 Onde rodar: Ubuntu/WSL
 
@@ -205,60 +214,63 @@ Para listar modelos:
 ollama list
 ```
 
-## 13. Criar pasta do Hermes
+## 14. Baixar a imagem correta do Hermes Agent
 
 Onde rodar: Ubuntu/WSL
 
 ```bash
-mkdir -p "$HOME/hermes-docker"
-cd "$HOME/hermes-docker"
+docker pull nousresearch/hermes-agent:latest
 ```
 
-## 14. Criar arquivo docker-compose.yml do Hermes
-
-Onde rodar: Ubuntu/WSL
-
-```bash
-nano "docker-compose.yml"
-```
-
-Cole o conteúdo abaixo:
-
-```yaml
-services:
-  hermes:
-    image: ghcr.io/nousresearch/hermes-agent:latest
-    container_name: hermes-agent
-    restart: unless-stopped
-    network_mode: "host"
-    environment:
-      OLLAMA_BASE_URL: "http://127.0.0.1:11434"
-      HERMES_HOST: "0.0.0.0"
-      HERMES_PORT: "8642"
-    volumes:
-      - ./data:/data
-```
-
-Salve e saia.
-
-No nano:
+Não use esta imagem neste fluxo:
 
 ```text
-CTRL + O
-ENTER
-CTRL + X
+ghcr.io/nousresearch/hermes-agent:latest
 ```
 
-## 15. Subir o Hermes em Docker
+Se aparecer erro "denied" com "ghcr.io/nousresearch/hermes-agent:latest", troque para:
 
-Onde rodar: Ubuntu/WSL dentro da pasta "hermes-docker"
+```text
+nousresearch/hermes-agent:latest
+```
+
+## 15. Criar pasta de dados persistentes do Hermes
+
+Onde rodar: Ubuntu/WSL
 
 ```bash
-cd "$HOME/hermes-docker"
-docker compose up -d
+mkdir -p "$HOME/.hermes"
 ```
 
-## 16. Ver logs do Hermes
+## 16. Rodar configuração inicial do Hermes Agent
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+docker run -it --rm \
+  -v "$HOME/.hermes:/opt/data" \
+  nousresearch/hermes-agent:latest setup
+```
+
+Siga o assistente de configuração do Hermes.
+
+## 17. Subir o Hermes Agent direto pelo Docker
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+docker run -d \
+  --name hermes-agent \
+  --restart unless-stopped \
+  --network host \
+  -v "$HOME/.hermes:/opt/data" \
+  -e OLLAMA_BASE_URL="http://127.0.0.1:11434" \
+  -e HERMES_HOST="0.0.0.0" \
+  -e HERMES_PORT="8642" \
+  nousresearch/hermes-agent:latest gateway run
+```
+
+## 18. Ver logs do Hermes
 
 Onde rodar: Ubuntu/WSL
 
@@ -272,7 +284,7 @@ Para sair dos logs:
 CTRL + C
 ```
 
-## 17. Testar Hermes Gateway
+## 19. Testar Hermes Gateway
 
 Onde rodar: Ubuntu/WSL
 
@@ -282,27 +294,17 @@ curl "http://127.0.0.1:8642/health"
 
 Se responder sem erro de conexão, o Hermes Gateway está ativo.
 
-## 18. Testar se o container acessa o Ollama
+## 20. Testar se o Hermes acessa o Ollama
 
 Onde rodar: Ubuntu/WSL
-
-```bash
-docker exec -it hermes-agent sh
-```
-
-Dentro do container, teste:
 
 ```bash
 curl "http://127.0.0.1:11434/api/tags"
 ```
 
-Depois saia do container:
+Se o Ollama responder, o endereço usado pelo Hermes está correto no WSL.
 
-```bash
-exit
-```
-
-## 19. Instalar Node.js 22 para o Hermes Workspace
+## 21. Instalar Node.js 22 para o Hermes Workspace
 
 Onde rodar: Ubuntu/WSL
 
@@ -318,7 +320,7 @@ node -v
 npm -v
 ```
 
-## 20. Instalar pnpm
+## 22. Instalar pnpm
 
 Onde rodar: Ubuntu/WSL
 
@@ -332,7 +334,7 @@ Verificar:
 pnpm -v
 ```
 
-## 21. Instalar Hermes Workspace
+## 23. Instalar Hermes Workspace
 
 Onde rodar: Ubuntu/WSL
 
@@ -344,7 +346,7 @@ pnpm install
 cp ".env.example" ".env"
 ```
 
-## 22. Configurar Hermes Workspace
+## 24. Configurar Hermes Workspace
 
 Onde rodar: Ubuntu/WSL dentro da pasta "hermes-workspace"
 
@@ -354,7 +356,7 @@ printf "\nHERMES_API_URL=http://127.0.0.1:8642\n" >> ".env"
 printf "HERMES_DASHBOARD_URL=http://127.0.0.1:9119\n" >> ".env"
 ```
 
-## 23. Iniciar Hermes Workspace
+## 25. Iniciar Hermes Workspace
 
 Onde rodar: Ubuntu/WSL dentro da pasta "hermes-workspace"
 
@@ -365,7 +367,7 @@ pnpm dev
 
 Deixe esse terminal aberto.
 
-## 24. Abrir o Hermes Workspace
+## 26. Abrir o Hermes Workspace
 
 Onde rodar: navegador do Windows
 
@@ -375,7 +377,7 @@ Acesse:
 http://localhost:3000
 ```
 
-## 25. Teste básico no Workspace
+## 27. Teste básico no Workspace
 
 Onde rodar: navegador do Windows
 
@@ -391,49 +393,46 @@ Verificar se skills aparecem
 Verificar se painel funciona como interface do Hermes Agent
 ```
 
-## 26. Parar o Hermes em Docker
+## 28. Parar o Hermes Agent em Docker
 
 Onde rodar: Ubuntu/WSL
 
 ```bash
-cd "$HOME/hermes-docker"
-docker compose down
+docker stop hermes-agent
 ```
 
-## 27. Subir novamente o Hermes em Docker
+## 29. Subir novamente o Hermes Agent em Docker
 
 Onde rodar: Ubuntu/WSL
 
 ```bash
-cd "$HOME/hermes-docker"
-docker compose up -d
+docker start hermes-agent
 ```
 
-## 28. Remover Hermes em Docker mantendo os dados
+## 30. Remover Hermes Agent mantendo os dados
 
 Onde rodar: Ubuntu/WSL
 
 ```bash
-cd "$HOME/hermes-docker"
-docker compose down
+docker stop hermes-agent
 ```
 
-## 29. Remover Hermes em Docker apagando os dados persistentes
+Depois remova o container pelo Docker somente se tiver certeza.
 
-Atenção: este comando apaga a pasta local de dados do Hermes criada neste tutorial.
+## 31. Remover Hermes Agent apagando os dados persistentes
+
+Atenção: este procedimento apaga a pasta local de dados do Hermes criada neste tutorial.
 
 Onde rodar: Ubuntu/WSL
 
 ```bash
-cd "$HOME/hermes-docker"
-docker compose down
-rm -rf "$HOME/hermes-docker/data"
+docker stop hermes-agent
 ```
 
-## 30. Remover Hermes Workspace
+Depois remova manualmente o container e apague a pasta "$HOME/.hermes" somente se tiver certeza.
+
+## 32. Remover Hermes Workspace
 
 Onde rodar: Ubuntu/WSL
 
-```bash
-rm -rf "$HOME/hermes-workspace"
-```
+Apague manualmente a pasta "$HOME/hermes-workspace" somente se tiver certeza.
