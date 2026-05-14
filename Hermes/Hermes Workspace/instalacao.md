@@ -781,6 +781,185 @@ Quit Docker Desktop
 
 ---
 
+# Parte 16 - Remover Hermes do Docker sem apagar dados persistentes
+
+Use esta opção para remover os containers e a rede do Compose, mas manter o volume com dados do Hermes.
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+cd "$HOME/hermes-docker"
+docker compose down
+```
+
+Opcional: remover as imagens baixadas.
+
+```bash
+docker rmi nousresearch/hermes-agent:latest ghcr.io/outsourc-e/hermes-workspace:latest
+```
+
+Verificar se o volume ainda existe:
+
+```bash
+docker volume ls | grep hermes
+```
+
+Neste modo, os dados persistentes continuam salvos no volume:
+
+```text
+hermes-docker_hermes-data
+```
+
+Para instalar de novo depois, basta voltar para a pasta e subir novamente:
+
+```bash
+cd "$HOME/hermes-docker"
+docker compose pull
+docker compose up -d
+```
+
+---
+
+# Parte 17 - Remover Hermes do Docker apagando dados persistentes
+
+Use esta opção para apagar tudo do ambiente Docker deste guia.
+
+Atenção: isso remove containers, rede e volume persistente do Hermes.
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+cd "$HOME/hermes-docker"
+docker compose down -v
+```
+
+Remover imagens, se quiser limpar também os downloads:
+
+```bash
+docker rmi nousresearch/hermes-agent:latest ghcr.io/outsourc-e/hermes-workspace:latest
+```
+
+Remover a pasta do projeto:
+
+```bash
+rm -rf "$HOME/hermes-docker"
+```
+
+Verificar se ainda ficou algum container:
+
+```bash
+docker ps -a | grep hermes
+```
+
+Verificar se ainda ficou algum volume:
+
+```bash
+docker volume ls | grep hermes
+```
+
+Se ainda aparecer o volume persistente, remover manualmente:
+
+```bash
+docker volume rm hermes-docker_hermes-data
+```
+
+Se o nome do volume for diferente, listar e copiar o nome correto:
+
+```bash
+docker volume ls
+```
+
+---
+
+# Parte 18 - Remover Hermes Desktop do Windows
+
+Onde fazer: Windows
+
+Abrir:
+
+```text
+Configurações > Aplicativos > Aplicativos instalados
+```
+
+Procurar:
+
+```text
+Hermes Desktop
+```
+
+Clicar em:
+
+```text
+Desinstalar
+```
+
+Se o Desktop instalou Hermes Agent local pelo botão `Get Started`, pode ter criado arquivos adicionais no perfil do usuário.
+
+Verificar estas pastas no Windows:
+
+```text
+C:\Users\SEU_USUARIO\.hermes
+C:\Users\SEU_USUARIO\AppData\Local\Hermes
+C:\Users\SEU_USUARIO\AppData\Roaming\Hermes
+C:\Users\SEU_USUARIO\AppData\Local\Programs\Hermes Desktop
+```
+
+Apagar apenas se tiver certeza de que não precisa mais dos dados locais.
+
+---
+
+# Parte 19 - Remover Claw3D manual
+
+Se o Claw3D foi instalado manualmente no PowerShell, remover a pasta clonada.
+
+Onde rodar: PowerShell
+
+```powershell
+cd $env:USERPROFILE
+Remove-Item -Recurse -Force .\Claw3D
+```
+
+Se o Claw3D foi instalado pelo Hermes Desktop, procurar dentro das pastas do Hermes Desktop ou do usuário.
+
+Verificar:
+
+```text
+C:\Users\SEU_USUARIO\Claw3D
+C:\Users\SEU_USUARIO\.hermes
+C:\Users\SEU_USUARIO\AppData\Roaming\Hermes
+C:\Users\SEU_USUARIO\AppData\Local\Hermes
+```
+
+---
+
+# Parte 20 - Limpeza opcional do Docker Desktop
+
+Use apenas se quiser limpar recursos não usados do Docker.
+
+Atenção: pode remover imagens, containers parados, redes e cache não usados por outros projetos.
+
+Onde rodar: Ubuntu/WSL
+
+```bash
+docker system prune
+```
+
+Para limpeza mais agressiva:
+
+```bash
+docker system prune -a
+```
+
+Para remover volumes não usados:
+
+```bash
+docker volume prune
+```
+
+Não use `docker volume prune` se tiver volumes importantes de outros projetos.
+
+---
+
 # URLs finais
 
 Hermes Agent API:
