@@ -1,8 +1,8 @@
-# Nota pós-gravação - Hermes TikTok Commerce Lab
+# Nota pós-gravação - Hermes Agent Lab na Hetzner
 
 ## Contexto
 
-Durante a gravação do laboratório Hermes TikTok Commerce Lab em VPS Hetzner Ubuntu, a infraestrutura principal funcionou.
+Durante a gravação do laboratório Hermes Agent Lab na Hetzner em VPS Hetzner Ubuntu, a infraestrutura principal funcionou.
 
 Funcionaram:
 
@@ -86,3 +86,4 @@ comportamento dos workers quando a fonte bloquear acesso
 ```text
 A VPS fora do Brasil é boa para infraestrutura, orquestração, Kanban e documentação.
 ```
+

@@ -1,4 +1,4 @@
-# Hermes TikTok Commerce Lab - criação dos agentes via CLI
+# Hermes Agent Lab na Hetzner - criação dos agentes via CLI
 
 ## Objetivo
 
@@ -308,7 +308,7 @@ nano /root/.hermes/profiles/hermes-pesquisador-tiktok/SOUL.md
 Colar:
 
 ```text
-Você é o Pesquisador de Produtos TikTok do projeto Hermes TikTok Commerce Lab.
+Você é o Pesquisador de Produtos TikTok do projeto Hermes Agent Lab na Hetzner.
 
 Trabalhe sempre no projeto:
 /root/projetos/hermes-tiktok-commerce-lab
@@ -388,7 +388,7 @@ nano /root/.hermes/profiles/hermes-validador-searxng/SOUL.md
 Colar:
 
 ```text
-Você é o Validador com SearXNG do projeto Hermes TikTok Commerce Lab.
+Você é o Validador com SearXNG do projeto Hermes Agent Lab na Hetzner.
 
 Trabalhe sempre no projeto:
 /root/projetos/hermes-tiktok-commerce-lab
@@ -457,7 +457,7 @@ nano /root/.hermes/profiles/hermes-organizador-produtos/SOUL.md
 Colar:
 
 ```text
-Você é o Organizador de Lista de Produtos do projeto Hermes TikTok Commerce Lab.
+Você é o Organizador de Lista de Produtos do projeto Hermes Agent Lab na Hetzner.
 
 Trabalhe sempre no projeto:
 /root/projetos/hermes-tiktok-commerce-lab
@@ -527,7 +527,7 @@ nano /root/.hermes/profiles/hermes-criador-conteudo/SOUL.md
 Colar:
 
 ```text
-Você é o Criador de Conteúdo do projeto Hermes TikTok Commerce Lab.
+Você é o Criador de Conteúdo do projeto Hermes Agent Lab na Hetzner.
 
 Trabalhe sempre no projeto:
 /root/projetos/hermes-tiktok-commerce-lab
@@ -595,7 +595,7 @@ nano /root/.hermes/profiles/hermes-designer-pipclip/SOUL.md
 Colar:
 
 ```text
-Você é o Designer de Prompt PipClip do projeto Hermes TikTok Commerce Lab.
+Você é o Designer de Prompt PipClip do projeto Hermes Agent Lab na Hetzner.
 
 Trabalhe sempre no projeto:
 /root/projetos/hermes-tiktok-commerce-lab
@@ -668,7 +668,7 @@ nano /root/.hermes/profiles/hermes-revisor-final/SOUL.md
 Colar:
 
 ```text
-Você é o Revisor Final do projeto Hermes TikTok Commerce Lab.
+Você é o Revisor Final do projeto Hermes Agent Lab na Hetzner.
 
 Trabalhe sempre no projeto:
 /root/projetos/hermes-tiktok-commerce-lab
@@ -961,5 +961,6 @@ observação manual sobre comentários ou tendência
 ```
 
 O worker deve analisar o material recebido sem inventar dados ausentes.
+
 
 

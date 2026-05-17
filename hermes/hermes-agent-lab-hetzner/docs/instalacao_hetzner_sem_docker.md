@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Preparar uma VPS Ubuntu da Hetzner para rodar o ecossistema Hermes usado no projeto **Hermes TikTok Commerce Lab**.
+Preparar uma VPS Ubuntu da Hetzner para rodar o ecossistema Hermes usado no projeto **Hermes Agent Lab na Hetzner**.
 
 ## Regra de arquitetura
 
@@ -67,6 +67,7 @@ Se o comando disser que não há pacotes aguardando aprovação, continue a inst
 - Não exponha portas internas sem necessidade.
 - Prefira acesso privado via Tailscale.
 - Não altere firewall ou tokens sem aprovação humana.
+
 
 
 

@@ -1,20 +1,20 @@
-# Como instalar Hermes Agent na Hetzner para o Hermes TikTok Commerce Lab
+# Como instalar Hermes Agent na Hetzner para o Hermes Agent Lab na Hetzner
 
 ## Objetivo
 
-Instalar uma infraestrutura híbrida em uma VPS Ubuntu da Hetzner para o projeto **Hermes TikTok Commerce Lab**.
+Instalar uma infraestrutura híbrida em uma VPS Ubuntu da Hetzner para o projeto **Hermes Agent Lab na Hetzner**.
 
 Título explicativo:
 
 ```text
-Como usar Hermes Agent para vender no TikTok com IA
+Como instalar e organizar Hermes Agent na Hetzner
 ```
 
 O objetivo técnico continua sendo preparar o Hermes Agent, Hermes Workspace, OpenSpec e serviços auxiliares na Hetzner.
 
-O TikTok é o caso de uso final.
+TikTok/Shopee aparecem como teste experimental no final do vídeo.
 
-A infraestrutura continua sendo Hermes na Hetzner.
+A infraestrutura principal é Hermes na Hetzner.
 
 ![[projeto.png]]
 
@@ -1127,10 +1127,10 @@ A estrutura pode variar conforme a versão, mas normalmente inclui arquivos de i
 Use este prompt no Codex ou no assistente conectado ao projeto:
 
 ```text
-/opsx:propose Criar a estrutura profissional do projeto Hermes TikTok Commerce Lab, com documentação organizada, exemplos de configuração, scripts auxiliares, segurança, operação, agentes do Hermes Workspace, fluxo de trabalho com OpenSpec e caso de uso final em afiliados no TikTok.
+/opsx:propose Criar a estrutura profissional do projeto Hermes Agent Lab na Hetzner, com documentação organizada, exemplos de configuração, scripts auxiliares, segurança, operação, agentes do Hermes Workspace, fluxo de trabalho com OpenSpec e caso de uso final em afiliados no TikTok.
 ```
 
-O projeto deve mostrar como usar Hermes Agent, Hermes Workspace, OpenSpec e agentes de IA para organizar uma operação de afiliados no TikTok.
+O projeto deve mostrar como usar Hermes Agent, Hermes Workspace, OpenSpec e agentes de IA para organizar um teste experimental de conteúdo com TikTok/Shopee.
 
 A infraestrutura continua sendo:
 
@@ -1221,7 +1221,7 @@ Ordem recomendada:
 
 ---
 
-# 19. Exemplo de agentes para o Hermes TikTok Commerce Lab
+# 19. Exemplo de agentes para o Hermes Agent Lab na Hetzner
 
 Crie os agentes no Hermes Workspace depois de inicializar e revisar o OpenSpec.
 
@@ -1249,7 +1249,7 @@ Kanban Manager
 ## Prompt inicial para o CEO / Orquestrador
 
 ```text
-Você é o CEO / Orquestrador do projeto Hermes TikTok Commerce Lab.
+Você é o CEO / Orquestrador do projeto Hermes Agent Lab na Hetzner.
 
 Antes de delegar qualquer tarefa, leia o projeto OpenSpec em:
 
@@ -1257,7 +1257,7 @@ Antes de delegar qualquer tarefa, leia o projeto OpenSpec em:
 
 Sua função é coordenar os agentes, dividir tarefas, controlar escopo, pedir aprovação humana quando necessário e garantir que toda execução siga a proposta aprovada no OpenSpec.
 
-O objetivo do projeto é demonstrar como usar Hermes Agent, Hermes Workspace, OpenSpec e agentes de IA para organizar uma operação de afiliados no TikTok.
+O objetivo do projeto é demonstrar como usar Hermes Agent, Hermes Workspace, OpenSpec e agentes de IA para organizar um teste experimental de conteúdo com TikTok/Shopee.
 
 A operação envolve pesquisa de produtos afiliados, tendências de TikTok, roteiros curtos, calendário de conteúdo, direção visual, revisão de promessas, Kanban e documentação.
 
@@ -1363,10 +1363,10 @@ Hermes Workspace
 A documentação foi ajustada para copiar .env.example, configurar HERMES_API_URL e HERMES_DASHBOARD_URL, e usar o IP do Tailscale.
 
 OpenSpec
-A seção foi ajustada para o projeto Hermes TikTok Commerce Lab e para o fluxo /opsx:propose, /opsx:apply, /opsx:verify e /opsx:archive.
+A seção foi ajustada para o projeto Hermes Agent Lab na Hetzner e para o fluxo /opsx:propose, /opsx:apply, /opsx:verify e /opsx:archive.
 
 afiliados no TikTok
-O TikTok é o caso de uso final.
+TikTok/Shopee aparecem como teste experimental no final do vídeo.
 O projeto não promete vendas, renda ou comissão garantida, não ensina spam e não automatiza publicação sem revisão humana.
 
 Ferramentas visuais
@@ -1378,7 +1378,7 @@ Canva, CapCut, PipClip e ComfyUI aparecem como opções manuais ou avançadas pa
 
 Esta instalação usa uma VPS Hetzner fora do Brasil.
 
-Durante o teste real do Hermes TikTok Commerce Lab, foi identificado que alguns sites de marketplace, redes sociais e páginas de produtos podem bloquear ou limitar acessos vindos de IPs de datacenter ou IPs estrangeiros.
+Durante o teste real do Hermes Agent Lab na Hetzner, foi identificado que alguns sites de marketplace, redes sociais e páginas de produtos podem bloquear ou limitar acessos vindos de IPs de datacenter ou IPs estrangeiros.
 
 Isso pode afetar principalmente:
 
@@ -1471,4 +1471,5 @@ melhorar os SOUL.md dos workers
 verificar por que alguns agentes falharam durante o teste
 ajustar instruções dos workers para o fluxo humano assistido
 ```
+
 

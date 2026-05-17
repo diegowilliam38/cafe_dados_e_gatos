@@ -2,21 +2,21 @@
 
 ## Projeto
 
-Hermes TikTok Commerce Lab
+Hermes Agent Lab na Hetzner
 
 ## Título explicativo
 
-Como usar Hermes Agent para vender no TikTok com IA
+Como instalar e organizar Hermes Agent na Hetzner
 
 ## Objetivo
 
 Usar o OpenSpec como camada de planejamento antes da execução dos agentes no Hermes Workspace.
 
-O projeto mostra como usar Hermes Agent, Hermes Workspace, OpenSpec e agentes de IA para organizar uma operação prática de conteúdo afiliado no TikTok.
+O projeto mostra como usar Hermes Agent, Hermes Workspace, OpenSpec e agentes de IA para organizar um teste prático com pesquisa, validação, roteiro, prompt visual e revisão humana.
 
-O TikTok é o caso de uso final.
+TikTok/Shopee aparecem como teste experimental no final do vídeo.
 
-A infraestrutura continua sendo Hermes na Hetzner.
+A infraestrutura principal é Hermes na Hetzner.
 
 ```text
 OpenSpec
@@ -253,7 +253,7 @@ Abra a pasta remota da VPS pelo VS Code Remote SSH.
 ## Usar no Codex / assistente configurado com OpenSpec dentro do projeto
 
 ```text
-/opsx:propose Criar a estrutura profissional do projeto Hermes TikTok Commerce Lab, com documentação organizada, exemplos de configuração, scripts auxiliares, segurança, operação, agentes do Hermes Workspace, fluxo de trabalho com OpenSpec e caso de uso final em afiliados no TikTok.
+/opsx:propose Criar a estrutura profissional do projeto Hermes Agent Lab na Hetzner, com documentação organizada, exemplos de configuração, scripts auxiliares, segurança, operação, agentes do Hermes Workspace, fluxo de trabalho com OpenSpec e caso de uso final em afiliados no TikTok.
 ```
 
 ---
@@ -263,17 +263,17 @@ Abra a pasta remota da VPS pelo VS Code Remote SSH.
 Use este conteúdo como base da especificação do projeto.
 
 ````md
-# Especificação OpenSpec - Hermes TikTok Commerce Lab
+# Especificação OpenSpec - Hermes Agent Lab na Hetzner
 
 ## 1. Objetivo do projeto
 
-Criar um laboratório técnico e prático para demonstrar como Hermes Agent, Hermes Workspace, OpenSpec e agentes de IA podem ajudar a organizar uma operação real de afiliados no TikTok.
+Criar um laboratório técnico e prático para demonstrar como Hermes Agent, Hermes Workspace, OpenSpec e agentes de IA podem ajudar a organizar uma rodada experimental de pesquisa e conteúdo para TikTok/Shopee.
 
 O projeto deve mostrar pesquisa de produtos afiliados, pesquisa de tendências, criação de roteiros, calendário de conteúdo, revisão de promessas, organização em Kanban, documentação para GitHub e apoio à produção de vídeos curtos.
 
-O TikTok é o caso de uso final.
+TikTok/Shopee aparecem como teste experimental no final do vídeo.
 
-A infraestrutura continua sendo Hermes na Hetzner.
+A infraestrutura principal é Hermes na Hetzner.
 
 ## 2. Resultado final esperado
 
@@ -313,7 +313,7 @@ Este projeto inclui:
 - Configuração do Hermes Workspace
 - Criação de agentes pelo Hermes Workspace
 - Uso do OpenSpec como camada de planejamento antes da execução
-- operação de afiliados no TikTok como caso de uso
+- teste experimental com TikTok/Shopee como caso de uso do vídeo
 - pesquisa de produtos afiliados para gatos, gadgets, acessórios de computador e tecnologia
 - Pesquisa assistida em fontes públicas do TikTok com navegador controlado
 - Roteiros curtos para TikTok, Reels e Shorts
@@ -386,7 +386,7 @@ Não abrir portas públicas sem necessidade.
 
 ## 7. Caso de uso final
 
-O caso de uso final do projeto é organizar uma operação de afiliados no TikTok com apoio de agentes de IA.
+O caso de uso final do projeto é organizar um teste experimental de conteúdo com TikTok/Shopee com apoio de agentes de IA.
 
 Frentes do caso de uso:
 
@@ -911,7 +911,7 @@ Sua função como CEO / Orquestrador é ler os arquivos do OpenSpec dentro da pa
 
 O acesso ao Hermes Gateway, Dashboard e Workspace será feito pela rede privada Tailscale.
 
-O objetivo do projeto é demonstrar como usar Hermes Agent, Hermes Workspace, OpenSpec e agentes de IA para organizar uma operação de afiliados no TikTok.
+O objetivo do projeto é demonstrar como usar Hermes Agent, Hermes Workspace, OpenSpec e agentes de IA para organizar um teste experimental de conteúdo com TikTok/Shopee.
 
 A operação envolve pesquisa de produtos afiliados, tendências de TikTok, roteiros curtos, calendário de conteúdo, direção visual, revisão de promessas, Kanban e documentação.
 
@@ -937,7 +937,7 @@ Não execute comandos ainda.
 # 19. Prompt para organizar a primeira rodada
 
 ```text
-Com base na especificação OpenSpec do projeto Hermes TikTok Commerce Lab, organize a primeira rodada de trabalho.
+Com base na especificação OpenSpec do projeto Hermes Agent Lab na Hetzner, organize a primeira rodada de trabalho.
 
 Quero que você entregue:
 
@@ -959,7 +959,7 @@ Não execute comandos ainda.
 Use este prompt quando quiser que o Documentador Técnico trabalhe.
 
 ```text
-Com base na especificação OpenSpec do projeto Hermes TikTok Commerce Lab, crie ou atualize a documentação técnica do projeto.
+Com base na especificação OpenSpec do projeto Hermes Agent Lab na Hetzner, crie ou atualize a documentação técnica do projeto.
 
 Regras:
 - usar Markdown simples
@@ -989,7 +989,7 @@ Antes de alterar qualquer arquivo, apresente o plano de arquivos que serão cria
 Use este prompt quando quiser que o Revisor de Promessas analise conteúdo, roteiro ou criativo.
 
 ```text
-Revise o material criado para o projeto Hermes TikTok Commerce Lab.
+Revise o material criado para o projeto Hermes Agent Lab na Hetzner.
 
 Verifique:
 - promessa de venda, renda ou comissão garantida
@@ -1019,7 +1019,7 @@ Explique os motivos.
 Use este prompt quando quiser pesquisar fontes públicas do TikTok com navegador controlado.
 
 ```text
-Com base na especificação OpenSpec do projeto Hermes TikTok Commerce Lab, use o navegador controlado para pesquisar sinais públicos de tendência e produto.
+Com base na especificação OpenSpec do projeto Hermes Agent Lab na Hetzner, use o navegador controlado para pesquisar sinais públicos de tendência e produto.
 
 Fontes permitidas:
 - TikTok Creative Center
@@ -1057,7 +1057,7 @@ Entregue uma tabela com:
 Use este prompt para o Kanban Manager.
 
 ```text
-Com base na especificação OpenSpec do projeto Hermes TikTok Commerce Lab, organize o projeto em tarefas de Kanban.
+Com base na especificação OpenSpec do projeto Hermes Agent Lab na Hetzner, organize o projeto em tarefas de Kanban.
 
 Use estes status:
 
@@ -1141,5 +1141,6 @@ Execução só depois de revisão.
 Ação crítica só com aprovação humana.
 Conteúdo público só com revisão humana.
 ```
+
 
 

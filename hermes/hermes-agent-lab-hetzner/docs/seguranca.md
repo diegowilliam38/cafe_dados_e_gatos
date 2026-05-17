@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Definir cuidados simples para publicar e operar o **Hermes TikTok Commerce Lab** sem expor dados sensíveis, sem abrir serviços sem necessidade e sem criar riscos comerciais.
+Definir cuidados simples para publicar e operar o **Hermes Agent Lab na Hetzner** sem expor dados sensíveis, sem abrir serviços sem necessidade e sem criar riscos comerciais.
 
 ## Regra rápida
 
@@ -99,3 +99,4 @@ Peça aprovação humana antes de:
 ## Critério final
 
 Se houver dúvida sobre segurança, privacidade, promessa comercial, uso de marca ou exposição pública, pare e peça revisão humana.
+

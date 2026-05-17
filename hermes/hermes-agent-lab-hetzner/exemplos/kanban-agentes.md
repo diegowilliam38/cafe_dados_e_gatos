@@ -1,6 +1,6 @@
 # Kanban de agentes
 
-Modelo inicial para organizar o projeto Hermes TikTok Commerce Lab.
+Modelo inicial para organizar o projeto Hermes Agent Lab na Hetzner.
 
 ## Entrada / Produto encontrado
 
@@ -91,5 +91,6 @@ Critério de conclusão:
 - [ ] Fonte marcada como pendente
 - [ ] Uso em roteiro bloqueado
 - [ ] Validação humana solicitada
+
 
 

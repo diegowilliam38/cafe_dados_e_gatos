@@ -2,11 +2,11 @@
 
 ## Objetivo
 
-Descrever a arquitetura técnica do **Hermes TikTok Commerce Lab**.
+Descrever a arquitetura técnica do **Hermes Agent Lab na Hetzner**.
 
-O TikTok é o caso de uso final.
+TikTok/Shopee aparecem como teste experimental no final do vídeo.
 
-A infraestrutura continua sendo Hermes na Hetzner.
+A infraestrutura principal é Hermes na Hetzner.
 
 ## Visão geral
 
@@ -76,5 +76,6 @@ O fluxo técnico apoia:
 O navegador controlado pode apoiar pesquisa assistida em páginas públicas ou páginas abertas pela pessoa humana.
 
 Ele não deve ser usado para burlar login, captcha, paywall, restrição de plataforma ou coletar dados privados.
+
 
 

@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Este documento resume o contrato operacional do projeto **Hermes TikTok Commerce Lab**.
+Este documento resume o contrato operacional do projeto **Hermes Agent Lab na Hetzner**.
 
 O OpenSpec define o fluxo de trabalho dos agentes antes da execução: pesquisa, validação, escolha humana, roteiro, prompt visual, revisão, Kanban e documentação.
 
@@ -11,13 +11,13 @@ O OpenSpec não valida instalação, não audita infraestrutura e não substitui
 ## Projeto
 
 ```text
-Hermes TikTok Commerce Lab
-Como usar Hermes Agent para vender no TikTok com IA
+Hermes Agent Lab na Hetzner
+Como instalar e organizar Hermes Agent na Hetzner
 ```
 
 ## Escopo incluído
 
-- Operação de afiliados no TikTok como caso de uso.
+- Teste experimental com TikTok/Shopee como caso de uso do vídeo.
 - Pesquisa de produtos em destaque ou produtos candidatos.
 - Validação externa com SearXNG.
 - Organização de lista de produtos para escolha humana.
@@ -202,3 +202,4 @@ Negativas recomendadas:
 - As promessas comerciais passam por revisão.
 - O projeto não promete vendas, renda ou comissão garantida.
 - Todo conteúdo público exige revisão humana.
+

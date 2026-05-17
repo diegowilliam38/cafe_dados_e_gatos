@@ -1,14 +1,14 @@
-# Hermes TikTok Commerce Lab
+# Hermes Agent na Hetzner
 
-Como instalar e organizar um laboratório Hermes Agent na Hetzner.
+Documentação de instalação do Hermes Agent, Hermes Workspace, OpenSpec, Ollama/Ollama Cloud, SearXNG e ferramentas de apoio em uma VPS Ubuntu da Hetzner.
 
-Este projeto é um laboratório técnico e prático para montar uma infraestrutura de agentes de IA usando Hermes Agent, Hermes Workspace, OpenSpec, Ollama/Ollama Cloud, SearXNG e uma VPS Ubuntu da Hetzner.
+O foco principal deste material é acompanhar o vídeo de instalação: preparar a VPS, configurar acesso seguro com Tailscale, instalar os serviços necessários e deixar o ambiente pronto para usar agentes de IA.
 
-O caso TikTok/Shopee aparece como experimento final do vídeo: depois da infraestrutura pronta, o Hermes é usado para organizar uma primeira operação de pesquisa, validação, roteiro, prompt visual, Kanban e revisão humana.
+No final do vídeo, depois da infraestrutura pronta, é criado um projeto inicial TikTok/Shopee apenas como teste prático do fluxo com Hermes, OpenSpec, workers, Kanban, roteiro, prompt visual e revisão humana.
 
-O projeto não garante vendas, não promete renda, não ensina spam e não automatiza publicação sem revisão humana.
+O material não promete vendas, renda, comissão, automação de publicação ou resultado financeiro.
 
-![Hermes TikTok Commerce Lab](assets/hermes-tiktok-commerce-lab.png)
+![Hermes Agent na Hetzner](assets/hermes-tiktok-commerce-lab.png)
 
 ## Para quem é
 
@@ -32,7 +32,7 @@ O projeto não garante vendas, não promete renda, não ensina spam e não autom
 - Usa OpenSpec para organizar o projeto antes da execução.
 - Cria workers do Hermes via CLI.
 - Usa Kanban como controle operacional.
-- Demonstra um teste experimental com pesquisa de produtos, roteiro e prompt visual.
+- No final, cria um projeto inicial TikTok/Shopee para testar o fluxo com agentes, Kanban, roteiro, prompt visual e revisão humana.
 
 ## O que o projeto não faz
 
@@ -49,17 +49,17 @@ O projeto não garante vendas, não promete renda, não ensina spam e não autom
 ## Capítulos do vídeo
 
 ```text
-00:01:53 - Visão geral do projeto
-00:06:58 - Preparando a VPS na Hetzner
-00:09:04 - Acesso seguro com Tailscale
-00:16:22 - Ollama: modelo e teste inicial
-00:24:34 - SearXNG: busca local para validação
-00:30:09 - Hermes Agent: instalação principal
-00:44:32 - Hermes Workspace: interface visual
-01:00:33 - OpenSpec: organizando o projeto antes da execução
-01:11:11 - Teste inicial: busca de produtos para TikTok/Shopee
-01:36:24 - Resultado: vídeo gerado pelo prompt do Hermes
-01:37:18 - Conclusão
+00:01:53 - O que será feito neste vídeo
+00:06:58 - Criando o ambiente na VPS
+00:09:04 - Configurando o Tailscale
+00:16:22 - Instalando e testando o Ollama
+00:24:34 - Instalando e configurando o SearXNG
+00:30:09 - Instalando o Hermes Agent
+00:44:32 - Configurando o Hermes Workspace
+01:00:33 - Instalando e preparando o OpenSpec
+01:11:11 - Criando o projeto TikTok/Shopee
+01:36:24 - Vídeo gerado pelo prompt do Hermes
+01:37:18 - Finalização e próximos passos
 ```
 
 ## Arquitetura
@@ -108,11 +108,11 @@ VPS Ubuntu Hetzner
 10. Revisar resultados e limitações.
 ```
 
-## Experimento TikTok/Shopee
+## Teste inicial do Projeto TikTok/Shopee
 
-O teste com TikTok/Shopee foi usado como caso prático para verificar se a infraestrutura conseguia apoiar uma operação real de pesquisa e conteúdo.
+No final do vídeo, o Projeto TikTok/Shopee é criado como primeiro teste prático depois da instalação da infraestrutura.
 
-Esse experimento inclui:
+Esse teste inicial inclui:
 
 - pesquisa de produtos ou oportunidades
 - validação externa com SearXNG
@@ -123,7 +123,7 @@ Esse experimento inclui:
 - revisão final
 - publicação manual fora da automação
 
-Durante a gravação, a infraestrutura na Hetzner funcionou para Hermes, Gateway, OpenSpec, workers e Kanban.
+Durante a gravação, a infraestrutura na Hetzner funcionou para Hermes Agent, Gateway, Workspace, OpenSpec, workers e Kanban.
 
 Como a VPS estava fora do Brasil, alguns sites brasileiros ou plataformas sociais podem bloquear pesquisa por IP de datacenter, região, login, captcha ou proteção antifraude.
 
@@ -195,5 +195,8 @@ Essas ferramentas são opcionais e não substituem o Hermes.
 - Não use imagem, marca ou pessoa sem autorização.
 - Não faça promessas comerciais sem comprovação.
 - Não prometa comissão, renda ou resultado financeiro.
+
+
+
 
 

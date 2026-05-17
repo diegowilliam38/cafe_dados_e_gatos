@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Organizar o fluxo operacional do projeto **Hermes TikTok Commerce Lab**.
+Organizar o fluxo operacional do projeto **Hermes Agent Lab na Hetzner**.
 
 Na gravação, o fluxo prático usou o profile `default` como orquestrador e workers especializados criados via CLI.
 
@@ -168,3 +168,4 @@ Use quando TikTok, Shopee, Creative Center, Seller Center ou outro site bloquear
 - [Criação dos agentes via CLI](../materiais/criar_agentes_via_cli.md)
 - [Rodando o projeto operacional](../materiais/rodando_projeto_operacional.md)
 - [Nota pós-gravação sobre VPS fora do Brasil](../materiais/nota_pos_gravacao_vps_fora_do_brasil.md)
+

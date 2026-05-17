@@ -1,4 +1,4 @@
-# Rodando o Projeto - Hermes TikTok Commerce Lab
+# Rodando o Projeto - Hermes Agent Lab na Hetzner
 
 # Objetivo
 
@@ -619,3 +619,4 @@ VPS fora do Brasil é boa para infraestrutura e orquestração.
 
 Para pesquisa real em plataformas brasileiras de marketplace e redes sociais, o caminho mais confiável é usar modo humano assistido ou execução local com navegador do próprio usuário.
 ```
+

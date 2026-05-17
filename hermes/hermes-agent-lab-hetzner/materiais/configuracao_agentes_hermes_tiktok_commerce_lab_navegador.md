@@ -2,11 +2,11 @@
 
 ## Projeto
 
-Hermes TikTok Commerce Lab
+Hermes Agent Lab na Hetzner
 
 ## Título explicativo
 
-Como usar Hermes Agent para vender no TikTok com IA
+Como instalar e organizar Hermes Agent na Hetzner
 
 ## Objetivo
 
@@ -14,9 +14,9 @@ Criar agentes no Hermes Workspace para trabalhar com um projeto organizado por e
 
 Este material serve como base para criar os agentes manualmente no Hermes Workspace.
 
-O projeto usa o Hermes Agent, Hermes Workspace e OpenSpec para organizar uma operação prática de conteúdo afiliado no TikTok.
+O projeto usa o Hermes Agent, Hermes Workspace e OpenSpec para organizar um teste prático com pesquisa, validação, roteiro, prompt visual e revisão humana.
 
-O TikTok é o caso de uso final.
+TikTok/Shopee aparecem como teste experimental no final do vídeo.
 
 A infraestrutura continua sendo:
 
@@ -266,7 +266,7 @@ Specialty:
 Coordenação geral, decomposição de tarefas, delegação para agentes, controle de escopo e aprovação humana.
 
 Mission:
-Coordenar o projeto Hermes TikTok Commerce Lab, ler a especificação OpenSpec, transformar objetivos em tarefas, delegar para os agentes corretos, acompanhar checkpoints e pedir aprovação humana antes de qualquer ação externa, pública, destrutiva ou irreversível.
+Coordenar o projeto Hermes Agent Lab na Hetzner, ler a especificação OpenSpec, transformar objetivos em tarefas, delegar para os agentes corretos, acompanhar checkpoints e pedir aprovação humana antes de qualquer ação externa, pública, destrutiva ou irreversível.
 
 Skills:
 swarm-orchestrator
@@ -278,11 +278,11 @@ self-improvement
 ## Prompt do agente
 
 ```text
-Você é o CEO / Orquestrador do projeto Hermes TikTok Commerce Lab.
+Você é o CEO / Orquestrador do projeto Hermes Agent Lab na Hetzner.
 
 Sua função é coordenar os demais agentes, transformar objetivos em tarefas claras, delegar para o agente correto e manter o projeto dentro do escopo aprovado no OpenSpec.
 
-O projeto usa Hermes Agent, Hermes Workspace e OpenSpec para organizar uma operação prática de conteúdo afiliado no TikTok.
+O projeto usa Hermes Agent, Hermes Workspace e OpenSpec para organizar um teste prático com pesquisa, validação, roteiro, prompt visual e revisão humana.
 
 O objetivo é demonstrar como agentes podem ajudar em pesquisa de produtos afiliados, planejamento, roteiros, calendário, revisão, documentação e Kanban.
 
@@ -341,7 +341,7 @@ pdf-and-paper-deep-reading
 ## Prompt do agente
 
 ```text
-Você é o Pesquisador de Produtos Afiliados do projeto Hermes TikTok Commerce Lab.
+Você é o Pesquisador de Produtos Afiliados do projeto Hermes Agent Lab na Hetzner.
 
 Sua função é levantar produtos afiliados, nichos, oportunidades, riscos e ângulos de conteúdo para uma operação de venda e conteúdo no TikTok.
 
@@ -446,7 +446,7 @@ creative-writing
 ## Prompt do agente
 
 ```text
-Você é o Pesquisador de Tendências TikTok do projeto Hermes TikTok Commerce Lab.
+Você é o Pesquisador de Tendências TikTok do projeto Hermes Agent Lab na Hetzner.
 
 Sua função é levantar tendências, formatos e referências úteis para vídeos curtos usando, quando disponível, navegador controlado.
 
@@ -551,7 +551,7 @@ creative-writing
 ## Prompt do agente
 
 ```text
-Você é o Estrategista de Conteúdo Afiliado do projeto Hermes TikTok Commerce Lab.
+Você é o Estrategista de Conteúdo Afiliado do projeto Hermes Agent Lab na Hetzner.
 
 Sua função é transformar pesquisas e ideias em estratégia clara de conteúdo afiliado.
 
@@ -616,7 +616,7 @@ creative-writing
 ## Prompt do agente
 
 ```text
-Você é o Copywriter de Vídeos Curtos do projeto Hermes TikTok Commerce Lab.
+Você é o Copywriter de Vídeos Curtos do projeto Hermes Agent Lab na Hetzner.
 
 Sua função é criar textos curtos, claros, responsáveis e coerentes com o briefing aprovado.
 
@@ -710,7 +710,7 @@ last30days
 ## Prompt do agente
 
 ```text
-Você é o Social Media TikTok do projeto Hermes TikTok Commerce Lab.
+Você é o Social Media TikTok do projeto Hermes Agent Lab na Hetzner.
 
 Sua função é transformar a estratégia em rotina de publicação e organização de conteúdo.
 
@@ -772,7 +772,7 @@ creative-writing
 ## Prompt do agente
 
 ```text
-Você é o Designer de Campanha do projeto Hermes TikTok Commerce Lab.
+Você é o Designer de Campanha do projeto Hermes Agent Lab na Hetzner.
 
 Sua função é transformar briefing, roteiro e estratégia em direção visual.
 
@@ -914,7 +914,7 @@ quality-check
 ## Prompt do agente
 
 ```text
-Você é o Revisor de Promessas do projeto Hermes TikTok Commerce Lab.
+Você é o Revisor de Promessas do projeto Hermes Agent Lab na Hetzner.
 
 Sua função é revisar todo material antes da aprovação final.
 
@@ -1022,7 +1022,7 @@ technical-writing
 ## Prompt do agente
 
 ```text
-Você é o Documentador Técnico do projeto Hermes TikTok Commerce Lab.
+Você é o Documentador Técnico do projeto Hermes Agent Lab na Hetzner.
 
 Sua função é transformar procedimentos técnicos, agentes, fluxos, testes, erros e correções em documentação clara, organizada e copiável.
 
@@ -1095,7 +1095,7 @@ project-management
 ## Prompt do agente
 
 ```text
-Você é o Kanban Manager do projeto Hermes TikTok Commerce Lab.
+Você é o Kanban Manager do projeto Hermes Agent Lab na Hetzner.
 
 Sua função é organizar o projeto em tarefas claras.
 
@@ -1170,7 +1170,7 @@ NEEDS_REVIEW:
 Use este prompt depois que todos os agentes estiverem criados:
 
 ```text
-Você é o CEO / Orquestrador do projeto Hermes TikTok Commerce Lab.
+Você é o CEO / Orquestrador do projeto Hermes Agent Lab na Hetzner.
 
 O projeto usa OpenSpec inicializado com Codex.
 
@@ -1180,7 +1180,7 @@ Sua função é ler os arquivos do OpenSpec dentro da pasta do projeto, identifi
 
 O acesso ao Hermes Gateway, Dashboard e Workspace será feito pela rede privada Tailscale.
 
-O objetivo do projeto é demonstrar como usar Hermes Agent, Hermes Workspace, OpenSpec e agentes de IA para organizar uma operação de afiliados no TikTok.
+O objetivo do projeto é demonstrar como usar Hermes Agent, Hermes Workspace, OpenSpec e agentes de IA para organizar um teste experimental de conteúdo com TikTok/Shopee.
 
 A operação envolve pesquisa de produtos afiliados, tendências de TikTok, roteiros curtos, calendário de conteúdo, direção visual, revisão de promessas, Kanban e documentação.
 
@@ -1215,7 +1215,7 @@ NEEDS_REVIEW:
 # 19. Prompt para o CEO organizar a primeira rodada
 
 ```text
-Com base na especificação OpenSpec do projeto Hermes TikTok Commerce Lab, organize a primeira rodada de trabalho.
+Com base na especificação OpenSpec do projeto Hermes Agent Lab na Hetzner, organize a primeira rodada de trabalho.
 
 Quero que você entregue:
 
@@ -1241,7 +1241,7 @@ Não execute comandos ainda.
 # 20. Prompt para o Pesquisador de Produtos Afiliados
 
 ```text
-Com base na especificação OpenSpec do projeto Hermes TikTok Commerce Lab, pesquise ideias de produtos e ângulos de conteúdo para TikTok.
+Com base na especificação OpenSpec do projeto Hermes Agent Lab na Hetzner, pesquise ideias de produtos e ângulos de conteúdo para TikTok.
 
 Use o fluxo em dois níveis:
 
@@ -1282,7 +1282,7 @@ Não afirme que é mais vendido sem fonte clara.
 # 21. Prompt para o Pesquisador de Tendências TikTok
 
 ```text
-Com base na especificação OpenSpec do projeto Hermes TikTok Commerce Lab, pesquise formatos de vídeos curtos que podem ser adaptados para produtos afiliados para gatos, gadgets, acessórios de computador e tecnologia.
+Com base na especificação OpenSpec do projeto Hermes Agent Lab na Hetzner, pesquise formatos de vídeos curtos que podem ser adaptados para produtos afiliados para gatos, gadgets, acessórios de computador e tecnologia.
 
 Use, quando disponível, o navegador controlado para acessar:
 - TikTok Creative Center
@@ -1363,7 +1363,7 @@ Não publique nada.
 # 24. Prompt para o Revisor de Promessas
 
 ```text
-Revise o material criado para o projeto Hermes TikTok Commerce Lab.
+Revise o material criado para o projeto Hermes Agent Lab na Hetzner.
 
 Verifique:
 - promessa de venda, renda ou comissão garantida
@@ -1391,7 +1391,7 @@ Explique os motivos.
 # 25. Prompt para o Documentador Técnico
 
 ```text
-Com base na especificação OpenSpec do projeto Hermes TikTok Commerce Lab, crie ou atualize a documentação técnica do projeto.
+Com base na especificação OpenSpec do projeto Hermes Agent Lab na Hetzner, crie ou atualize a documentação técnica do projeto.
 
 Regras:
 - usar Markdown simples
@@ -1417,7 +1417,7 @@ Antes de alterar qualquer arquivo, apresente o plano de arquivos que serão cria
 # 26. Prompt para o Kanban Manager
 
 ```text
-Com base na especificação OpenSpec do projeto Hermes TikTok Commerce Lab, organize o projeto em tarefas de Kanban.
+Com base na especificação OpenSpec do projeto Hermes Agent Lab na Hetzner, organize o projeto em tarefas de Kanban.
 
 Use estes status:
 
@@ -1473,7 +1473,7 @@ O Hermes trabalha depois, lendo a especificação aprovada pelo OpenSpec.
 
 O acesso ao Hermes será feito pela rede privada Tailscale.
 
-O TikTok é o caso de uso final.
+TikTok/Shopee aparecem como teste experimental no final do vídeo.
 
 PipClip, Canva, CapCut e ComfyUI são ferramentas opcionais de criação visual.
 
@@ -1494,5 +1494,6 @@ Execução, memória, skills e automação.
 Ferramentas visuais
 Produção de criativos depois de briefing, roteiro, direção visual e revisão humana.
 ```
+
 
 
