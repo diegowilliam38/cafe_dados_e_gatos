@@ -1,0 +1,19 @@
+[Unit]
+Description=Hermes Dashboard
+After=network.target hermes-gateway.service
+Wants=hermes-gateway.service
+
+[Service]
+Type=simple
+User=hermes
+Group=hermes
+WorkingDirectory=/home/hermes/hermes-agent
+EnvironmentFile=/home/hermes/.hermes/.env
+ExecStart=/usr/bin/pnpm start:dashboard
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

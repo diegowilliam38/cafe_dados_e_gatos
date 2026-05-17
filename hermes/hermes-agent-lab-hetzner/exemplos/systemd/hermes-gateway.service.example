@@ -1,0 +1,19 @@
+[Unit]
+Description=Hermes Gateway API
+After=network.target ollama.service searxng.service
+Wants=ollama.service searxng.service
+
+[Service]
+Type=simple
+User=hermes
+Group=hermes
+WorkingDirectory=/home/hermes/hermes-agent
+EnvironmentFile=/home/hermes/.hermes/.env
+ExecStart=/usr/bin/pnpm start:gateway
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

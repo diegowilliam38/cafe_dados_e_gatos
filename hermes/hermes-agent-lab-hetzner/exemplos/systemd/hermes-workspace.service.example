@@ -1,0 +1,19 @@
+[Unit]
+Description=Hermes Workspace
+After=network.target hermes-gateway.service
+Wants=hermes-gateway.service
+
+[Service]
+Type=simple
+User=hermes
+Group=hermes
+WorkingDirectory=/home/hermes/hermes-workspace
+EnvironmentFile=/home/hermes/hermes-workspace/.env
+ExecStart=/usr/bin/pnpm start
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
