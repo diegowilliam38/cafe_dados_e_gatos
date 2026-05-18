@@ -47,7 +47,20 @@ Leia a pasta atual, identifique os arquivos criados pelo Ruflo e me explique com
 ## 8. Segundo prompt para colar no Codex
 
 ```text
-Crie um mini projeto Python nesta pasta com README.md, requirements.txt, app.py e um teste simples. Use a estrutura do Ruflo se ela estiver disponível.
+Crie um software simples em Python chamado "Mini Tarefas".
+
+Requisitos:
+- rodar localmente pelo terminal
+- permitir adicionar tarefa
+- listar tarefas
+- marcar tarefa como concluída
+- remover tarefa
+- salvar tudo em um arquivo JSON local
+- criar README.md explicando como rodar
+- criar requirements.txt, mesmo que vazio
+- criar app.py
+- criar uma pasta tests com pelo menos um teste simples
+- manter o código simples e fácil de entender
 ```
 
 ## 9. Prompt para testar organização
