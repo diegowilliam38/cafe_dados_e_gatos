@@ -1,121 +1,109 @@
-# OpenHuman no Linux - Instalação e Remoção
+# OpenHuman Ubuntu 24.04
 
-## Contexto
+## 1. Baixar o arquivo .deb
 
-Este guia é para instalar o OpenHuman diretamente no Linux.
+Baixar no GitHub Releases:
 
-A instalação usa o instalador oficial do projeto, que baixa o AppImage mais recente e cria o comando "openhuman".
+```text
+OpenHuman_0.53.43_amd64.deb
+```
 
 ---
 
-# 1. Atualizar o sistema
+## 2. Instalar dependências
 
 ```bash
 sudo apt update
+sudo apt install -y curl tar python3 ca-certificates libxdo3 libgtk-3-0 libwebkit2gtk-4.1-0 libayatana-appindicator3-1 libssl3
 ```
 
 ---
 
-# 2. Instalar dependências básicas
+## 3. Instalar o OpenHuman
 
 ```bash
-sudo apt install -y curl tar python3 ca-certificates
+cd ~/Downloads
+sudo apt install ./OpenHuman_0.53.43_amd64.deb
 ```
 
 ---
 
-# 3. Instalar dependência para AppImage
-
-No Ubuntu mais novo:
+## 4. Abrir o OpenHuman
 
 ```bash
-sudo apt install -y libfuse2t64
+OpenHuman
 ```
 
-Se o pacote acima não existir:
+ou:
 
 ```bash
-sudo apt install -y libfuse2
-```
-
----
-
-# 4. Testar o instalador sem instalar
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/tinyhumansai/openhuman/main/scripts/install.sh | bash -s -- --dry-run
+/usr/bin/OpenHuman
 ```
 
 ---
 
-# 5. Instalar o OpenHuman
+## 5. Observações importantes
+
+Durante os testes no Ubuntu 24.04, o método AppImage/script apresentou erros relacionados a:
+
+- EGL_BAD_ATTRIBUTE
+- GPU shared context
+- NSS
+- GLIBC
+- sandbox/AppImage
+- virtualização
+
+O método ".deb" foi o que funcionou corretamente no ambiente real.
+
+---
+
+## 6. Problema encontrado
+
+Erro:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/tinyhumansai/openhuman/main/scripts/install.sh | bash
+libxdo.so.3: cannot open shared object file
+```
+
+Correção:
+
+```bash
+sudo apt install -y libxdo3
 ```
 
 ---
 
-# 6. Atualizar o terminal
+## 7. Fluxo utilizado no teste real
+
+- Ubuntu 24.04.4 LTS
+- GLIBC 2.39
+- Instalação real em máquina física
+- AppImage falhou
+- ".deb" funcionou corretamente
+
+---
+
+## 8. Remover o OpenHuman
 
 ```bash
-source ~/.bashrc
+sudo apt remove -y open-human
+sudo apt autoremove -y
 ```
 
 ---
 
-# 7. Abrir o OpenHuman
+## 9. Abrir depois pelo menu
 
-```bash
-openhuman
-```
+Depois da instalação, também é possível procurar no menu do Ubuntu por:
 
-Se o comando acima não abrir:
-
-```bash
-~/.local/bin/openhuman
+```text
+OpenHuman
 ```
 
 ---
 
-# 8. Remover o OpenHuman
+## 10. Link oficial
 
-Fechar processos abertos:
-
-```bash
-pkill -f openhuman || true
-```
-
-Remover o binário:
-
-```bash
-rm -f ~/.local/bin/openhuman
-```
-
-Remover o atalho do sistema:
-
-```bash
-rm -f ~/.local/share/applications/openhuman.desktop
-```
-
-Remover configurações e dados locais:
-
-```bash
-rm -rf ~/.config/openhuman
-```
-
-```bash
-rm -rf ~/.local/share/openhuman
-```
-
-```bash
-rm -rf ~/.cache/openhuman
-```
-
----
-
-# 9. Documentação oficial
-
-```bash
-https://github.com/tinyhumansai/openhuman
+```text
+https://github.com/tinyhumansai/openhuman/releases
 ```
