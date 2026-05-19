@@ -304,18 +304,6 @@ Exemplo de arquivo:
 tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf
 ```
 
----
-
-# O QUE EVITAR NESTE VÍDEO
-
-Não use modelos em formatos como:
-
-```text
-safetensors
-bin
-pt
-ckpt
-```
 
 Esses formatos não entram direto nesse fluxo simples com Ollama.
 
