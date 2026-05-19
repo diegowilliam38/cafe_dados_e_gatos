@@ -321,22 +321,3 @@ Esses formatos não entram direto nesse fluxo simples com Ollama.
 
 ---
 
-# RESUMO PARA O VÍDEO
-
-O comando direto segue este padrão:
-
-```text
-ollama run hf.co/USUARIO/REPOSITORIO:QUANTIZACAO
-```
-
-Exemplo real:
-
-```text
-ollama run hf.co/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF:Q4_K_M
-```
-
-Esse comando baixa o modelo GGUF do Hugging Face e já abre o chat no Ollama.
-
-No Windows e no Linux, o comando do modelo é o mesmo.
-
-O que muda é apenas a instalação do Ollama e o terminal usado.
