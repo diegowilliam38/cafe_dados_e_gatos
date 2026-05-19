@@ -8,7 +8,16 @@
 
 Vamos rodar modelos GGUF do Hugging Face diretamente no Ollama, sem baixar manualmente o arquivo e sem criar "Modelfile".
 
-O formato do comando é:
+O comando do modelo funciona igual no Windows e no Linux.
+
+A diferença entre Windows e Linux fica basicamente na instalação do Ollama e no terminal usado:
+
+```text
+Windows: PowerShell
+Linux: Terminal
+```
+
+Depois que o Ollama está instalado, o comando para rodar o modelo é o mesmo:
 
 ```text
 ollama run hf.co/USUARIO/REPOSITORIO:QUANTIZACAO
@@ -22,43 +31,31 @@ ollama run hf.co/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF:Q4_K_M
 
 ---
 
-# COMO MONTAR O COMANDO
+# COMO PEGAR O COMANDO NO HUGGING FACE
 
-Pegue o link do modelo no Hugging Face.
+Abra a página do modelo GGUF no Hugging Face.
+
+Clique em:
+
+```text
+Use this model
+```
+
+Depois escolha:
+
+```text
+Ollama
+```
+
+Escolha a quantização, por exemplo:
+
+```text
+Q4_K_M
+```
+
+Copie o comando pronto que o Hugging Face gerar.
 
 Exemplo:
-
-```text
-https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF
-```
-
-Remova esta parte:
-
-```text
-https://huggingface.co/
-```
-
-Sobra isto:
-
-```text
-TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF
-```
-
-Agora coloque "hf.co/" na frente:
-
-```text
-hf.co/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF
-```
-
-Depois coloque ":" e a quantização desejada.
-
-Exemplo:
-
-```text
-:Q4_K_M
-```
-
-Comando final:
 
 ```text
 ollama run hf.co/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF:Q4_K_M
@@ -138,6 +135,26 @@ Para sair:
 
 Escolha um repositório GGUF pequeno do Qwen no Hugging Face.
 
+No Hugging Face, clique em:
+
+```text
+Use this model
+```
+
+Escolha:
+
+```text
+Ollama
+```
+
+Selecione a quantização:
+
+```text
+Q4_K_M
+```
+
+Copie o comando gerado.
+
 O formato será assim:
 
 ```powershell
@@ -215,6 +232,26 @@ Para sair:
 # 5. Rodar modelo pequeno 2 — Qwen
 
 Escolha um repositório GGUF pequeno do Qwen no Hugging Face.
+
+No Hugging Face, clique em:
+
+```text
+Use this model
+```
+
+Escolha:
+
+```text
+Ollama
+```
+
+Selecione a quantização:
+
+```text
+Q4_K_M
+```
+
+Copie o comando gerado.
 
 O formato será assim:
 
@@ -299,3 +336,7 @@ ollama run hf.co/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF:Q4_K_M
 ```
 
 Esse comando baixa o modelo GGUF do Hugging Face e já abre o chat no Ollama.
+
+No Windows e no Linux, o comando do modelo é o mesmo.
+
+O que muda é apenas a instalação do Ollama e o terminal usado.
