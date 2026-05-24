@@ -36,24 +36,48 @@ apt install -y git curl wget nano build-essential make
 
 ## 2. Instalar Go
 
-O PicoClaw é feito em Go. Para compilar direto na VPS, instale o Go.
+O PicoClaw é feito em Go. Para compilar direto na VPS, instale o Go na versão `1.25.10`.
 
-Verifique se já existe Go instalado:
+Remova instalações anteriores em `/usr/local/go`:
+
+```bash
+rm -rf /usr/local/go
+```
+
+Baixe o Go `1.25.10` para Linux AMD64:
+
+```bash
+cd /tmp
+
+wget https://go.dev/dl/go1.25.10.linux-amd64.tar.gz
+```
+
+Extraia em `/usr/local`:
+
+```bash
+tar -C /usr/local -xzf go1.25.10.linux-amd64.tar.gz
+```
+
+Adicione o Go ao PATH do usuário atual:
+
+```bash
+echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc
+
+source ~/.bashrc
+```
+
+Confira a instalação:
 
 ```bash
 go version
+which go
 ```
 
-Se não existir ou estiver muito antigo, instale pelos pacotes do Ubuntu:
+O resultado esperado é:
 
-```bash
-apt install -y golang-go
-```
-
-Confira novamente:
-
-```bash
-go version
+```text
+go version go1.25.10 linux/amd64
+/usr/local/go/bin/go
 ```
 
 ---
