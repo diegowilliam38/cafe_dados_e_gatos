@@ -15,6 +15,7 @@ Instalação do OpenClaw em uma VPS Linux Ubuntu da Hetzner, sem Docker, usando 
 - Instala dependências básicas.
 - Instala o OpenClaw pelo instalador oficial.
 - Roda o `openclaw onboard`.
+- Mostra como obter o caminho de acesso da interface web.
 - Mostra os comandos básicos para verificar a instalação.
 
 ## O que este guia não faz
@@ -24,7 +25,7 @@ Instalação do OpenClaw em uma VPS Linux Ubuntu da Hetzner, sem Docker, usando 
 - Não cria serviço `systemd` manual.
 - Não força instalação de daemon.
 - Não assume que existe tela `Advanced` no onboard.
-- Não assume que o dashboard abre na porta `18789`.
+- Não assume que o dashboard abre sempre na mesma porta.
 
 ## 1. Acessar a VPS
 
@@ -95,7 +96,35 @@ Siga as perguntas que aparecerem na tela.
 
 No teste feito para este guia, não apareceu uma etapa obrigatória chamada `Advanced` e também não foi necessário instalar daemon manualmente.
 
-## 9. Conferir comandos disponíveis
+## 9. Obter o caminho de acesso da interface web
+
+Depois do onboard, use este comando para ver o endereço de acesso da interface:
+
+```bash
+openclaw dashboard --no-open
+```
+
+Esse comando é útil em VPS, porque o servidor normalmente não tem navegador gráfico.
+
+Se o OpenClaw mostrar uma URL com token, copie a URL completa exibida no terminal.
+
+Se precisar ver o token separadamente:
+
+```bash
+openclaw config get gateway.auth.token
+```
+
+## 10. Acessar pelo navegador
+
+Se o OpenClaw mostrar uma URL pública em `https`, copie e cole essa URL no navegador.
+
+Se ele mostrar apenas um endereço local, use o caminho indicado pelo próprio comando:
+
+```bash
+openclaw dashboard --no-open
+```
+
+## 11. Conferir comandos disponíveis
 
 ```bash
 openclaw --help
@@ -113,7 +142,7 @@ Se quiser conferir comandos relacionados ao Gateway:
 openclaw gateway --help
 ```
 
-## 10. Verificar status depois do onboard
+## 12. Verificar status depois do onboard
 
 Use os comandos disponíveis no seu ambiente:
 
@@ -131,7 +160,7 @@ Se algum comando não existir na sua versão, confira a lista atual:
 openclaw --help
 ```
 
-## 11. Atualizar o OpenClaw
+## 13. Atualizar o OpenClaw
 
 ```bash
 openclaw update
@@ -150,18 +179,20 @@ Se algum comando de atualização não existir na sua versão:
 openclaw --help
 ```
 
-## 12. Ver a versão mais recente publicada
+## 14. Ver a versão mais recente publicada
 
 ```bash
 npm view openclaw version
 ```
 
-## 13. Comandos principais
+## 15. Comandos principais
 
 ```bash
 openclaw --version
 openclaw --help
 openclaw onboard
+openclaw dashboard --no-open
+openclaw config get gateway.auth.token
 openclaw configure --help
 openclaw gateway --help
 openclaw doctor
@@ -177,6 +208,7 @@ Ao final, a VPS deve ter:
 OpenClaw instalado sem Docker.
 CLI openclaw funcionando.
 Onboarding executado.
+Caminho de acesso da interface web disponível no terminal.
 Comandos básicos disponíveis no terminal.
 ```
 
@@ -184,4 +216,4 @@ Comandos básicos disponíveis no terminal.
 
 A interface e as opções do `openclaw onboard` podem mudar entre versões.
 
-Por isso, este guia registra o fluxo real usado na instalação: instalar pelo script oficial, rodar `openclaw onboard` e seguir as opções que aparecem na tela.
+Por isso, este guia registra o fluxo real usado na instalação: instalar pelo script oficial, rodar `openclaw onboard`, obter o caminho com `openclaw dashboard --no-open` e seguir as opções que aparecem na tela.
