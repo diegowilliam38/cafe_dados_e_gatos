@@ -1,6 +1,6 @@
-# Como instalar o OpenClaw na Hetzner sem Docker usando o modo Linux full
+# Como instalar o OpenClaw na Hetzner
 
-Instalação do OpenClaw em uma VPS Linux Ubuntu, sem Docker, usando o fluxo oficial atual do OpenClaw: instalador Linux, `openclaw onboard`, modo `Advanced` e daemon gerenciado pelo próprio OpenClaw.
+Instalação do OpenClaw em uma VPS Linux Ubuntu da Hetzner, sem Docker, usando o fluxo oficial atual do OpenClaw: instalador Linux, `openclaw onboard`, modo `Advanced` e daemon gerenciado pelo próprio OpenClaw.
 
 ## Base oficial usada
 
