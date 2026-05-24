@@ -1,32 +1,26 @@
-# Instalação do PicoClaw em VPS Hetzner sem Docker
+# Como instalar PicoClaw em VPS Hetzner sem Docker
 
 ## Objetivo
 
-Instalar o PicoClaw diretamente na VPS Ubuntu da Hetzner, sem Docker.
+Instalar o PicoClaw diretamente em uma VPS Ubuntu da Hetzner, sem Docker.
 
-Este documento usa o caminho de instalação puro:
+Fluxo usado:
 
-```bash
-GitHub -> build local -> binário -> configuração -> systemd
+```text
+VPS Ubuntu -> Go 1.25.10 -> build local -> onboard -> config.json -> Ollama -> WebUI Launcher -> Gateway
 ```
 
 ---
 
 ## 1. Acessar a VPS
 
-No seu computador local, acesse a VPS por SSH:
-
 ```bash
-ssh root@IP_DA_SUA_VPS
+ssh root@"IP_DA_SUA_VPS"
 ```
-
-Atualize o sistema:
 
 ```bash
 apt update && apt upgrade -y
 ```
-
-Instale ferramentas básicas:
 
 ```bash
 apt install -y git curl wget nano build-essential make
@@ -34,87 +28,76 @@ apt install -y git curl wget nano build-essential make
 
 ---
 
-## 2. Instalar Go
-
-O PicoClaw é feito em Go. Para compilar direto na VPS, instale o Go na versão `1.25.10`.
-
-Remova instalações anteriores em `/usr/local/go`:
+## 2. Instalar Go 1.25.10
 
 ```bash
-rm -rf /usr/local/go
+rm -rf "/usr/local/go"
 ```
-
-Baixe o Go `1.25.10` para Linux AMD64:
 
 ```bash
-cd /tmp
+cd "/tmp"
 
-wget https://go.dev/dl/go1.25.10.linux-amd64.tar.gz
+wget "https://go.dev/dl/go1.25.10.linux-amd64.tar.gz"
 ```
-
-Extraia em `/usr/local`:
 
 ```bash
-tar -C /usr/local -xzf go1.25.10.linux-amd64.tar.gz
+tar -C "/usr/local" -xzf "go1.25.10.linux-amd64.tar.gz"
 ```
-
-Adicione o Go ao PATH do usuário atual:
 
 ```bash
-echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc
+echo 'export PATH=/usr/local/go/bin:$PATH' >> "~/.bashrc"
 
-source ~/.bashrc
+source "~/.bashrc"
 ```
-
-Confira a instalação:
 
 ```bash
 go version
 which go
 ```
 
-O resultado esperado é:
+Resultado esperado:
 
 ```text
 go version go1.25.10 linux/amd64
 /usr/local/go/bin/go
 ```
 
+Se ainda aparecer Go antigo:
+
+```bash
+export PATH="/usr/local/go/bin:$PATH"
+
+go version
+which go
+```
+
 ---
 
 ## 3. Baixar o PicoClaw
 
-Entre na pasta onde você costuma instalar projetos:
+Se já existir uma instalação anterior e quiser começar limpo:
 
 ```bash
-cd /opt
+rm -rf "/opt/picoclaw"
 ```
 
-Clone o repositório oficial:
-
 ```bash
-git clone https://github.com/sipeed/picoclaw.git
-```
+cd "/opt"
 
-Entre na pasta:
+git clone "https://github.com/sipeed/picoclaw.git"
 
-```bash
-cd /opt/picoclaw
-```
+cd "/opt/picoclaw"
 
-Veja os arquivos:
-
-```bash
 ls
 ```
 
 ---
 
-## 4. Instalar dependências do projeto
-
-Dentro da pasta do PicoClaw:
+## 4. Instalar dependências
 
 ```bash
+cd "/opt/picoclaw"
+
 make deps
 ```
 
@@ -122,89 +105,139 @@ make deps
 
 ## 5. Compilar o PicoClaw
 
-Compile para a plataforma atual:
-
 ```bash
+cd "/opt/picoclaw"
+
 make build
 ```
 
-Verifique se o binário foi criado:
-
 ```bash
-ls build
+find "/opt/picoclaw/build" -type f -name "picoclaw*" 2>/dev/null
+```
+
+No teste, o binário principal foi gerado como:
+
+```text
+/opt/picoclaw/build/picoclaw-linux-amd64
 ```
 
 ---
 
 ## 6. Instalar o binário no PATH
 
-Use o alvo oficial de instalação:
-
 ```bash
-make install
-```
+cp "/opt/picoclaw/build/picoclaw-linux-amd64" "/usr/local/bin/picoclaw"
 
-Verifique se o comando ficou disponível:
+chmod +x "/usr/local/bin/picoclaw"
 
-```bash
 which picoclaw
+
+picoclaw --help
 ```
 
-Confira a versão:
+Observação: nesta build, este comando não existe:
 
 ```bash
 picoclaw --version
 ```
 
-Se o comando não for encontrado, teste procurar o binário:
+Use:
 
 ```bash
-find /opt/picoclaw -type f -name "picoclaw*" 2>/dev/null
+picoclaw --help
 ```
 
 ---
 
-## 7. Criar a configuração inicial
+## 7. Gerar a configuração inicial
 
-Rode o onboarding:
+O arquivo de configuração é gerado pelo próprio PicoClaw.
 
 ```bash
 picoclaw onboard
 ```
 
-Depois verifique se a pasta de configuração foi criada:
+Confira:
 
 ```bash
-ls ~/.picoclaw
+ls "/root/.picoclaw"
+
+ls "/root/.picoclaw/config.json"
 ```
 
-Veja o arquivo de configuração:
+Abra:
 
 ```bash
-ls ~/.picoclaw/config.json
+nano "/root/.picoclaw/config.json"
 ```
 
-Abra para editar:
+---
+
+## 8. Configurar Ollama no config.json
+
+Confirme se o Ollama responde:
 
 ```bash
-nano ~/.picoclaw/config.json
+curl "http://127.0.0.1:11434/api/tags"
 ```
 
-Configure pelo menos um provedor de modelo.
+Veja os modelos disponíveis no Ollama:
 
-Exemplo de pontos para revisar dentro do arquivo:
+```bash
+ollama list
+```
+
+Abra a configuração:
+
+```bash
+nano "/root/.picoclaw/config.json"
+```
+
+Procure por `model_list`:
 
 ```text
-providers
-api_key
-model
-tools
-telegram
-discord
-web
+CTRL + W
+model_list
+ENTER
 ```
 
-Salve no nano:
+No começo do arquivo, em:
+
+```json
+"agents": {
+  "defaults": {
+```
+
+configure o provider e o modelo padrão.
+
+Exemplo usado no teste:
+
+```json
+"provider": "ollama",
+"model_name": "gemma4:31b-cloud"
+```
+
+Depois, em `model_list`, cadastre o mesmo `model_name`:
+
+```json
+{
+  "model_name": "gemma4:31b-cloud",
+  "provider": "ollama",
+  "model": "ollama/gemma4:31b-cloud",
+  "api_base": "http://127.0.0.1:11434/v1"
+}
+```
+
+Pontos importantes:
+
+```text
+agents.defaults.model_name precisa bater exatamente com model_list[].model_name.
+Para Ollama local, use http://127.0.0.1:11434/v1.
+Não use https no Ollama local.
+O campo model precisa ter o prefixo ollama/.
+```
+
+Salvar no nano:
 
 ```text
 CTRL + O
@@ -212,31 +245,21 @@ ENTER
 CTRL + X
 ```
 
----
-
-## 8. Testar o PicoClaw no terminal
-
-Teste uma pergunta simples:
+Teste:
 
 ```bash
-picoclaw agent -m "Responda apenas: PicoClaw funcionando."
+picoclaw agent -m "Oi, diga olá para meus amigos do Café com Dados e Gatos."
 ```
-
-Se responder corretamente, o binário e a configuração básica estão funcionando.
 
 ---
 
-## 9. Rodar o gateway manualmente
-
-Para iniciar o gateway em primeiro plano:
+## 9. Usar o modo interativo
 
 ```bash
-picoclaw gateway
+picoclaw agent
 ```
 
-Se estiver usando Telegram, Discord ou outro canal, este comando mantém o PicoClaw ouvindo as mensagens.
-
-Para parar:
+Para sair:
 
 ```text
 CTRL + C
@@ -244,254 +267,347 @@ CTRL + C
 
 ---
 
-## 10. Criar serviço systemd
+## 10. Compilar o WebUI Launcher
 
-Para deixar o PicoClaw rodando mesmo depois de fechar o terminal, crie um serviço.
-
-Crie o arquivo:
+O WebUI Launcher precisa ser compilado separadamente.
 
 ```bash
-nano /etc/systemd/system/picoclaw.service
+cd "/opt/picoclaw"
+
+make build-launcher
 ```
 
-Cole:
+Verifique se foi gerado:
 
-```ini
-[Unit]
-Description=PicoClaw Gateway
-After=network.target
-
-[Service]
-Type=simple
-User=root
-WorkingDirectory=/root
-ExecStart=/usr/local/bin/picoclaw gateway
-Restart=always
-RestartSec=5
-Environment=HOME=/root
-
-[Install]
-WantedBy=multi-user.target
+```bash
+find "/opt/picoclaw" -type f -name "*launcher*" 2>/dev/null
 ```
 
-Salve:
+No teste, o launcher foi gerado como:
 
 ```text
-CTRL + O
-ENTER
-CTRL + X
+/opt/picoclaw/build/picoclaw-launcher
 ```
 
-Recarregue o systemd:
+Instale no PATH:
 
 ```bash
-systemctl daemon-reload
-```
+cp "/opt/picoclaw/build/picoclaw-launcher" "/usr/local/bin/picoclaw-launcher"
 
-Ative o serviço:
+chmod +x "/usr/local/bin/picoclaw-launcher"
 
-```bash
-systemctl enable picoclaw
-```
-
-Inicie:
-
-```bash
-systemctl start picoclaw
-```
-
-Veja o status:
-
-```bash
-systemctl status picoclaw
+which picoclaw-launcher
 ```
 
 ---
 
-## 11. Ver logs
+## 11. Subir a interface WebUI
 
-Ver logs em tempo real:
+Para VPS, VM ou Tailscale:
 
 ```bash
-journalctl -u picoclaw -f
+picoclaw-launcher -public
 ```
 
-Ver últimos logs:
+Abra no navegador:
 
-```bash
-journalctl -u picoclaw -n 100 --no-pager
+```text
+http://IP_DA_VPS:18800
 ```
 
----
+Ou via Tailscale:
 
-## 12. Reiniciar o PicoClaw
-
-```bash
-systemctl restart picoclaw
+```text
+http://IP_TAILSCALE:18800
 ```
 
----
-
-## 13. Parar o PicoClaw
+Conferir porta:
 
 ```bash
-systemctl stop picoclaw
+ss -tulpn | grep "18800"
 ```
 
 ---
 
-## 14. Desativar da inicialização
-
-```bash
-systemctl disable picoclaw
-```
-
----
-
-## 15. Atualizar o PicoClaw
-
-Entre na pasta do projeto:
-
-```bash
-cd /opt/picoclaw
-```
-
-Atualize o código:
-
-```bash
-git pull
-```
-
-Recompile:
-
-```bash
-make deps
-make build
-make install
-```
-
-Reinicie o serviço:
-
-```bash
-systemctl restart picoclaw
-```
-
-Confira o status:
-
-```bash
-systemctl status picoclaw
-```
-
----
-
-## 16. Checar portas abertas
-
-Se o PicoClaw estiver rodando como gateway ou API, confira portas abertas:
-
-```bash
-ss -tulpn
-```
-
-Se usar firewall UFW, veja o status:
-
-```bash
-ufw status
-```
-
----
-
-## 17. Comandos úteis
-
-Ver versão:
-
-```bash
-picoclaw --version
-```
-
-Rodar onboarding:
-
-```bash
-picoclaw onboard
-```
-
-Testar agente:
-
-```bash
-picoclaw agent -m "Teste rápido."
-```
-
-Rodar gateway:
+## 12. Subir o Gateway
 
 ```bash
 picoclaw gateway
 ```
 
-Ver serviço:
+Para deixar rodando em segundo plano:
 
 ```bash
-systemctl status picoclaw
+nohup picoclaw gateway > "/root/picoclaw-gateway.log" 2>&1 &
 ```
 
 Ver logs:
 
 ```bash
-journalctl -u picoclaw -f
+tail -f "/root/picoclaw-gateway.log"
+```
+
+Ver processo:
+
+```bash
+ps aux | grep "picoclaw"
 ```
 
 ---
 
-## 18. Remover PicoClaw
-
-Parar serviço:
+## 13. Atualizar PicoClaw depois
 
 ```bash
-systemctl stop picoclaw
-```
+cd "/opt/picoclaw"
 
-Desativar serviço:
+git pull
 
-```bash
-systemctl disable picoclaw
-```
+make deps
 
-Remover arquivo systemd:
+make build
 
-```bash
-rm /etc/systemd/system/picoclaw.service
-```
+make build-launcher
 
-Recarregar systemd:
+cp "/opt/picoclaw/build/picoclaw-linux-amd64" "/usr/local/bin/picoclaw"
 
-```bash
-systemctl daemon-reload
-```
+chmod +x "/usr/local/bin/picoclaw"
 
-Remover binário:
+cp "/opt/picoclaw/build/picoclaw-launcher" "/usr/local/bin/picoclaw-launcher"
 
-```bash
-rm -f /usr/local/bin/picoclaw
-```
-
-Remover projeto:
-
-```bash
-rm -rf /opt/picoclaw
-```
-
-Opcional: remover configuração do usuário root:
-
-```bash
-rm -rf /root/.picoclaw
+chmod +x "/usr/local/bin/picoclaw-launcher"
 ```
 
 ---
 
-## Observação
+# Como corrigir erros comuns
+
+## Erro: Go antigo
+
+```text
+go.mod requires go >= 1.25.10
+running go 1.22.2
+```
+
+Correção:
+
+```bash
+rm -rf "/usr/local/go"
+
+cd "/tmp"
+
+wget "https://go.dev/dl/go1.25.10.linux-amd64.tar.gz"
+
+tar -C "/usr/local" -xzf "go1.25.10.linux-amd64.tar.gz"
+
+export PATH="/usr/local/go/bin:$PATH"
+
+go version
+which go
+```
+
+---
+
+## Erro: pasta já existe
+
+```text
+fatal: destination path 'picoclaw' already exists and is not an empty directory.
+```
+
+Correção:
+
+```bash
+rm -rf "/opt/picoclaw"
+
+cd "/opt"
+
+git clone "https://github.com/sipeed/picoclaw.git"
+
+cd "/opt/picoclaw"
+```
+
+---
+
+## Erro: picoclaw --version não existe
+
+```text
+unknown flag: --version
+```
+
+Use:
+
+```bash
+picoclaw --help
+```
+
+---
+
+## Erro: model não encontrado
+
+```text
+model "NOME_DO_MODELO" not found in model_list
+```
+
+Causa:
+
+```text
+agents.defaults.model_name não existe dentro de model_list.
+```
+
+Correção:
+
+```json
+"model_name": "gemma4:31b-cloud"
+```
+
+E dentro de `model_list`:
+
+```json
+{
+  "model_name": "gemma4:31b-cloud",
+  "provider": "ollama",
+  "model": "ollama/gemma4:31b-cloud",
+  "api_base": "http://127.0.0.1:11434/v1"
+}
+```
+
+---
+
+## Erro: HTTPS no Ollama local
+
+```text
+server gave HTTP response to HTTPS client
+```
+
+Causa:
+
+```text
+Ollama local usa HTTP, não HTTPS.
+```
+
+Correção:
+
+```json
+"api_base": "http://127.0.0.1:11434/v1"
+```
+
+Não use:
+
+```json
+"api_base": "https://127.0.0.1:11434/v1"
+```
+
+---
+
+## Erro: mensagem digitada direto no terminal
+
+```text
+command not found
+```
+
+Use:
+
+```bash
+picoclaw agent -m "Sua mensagem aqui"
+```
+
+Ou:
+
+```bash
+picoclaw agent
+```
+
+---
+
+## Erro: launcher não encontrado
+
+```text
+picoclaw-launcher: command not found
+```
+
+Correção:
+
+```bash
+cd "/opt/picoclaw"
+
+make build-launcher
+
+cp "/opt/picoclaw/build/picoclaw-launcher" "/usr/local/bin/picoclaw-launcher"
+
+chmod +x "/usr/local/bin/picoclaw-launcher"
+
+picoclaw-launcher -public
+```
+
+---
+
+# Comandos úteis
+
+```bash
+picoclaw --help
+```
+
+```bash
+picoclaw onboard
+```
+
+```bash
+nano "/root/.picoclaw/config.json"
+```
+
+```bash
+picoclaw agent -m "Teste rápido."
+```
+
+```bash
+picoclaw agent
+```
+
+```bash
+picoclaw gateway
+```
+
+```bash
+picoclaw-launcher -public
+```
+
+```bash
+ss -tulpn
+```
+
+---
+
+# Remover PicoClaw
+
+```bash
+rm -f "/usr/local/bin/picoclaw"
+
+rm -f "/usr/local/bin/picoclaw-launcher"
+
+rm -rf "/opt/picoclaw"
+```
+
+Opcional: remover configuração:
+
+```bash
+rm -rf "/root/.picoclaw"
+```
+
+---
+
+# Observações
 
 Este guia evita Docker de propósito.
 
-A ideia é manter a VPS Hetzner no padrão de instalação pura:
+O PicoClaw ainda está em evolução rápida. Comandos, nomes de binários, launcher e formato de configuração podem mudar entre versões.
+
+Pontos confirmados no teste:
 
 ```text
-binário + config + systemd
+Go precisa estar atualizado.
+O config.json é criado pelo picoclaw onboard.
+O binário principal foi gerado como build/picoclaw-linux-amd64.
+O launcher precisou ser compilado com make build-launcher.
+picoclaw --version não existia nesta build.
+Ollama local precisa usar HTTP, não HTTPS.
+agents.defaults.model_name precisa existir em model_list[].model_name.
 ```
