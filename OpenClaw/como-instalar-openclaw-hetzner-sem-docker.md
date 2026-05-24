@@ -15,7 +15,7 @@ Instalação do OpenClaw em uma VPS Linux Ubuntu da Hetzner, sem Docker, usando 
 - Instala dependências básicas.
 - Instala o OpenClaw pelo instalador oficial.
 - Roda o `openclaw onboard`.
-- Mostra como obter o caminho de acesso da interface web.
+- Mostra como obter o caminho HTTPS de acesso com Tailscale Serve.
 - Mostra os comandos básicos para verificar a instalação.
 
 ## O que este guia não faz
@@ -96,9 +96,60 @@ Siga as perguntas que aparecerem na tela.
 
 No teste feito para este guia, não apareceu uma etapa obrigatória chamada `Advanced` e também não foi necessário instalar daemon manualmente.
 
-## 9. Obter o caminho de acesso da interface web
+## 9. Conferir se o Gateway está respondendo localmente
 
-Depois do onboard, use este comando para ver o endereço de acesso da interface:
+```bash
+openclaw gateway status
+```
+
+Se o Gateway estiver usando a porta `18789`, o serviço local estará neste endereço:
+
+```text
+http://127.0.0.1:18789
+```
+
+## 10. Gerar o acesso HTTPS com Tailscale Serve
+
+Na VPS, rode:
+
+```bash
+tailscale serve --https=18789 http://127.0.0.1:18789
+```
+
+O Tailscale vai mostrar uma saída parecida com esta:
+
+```text
+Available within your tailnet:
+
+https://NOME-DA-MAQUINA.NOME-DA-TAILNET.ts.net:18789/
+|-- proxy http://127.0.0.1:18789
+```
+
+Copie a URL `https` exibida no terminal e abra no navegador.
+
+Exemplo de formato:
+
+```text
+https://NOME-DA-MAQUINA.NOME-DA-TAILNET.ts.net:18789/
+```
+
+## 11. Conferir o acesso HTTPS ativo
+
+```bash
+tailscale serve status
+```
+
+## 12. Remover o acesso HTTPS se precisar
+
+Use apenas se quiser desligar o compartilhamento HTTPS criado pelo Tailscale Serve.
+
+```bash
+tailscale serve reset
+```
+
+## 13. Obter o caminho da interface pelo OpenClaw
+
+Também é possível pedir para o OpenClaw mostrar o endereço da interface:
 
 ```bash
 openclaw dashboard --no-open
@@ -114,17 +165,7 @@ Se precisar ver o token separadamente:
 openclaw config get gateway.auth.token
 ```
 
-## 10. Acessar pelo navegador
-
-Se o OpenClaw mostrar uma URL pública em `https`, copie e cole essa URL no navegador.
-
-Se ele mostrar apenas um endereço local, use o caminho indicado pelo próprio comando:
-
-```bash
-openclaw dashboard --no-open
-```
-
-## 11. Conferir comandos disponíveis
+## 14. Conferir comandos disponíveis
 
 ```bash
 openclaw --help
@@ -142,7 +183,7 @@ Se quiser conferir comandos relacionados ao Gateway:
 openclaw gateway --help
 ```
 
-## 12. Verificar status depois do onboard
+## 15. Verificar status depois do onboard
 
 Use os comandos disponíveis no seu ambiente:
 
@@ -160,7 +201,7 @@ Se algum comando não existir na sua versão, confira a lista atual:
 openclaw --help
 ```
 
-## 13. Atualizar o OpenClaw
+## 16. Atualizar o OpenClaw
 
 ```bash
 openclaw update
@@ -179,24 +220,27 @@ Se algum comando de atualização não existir na sua versão:
 openclaw --help
 ```
 
-## 14. Ver a versão mais recente publicada
+## 17. Ver a versão mais recente publicada
 
 ```bash
 npm view openclaw version
 ```
 
-## 15. Comandos principais
+## 18. Comandos principais
 
 ```bash
 openclaw --version
 openclaw --help
 openclaw onboard
+openclaw gateway status
+tailscale serve --https=18789 http://127.0.0.1:18789
+tailscale serve status
+tailscale serve reset
 openclaw dashboard --no-open
 openclaw config get gateway.auth.token
 openclaw configure --help
 openclaw gateway --help
 openclaw doctor
-openclaw gateway status
 openclaw update
 ```
 
@@ -208,7 +252,8 @@ Ao final, a VPS deve ter:
 OpenClaw instalado sem Docker.
 CLI openclaw funcionando.
 Onboarding executado.
-Caminho de acesso da interface web disponível no terminal.
+Gateway respondendo localmente.
+Acesso HTTPS gerado com Tailscale Serve.
 Comandos básicos disponíveis no terminal.
 ```
 
@@ -216,4 +261,4 @@ Comandos básicos disponíveis no terminal.
 
 A interface e as opções do `openclaw onboard` podem mudar entre versões.
 
-Por isso, este guia registra o fluxo real usado na instalação: instalar pelo script oficial, rodar `openclaw onboard`, obter o caminho com `openclaw dashboard --no-open` e seguir as opções que aparecem na tela.
+Por isso, este guia registra o fluxo real usado na instalação: instalar pelo script oficial, rodar `openclaw onboard`, expor o acesso com `tailscale serve --https=18789 http://127.0.0.1:18789` e seguir as opções que aparecem na tela.
