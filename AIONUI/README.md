@@ -2,69 +2,103 @@
 
 ## 1. Acessar o download oficial
 
-Baixar o AionUI para Linux em:
-
-```text
-https://aionui.com/download/
-```
-
-Ou pelo GitHub Releases:
+Baixar o AionUI para Linux pelo GitHub Releases:
 
 ```text
 https://github.com/iOfficeAI/AionUi/releases
 ```
 
-## 2. Baixar a versão Linux
+## 2. Baixar a versão Linux correta
 
-Escolher o pacote compatível com a máquina:
-
-```text
-Linux x64
-```
-
-ou:
+Para Ubuntu/Linux comum em computador Intel ou AMD 64-bit, baixar:
 
 ```text
-Linux arm64
+AionUi-2.1.4-linux-amd64.deb
 ```
 
-## 3. Dar permissão de execução se for AppImage
+Para máquina ARM, baixar:
+
+```text
+AionUi-2.1.4-linux-arm64.deb
+```
+
+Na maioria dos notebooks e PCs comuns, usar a versão:
+
+```text
+linux-amd64.deb
+```
+
+## 3. Entrar na pasta de downloads
 
 ```bash
-chmod +x "AionUI*.AppImage"
+cd "$HOME/Downloads"
 ```
 
-## 4. Abrir o AionUI
+## 4. Instalar o pacote .deb
 
 ```bash
-./AionUI*.AppImage
+sudo dpkg -i "AionUi-2.1.4-linux-amd64.deb"
 ```
 
-## 5. Testar Hermes no terminal
+## 5. Corrigir dependências, se precisar
+
+Se aparecer erro de dependência, rodar:
+
+```bash
+sudo apt --fix-broken install -y
+```
+
+Depois tentar instalar novamente:
+
+```bash
+sudo dpkg -i "AionUi-2.1.4-linux-amd64.deb"
+```
+
+## 6. Abrir o AionUI
+
+Tentar abrir pelo terminal:
+
+```bash
+aionui
+```
+
+Ou procurar no menu do Ubuntu por:
+
+```text
+AionUI
+```
+
+## 7. Testar Hermes no terminal
 
 ```bash
 hermes --help
 ```
 
-## 6. Testar OpenClaw no terminal
+## 8. Testar OpenClaw no terminal
 
 ```bash
 openclaw --help
 ```
 
-## 7. Configurar no AionUI
+## 9. Configurar no AionUI
 
-Dentro do AionUI, adicionar os comandos locais:
+Dentro do AionUI, verificar se ele detecta Hermes e OpenClaw automaticamente.
+
+Se não detectar, procurar a opção de adicionar comando local ou CLI manualmente.
+
+Adicionar:
 
 ```bash
 hermes
 ```
 
+E também:
+
 ```bash
 openclaw
 ```
 
-## 8. Primeiro teste
+## 10. Primeiro teste
 
 Pedir no AionUI:
 
@@ -72,7 +106,7 @@ Pedir no AionUI:
 Crie um arquivo chamado teste-aionui.txt dizendo qual agente executou a tarefa.
 ```
 
-## 9. Conferir o arquivo
+## 11. Conferir o arquivo
 
 ```bash
 ls -la
