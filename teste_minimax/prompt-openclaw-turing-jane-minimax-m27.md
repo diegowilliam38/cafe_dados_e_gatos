@@ -1,6 +1,6 @@
 # Prompt Avançado para Teste Multiagente no OpenClaw com MiniMax M2.7
 
-Quero que você crie um sistema operacional multiagente inteligente utilizando dois agentes especializados trabalhando em conjunto.
+Quero que você crie um sistema multiagente inteligente utilizando dois agentes especializados trabalhando em conjunto, 1 é você e preciso que vocẽ crie uma nova agente.
 
 Os agentes principais serão:
 
