@@ -24,7 +24,27 @@ npm install
 cp ".env.example" ".env"
 ```
 
-## 5. Confirmar que o Hermes está rodando
+## 5. Configurar o arquivo .env para Hermes
+
+Abrir o arquivo:
+
+```bash
+nano ".env"
+```
+
+Confirmar ou adicionar estas variáveis:
+
+```env
+NEXT_PUBLIC_GATEWAY_URL=ws://localhost:18789
+HERMES_API_URL=http://localhost:8642
+HERMES_ADAPTER_PORT=18789
+HERMES_MODEL=hermes
+HERMES_AGENT_NAME=Hermes
+```
+
+Salvar o arquivo.
+
+## 6. Confirmar que o Hermes está rodando
 
 No ambiente atual, o Hermes Agent Office aparece em:
 
@@ -34,7 +54,7 @@ http://localhost:3100/office
 
 O Claw3D usa o Hermes como runtime dos agentes.
 
-## 6. Rodar o Hermes Adapter
+## 7. Rodar o Hermes Adapter
 
 Abra um terminal e rode:
 
@@ -51,7 +71,7 @@ Endereço esperado:
 ws://localhost:18789
 ```
 
-## 7. Rodar o Claw3D Studio
+## 8. Rodar o Claw3D Studio
 
 Abra outro terminal e rode:
 
@@ -66,7 +86,7 @@ Depois abra no navegador:
 http://localhost:3000
 ```
 
-## 8. Conectar no Claw3D
+## 9. Conectar no Claw3D
 
 Na tela de conexão do Claw3D, usar:
 
@@ -75,7 +95,7 @@ Backend: Hermes backend
 Gateway URL: ws://localhost:18789
 ```
 
-## 9. Entender a arquitetura
+## 10. Entender a arquitetura
 
 ```text
 Hermes = motor dos agentes
@@ -86,7 +106,7 @@ Jane = agente de escrita
 Turing = agente de codificação
 ```
 
-## 10. Fluxo recomendado
+## 11. Fluxo recomendado
 
 ```text
 1. Iniciar Hermes
@@ -98,7 +118,7 @@ Turing = agente de codificação
 7. Testar chat, perfis e Kanban
 ```
 
-## 11. Observações
+## 12. Observações
 
 O Claw3D não substitui o Hermes.
 
