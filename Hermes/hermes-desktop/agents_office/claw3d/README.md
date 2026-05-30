@@ -1,30 +1,79 @@
 # Como instalar o Claw3D com Hermes
 
-## 1. Clonar o repositório
+## 1. Limpar instalação anterior
+
+Parar qualquer terminal que esteja rodando Claw3D ou Hermes Adapter:
+
+```text
+Ctrl + C
+```
+
+Remover instalação antiga:
+
+```bash
+cd ~
+rm -rf "claw3d"
+```
+
+Limpar cache do npm:
+
+```bash
+npm cache clean --force
+```
+
+## 2. Clonar o repositório oficial
 
 ```bash
 git clone "https://github.com/iamlukethedev/Claw3D.git" "claw3d"
 ```
 
-## 2. Entrar na pasta
+## 3. Entrar na pasta
 
 ```bash
 cd "claw3d"
 ```
 
-## 3. Instalar dependências
+## 4. Garantir instalação limpa
+
+Remover dependências e lockfile antigos, caso existam:
+
+```bash
+rm -rf "node_modules" "package-lock.json"
+```
+
+## 5. Instalar dependências
 
 ```bash
 npm install
 ```
 
-## 4. Criar o arquivo de ambiente
+## 6. Conferir versão do Next
+
+```bash
+npm list next
+```
+
+O esperado no repositório atual é algo próximo de:
+
+```text
+next@16.1.7
+```
+
+Se aparecer:
+
+```text
+next@9.3.3
+```
+
+a instalação ainda está pegando dependência antiga ou cache errado.
+
+## 7. Criar o arquivo de ambiente
 
 ```bash
 cp ".env.example" ".env"
 ```
 
-## 5. Configurar o arquivo .env para Hermes
+## 8. Configurar o arquivo .env para Hermes
 
 Abrir o arquivo:
 
@@ -42,9 +91,35 @@ HERMES_MODEL=hermes
 HERMES_AGENT_NAME=Hermes
 ```
 
-Salvar o arquivo.
+Salvar:
 
-## 6. Confirmar que o Hermes está rodando
+```text
+Ctrl + O
+Enter
+Ctrl + X
+```
+
+## 9. Não renomear next.config.ts
+
+No repositório atual, o arquivo:
+
+```text
+next.config.ts
+```
+
+deve permanecer assim.
+
+Não fazer:
+
+```bash
+mv "next.config.ts" "next.config.js"
+```
+
+Esse erro aconteceu quando o projeto instalou uma versão antiga do Next.
+
+Com Next 16, o `next.config.ts` é compatível.
+
+## 10. Confirmar que o Hermes está rodando
 
 No ambiente atual, o Hermes Agent Office aparece em:
 
@@ -54,14 +129,16 @@ http://localhost:3100/office
 
 O Claw3D usa o Hermes como runtime dos agentes.
 
-## 7. Rodar o Hermes Adapter
+## 11. Rodar o Hermes Adapter
 
-Abra um terminal e rode:
+Abrir um terminal e rodar:
 
 ```bash
-cd "claw3d"
+cd ~/claw3d
 npm run hermes-adapter
 ```
+
+Esse terminal deve ficar aberto.
 
 O adapter cria a ponte WebSocket entre Claw3D e Hermes.
 
@@ -71,22 +148,30 @@ Endereço esperado:
 ws://localhost:18789
 ```
 
-## 8. Rodar o Claw3D Studio
+Se aparecer algo como:
 
-Abra outro terminal e rode:
+```text
+Port 18789 in use
+```
+
+provavelmente já existe outro adapter ou gateway rodando nessa porta.
+
+## 12. Rodar o Claw3D Studio
+
+Abrir outro terminal e rodar:
 
 ```bash
-cd "claw3d"
+cd ~/claw3d
 npm run dev
 ```
 
-Depois abra no navegador:
+Depois abrir no navegador:
 
 ```text
 http://localhost:3000
 ```
 
-## 9. Conectar no Claw3D
+## 13. Conectar no Claw3D
 
 Na tela de conexão do Claw3D, usar:
 
@@ -95,7 +180,7 @@ Backend: Hermes backend
 Gateway URL: ws://localhost:18789
 ```
 
-## 10. Entender a arquitetura
+## 14. Entender a arquitetura
 
 ```text
 Hermes = motor dos agentes
@@ -106,7 +191,7 @@ Jane = agente de escrita
 Turing = agente de codificação
 ```
 
-## 11. Fluxo recomendado
+## 15. Fluxo recomendado
 
 ```text
 1. Iniciar Hermes
@@ -118,7 +203,29 @@ Turing = agente de codificação
 7. Testar chat, perfis e Kanban
 ```
 
-## 12. Observações
+## 16. O que não fazer
+
+Não rodar:
+
+```bash
+npm audit fix --force
+```
+
+Esse comando pode instalar versões novas demais e quebrar o projeto.
+
+Não renomear:
+
+```text
+next.config.ts
+```
+
+Não tentar corrigir dependência antiga manualmente antes de verificar:
+
+```bash
+npm list next
+```
+
+## 17. Observações
 
 O Claw3D não substitui o Hermes.
 
