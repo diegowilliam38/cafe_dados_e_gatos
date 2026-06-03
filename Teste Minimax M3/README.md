@@ -1,142 +1,186 @@
-# Teste M3
+# Teste Minimax M3
 
-Esta pasta organiza materiais de teste do `MiniMax M3` em mais de um contexto.
+Este diretório reúne um laboratório prático de uso do `MiniMax M3` para fluxos de curadoria Shopee, geração de prompts visuais e montagem de site/blog comercial.
 
-Não se trata apenas da ferramenta de áudio.  
-O conjunto atual mistura:
+O foco aqui não é apenas testar um modelo. A proposta é documentar um processo reutilizável para:
 
-- testes de prompts para `Hermes`
-- testes de prompts para `OpenClaw`
-- testes de uso via `VS Code / Cline`
-- fluxos para curadoria Shopee
-- fluxos para criação de blog/site
-- prompts para imagem Hero
-- prompts para vídeo no ComfyUI
-- pacote separado para laboratório de vozes MiniMax
+- selecionar produtos com `potencial comercial estimado`
+- organizar dados finais para publicação
+- preparar prompt de imagem Hero
+- preparar prompt de vídeo para ComfyUI
+- montar um site/blog a partir dos arquivos gerados
+- comparar o mesmo fluxo em ambientes diferentes
 
-## Estrutura principal
+## O que esta pasta cobre
 
-Dentro desta pasta existe a subpasta:
+O conteúdo atual está organizado para quatro trilhas de trabalho:
+
+- `Hermes`
+- `OpenClaw`
+- `Claude Code`
+- `VS Code + Cline`
+
+Na prática, `Hermes` e `OpenClaw` concentram a etapa de curadoria e preparação dos materiais.
+
+Depois disso, a construção do site pode seguir por dois caminhos:
+
+- via `Claude Code`, com checklists específicos para `site_hermes/` e `site_openclaw/`
+- via `VS Code + Cline`, pensado como alternativa para quem não usa Claude Code
+
+## Objetivo do teste
+
+Este conjunto de prompts foi pensado para validar como o `MiniMax M3` se comporta em uma cadeia de trabalho mais completa, incluindo:
+
+- leitura e filtragem de CSV da Shopee
+- classificação de produtos por critérios auditáveis
+- separação por categorias finais do site
+- geração de arquivos prontos para uso
+- criação de assets textuais para imagem e vídeo
+- orientação de build para blog/site responsivo
+
+## Estrutura da pasta
 
 ```text
-Teste M3/
+Teste Minimax M3/
+├── README.md
+└── Prompts/
+    ├── Claude/
+    │   ├── Hermes/
+    │   │   └── CLAUDE.md
+    │   └── OpenClaw/
+    │       └── CLAUDE.md
+    ├── hermes/
+    │   ├── prompt_hermes_shopee.md
+    │   └── prompt_video_comfyui_hermes_shopee.md
+    ├── hero/
+    │   ├── promtp_hero_Hermes.md
+    │   └── promtp_hero_openclaw.md
+    ├── openclaw/
+    │   ├── prompt_openclaw_shopee.md
+    │   └── prompt_video_comfyui_openclaw_shopee.md
+    └── VS_Code_Cline/
+        ├── criacao_blog_hermes.md
+        └── criacao_blog_openclaw.md
 ```
 
-Ela está organizada em:
+## Como o fluxo está dividido
 
-- `hermes/`
-- `openclaw/`
-- `VS_Code_Cline/`
+### `Prompts/hermes/`
 
-## O que existe em cada área
+Aqui ficam os prompts do fluxo Hermes para curadoria e vídeo.
 
-### `hermes/`
+Principais pontos:
 
-Material de teste do fluxo Hermes com `MiniMax M3` para projeto Shopee.
+- uso do agente `Frank`
+- análise do CSV com `Python/Pandas`
+- seleção de produtos por faixa de preço, nota e disponibilidade de link
+- geração de arquivos finais para site
+- preparação de prompt para vídeo curto no ComfyUI
 
-Arquivos lidos:
+### `Prompts/openclaw/`
 
-- `prompt_hermes_shopee.md`
-  - curadoria de produtos com potencial comercial estimado
-  - arquitetura com agentes `Frank` e `Jane`
-  - saídas em dados finais, logs e arquivos auxiliares
-- `prompt_blog_hermes_shopee.md`
-  - criação de blog/site com base na curadoria
-- `prompt_imagem_hero_hermes.md`
-  - criação de prompt final para imagem Hero
-- `prompt_video_comfyui_hermes_shopee.md`
-  - criação de briefs e prompts para vídeos curtos no ComfyUI
+Traz o fluxo equivalente para `OpenClaw`, com a mesma linha metodológica da curadoria.
 
-### `openclaw/`
+Principais pontos:
 
-Material equivalente para o fluxo `OpenClaw`, também com `MiniMax M3`.
+- execução direta no ambiente OpenClaw
+- análise e filtragem de CSV da Shopee
+- produção de arquivos finais para publicação
+- preparação de prompt para vídeo curto
 
-Arquivos lidos:
+### `Prompts/hero/`
 
-- `prompt_openclaw_shopee.md`
-  - curadoria inicial dos produtos
-- `prompt_blog_openclaw_shopee.md`
-  - criação de blog/site
-- `prompt_imagem_hero_openclaw.md`
-  - prompt de imagem Hero
-- `prompt_video_comfyui_openclaw_shopee.md`
-  - prompts e briefs para vídeo
+Contém os prompts para criação da imagem Hero do blog.
 
-### `VS_Code_Cline/`
+Nessa etapa, a ideia é usar os produtos finais como referência visual para gerar uma Hero:
 
-Prompts pensados para execução via `Cline` no `VS Code`, usando os materiais já gerados nos fluxos anteriores.
+- horizontal
+- comercial
+- limpa
+- moderna
+- alinhada à estética de um blog de achadinhos
 
-Arquivos lidos:
+### `Prompts/Claude/`
 
-- `criacao_blog_hermes.md`
-- `criacao_blog_openclaw.md`
+Aqui estão os checklists para quem vai montar o site usando `Claude Code`.
 
-Esses arquivos focam na montagem do blog de afiliados com base nos dados, artigos, SEO e assets já preparados.
+Esses arquivos orientam:
 
-## Tema central dos testes
+- pasta base de cada projeto
+- pasta correta de saída
+- arquivos de entrada prioritários
+- validações finais
+- regras para publicação somente com `link_gerado_shopee`
 
-O eixo principal desta pasta é comparar ou estruturar o uso do `MiniMax M3` em tarefas como:
+Hoje essa é a trilha mais direta para quem já trabalha com Claude Code.
 
-- leitura e curadoria de CSV da Shopee
-- classificação por `potencial comercial estimado`
-- organização de arquivos finais para site
-- criação de blog comercial/editorial
-- geração de prompts visuais para Hero
-- geração de prompts para vídeo curto
-- orquestração em ambientes diferentes:
-  - `Hermes`
-  - `OpenClaw`
-  - `Cline / VS Code`
+### `Prompts/VS_Code_Cline/`
 
-## Regra metodológica recorrente
+Essa trilha foi mantida como alternativa para quem prefere usar `Cline` no `VS Code`.
 
-Nos prompts lidos aparece uma regra consistente:
+Os prompts dessa pasta orientam a criação de um blog com:
+
+- Home
+- Produtos
+- Blog
+- página oculta de anúncios copiáveis
+
+Eles aproveitam os dados já gerados nas etapas anteriores e descrevem o visual, a linguagem comercial e os cuidados com links e SEO.
+
+## Regra metodológica central
+
+Um dos pontos mais importantes deste teste é a padronização editorial.
+
+Os prompts insistem em uma regra:
 
 - não tratar os produtos como `mais vendidos`
-- não afirmar venda comprovada
-- usar a expressão:
+- não prometer venda real
+- não sugerir comissão garantida
+- usar a expressão `potencial comercial estimado`
 
-```text
-potencial comercial estimado
-```
+Isso faz com que o experimento não seja apenas técnico. Ele também testa uma forma mais segura e auditável de curadoria comercial.
 
-Isso mostra que o teste não é apenas técnico sobre modelo, mas também metodológico e editorial.
+## Regras recorrentes nos prompts
 
-## Ferramenta de voz MiniMax
+Ao longo dos arquivos, aparecem algumas decisões consistentes:
 
-Em paralelo a esses testes, foi preparado um pacote separado para experimentar vozes portuguesas da MiniMax.
+- usar `product_link` como link principal
+- não usar `product_short link` como link oficial do site
+- não inventar categorias manualmente
+- definir categoria final somente por `global_category1` e `global_category2`
+- usar `description` apenas como apoio para `porte_estimado`
+- limitar os arquivos finais a até `4 produtos por categoria`
+- registrar logs e validações de execução
 
-Esse pacote não substitui os materiais acima.  
-Ele é um complemento para teste de voz e escolha de `voice_id`.
+## Ordem sugerida de leitura
 
-Pacotes preparados:
+Se a ideia for entender o processo de ponta a ponta, esta é uma boa sequência:
 
-- Linux
-- Windows
+1. `Prompts/hermes/prompt_hermes_shopee.md` ou `Prompts/openclaw/prompt_openclaw_shopee.md`
+2. `Prompts/hero/promtp_hero_Hermes.md` ou `Prompts/hero/promtp_hero_openclaw.md`
+3. `Prompts/hermes/prompt_video_comfyui_hermes_shopee.md` ou `Prompts/openclaw/prompt_video_comfyui_openclaw_shopee.md`
+4. `Prompts/Claude/Hermes/CLAUDE.md` ou `Prompts/Claude/OpenClaw/CLAUDE.md`
+5. `Prompts/VS_Code_Cline/criacao_blog_hermes.md` ou `Prompts/VS_Code_Cline/criacao_blog_openclaw.md`
 
-Repositório preparado:
+## O que este repositório entrega hoje
 
-```text
-cafe_dados_e_gatos/Teste MinimMax M3/
-```
+Neste estágio, esta pasta funciona principalmente como:
 
-## Leitura prática desta pasta
+- acervo de prompts
+- documentação de fluxo
+- base de comparação entre ambientes
+- guia para transformar curadoria em site/blog publicável
 
-Se a ideia for seguir um fluxo, a leitura mais natural hoje parece ser:
+Ela não depende de um único orquestrador e pode servir tanto para testes comparativos quanto para reaproveitamento prático do pipeline.
 
-1. `hermes/prompt_hermes_shopee.md` ou `openclaw/prompt_openclaw_shopee.md`
-2. prompt de blog correspondente
-3. prompt de imagem Hero correspondente
-4. prompt de vídeo correspondente
-5. prompts de `VS_Code_Cline/` para montar o site final com os arquivos já produzidos
+## Desconto MiniMax
 
-## Resumo
+🚀 **GANHE 12% DE DESCONTO no Plano MiniMax Token Plan:**  
+[https://platform.minimax.io/subscribe/coding-plan?code=LSRdjVVKt6&source=link](https://platform.minimax.io/subscribe/coding-plan?code=LSRdjVVKt6&source=link)
 
-Esta pasta hoje representa um laboratório de teste do `MiniMax M3` para:
+Aproveite o preço promocional do MiniMax M2.7 com o cupom do canal Café com Dados e Gatos.
 
-- operação de agentes
-- curadoria de produtos
-- produção editorial
-- criação de blog/site
-- planejamento de imagem e vídeo
-- e, em trilha paralela, teste de vozes
+## Links oficiais da plataforma
+
+- MiniMax Cloud Platform: [https://minimax.io](https://minimax.io)
+- Documentação Oficial da API: [https://minimax.io/docs/guides/text-generation](https://minimax.io/docs/guides/text-generation)
