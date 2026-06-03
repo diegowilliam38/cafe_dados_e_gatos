@@ -2,6 +2,8 @@
 
 Crie um blog de produtos usando os arquivos já gerados pela curadoria feita no Openclaw
 
+A parte de imagem do Hero será gerada separada
+
 ---
 
 ## Pasta base do projeto
