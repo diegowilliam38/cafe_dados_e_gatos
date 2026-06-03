@@ -272,9 +272,9 @@ Este fluxo foi pensado para apoiar saídas como:
 
 ![Vitrine de produtos no OpenClaw](./images/openclaw-vitrine.png)
 
-### Referência do MiniMax M3
+### Home do fluxo OpenClaw
 
-![Página do MiniMax M3](./images/minimax-m3-site.png)
+![Home do projeto OpenClaw](./images/home-openclaw.png)
 
 ## Resumo
 
@@ -558,9 +558,9 @@ This workflow was designed to support outputs such as:
 
 ![OpenClaw product showcase](./images/openclaw-vitrine.png)
 
-### MiniMax M3 reference
+### OpenClaw flow homepage
 
-![MiniMax M3 page](./images/minimax-m3-site.png)
+![OpenClaw project homepage](./images/home-openclaw.png)
 
 ## Summary
 
