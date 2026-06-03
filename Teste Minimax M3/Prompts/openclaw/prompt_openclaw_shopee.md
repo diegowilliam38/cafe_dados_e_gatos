@@ -1,14 +1,14 @@
 # PROMPT — OPENCLAW — CURADORIA SHOPEE PARA SITE
 
-Você é um agente orquestrador no OpenClaw.
+Você é um agente executor no OpenClaw.
 
-Sua função é coordenar a análise de um CSV de produtos da Shopee e delegar a execução para um agente executor.
+Sua função é analisar um CSV de produtos da Shopee usando Python/Pandas e gerar arquivos finais para o site com produtos de **potencial comercial estimado**, sem afirmar venda real.
 
-Conte quantos produtos existem na lista usando o itemid como chave única para contar.
+Você deve executar diretamente a tarefa.
 
-Por favor use apenas global_category1 e global_category2 como referência se o produto pertence ou não a categoria que buscamos, não previsa verificar na descrição, a Shoppe já entrega os produtos na catergoria certa.
+Não crie subagentes.
 
-O objetivo é gerar arquivos finais para o site com produtos de **potencial comercial estimado**, sem afirmar venda real.
+Conte quantos produtos existem na lista usando `itemid` como chave única para contar.
 
 Use sempre o termo:
 
@@ -46,7 +46,8 @@ O CSV original estará em:
 ```text
 ~/Documents/shopee/raw/
 ```
-Liste agora o número de produtos que você achou nesse arquivo antes de prosseguir.
+
+Liste o número de produtos encontrados no CSV antes de prosseguir.
 
 Regras:
 
@@ -73,9 +74,9 @@ Criar apenas se não existirem:
 ~/Documents/shopee/openclaw/site_openclaw/data/
 ```
 
-## Regras de curadoria
+## Regras principais de curadoria
 
-O agente executor deve usar Python/Pandas para analisar o CSV.
+Use Python/Pandas para analisar o CSV.
 
 Filtrar produtos com:
 
@@ -83,14 +84,103 @@ Filtrar produtos com:
 sale_price entre R$ 20 e R$ 80
 item_rating maior que 4.0
 product_link disponível
-categoria final identificada
+categoria_final identificada com base somente em global_category1 e global_category2
 ```
 
 Remover produtos sem `product_link`.
 
 Não usar `product_short link` como link principal do site.
 
-O link oficial usado nos arquivos finais deve ser sempre `product_link`.
+O link oficial usado nos arquivos finais deve ser sempre:
+
+```text
+product_link
+```
+
+## Regra obrigatória sobre categoria
+
+Para decidir se um produto pertence ou não a uma das categorias finais do site, use **somente**:
+
+```text
+global_category1
+global_category2
+```
+
+Não use:
+
+```text
+title
+description
+image_link
+```
+
+para definir categoria.
+
+A Shopee já entrega os produtos dentro de categorias. Portanto, a categoria final do site deve ser inferida apenas a partir de `global_category1` e `global_category2`.
+
+A coluna `description` pode ser usada somente para identificar se o produto é pequeno ou grande.
+
+A descrição não deve ser usada para decidir se o produto é de moda, beleza, casa, cozinha, pets, papelaria, infantil, fitness, organização ou acessórios para celular.
+
+O título também não deve ser usado para definir categoria.
+
+## Uso permitido da descrição
+
+A coluna `description` pode ser usada apenas para criar um sinal auxiliar de tamanho do produto.
+
+Criar, se possível, a coluna:
+
+```text
+porte_estimado
+```
+
+Valores permitidos:
+
+```text
+pequeno
+grande
+indefinido
+```
+
+Use `description` apenas para buscar sinais de tamanho, volume, medida, kit, peso, capacidade ou dimensão.
+
+Exemplos de sinais de produto pequeno:
+
+```text
+mini
+pequeno
+portátil
+compacto
+bolso
+leve
+unidade pequena
+acessório pequeno
+```
+
+Exemplos de sinais de produto grande:
+
+```text
+grande
+gigante
+extra grande
+tamanho grande
+volumoso
+kit grande
+alta capacidade
+organizador grande
+tapete grande
+suporte grande
+```
+
+Se não houver informação suficiente, usar:
+
+```text
+indefinido
+```
+
+Não excluir produto apenas porque `porte_estimado` ficou indefinido.
+
+## Score de potencial comercial estimado
 
 Usar como sinais de score:
 
@@ -98,13 +188,18 @@ Usar como sinais de score:
 item_rating
 sale_price
 discount_percentage
-title
-description
-image_link
 global_category1
 global_category2
 product_link existente
+image_link existente
+porte_estimado
 ```
+
+Não usar `description` para score de categoria.
+
+Não usar `title` para score de categoria.
+
+O `title` pode ser usado apenas para limpeza e exibição do nome do produto.
 
 Criar a coluna:
 
@@ -113,6 +208,12 @@ score_potencial_comercial
 ```
 
 Esse score representa apenas uma estimativa com base nos dados disponíveis no CSV.
+
+Não afirmar venda real.
+
+Não afirmar que o produto é mais vendido.
+
+Não afirmar garantia de comissão.
 
 ## Categorias finais do site
 
@@ -147,26 +248,16 @@ Não duplicar produtos.
 
 Não completar categoria artificialmente.
 
-## Heurística simples de categoria
+## Heurística de categoria
 
-Usar `global_category1`, `global_category2`, `title` e `description` para classificar.
-
-Sinais por categoria:
+Usar apenas:
 
 ```text
-moda: roupa, blusa, vestido, camisa, calça, short, saia, top, legging
-beleza: maquiagem, skincare, pele, rosto, cabelo, unhas, pincel, cosmético
-acessórios para celular: capinha, capa, película, carregador, suporte celular, cabo, fone, iphone, android
-casa: decoração, sala, quarto, banheiro, tapete, luminária, almofada, cortina
-cozinha: cozinha, forma, panela, utensílio, copo, garrafa, pote, talher, air fryer
-organização: organizador, caixa, gaveta, suporte, prateleira, armazenamento, cabide
-pets: gato, cachorro, pet, coleira, caminha, comedouro, bebedouro, arranhador
-papelaria: caneta, caderno, planner, adesivo, marcador, estojo, lápis, agenda
-infantil: infantil, criança, bebê, brinquedo, maternidade, kids
-fitness: academia, treino, exercício, yoga, pilates, garrafa fitness, elástico, esporte
+global_category1
+global_category2
 ```
 
-Se não for possível classificar com confiança, excluir dos arquivos finais e registrar no log:
+Se não for possível classificar com confiança usando apenas `global_category1` e `global_category2`, excluir dos arquivos finais e registrar no log:
 
 ```text
 categoria_final_nao_identificada
@@ -330,6 +421,7 @@ data/hora da execução
 colunas encontradas
 colunas ausentes
 quantidade inicial de produtos
+quantidade única de produtos por itemid
 quantidade removida por preço
 quantidade removida por nota
 quantidade removida por falta de product_link
@@ -339,6 +431,19 @@ validação do limite de 4 produtos por categoria
 arquivos gerados
 erros encontrados
 tentativas de correção
+metodo_curadoria_version
+modelo_usado
+ambiente
+ferramenta_orquestracao
+```
+
+Também registrar no log:
+
+```text
+categoria definida somente por global_category1/global_category2
+description usada somente para porte_estimado
+title usado somente para title_clean/exibição
+nenhum subagente criado
 ```
 
 ## Validação final obrigatória
@@ -359,6 +464,8 @@ todos os produtos finais usam product_link como link principal
 nenhum produto final usa product_short link como link principal
 links originais foram preservados
 link_gerado_shopee está vazio
+categoria_final foi definida somente por global_category1/global_category2
+description foi usada somente para porte_estimado quando disponível
 ```
 
 ## Regra de erro
@@ -385,4 +492,7 @@ arquivo manual de links usando product_link
 logs da execução
 arquivos copiados para o site
 máximo de 4 produtos por categoria
+categoria definida somente por global_category1/global_category2
+description usada somente para porte_estimado
+nenhum subagente criado
 ```
