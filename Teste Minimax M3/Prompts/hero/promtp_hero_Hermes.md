@@ -2,6 +2,8 @@
 
 Frank, gere o prompt da imagem Hero do blog da Shopee.
 
+Antes de gerar a imagem, me entregue o prompt criado para que eu valide.
+
 Use como referência o arquivo:
 
 ```text
