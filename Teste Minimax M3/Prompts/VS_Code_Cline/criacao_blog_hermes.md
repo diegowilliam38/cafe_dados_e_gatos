@@ -1,11 +1,10 @@
-# PROMPT CLINE — CRIAR BLOG DE AFILIADOS SHOPEE COM DADOS DO HERMES
+# PROMPT CLINE — CRIAR BLOG DE PRODUTOS SHOPEE COM HERMES
 
-Crie um blog de produtos usando os arquivos já gerados pela curadoria feita no Hermes pelo agente Frank.
+Crie um blog moderno de produtos da Shopee usando os arquivos já gerados pela curadoria Hermes e pelo agente de conteúdo.
 
-A parte de imagem do Hero será gerada separada
+O objetivo é entregar um blog bonito, responsivo, funcional e fácil de publicar, com aparência comercial e editorial.
 
-
----
+Use uma stack simples e adequada para o resultado. Pode usar HTML, CSS, JavaScript, React, Tailwind CSS, Vite ou outra estrutura simples de front-end.
 
 ## Pasta base do projeto
 
@@ -13,379 +12,422 @@ Use esta pasta como base:
 
 ```text
 ~/Documents/shopee/hermes/
+```
 
 Se eu informar outro caminho, use o caminho informado.
 
-Objetivo
+## Objetivo do blog
 
-Criar um blog/site simples, bonito, responsivo e funcional para exibir produtos da Shopee selecionados por potencial comercial estimado.
+Criar um blog de achados, recomendações e conteúdos sobre produtos da Shopee.
 
-O site deve usar os dados já gerados pela curadoria do Hermes.
+O blog deve usar os dados e conteúdos já gerados nas etapas anteriores.
 
-O foco é criar uma estrutura funcional para exibir produtos, categorias, filtros, cards e aviso metodológico.
+A comunicação deve parecer de um blog real de produtos, não de relatório técnico.
 
-Arquivos de entrada principais
+Use linguagem simples, comercial e natural.
 
-Use como fonte principal de produtos:
+Exemplos de linguagem adequada:
 
+```text
+achados selecionados para facilitar sua escolha
+produtos organizados para você explorar
+ideias úteis para o dia a dia
+opções interessantes para conhecer
+seleções simples para ajudar na decisão
+```
+
+## Arquivos de entrada
+
+Use como base principal os arquivos disponíveis em:
+
+```text
 data/final/produtos_escolhidos.json
 data/final/produtos_escolhidos.csv
-
-Se esses arquivos não existirem, use como fallback:
-
-data/final/produtos_site_por_categoria.json
-data/final/produtos_site_por_categoria.csv
-
-Se nenhum desses arquivos existir, pare e avise Denise.
-
-Arquivos opcionais
-
-Use se existirem:
-
+data/final/links_shopee_manual.csv
 blog/pautas/01_mapa_editorial.md
 blog/pautas/02_pautas_blog.json
 blog/pautas/02_pautas_blog.md
 blog/artigos/
 blog/seo/seo_blog.json
 blog/seo/seo_blog.csv
+imagem/prompt_hero_blog_hermes.md
+video_api/prompts/
+video_api/roteiros/
+```
 
-Se algum arquivo opcional não existir, continue com os arquivos disponíveis e registre a ausência no log.
+Se algum arquivo não existir, continue com os arquivos disponíveis e registre a ausência no log.
 
-Parte de imagem
+## Estrutura do blog
 
-A parte de imagem ho hero é um prompt separado.
+Crie um blog com estas áreas principais:
 
+```text
+Home
+Produtos
+Blog
+Anúncios copiáveis
+```
 
-Apenas prepare o site para receber imagem futuramente.
+A estrutura pode ser feita com arquivos HTML ou com componentes/rotas React, conforme a solução escolhida.
 
-O Hero deve ter:
+O resultado final deve entregar páginas ou rotas equivalentes a:
 
-título claro
-subtítulo curto
-chamada para ver os achadinhos
-espaço reservado para imagem Hero
+```text
+index.html
+produtos.html
+blog.html
+anuncios-top10.html
+```
 
-Se já existir imagem pronta, use-a.
+## Home
+
+A home deve apresentar o blog e destacar alguns produtos.
+
+Inclua:
+
+```text
+cabeçalho com nome do blog
+menu simples
+seção Hero bonita
+chamada para ver os produtos
+chamada para acessar conteúdos do blog
+produtos em destaque
+bloco curto explicando o propósito do blog
+rodapé
+```
+
+Use a ideia do arquivo:
+
+```text
+imagem/prompt_hero_blog_hermes.md
+```
+
+Se já existir imagem gerada, use-a.
 
 Procure por imagens em:
 
+```text
 assets_generated/images/
-site_hermes/public/images/
+blog_hermes/public/images/
+```
 
-Se não houver imagem, crie um placeholder visual bonito e registre no log:
+Se não houver imagem, crie um placeholder visual bonito e registre que a imagem final ainda precisa ser gerada.
 
-imagem hero ainda não gerada
-Regras de linguagem
+## Produtos
 
+Use o arquivo principal:
 
-Crie um site com:
-
-página inicial
-seção Hero
-seção de produtos em destaque
-grade de produtos
-filtro por categoria
-filtro por status de oportunidade
-filtro por faixa de preço
-página ou seção de blog, se houver artigos
-cards de produto
-botão para acessar o produto original
-aviso metodológico
-rodapé simples
-Stack preferida
-
-Use preferencialmente:
-
-HTML
-CSS
-JavaScript simples
-
-Se já existir projeto React, Vite ou Next.js dentro da pasta, aproveite a stack existente.
-
-Não complique a arquitetura sem necessidade.
-
-Pasta do site
-
-Crie ou atualize o site em:
-
-site_hermes/
-
-Organize os arquivos principais assim, se estiver usando HTML, CSS e JavaScript simples:
-
-site_hermes/
-├── index.html
-├── produtos.html
-├── blog.html
-├── css/
-│   └── style.css
-├── js/
-│   └── app.js
-├── data/
-│   ├── produtos_escolhidos.json
-│   └── produtos_site_por_categoria.json
-└── public/
-    ├── images/
-    └── videos/
-
-Se a estrutura existente for diferente, adapte sem apagar arquivos importantes.
-
-Dados dos produtos
-
-O site deve carregar os produtos a partir de:
-
-site_hermes/data/produtos_escolhidos.json
-
-Se o arquivo original usado for:
-
+```text
 data/final/produtos_escolhidos.json
+```
 
-copie para:
+Cada card de produto deve exibir, quando disponível:
 
-site_hermes/data/produtos_escolhidos.json
-
-Se o fallback usado for:
-
-data/final/produtos_site_por_categoria.json
-
-copie para:
-
-site_hermes/data/produtos_escolhidos.json
-
-Assim o site sempre lê o mesmo arquivo final.
-
-Campos esperados dos produtos
-
-Cada produto pode conter campos como:
-
-itemid
-categoria_final
-title_clean
-sale_price
-item_rating
-image_link
-product_url
-product_link
-product_short link
-link_gerado_shopee
-status_oportunidade
-motivo_escolha
-score_potencial_comercial
-
-Se algum campo não existir, adapte usando os campos disponíveis.
-
-Regra para URL do produto
-
-O botão do produto deve apontar para o melhor link disponível nesta ordem:
-
-link_gerado_shopee
-product_url
-product_short link
-product_link
-
-Se nenhum link existir, não criar botão falso.
-
-Não inventar link.
-
-Não alterar link original.
-
-Não adicionar parâmetro manualmente.
-
-Não criar link de afiliado automaticamente.
-
-Cards de produto
-
-Cada card deve exibir, quando disponível:
-
+```text
 imagem
 título limpo
 categoria
 preço
 rating
-botão para acessar o produto original
+descrição curta
+motivo comercial em linguagem simples
+botão de ação
+status de link pendente, quando necessário
+```
 
-Se image_link existir, usar como imagem do produto.
+Use as imagens disponíveis nos dados dos produtos.
 
-Se não existir imagem, usar placeholder visual simples.
+Priorize campos como:
 
-Categorias
+```text
+image_url
+image_link
+```
 
-O site deve trabalhar com estas categorias:
+Se algum produto não tiver imagem, use um placeholder simples.
 
-moda
-beleza
-acessórios para celular
-casa
-cozinha
-organização
-pets
-papelaria
-infantil
-fitness
+## Links dos produtos
 
-Criar filtro por categoria.
+Use `itemid` para cruzar os produtos com o arquivo:
 
+```text
+data/final/links_shopee_manual.csv
+```
 
-Filtros
+A coluna correta para o botão final do produto é:
 
-Criar filtros simples para:
+```text
+link_gerado_shopee
+```
 
-categoria
-status de oportunidade
-faixa de preço
+Quando `link_gerado_shopee` estiver preenchido, use esse link no botão.
 
-Faixas de preço sugeridas:
+Quando `link_gerado_shopee` estiver vazio, mostre:
 
-R$ 20 a R$ 40
-R$ 40 a R$ 60
-R$ 60 a R$ 80
+```text
+Link pendente
+```
 
+Use textos de botão como:
 
-Se não houver score, ocultar esse filtro ou usar apenas categoria e preço.
+```text
+Ver produto
+Conferir oferta
+Ver na Shopee
+```
 
-Produtos em destaque
+Abra links externos em nova aba com atributos adequados para links patrocinados.
 
-Na página inicial, exibir uma seção de produtos em destaque.
+Preserve `product_url` apenas como dado original, se existir. O botão final do blog deve usar `link_gerado_shopee`.
 
-Critério:
+## Blog
 
-maior score_potencial_comercial
-melhor item_rating
-produto com imagem
-produto com link válido
+Use os conteúdos existentes em:
 
-Mostrar poucos produtos na home.
-
-Sugestão:
-
-8 a 12 produtos em destaque
-Blog
-
-Se existirem artigos em:
-
+```text
 blog/artigos/
+blog/pautas/
+blog/seo/
+blog/referencias/
+```
 
-crie uma área de blog com:
+Crie uma área editorial com:
 
+```text
 listagem de artigos
-título do artigo
+cards de leitura
+título do conteúdo
 descrição curta
 categoria
-slug
-link para leitura
+slug ou link interno
+```
 
 Se os artigos estiverem em Markdown, implemente leitura/renderização simples ou converta para páginas estáticas.
 
-Se não houver artigos, crie apenas uma seção simples dizendo:
+Se não houver conteúdo real, mostre uma mensagem simples de conteúdo em preparação.
 
-Em breve, novos guias de achadinhos e curadorias por categoria.
-SEO
+Exemplo:
 
-Se existirem:
+```text
+Conteúdo em preparação. Em breve, este blog terá dicas, listas e achados selecionados para ajudar você a escolher melhor.
+```
 
+## SEO
+
+Use os arquivos disponíveis em:
+
+```text
 blog/seo/seo_blog.json
 blog/seo/seo_blog.csv
+```
 
-aplique quando possível:
+Aplique quando possível:
 
+```text
 title
 meta description
 slug
 palavra-chave principal
 palavras-chave secundárias
+```
 
-Não invente SEO se os campos não existirem.
+## Página oculta de anúncios copiáveis
 
-Se não houver SEO, crie metadados simples e honestos para o site.
+Crie uma página auxiliar chamada:
 
-Aviso metodológico obrigatório
+```text
+anuncios-top10.html
+```
 
-Inclua no site um aviso visível, em linguagem simples:
+Essa página será usada apenas para copiar anúncios em HTML.
 
-Os produtos exibidos foram selecionados por potencial comercial estimado com base no dataset analisado, considerando preço, rating, categoria e qualidade do cadastro. O dataset não contém quantidade vendida, portanto este site não afirma que os produtos são os mais vendidos.
+Ela deve ser acessível por URL direta e não deve aparecer no menu, na home, no rodapé, na página de produtos nem na página do blog.
 
-Esse aviso deve aparecer na página inicial e/ou no rodapé.
+Inclua na página:
 
-Estilo visual
+```html
+<meta name="robots" content="noindex,nofollow">
+```
 
-Use um estilo:
+Use apenas os 10 primeiros produtos da lista final.
 
-limpo
-leve
-moderno
-comercial
-responsivo
-agradável para blog de achadinhos
-bom espaçamento
-cards bem legíveis
-visual confiável
+Para cada produto, crie:
 
-Evite:
+```text
+uma prévia visual do anúncio
+um bloco com o código HTML copiável
+um botão para copiar o código
+um status indicando se o link está preenchido ou pendente
+```
 
-visual poluído
-cores agressivas demais
-excesso de banners
-texto pequeno
-cards confusos
-promessas exageradas
-Assets
+O código copiável deve ser HTML simples, com CSS inline e independente do layout principal do blog.
 
+O código copiável deve conter:
 
-Apenas use arquivos existentes ou placeholders.
+```text
+imagem
+nome do produto
+preço, quando existir
+botão de chamada para ação
+CSS inline
+```
 
-Log obrigatório
+Para o link do anúncio:
 
-Crie ou atualize:
+```text
+se link_gerado_shopee estiver preenchido, usar link_gerado_shopee
+se link_gerado_shopee estiver vazio, usar "#LINK_GERADO_SHOPEE_PENDENTE"
+```
 
-logs/site_build_log.md
+Se o link estiver pendente, mostre aviso claro para Denise preencher o link antes de publicar o anúncio.
 
-Registrar:
+## Visual desejado
 
-data e hora da execução
-arquivos de entrada usados
-arquivos ausentes
-arquivo de produtos usado
-estrutura criada
-componentes criados
-assets usados
-se imagem hero foi encontrada ou não
-erros encontrados
-decisões tomadas
-Validação final
+O blog deve ter aparência moderna, bonita e comercial.
 
-Antes de encerrar, valide:
+Priorize:
 
-site criado ou atualizado
-arquivo de produtos copiado para site_hermes/data/
-produtos carregando corretamente
-filtros funcionando
-links de produtos preservados
-aviso metodológico visível
-layout responsivo básico funcionando
-blog criado ou placeholder exibido
-logs atualizados
-nenhuma imagem foi gerada automaticamente
-nenhum vídeo foi gerado automaticamente
-Resultado esperado
+```text
+layout limpo
+boa leitura
+responsividade no celular
+cards organizados
+imagens proporcionais
+botões claros
+menu simples
+rodapé bem acabado
+aparência de blog confiável
+```
 
-Ao final, entregue somente:
+Pode usar Tailwind, componentes React ou CSS próprio para melhorar o visual.
 
-1. resumo curto do que foi criado
-2. caminho da pasta do site
-3. arquivos principais criados ou alterados
-4. como rodar/testar localmente
-5. pendências ou limitações encontradas
-Observação final
+## Linguagem do blog
 
-Este site deve consumir a saída da curadoria feita no Hermes pelo agente Frank.
+Use linguagem comercial simples, natural e segura.
 
-A curadoria pode vir com os nomes:
+Evite promessas exageradas ou afirmações que dependem de dados não disponíveis, como:
 
-produtos_escolhidos.json
-produtos_escolhidos.csv
+```text
+mais vendido
+campeão de vendas
+produto que mais vende
+venda comprovada
+sucesso garantido
+garantia de venda
+garantia de comissão
+melhor produto do mercado
+```
 
-ou, como fallback:
+Evite expor termos técnicos internos nas páginas principais do blog, como:
 
-produtos_site_por_categoria.json
-produtos_site_por_categoria.csv
+```text
+dataset
+score
+ranking heurístico
+modelo usado
+CSV
+curadoria automatizada
+```
 
-O site deve funcionar com os arquivos disponíveis, sem inventar dados, sem prometer vendas e sem gerar assets visuais nesta etapa.
+Esses termos podem aparecer apenas em logs técnicos, se necessário.
+
+## Assets
+
+Organize os assets em:
+
+```text
+blog_hermes/public/images/
+blog_hermes/public/videos/
+```
+
+Se for necessário gerar imagem ou vídeo usando API configurada no projeto, peça aprovação antes de executar.
+
+Antes de gerar qualquer asset visual, mostre:
+
+```text
+prompt usado
+caminho de saída
+nome do arquivo
+```
+
+Só gere após aprovação explícita.
+
+## Implementação
+
+Crie ou atualize o projeto dentro de:
+
+```text
+~/Documents/shopee/hermes/blog_hermes/
+```
+
+Escolha a implementação que entregar melhor resultado visual e que seja simples de revisar.
+
+Pode usar:
+
+```text
+HTML/CSS/JS simples
+React com Vite
+Tailwind CSS
+componentes próprios
+```
+
+## Log obrigatório
+
+Ao final, crie ou atualize:
+
+```text
+logs/blog_build_log.md
+```
+
+Registre:
+
+```text
+tecnologia usada
+arquivos criados ou alterados
+arquivos de entrada encontrados
+arquivos de entrada ausentes
+quantidade de produtos carregados
+quantidade de produtos com link preenchido
+quantidade de produtos com link pendente
+conteúdos de blog encontrados
+pendências
+como rodar ou abrir o blog localmente
+```
+
+## Validação
+
+Antes de finalizar, confira:
+
+```text
+produtos_escolhidos.json existe
+produtos_escolhidos.csv existe
+links_shopee_manual.csv existe
+os produtos foram carregados
+o cruzamento por itemid foi feito
+os links usam link_gerado_shopee quando preenchido
+produtos sem link mostram Link pendente
+a home parece um blog moderno
+a página de produtos está organizada em cards
+a página de blog usa conteúdo real quando existir
+a página de blog não inventa artigos quando não houver conteúdo
+anuncios-top10.html foi criada
+anuncios-top10.html usa apenas os 10 primeiros produtos
+anuncios-top10.html não aparece no menu nem na home
+os anúncios copiáveis têm HTML simples com CSS inline
+nenhum link da Shopee foi alterado automaticamente
+```
+
+## Resultado esperado
+
+Ao final, informe:
+
+```text
+tecnologia usada
+páginas ou componentes criados/atualizados
+quantidade de produtos carregados
+quantidade de produtos com link preenchido
+quantidade de produtos com link pendente
+caminho da página anuncios-top10.html
+se a página de blog encontrou conteúdo real ou ficou como conteúdo em preparação
+qualquer erro ou pendência encontrada
+```
