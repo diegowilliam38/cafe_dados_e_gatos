@@ -84,11 +84,15 @@ Filtrar produtos com:
 ```text
 sale_price entre R$ 20 e R$ 80
 item_rating maior que 4.0
-link disponível
+product_link disponível
 categoria final identificada
 ```
 
-Remover produtos sem `product_short link` e sem `product_link`.
+Remover produtos sem `product_link`.
+
+Não usar `product_short link` como link principal do site.
+
+O link oficial usado nos arquivos finais deve ser sempre `product_link`.
 
 Não inventar dados.
 
@@ -168,7 +172,7 @@ title preenchido
 description preenchida
 image_link existente
 categoria_final identificada
-link existente
+product_link existente
 ```
 
 O score é apenas uma estimativa baseada no CSV.
@@ -195,6 +199,8 @@ image_link
 ```
 
 Se alguma coluna não existir, registrar no log e continuar com as colunas disponíveis.
+
+A coluna `product_short link` pode existir no CSV, mas não deve ser usada como link principal dos arquivos finais.
 
 ---
 
@@ -267,7 +273,7 @@ Com somente estas colunas:
 itemid
 categoria_final
 title_clean
-product_short_url
+product_url
 link_gerado_shopee
 ```
 
@@ -277,11 +283,21 @@ Preencher assim:
 itemid = id original do produto
 categoria_final = categoria final usada no site
 title_clean = título limpo
-product_short_url = product_short link, se existir; senão usar product_link
+product_url = product_link original do CSV
 link_gerado_shopee = vazio
 ```
 
 A coluna `link_gerado_shopee` deve ficar vazia para Denise preencher manualmente.
+
+Não usar `product_short link` neste arquivo.
+
+Não usar short link.
+
+Não encurtar links.
+
+Não expandir links.
+
+Não alterar o `product_link` original.
 
 ---
 
@@ -303,7 +319,7 @@ colunas ausentes
 quantidade inicial de produtos
 quantidade removida por preço
 quantidade removida por nota
-quantidade removida por falta de link
+quantidade removida por falta de product_link
 quantidade removida por categoria não identificada
 quantidade final por categoria
 validação do limite de 20 produtos por categoria
@@ -326,7 +342,9 @@ links_shopee_manual.csv existe
 arquivos foram copiados para site_hermes/data/
 nenhuma categoria tem mais de 20 produtos
 todos os produtos têm categoria_final
-todos os produtos têm link disponível
+todos os produtos têm product_link disponível
+todos os produtos finais usam product_link como link principal
+nenhum produto final usa product_short link como link principal
 links originais foram preservados
 link_gerado_shopee está vazio
 ```
@@ -363,7 +381,7 @@ Entregar uma curadoria final com:
 ```text
 ranking auditável de potencial comercial estimado
 arquivos CSV e JSON
-arquivo manual de links
+arquivo manual de links usando product_link
 logs da execução
 arquivos do site com no máximo 20 produtos por categoria
 ```
