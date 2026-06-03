@@ -1,9 +1,9 @@
 # PROMPT CLINE — CRIAR BLOG DE AFILIADOS SHOPEE COM DADOS DO HERMES
 
-Crie um blog/site de afiliados usando os arquivos já gerados pela curadoria feita no Hermes pelo agente Frank.
+Crie um blog de produtos usando os arquivos já gerados pela curadoria feita no Hermes pelo agente Frank.
 
-A parte de imagem é separada.  
-Não gere imagem automaticamente nesta etapa.
+A parte de imagem do Hero será gerada separada
+
 
 ---
 
