@@ -4,6 +4,18 @@ Laboratório prático de uso do `MiniMax M3` para transformar dados de produtos 
 
 Este material foi organizado para testar o modelo em tarefas reais de produção, e não apenas em exemplos isolados. O foco aqui é sair de um `CSV` de produtos e chegar a uma estrutura pronta para publicação, com regras editoriais, validações e caminhos diferentes de execução.
 
+## Desconto MiniMax
+
+🚀 **GANHE 12% DE DESCONTO no Plano MiniMax Token Plan:**  
+[https://platform.minimax.io/subscribe/coding-plan?code=LSRdjVVKt6&source=link](https://platform.minimax.io/subscribe/coding-plan?code=LSRdjVVKt6&source=link)
+
+Aproveite o preço promocional do MiniMax M2.7 com o cupom do canal Café com Dados e Gatos.
+
+## Links oficiais da plataforma
+
+- MiniMax Cloud Platform: [https://minimax.io](https://minimax.io)
+- Documentação Oficial da API: [https://minimax.io/docs/guides/text-generation](https://minimax.io/docs/guides/text-generation)
+
 ## Visão geral
 
 Este diretório reúne prompts e checklists para:
@@ -242,19 +254,21 @@ Este fluxo foi pensado para apoiar saídas como:
 - páginas de blog com visual publicável
 - estrutura mais próxima de projeto real do que de protótipo técnico
 
-Se quiser enriquecer ainda mais este README depois, uma ótima próxima etapa é adicionar capturas de tela do resultado final nesta seção.
+### Home do fluxo Hermes
 
-## Desconto MiniMax
+![Home do projeto Hermes](./images/home-hermes.png)
 
-🚀 **GANHE 12% DE DESCONTO no Plano MiniMax Token Plan:**  
-[https://platform.minimax.io/subscribe/coding-plan?code=LSRdjVVKt6&source=link](https://platform.minimax.io/subscribe/coding-plan?code=LSRdjVVKt6&source=link)
+### Vitrine de produtos no Hermes
 
-Aproveite o preço promocional do MiniMax M2.7 com o cupom do canal Café com Dados e Gatos.
+![Vitrine de produtos no Hermes](./images/produtos-hermes.png)
 
-## Links oficiais da plataforma
+### Vitrine de produtos no OpenClaw
 
-- MiniMax Cloud Platform: [https://minimax.io](https://minimax.io)
-- Documentação Oficial da API: [https://minimax.io/docs/guides/text-generation](https://minimax.io/docs/guides/text-generation)
+![Vitrine de produtos no OpenClaw](./images/openclaw-vitrine.png)
+
+### Referência do MiniMax M3
+
+![Página do MiniMax M3](./images/minimax-m3-site.png)
 
 ## Resumo
 
