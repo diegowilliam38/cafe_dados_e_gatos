@@ -1,214 +1,98 @@
-# PROMPT IMAGEM HERO — OPENCLAW — BLOG SHOPEE
+# PROMPT — OPENCLAW — IMAGEM HERO DO BLOG SHOPEE
 
-Você é **Turing**, agente orquestrador no OpenClaw.
+Turing, gere o prompt da imagem Hero do blog da Shopee.
 
-Sua tarefa é preparar o material para gerar a imagem principal do Hero do blog da Shopee.
-
-Nesta etapa, o foco é apenas **imagem**.  
-Não altere a curadoria de produtos, não refaça ranking, não mexa no site e não gere código do frontend.
-
-## Objetivo
-
-Criar um **prompt final de imagem** para ser usado em um gerador como MiniMax M3 na criação da imagem Hero do blog.
-
-A imagem deve representar visualmente o universo dos produtos escolhidos e usar os **3 primeiros produtos da lista final** como referência principal.
-
-## Entrada
-
-Leia o arquivo:
+Use como referência o arquivo:
 
 ```text
-~/Documents/shopee/openclaw/data/final/produtos_escolhidos.json
+~/Documents/shopee/openclaw/data/final/produtos_site_por_categoria.json
 ```
 
-Se necessário para conferência, use também:
+Leia o arquivo, pegue os **3 primeiros produtos da lista final** e use esses produtos como base visual para criar a imagem Hero.
+
+A imagem deve ser:
 
 ```text
-~/Documents/shopee/openclaw/data/final/produtos_escolhidos.csv
-```
-
-## Regra principal
-
-Use os **3 primeiros produtos da lista final** como referência temática e visual.
-
-Considere principalmente estes campos:
-
-```text
-rank_position
-title_original
-title_clean
-category
-subcategory
-sale_price
-item_rating
-image_url
-product_url
-site_tags
-why_selected
-risk_notes
-```
-
-## Como usar os 3 primeiros produtos
-
-Os 3 primeiros produtos devem orientar:
-
-```text
-tema visual da imagem
-tipo de produto em destaque
-clima comercial do blog
-paleta e atmosfera visual
-composição principal do Hero
-```
-
-Não é obrigatório reproduzir fielmente os produtos.  
-A imagem pode ser uma representação estilizada, limpa e visualmente atraente inspirada nesses produtos.
-
-Se os 3 primeiros produtos forem da mesma categoria, a imagem pode focar nesse universo.
-
-Se forem de categorias diferentes, a imagem deve representar o conceito de:
-
-```text
-achadinhos bem avaliados
-baixo ticket
-produtos visuais
-curadoria inteligente
-```
-
-## Direção visual
-
-A imagem Hero deve seguir estas características:
-
-```text
-formato horizontal
+horizontal
 proporção 16:9
-visual moderno
-aparência limpa
-estilo editorial/comercial
-sensação de blog profissional
-tema leve e atrativo
-bom espaço visual
-sem poluição
+moderna
+limpa
+comercial
+leve
+profissional
+com aparência de blog de curadoria de achadinhos
 ```
 
 A imagem deve transmitir:
 
 ```text
-curadoria de achadinhos
+achadinhos da Shopee
 produtos acessíveis
-compra por impulso
+curadoria inteligente
+potencial comercial estimado
 descoberta de produtos interessantes
-visual confiável e agradável
 ```
 
-## Elementos visuais desejados
+Não precisa reproduzir os produtos exatamente.
 
-A composição pode incluir:
+Use os 3 primeiros produtos apenas como inspiração para:
 
 ```text
-1 elemento principal inspirado nos produtos líderes
-2 ou 3 produtos secundários inspirados no top 3
-fundo claro ou elegante
-composição organizada
-detalhes sutis de lifestyle/e-commerce
-sensação de descoberta e curadoria
+tema visual
+objetos principais
+paleta
+atmosfera
+composição
 ```
 
-Se fizer sentido, incluir elementos como:
-
-```text
-embalagens, acessórios, utensílios, itens de beleza, organização ou tecnologia leve
-```
-
-desde que isso seja coerente com os 3 primeiros produtos.
-
-## Regras de qualidade
-
-Evitar:
+Evite:
 
 ```text
 imagem poluída
 muitos objetos
 texto longo
-layout confuso
-visual genérico demais
+logos
+marca Shopee em destaque exagerado
+watermark
 mãos deformadas
 objetos distorcidos
-aparência infantilizada demais
-logos indevidos
-watermark
-marca Shopee em destaque exagerado
 ```
 
-Se houver texto na imagem, usar pouco texto.
-
-No máximo algo curto como:
+Se usar texto na imagem, use no máximo:
 
 ```text
 Achadinhos com Potencial
 ```
 
-ou
+Se o gerador tiver dificuldade com texto, gere a imagem sem texto.
 
-```text
-Curadoria de Achadinhos
-```
-
-Se o modelo tiver dificuldade com texto, priorize a imagem sem texto.
-
-## Saída esperada
-
-Gere:
-
-```text
-1. um resumo curto dos 3 produtos usados como referência
-2. uma interpretação visual do conjunto
-3. um prompt final único pronto para imagem
-4. uma versão curta opcional do prompt
-5. uma lista curta de negativas
-```
-
-## Formato da saída
-
-Salvar em:
+Salve o resultado em:
 
 ```text
 ~/Documents/shopee/openclaw/imagem/prompt_hero_blog_openclaw.md
 ```
 
-Crie também, se não existir:
-
-```text
-~/Documents/shopee/openclaw/imagem/
-```
-
-## Estrutura desejada do arquivo
-
-O arquivo final deve conter:
+O arquivo deve conter:
 
 ```markdown
 # Hero do Blog — Prompt de Imagem
 
-## Top 3 produtos usados como referência
-- ...
-- ...
-- ...
+## Produtos usados como referência
+- Produto 1
+- Produto 2
+- Produto 3
 
-## Interpretação visual
-...
-
-## Prompt final
-...
-
-## Prompt curto opcional
-...
+## Prompt final da imagem
 
 ## Negativas
-- ...
-- ...
-- ...
 ```
 
-## Instrução final
+Não altere produtos.
 
+Não refaça curadoria.
 
-O objetivo é gerar a **melhor imagem possível para a Hero do blog**.
+Não mexa no site.
+
+Não gere código.
+
+A tarefa é apenas criar o prompt final para gerar a imagem Hero.
