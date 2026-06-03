@@ -142,12 +142,12 @@ Se não for possível classificar com segurança, remover dos arquivos finais do
 Os arquivos do site devem ter no máximo:
 
 ```text
-20 produtos por categoria
+4 produtos por categoria
 ```
 
-Se uma categoria tiver mais de 20 produtos elegíveis, manter apenas os 20 com maior **potencial comercial estimado**.
+Se uma categoria tiver mais de 4 produtos elegíveis, manter apenas os 4 com maior **potencial comercial estimado**.
 
-Se tiver menos de 20, manter somente os disponíveis.
+Se tiver menos de 4, manter somente os disponíveis.
 
 Não completar artificialmente.
 
@@ -323,7 +323,7 @@ quantidade removida por nota
 quantidade removida por falta de product_link
 quantidade removida por categoria não identificada
 quantidade final por categoria
-validação do limite de 20 produtos por categoria
+validação do limite de 4 produtos por categoria
 arquivos gerados
 erros encontrados
 ```
@@ -341,7 +341,7 @@ produtos_site_por_categoria.csv existe
 produtos_site_por_categoria.json existe
 links_shopee_manual.csv existe
 arquivos foram copiados para site_hermes/data/
-nenhuma categoria tem mais de 20 produtos
+nenhuma categoria tem mais de 4 produtos
 todos os produtos têm categoria_final
 todos os produtos têm product_link disponível
 todos os produtos finais usam product_link como link principal
@@ -384,7 +384,7 @@ ranking auditável de potencial comercial estimado
 arquivos CSV e JSON
 arquivo manual de links usando product_link
 logs da execução
-arquivos do site com no máximo 20 produtos por categoria
+arquivos do site com no máximo 4 produtos por categoria
 ```
 
 O foco é gerar arquivos prontos para o site usando Frank no Hermes, com uma curadoria simples, auditável e sem prometer venda real.
