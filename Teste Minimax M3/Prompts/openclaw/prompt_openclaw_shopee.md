@@ -42,6 +42,7 @@ O CSV original estará em:
 ```text
 ~/Documents/shopee/raw/
 ```
+Liste agora o número de produtos que você achou nesse arquivo antes de prosseguir.
 
 Regras:
 
