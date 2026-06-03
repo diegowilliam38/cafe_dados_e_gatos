@@ -77,9 +77,15 @@ Filtrar produtos com:
 ```text
 sale_price entre R$ 20 e R$ 80
 item_rating maior que 4.0
-link disponível
+product_link disponível
 categoria final identificada
 ```
+
+Remover produtos sem `product_link`.
+
+Não usar `product_short link` como link principal do site.
+
+O link oficial usado nos arquivos finais deve ser sempre `product_link`.
 
 Usar como sinais de score:
 
@@ -92,6 +98,7 @@ description
 image_link
 global_category1
 global_category2
+product_link existente
 ```
 
 Criar a coluna:
@@ -181,6 +188,8 @@ image_link
 
 Se alguma coluna não existir, registrar no log e continuar com as disponíveis.
 
+A coluna `product_short link` pode existir no CSV, mas não deve ser usada como link principal dos arquivos finais.
+
 ## Regras de links
 
 Preservar os links originais.
@@ -201,9 +210,11 @@ não expandir links
 não criar link de afiliado automaticamente
 não adicionar parâmetros manualmente
 não inventar link
+usar sempre product_link como link oficial
+não usar product_short link como link principal
 ```
 
-Se o produto não tiver `product_short link` nem `product_link`, remover dos arquivos finais e registrar no log.
+Se o produto não tiver `product_link`, remover dos arquivos finais e registrar no log.
 
 ## Arquivos finais
 
@@ -251,7 +262,7 @@ Com somente estas colunas:
 itemid
 categoria_final
 title_clean
-product_short_url
+product_url
 link_gerado_shopee
 ```
 
@@ -261,13 +272,23 @@ Preencher assim:
 itemid = id original do produto
 categoria_final = categoria final do site
 title_clean = título limpo
-product_short_url = product_short link, se existir; senão, product_link
+product_url = product_link original do CSV
 link_gerado_shopee = vazio
 ```
 
 Não preencher `link_gerado_shopee`.
 
 Essa coluna fica vazia para Denise colar manualmente o link gerado pela Shopee.
+
+Não usar `product_short link` neste arquivo.
+
+Não usar short link.
+
+Não encurtar links.
+
+Não expandir links.
+
+Não alterar o `product_link` original.
 
 ## Limpeza de título
 
@@ -306,7 +327,7 @@ colunas ausentes
 quantidade inicial de produtos
 quantidade removida por preço
 quantidade removida por nota
-quantidade removida por falta de link
+quantidade removida por falta de product_link
 quantidade removida por categoria não identificada
 quantidade final por categoria
 validação do limite de 20 produtos por categoria
@@ -328,7 +349,9 @@ links_shopee_manual.csv existe
 arquivos do site foram copiados para site_openclaw/data/
 nenhuma categoria tem mais de 20 produtos
 todos os produtos têm categoria_final
-todos os produtos têm link disponível
+todos os produtos têm product_link disponível
+todos os produtos finais usam product_link como link principal
+nenhum produto final usa product_short link como link principal
 links originais foram preservados
 link_gerado_shopee está vazio
 ```
@@ -353,7 +376,7 @@ Entregar:
 curadoria final coerente
 ranking auditável de potencial comercial estimado
 arquivos CSV e JSON
-arquivo manual de links
+arquivo manual de links usando product_link
 logs da execução
 arquivos copiados para o site
 máximo de 20 produtos por categoria
