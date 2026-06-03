@@ -1,34 +1,29 @@
 # Projeto OpenClaw Shopee
 
-## Objetivo
-Criar ou atualizar um blog/site de afiliados usando os arquivos já gerados pela curadoria e pelo agente de conteúdo.
+## Checklist
 
-O resultado deve ser simples, bonito, responsivo e funcional para exibir produtos da Shopee selecionados por potencial comercial estimado.
-
-## Pasta base
-Use esta pasta como base:
+### Pasta base
+Usar:
 
 ```text
 ~/Documents/shopee/openclaw/
 ```
 
-Se o usuário informar outro caminho, use o caminho informado.
+Se o usuário informar outro caminho, usar o caminho informado.
 
-## Pasta obrigatória de saída
-Todo o blog deve ser criado ou atualizado dentro de:
+### Pasta de saída
+Criar ou atualizar o blog somente em:
 
 ```text
 ~/Documents/shopee/openclaw/site_openclaw/
 ```
 
-Regras:
-
 - não criar pasta paralela fora de `site_openclaw/`
-- não espalhar arquivos do site fora de `site_openclaw/`
-- preservar os arquivos que já existirem em `site_openclaw/`, especialmente `hero.png` e `data/`
+- não criar arquivos do site fora de `site_openclaw/`
+- preservar arquivos já existentes em `site_openclaw/`, principalmente `hero.png` e `data/`
 
-## Arquivos de entrada
-Usar como base principal, quando existirem:
+### Arquivos de entrada principais
+Usar, quando existirem:
 
 ```text
 data/final/produtos_escolhidos.json
@@ -44,9 +39,9 @@ video_api/prompts/
 video_api/roteiros/
 ```
 
-Se algum arquivo não existir, continuar com os disponíveis e registrar a ausência em log.
+Se algum arquivo não existir, continuar com os disponíveis e registrar a ausência em `logs/site_build_log.md`.
 
-## Arquivos alternativos
+### Arquivos alternativos
 Se `produtos_escolhidos.*` não existir, usar nesta ordem:
 
 ```text
@@ -65,25 +60,7 @@ site_openclaw/data/links_shopee_manual.csv
 data/final/links_shopee_manual.csv
 ```
 
-## Linguagem pública
-A comunicação do site deve ser pensada para público final, com linguagem comercial simples, clara e convidativa.
-
-Preferir:
-
-- títulos fáceis de entender
-- chamadas curtas e diretas
-- foco em utilidade, estilo, preço e contexto de uso
-- texto que ajude a pessoa a explorar e comprar
-- sensação de vitrine organizada e confiável
-
-Evitar:
-
-- linguagem técnica
-- explicação de bastidor
-- termos de laboratório, curadoria interna ou análise de dados
-- promessas exageradas ou afirmações que não possam ser sustentadas
-
-## Estrutura esperada do site
+### Estrutura esperada
 Criar dentro de `site_openclaw/`:
 
 ```text
@@ -94,148 +71,44 @@ anuncios-top10.html
 assets/
 ```
 
-O site deve ter:
+### Hero
 
-- pagina inicial
-- seção Hero
-- produtos em destaque
-- grade de produtos
-- filtro por categoria
-- página ou seção de blog
-- cards de produto
-- botão para acessar o produto
-- rodapé simples
+- usar `imagem/prompt_hero_blog_openclaw.md` como referência
+- se `site_openclaw/hero.png` existir, usar esse arquivo
+- se não existir imagem final, criar placeholder e registrar isso no log
 
-## Hero
-Criar um Hero visual com:
+### Produtos
 
-- título claro
-- subtítulo curto
-- chamada para ver os achadinhos
-- imagem Hero ou placeholder
-
-Usar a ideia de:
-
-```text
-imagem/prompt_hero_blog_openclaw.md
-```
-
-Se já existir `site_openclaw/hero.png`, usar esse arquivo.
-
-Se não houver imagem final, criar placeholder visual bonito e registrar a pendência.
-
-## Produtos
-Usar o melhor JSON de produtos disponível.
-
-Cada card deve exibir, quando houver:
-
-- imagem
-- título limpo
-- categoria
-- preço
-- rating
-- status de oportunidade
-- motivo da escolha
-- CTA para abrir o link original
-
-Se existir `link_gerado_shopee`, usar esse link.
-Se não existir `link_gerado_shopee`, não publicar o produto no site.
-
-Regras:
-
+- usar o melhor JSON disponível
+- cada card deve exibir imagem, título, categoria, preço, rating e CTA
+- se existir `link_gerado_shopee`, usar esse link
+- se não existir `link_gerado_shopee`, não publicar o produto
 - não usar `product_url` como fallback público
-- não criar botão falso
 - não exibir produto com link pendente
-- publicar apenas produtos com link final pronto para clique
 
-## Blog
-Usar os artigos existentes em:
+### Blog
 
-```text
-blog/artigos/
-```
+- usar `blog/artigos/` se existir
+- se houver conteúdo real, listar e renderizar
+- se não houver conteúdo real, não inventar artigos
 
-Criar area de blog com:
+### SEO
 
-- listagem de artigos
-- título
-- descrição curta
-- categoria
-- slug
-- link para leitura
+- usar `blog/seo/seo_blog.json` e `blog/seo/seo_blog.csv` se existirem
+- aplicar apenas os campos que existirem
 
-Se os artigos estiverem em Markdown, renderizar ou converter para páginas estáticas.
+### Assets
 
-Se não houver conteúdo real, não inventar artigos. Mostrar claramente que o conteúdo está em preparação.
+- organizar assets em `site_openclaw/assets/`
+- se precisar gerar imagem ou vídeo por API, pedir aprovação antes
+- antes de gerar, mostrar prompt, caminho de saída e nome do arquivo
 
-## SEO
-Usar, quando existirem:
+### Implementação
 
-```text
-blog/seo/seo_blog.json
-blog/seo/seo_blog.csv
-```
+- preferir HTML, CSS e JavaScript simples
+- se já existir stack pronta no local, aproveitar a stack existente
 
-Aplicar quando possivel:
-
-- title
-- meta description
-- slug
-- palavra-chave principal
-- palavras-chave secundárias
-
-Não inventar SEO se os campos não existirem.
-
-## Assets
-Organizar assets em:
-
-```text
-site_openclaw/assets/
-```
-
-Se for necessário gerar imagem ou vídeo por API:
-
-- pedir aprovação antes
-- mostrar o prompt usado
-- mostrar o caminho de saída
-- mostrar o nome do arquivo
-
-Só gerar após aprovação explícita.
-
-## Implementacao
-Se ainda não houver projeto criado, preferir:
-
-```text
-HTML, CSS e JavaScript simples
-```
-
-Se já existir stack pronta no local, aproveitar a stack existente.
-
-Não complicar a arquitetura sem necessidade.
-
-## Estilo visual
-Usar um estilo:
-
-- limpo
-- leve
-- moderno
-- comercial
-- responsivo
-- agradável para blog de achadinhos
-- com bom espaçamento
-- com cards bem legíveis
-- com visual confiável
-
-Evitar:
-
-- visual poluído
-- cores agressivas demais
-- excesso de banners
-- texto pequeno
-- cards confusos
-- promessas exageradas
-
-## Logs
+### Log
 Criar ou atualizar:
 
 ```text
@@ -244,33 +117,29 @@ logs/site_build_log.md
 
 Registrar:
 
-- arquivos de entrada usados
+- arquivos usados
 - arquivos ausentes
 - estrutura criada
-- componentes criados
 - assets usados
 - erros encontrados
 - decisões tomadas
 - confirmação de que nada foi criado fora de `site_openclaw/`
 
-## Validação final
-Antes de encerrar, validar:
+### Validação final
 
-- site criado ou atualizado
-- produtos carregando corretamente
-- blog/artigos aparecendo quando existirem
-- links de produtos preservados
-- linguagem pública comercial, clara e sem exposição técnica de bastidor
-- layout responsivo básico funcionando
-- logs atualizados
+- confirmar que o site foi criado ou atualizado
+- confirmar que os produtos carregam corretamente
+- confirmar que só há produtos publicados com `link_gerado_shopee`
+- confirmar que o blog usa conteúdo real quando existir
+- confirmar que os logs foram atualizados
 
-## Resultado esperado
-Ao final, entregar somente:
+### Resultado esperado
+Entregar somente:
 
 ```text
-1. resumo curto do que foi criado
+1. resumo curto
 2. caminho da pasta do site
 3. arquivos principais criados ou alterados
 4. como rodar/testar localmente
-5. pendências ou limitações encontradas
+5. pendências ou limitações
 ```
