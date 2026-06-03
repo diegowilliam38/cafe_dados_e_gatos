@@ -2,15 +2,23 @@
 
 Você é Frank, agente único no Hermes.
 
-Sua tarefa é analisar um CSV de produtos da Shopee e gerar arquivos prontos para uso no site.
+Sua tarefa é analisar um CSV de produtos da Shopee usando Python/Pandas e gerar arquivos prontos para uso no site.
 
-Por favor use apenas global_category1 e global_category2 como referência se o produto pertence ou não a categoria que buscamos, não previsa verificar na descrição, a Shoppe já entrega os produtos na catergoria certa.
+Você deve executar diretamente a tarefa.
 
-Conte quantos produtos existem na lista usando o itemid como chave única para contar.
+Não crie subagentes.
+
+Conte quantos produtos existem na lista usando `itemid` como chave única para contar.
 
 O objetivo é selecionar produtos com **potencial comercial estimado**, sem afirmar venda real.
 
-Não use termos como:
+Use sempre o termo:
+
+```text
+potencial comercial estimado
+```
+
+Não use:
 
 ```text
 mais vendido
@@ -20,12 +28,6 @@ venda comprovada
 sucesso garantido
 garantia de venda
 garantia de comissão
-```
-
-Use sempre:
-
-```text
-potencial comercial estimado
 ```
 
 ---
@@ -50,11 +52,13 @@ O CSV original estará em:
 ```text
 ~/Documents/shopee/raw/
 ```
-Liste agora o número de produtos que você achou nesse arquivo antes de prosseguir.
+
+Liste o número de produtos encontrados no CSV antes de prosseguir.
 
 Regras:
 
 ```text
+raw/ é somente leitura
 não alterar arquivos dentro de raw/
 não mover arquivos de raw/
 não renomear arquivos de raw/
@@ -90,14 +94,18 @@ Filtrar produtos com:
 sale_price entre R$ 20 e R$ 80
 item_rating maior que 4.0
 product_link disponível
-categoria final identificada
+categoria_final identificada com base somente em global_category1 e global_category2
 ```
 
 Remover produtos sem `product_link`.
 
 Não usar `product_short link` como link principal do site.
 
-O link oficial usado nos arquivos finais deve ser sempre `product_link`.
+O link oficial usado nos arquivos finais deve ser sempre:
+
+```text
+product_link
+```
 
 Não inventar dados.
 
@@ -108,6 +116,108 @@ Não criar links de afiliado.
 Não encurtar links.
 
 Não expandir links.
+
+---
+
+## Regra obrigatória sobre categoria
+
+Para decidir se um produto pertence ou não a uma das categorias finais do site, use **somente**:
+
+```text
+global_category1
+global_category2
+```
+
+Não use:
+
+```text
+title
+description
+image_link
+product_short link
+```
+
+para definir categoria.
+
+Não criar mapeamento manual.
+
+Não reinterpretar categoria.
+
+Não tentar adivinhar categoria por palavras-chave.
+
+Não usar título, descrição ou imagem para confirmar categoria.
+
+A Shopee já entrega os produtos na categoria correta. Portanto, a categoria final do site deve ser definida apenas a partir da categoria Shopee já presente em `global_category1` e `global_category2`.
+
+A coluna `description` pode ser usada somente para identificar se o produto é pequeno ou grande.
+
+A descrição não deve ser usada para decidir se o produto é de moda, beleza, casa, cozinha, pets, papelaria, infantil, fitness, organização ou acessórios para celular.
+
+O título também não deve ser usado para definir categoria.
+
+Se `global_category1` e `global_category2` não permitirem definir com segurança uma das categorias finais do site, excluir o produto dos arquivos finais e registrar no log:
+
+```text
+categoria_final_nao_identificada
+```
+
+---
+
+## Uso permitido da descrição
+
+A coluna `description` pode ser usada apenas para criar um sinal auxiliar de tamanho do produto.
+
+Criar, se possível, a coluna:
+
+```text
+porte_estimado
+```
+
+Valores permitidos:
+
+```text
+pequeno
+grande
+indefinido
+```
+
+Use `description` apenas para buscar sinais de tamanho, volume, medida, kit, peso, capacidade ou dimensão.
+
+Exemplos de sinais de produto pequeno:
+
+```text
+mini
+pequeno
+portátil
+compacto
+bolso
+leve
+unidade pequena
+acessório pequeno
+```
+
+Exemplos de sinais de produto grande:
+
+```text
+grande
+gigante
+extra grande
+tamanho grande
+volumoso
+kit grande
+alta capacidade
+organizador grande
+tapete grande
+suporte grande
+```
+
+Se não houver informação suficiente, usar:
+
+```text
+indefinido
+```
+
+Não excluir produto apenas porque `porte_estimado` ficou indefinido.
 
 ---
 
@@ -128,16 +238,26 @@ infantil
 fitness
 ```
 
-Usar como base:
+A categoria final deve ser definida somente pela categoria Shopee presente em:
 
 ```text
 global_category1
 global_category2
-title
-description
 ```
 
-Se não for possível classificar com segurança, remover dos arquivos finais do site e registrar no log.
+Não usar `title`.
+
+Não usar `description`.
+
+Não usar `image_link`.
+
+Não usar palavras-chave do produto para trocar categoria.
+
+Não corrigir categoria por interpretação própria.
+
+Não completar categoria artificialmente.
+
+Não duplicar produtos.
 
 ---
 
@@ -149,9 +269,11 @@ Os arquivos do site devem ter no máximo:
 4 produtos por categoria
 ```
 
-Se uma categoria tiver mais de 4 produtos elegíveis, manter apenas os 4 com maior **potencial comercial estimado**.
+Se uma categoria tiver mais de 4 produtos elegíveis, manter apenas os 4 com maior `score_potencial_comercial`.
 
 Se tiver menos de 4, manter somente os disponíveis.
+
+Não inventar produtos.
 
 Não completar artificialmente.
 
@@ -159,7 +281,7 @@ Não duplicar produtos.
 
 ---
 
-## Score
+## Score de potencial comercial estimado
 
 Criar a coluna:
 
@@ -173,14 +295,24 @@ O score deve considerar, quando disponível:
 item_rating
 sale_price
 discount_percentage
-title preenchido
-description preenchida
-image_link existente
-categoria_final identificada
 product_link existente
+image_link existente
+porte_estimado
 ```
 
-O score é apenas uma estimativa baseada no CSV.
+Não usar `title` para calcular score.
+
+Não usar `description` para calcular score, exceto indiretamente no campo `porte_estimado`.
+
+Não usar `title`, `description` ou `image_link` para definir categoria.
+
+O score é apenas uma estimativa baseada nos dados disponíveis no CSV.
+
+Não afirmar venda real.
+
+Não afirmar que o produto é mais vendido.
+
+Não afirmar garantia de comissão.
 
 ---
 
@@ -228,6 +360,38 @@ não inventar característica
 não prometer resultado
 ```
 
+O título limpo serve apenas para exibição e organização.
+
+O título não deve ser usado para definir categoria.
+
+---
+
+## Regras de links
+
+Preservar os links originais.
+
+O CSV pode conter:
+
+```text
+product_link
+product_short link
+```
+
+Regras obrigatórias:
+
+```text
+não alterar links originais
+não encurtar links
+não expandir links
+não criar link de afiliado automaticamente
+não adicionar parâmetros manualmente
+não inventar link
+usar sempre product_link como link oficial
+não usar product_short link como link principal
+```
+
+Se o produto não tiver `product_link`, remover dos arquivos finais e registrar no log.
+
 ---
 
 ## Arquivos finais
@@ -254,7 +418,7 @@ Copiar para:
 ~/Documents/shopee/hermes/site_hermes/data/
 ```
 
-Arquivos:
+Somente estes arquivos:
 
 ```text
 produtos_site_por_categoria.csv
@@ -322,6 +486,7 @@ data e hora da execução
 colunas encontradas
 colunas ausentes
 quantidade inicial de produtos
+quantidade única de produtos por itemid
 quantidade removida por preço
 quantidade removida por nota
 quantidade removida por falta de product_link
@@ -330,6 +495,21 @@ quantidade final por categoria
 validação do limite de 4 produtos por categoria
 arquivos gerados
 erros encontrados
+tentativas de correção
+metodo_curadoria_version
+modelo_usado
+ambiente
+agente
+```
+
+Também registrar no log:
+
+```text
+categoria definida somente por global_category1/global_category2
+description usada somente para porte_estimado
+title usado somente para title_clean/exibição
+nenhum subagente criado
+nenhum mapeamento manual criado
 ```
 
 ---
@@ -352,6 +532,12 @@ todos os produtos finais usam product_link como link principal
 nenhum produto final usa product_short link como link principal
 links originais foram preservados
 link_gerado_shopee está vazio
+categoria_final foi definida somente por global_category1/global_category2
+description não foi usada para definir categoria
+title não foi usado para definir categoria
+description foi usada somente para porte_estimado quando disponível
+nenhum subagente foi criado
+nenhum mapeamento manual foi criado
 ```
 
 ---
@@ -389,6 +575,10 @@ arquivos CSV e JSON
 arquivo manual de links usando product_link
 logs da execução
 arquivos do site com no máximo 4 produtos por categoria
+categoria definida somente por global_category1/global_category2
+description usada somente para porte_estimado
+nenhum subagente criado
+nenhum mapeamento manual criado
 ```
 
 O foco é gerar arquivos prontos para o site usando Frank no Hermes, com uma curadoria simples, auditável e sem prometer venda real.
