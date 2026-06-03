@@ -87,11 +87,6 @@ O arquivo deve conter:
 ## Negativas
 ```
 
-Não altere produtos.
-
-Não refaça curadoria.
-
-Não mexa no site.
 
 Não gere código.
 
