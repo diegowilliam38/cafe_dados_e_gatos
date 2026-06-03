@@ -53,13 +53,8 @@ Se algum arquivo opcional não existir, continue com os arquivos disponíveis e 
 
 Parte de imagem
 
-A parte de imagem é um prompt separado.
+A parte de imagem ho hero é um prompt separado.
 
-Não gere imagem nesta etapa.
-
-Não use API de imagem nesta etapa.
-
-Não crie prompt de imagem nesta etapa.
 
 Apenas prepare o site para receber imagem futuramente.
 
@@ -82,26 +77,6 @@ Se não houver imagem, crie um placeholder visual bonito e registre no log:
 imagem hero ainda não gerada
 Regras de linguagem
 
-Não use:
-
-mais vendido
-campeão de vendas
-produto que mais vende
-venda comprovada
-sucesso garantido
-garantia de venda
-garantia de comissão
-
-Use linguagem como:
-
-potencial comercial estimado
-produto bem avaliado no dataset
-preço dentro do recorte analisado
-boa aderência ao ticket de R$ 20 a R$ 80
-categoria com prioridade comercial
-curadoria de achadinhos
-produto selecionado pela curadoria
-Estrutura do site
 
 Crie um site com:
 
@@ -226,8 +201,6 @@ título limpo
 categoria
 preço
 rating
-status de oportunidade
-motivo da escolha
 botão para acessar o produto original
 
 Se image_link existir, usar como imagem do produto.
@@ -251,12 +224,6 @@ fitness
 
 Criar filtro por categoria.
 
-O site deve suportar no máximo:
-
-20 produtos por categoria
-200 produtos no total
-
-Se o arquivo tiver mais de 20 produtos em alguma categoria, exibir apenas os 20 primeiros daquela categoria e registrar no log.
 
 Filtros
 
@@ -272,11 +239,6 @@ R$ 20 a R$ 40
 R$ 40 a R$ 60
 R$ 60 a R$ 80
 
-Se status_oportunidade não existir, criar uma classificação simples no front-end com base no score:
-
-score alto = destaque
-score médio = boa oportunidade
-score baixo = oportunidade moderada
 
 Se não houver score, ocultar esse filtro ou usar apenas categoria e preço.
 
@@ -367,18 +329,6 @@ cards confusos
 promessas exageradas
 Assets
 
-Organize os assets em:
-
-site_hermes/public/images/
-site_hermes/public/videos/
-
-Não gere imagem.
-
-Não gere vídeo.
-
-Não chame API de imagem.
-
-Não chame API de vídeo.
 
 Apenas use arquivos existentes ou placeholders.
 
