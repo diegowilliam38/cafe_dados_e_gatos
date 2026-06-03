@@ -70,6 +70,7 @@ blog.html
 anuncios-top10.html
 assets/
 ```
+- o modelo deve ser elegante, requintado mas moderno e que atraia clientes. Use a frase: Achadinhos da Shopee.
 
 ### Hero
 
