@@ -33,7 +33,7 @@ garantia de comissão
 Registrar nos arquivos finais e no log:
 
 ```text
-metodo_curadoria_version: "shopee_potencial_v1_2026-06-02"
+metodo_curadoria_version: "shopee_potencial_v1_dd_mm_aaaa"
 modelo_usado: "MiniMax M3"
 ambiente: "openclaw"
 ferramenta_orquestracao: "OpenClaw"
