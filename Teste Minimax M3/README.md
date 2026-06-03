@@ -268,13 +268,13 @@ Este fluxo foi pensado para apoiar saídas como:
 
 ![Vitrine de produtos no Hermes](./images/produtos-hermes.png)
 
-### Vitrine de produtos no OpenClaw
-
-![Vitrine de produtos no OpenClaw](./images/openclaw-vitrine.png)
-
 ### Home do fluxo OpenClaw
 
 ![Home do projeto OpenClaw](./images/home-openclaw.png)
+
+### Vitrine de produtos no OpenClaw
+
+![Vitrine de produtos no OpenClaw](./images/openclaw-vitrine.png)
 
 ## Resumo
 
@@ -554,13 +554,13 @@ This workflow was designed to support outputs such as:
 
 ![Hermes product showcase](./images/produtos-hermes.png)
 
-### OpenClaw product showcase
-
-![OpenClaw product showcase](./images/openclaw-vitrine.png)
-
 ### OpenClaw flow homepage
 
 ![OpenClaw project homepage](./images/home-openclaw.png)
+
+### OpenClaw product showcase
+
+![OpenClaw product showcase](./images/openclaw-vitrine.png)
 
 ## Summary
 
