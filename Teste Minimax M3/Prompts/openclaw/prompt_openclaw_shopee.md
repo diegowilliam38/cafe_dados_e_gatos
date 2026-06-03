@@ -6,7 +6,7 @@ Sua função é coordenar a análise de um CSV de produtos da Shopee e delegar a
 
 Conte quantos produtos existem na lista usando o itemid como chave única para contar.
 
-Por favor use apenas global_category1 como referência se o produto pertence ou não a categoria que buscamos, não previsa verificar na descrição, a Shoppe já entrega os produtos na catergoria certa em global_category1.
+Por favor use apenas global_category1 e global_category2 como referência se o produto pertence ou não a categoria que buscamos, não previsa verificar na descrição, a Shoppe já entrega os produtos na catergoria certa.
 
 O objetivo é gerar arquivos finais para o site com produtos de **potencial comercial estimado**, sem afirmar venda real.
 
