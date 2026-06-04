@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fce4ec"/>
+      <stop offset="100%" stop-color="#f5e6da"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#g)"/>
+  <g fill="#b76e79" opacity="0.45" text-anchor="middle" font-family="Georgia, serif">
+    <text x="200" y="210" font-size="80">✿</text>
+    <text x="200" y="260" font-size="18" font-style="italic">achadinho</text>
+  </g>
+</svg>
