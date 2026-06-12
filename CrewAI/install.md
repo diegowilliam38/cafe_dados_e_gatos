@@ -1,16 +1,6 @@
-# Como instalar CrewAI com MiniMax
+# Como instalar e remover CrewAI
 
-## 1. Atualizar o Ubuntu
-
-```bash
-sudo apt update
-```
-
-```bash
-sudo apt install -y curl git python3 python3-pip python3-venv
-```
-
-## 2. Verificar Python
+## 1. Verificar Python
 
 ```bash
 python3 --version
@@ -20,6 +10,16 @@ Resultado esperado:
 
 ```text
 Python 3.10.x até Python 3.13.x
+```
+
+## 2. Instalar dependências básicas
+
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install -y curl python3 python3-pip python3-venv
 ```
 
 ## 3. Instalar uv
@@ -42,6 +42,8 @@ uv --version
 uv tool install crewai
 ```
 
+## 5. Corrigir PATH se necessário
+
 ```bash
 uv tool update-shell
 ```
@@ -49,6 +51,8 @@ uv tool update-shell
 ```bash
 source "$HOME/.bashrc"
 ```
+
+## 6. Testar instalação
 
 ```bash
 crewai --version
@@ -58,177 +62,58 @@ crewai --version
 uv tool list
 ```
 
-## 5. Criar projeto
-
-```bash
-mkdir -p "$HOME/crewai-lab"
-```
-
-```bash
-cd "$HOME/crewai-lab"
-```
-
-```bash
-crewai create crew "cafe_dados_crew"
-```
-
-```bash
-cd "$HOME/crewai-lab/cafe_dados_crew"
-```
-
-## 6. Instalar dependências do projeto
-
-```bash
-crewai install
-```
-
-## 7. Configurar MiniMax
-
-```bash
-nano ".env"
-```
-
-Cole no arquivo:
-
-```env
-MODEL="openai/MiniMax-M3"
-OPENAI_API_KEY="SUA_CHAVE_MINIMAX_AQUI"
-OPENAI_API_BASE="https://api.minimax.io/v1"
-```
-
-Salvar:
-
-```text
-CTRL+O
-ENTER
-CTRL+X
-```
-
-## 8. Testar a chave MiniMax antes do CrewAI
-
-```bash
-source ".env"
-```
-
-```bash
-curl "https://api.minimax.io/v1/chat/completions" \
-  -H "Authorization: Bearer $OPENAI_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "MiniMax-M3",
-    "messages": [
-      {
-        "role": "user",
-        "content": "Responda apenas: MiniMax funcionando."
-      }
-    ]
-  }'
-```
-
-Resultado esperado:
-
-```text
-MiniMax funcionando.
-```
-
-## 9. Rodar CrewAI
-
-```bash
-crewai run
-```
-
-## 10. Ver estrutura criada
-
-```bash
-tree -a -I ".venv|__pycache__|.git"
-```
-
-Se não tiver tree:
-
-```bash
-sudo apt install -y tree
-```
-
-```bash
-tree -a -I ".venv|__pycache__|.git"
-```
-
-## 11. Arquivos principais
-
-```bash
-ls -la
-```
-
-```bash
-ls -la "src/cafe_dados_crew"
-```
-
-```bash
-ls -la "src/cafe_dados_crew/config"
-```
-
-## 12. Editar agentes
-
-```bash
-nano "src/cafe_dados_crew/config/agents.yaml"
-```
-
-## 13. Editar tarefas
-
-```bash
-nano "src/cafe_dados_crew/config/tasks.yaml"
-```
-
-## 14. Editar orquestração
-
-```bash
-nano "src/cafe_dados_crew/crew.py"
-```
-
-## 15. Editar entrada principal
-
-```bash
-nano "src/cafe_dados_crew/main.py"
-```
-
-## 16. Rodar novamente
-
-```bash
-crewai run
-```
-
-## 17. Atualizar CrewAI depois
+## 7. Atualizar CrewAI
 
 ```bash
 uv tool install crewai --upgrade
 ```
 
+## 8. Remover CrewAI
+
+```bash
+uv tool uninstall crewai
+```
+
+## 9. Conferir remoção
+
 ```bash
 crewai --version
 ```
 
-## 18. Corrigir PATH se o comando crewai não aparecer
+Resultado esperado:
 
-```bash
-uv tool update-shell
+```text
+comando não encontrado
 ```
 
 ```bash
-source "$HOME/.bashrc"
+uv tool list
+```
+
+## 10. Remover uv
+
+Usar somente se quiser remover também o gerenciador `uv`.
+
+```bash
+rm -rf "$HOME/.local/bin/uv"
 ```
 
 ```bash
-which crewai
+rm -rf "$HOME/.local/bin/uvx"
 ```
 
-## 19. Conferir variáveis do MiniMax
-
 ```bash
-grep -n "MODEL\|OPENAI_API_KEY\|OPENAI_API_BASE" ".env"
+rm -rf "$HOME/.cache/uv"
 ```
 
-## 20. Abrir o projeto no VS Code
+## 11. Conferir remoção do uv
 
 ```bash
-code .
+uv --version
+```
+
+Resultado esperado:
+
+```text
+comando não encontrado
 ```
