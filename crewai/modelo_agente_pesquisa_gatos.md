@@ -1,8 +1,59 @@
 # Como criar uma equipe de agentes no CrewAI
 
-## 1. Instalar o CrewAI
+## Objetivo
+
+Criar um projeto CrewAI com 4 agentes para gerar um manual em Markdown sobre as 10 raças de gatos mais conhecidas.
+
+Equipe:
+
+```text
+1. Coordenador da Equipe
+2. Pesquisador de Raças de Gatos
+3. Redator do Manual
+4. Revisor e Entregador Final
+```
+
+Fluxo:
+
+```text
+Planejar
+Pesquisar
+Redigir
+Revisar e entregar
+```
+
+Modelos usados neste exemplo:
+
+```text
+Ollama local/cloud para agentes leves
+MiniMax cloud oficial como provedor compatível com OpenAI
+```
+
+---
+
+## 1. Instalar o uv
+
+O CrewAI usa `uv` para criar ambiente, instalar dependências e executar o projeto.
 
 No terminal:
+
+```bash
+curl -LsSf "https://astral.sh/uv/install.sh" | sh
+```
+
+Fechar e abrir o terminal novamente.
+
+Conferir:
+
+```bash
+uv --version
+```
+
+---
+
+## 2. Instalar o CrewAI
+
+Este comando instala a ferramenta de linha de comando `crewai`.
 
 ```bash
 uv tool install crewai
@@ -14,7 +65,7 @@ Se aparecer aviso de PATH:
 uv tool update-shell
 ```
 
-Feche e abra o terminal novamente.
+Fechar e abrir o terminal novamente.
 
 Conferir instalação:
 
@@ -22,21 +73,39 @@ Conferir instalação:
 uv tool list
 ```
 
-## 2. Criar o projeto
+Resultado esperado:
+
+```text
+crewai
+```
+
+---
+
+## 3. Criar o projeto
+
+Este comando cria a estrutura inicial do projeto CrewAI.
 
 ```bash
 crewai create crew manual_gatos
 ```
 
-Entrar na pasta:
+Entrar na pasta do projeto:
 
 ```bash
 cd "manual_gatos"
 ```
 
-## 3. Estrutura principal
+---
 
-Arquivos principais:
+## 4. Conferir a estrutura principal
+
+Este passo serve para confirmar se o projeto foi criado no formato esperado.
+
+```bash
+ls
+```
+
+Estrutura esperada:
 
 ```text
 manual_gatos/
@@ -51,24 +120,98 @@ manual_gatos/
 │           └── tasks.yaml
 ```
 
-## 4. Configurar variáveis de ambiente
+---
 
-Editar o arquivo `.env`:
+## 5. Configurar o arquivo .env
+
+O arquivo `.env` guarda variáveis de ambiente, chaves de API e nomes de modelos.
+
+Não colocar código Python no `.env`.
+
+Abrir o arquivo:
+
+```bash
+nano ".env"
+```
+
+Apagar o conteúdo atual e colar:
 
 ```env
-OPENAI_API_KEY="SUA_CHAVE_AQUI"
-OPENAI_MODEL_NAME="gpt-4o-mini"
+# Modelo Ollama disponível localmente ou via Ollama Cloud
+OLLAMA_BASE_URL="http://localhost:11434"
+OLLAMA_MODEL_PHI="ollama/phi4-mini:latest"
+OLLAMA_MODEL_GEMMA="ollama/gemma4:31b-cloud"
+
+# MiniMax cloud oficial em endpoint compatível com OpenAI
+MINIMAX_API_KEY="SUA_CHAVE_MINIMAX_AQUI"
+MINIMAX_BASE_URL="https://api.minimax.io/v1"
+MINIMAX_MODEL="NOME_EXATO_DO_MODELO_MINIMAX_AQUI"
+
+# Configuração geral
+CREWAI_TELEMETRY_OPT_OUT="true"
 ```
 
-## 5. Editar os agentes
-
-Arquivo:
+Salvar:
 
 ```text
-src/manual_gatos/config/agents.yaml
+CTRL + O
+ENTER
+CTRL + X
 ```
 
-Conteúdo:
+Importante:
+
+```text
+Substituir SUA_CHAVE_MINIMAX_AQUI pela chave real somente no ambiente local.
+Substituir NOME_EXATO_DO_MODELO_MINIMAX_AQUI pelo nome correto do modelo no painel/documentação da MiniMax.
+Não publicar o arquivo .env com chave real no GitHub.
+```
+
+---
+
+## 6. Testar o Ollama antes de rodar o CrewAI
+
+Este teste confirma se o Ollama está respondendo fora do CrewAI.
+
+Listar modelos disponíveis:
+
+```bash
+ollama list
+```
+
+Testar um modelo local:
+
+```bash
+curl "http://localhost:11434/api/generate" -d '{
+  "model": "phi4-mini:latest",
+  "prompt": "Responda apenas: funcionando",
+  "stream": false
+}'
+```
+
+Se estiver usando outro nome no `ollama list`, trocar o valor de `"model"` pelo nome exato exibido.
+
+Resultado esperado:
+
+```text
+funcionando
+```
+
+---
+
+## 7. Editar os agentes
+
+O arquivo `agents.yaml` define os agentes, seus papéis, objetivos e contexto de trabalho.
+
+Os modelos não serão definidos aqui neste guia. Eles serão definidos diretamente no `crew.py`, para deixar claro qual agente usa Ollama e qual usa MiniMax.
+
+Abrir o arquivo:
+
+```bash
+nano "src/manual_gatos/config/agents.yaml"
+```
+
+Apagar o conteúdo atual e colar:
 
 ```yaml
 coordenador:
@@ -112,15 +255,29 @@ revisor:
     coerente e pronto para ser publicado.
 ```
 
-## 6. Editar as tarefas
-
-Arquivo:
+Salvar:
 
 ```text
-src/manual_gatos/config/tasks.yaml
+CTRL + O
+ENTER
+CTRL + X
 ```
 
-Conteúdo:
+---
+
+## 8. Editar as tarefas
+
+O arquivo `tasks.yaml` define o que cada agente deve fazer.
+
+Cada tarefa aponta para um agente. As tarefas seguintes podem receber o contexto das tarefas anteriores.
+
+Abrir o arquivo:
+
+```bash
+nano "src/manual_gatos/config/tasks.yaml"
+```
+
+Apagar o conteúdo atual e colar:
 
 ```yaml
 planejamento_task:
@@ -168,18 +325,41 @@ revisao_task:
   output_file: "output/manual_racas_gatos.md"
 ```
 
-## 7. Editar o arquivo da equipe
-
-Arquivo:
+Salvar:
 
 ```text
-src/manual_gatos/crew.py
+CTRL + O
+ENTER
+CTRL + X
 ```
 
-Conteúdo:
+---
+
+## 9. Editar o arquivo da equipe
+
+O arquivo `crew.py` monta a equipe.
+
+Aqui ficam os modelos. Neste exemplo:
+
+```text
+Coordenador: MiniMax cloud
+Pesquisador: Ollama Phi
+Redator: MiniMax cloud
+Revisor: Ollama Gemma
+```
+
+Abrir o arquivo:
+
+```bash
+nano "src/manual_gatos/crew.py"
+```
+
+Apagar o conteúdo atual e colar:
 
 ```python
-from crewai import Agent, Crew, Process, Task
+import os
+
+from crewai import Agent, Crew, LLM, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
 
@@ -190,32 +370,65 @@ class ManualGatosCrew:
     agents_config = "config/agents.yaml"
     tasks_config = "config/tasks.yaml"
 
+    def ollama_phi(self) -> LLM:
+        """Modelo leve via Ollama para tarefas simples."""
+        return LLM(
+            model=os.getenv("OLLAMA_MODEL_PHI", "ollama/phi4-mini:latest"),
+            base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
+            temperature=0.2,
+        )
+
+    def ollama_gemma(self) -> LLM:
+        """Modelo Gemma via Ollama local ou cloud."""
+        return LLM(
+            model=os.getenv("OLLAMA_MODEL_GEMMA", "ollama/gemma4:31b-cloud"),
+            base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
+            temperature=0.2,
+        )
+
+    def minimax_cloud(self) -> LLM:
+        """Modelo MiniMax cloud oficial usando endpoint compatível com OpenAI."""
+        return LLM(
+            model=f"openai/{os.getenv('MINIMAX_MODEL', 'NOME_EXATO_DO_MODELO_MINIMAX_AQUI')}",
+            api_key=os.getenv("MINIMAX_API_KEY"),
+            base_url=os.getenv("MINIMAX_BASE_URL", "https://api.minimax.io/v1"),
+            temperature=0.2,
+        )
+
     @agent
     def coordenador(self) -> Agent:
         return Agent(
             config=self.agents_config["coordenador"],
+            llm=self.minimax_cloud(),
             verbose=True,
+            allow_delegation=False,
         )
 
     @agent
     def pesquisador(self) -> Agent:
         return Agent(
             config=self.agents_config["pesquisador"],
+            llm=self.ollama_phi(),
             verbose=True,
+            allow_delegation=False,
         )
 
     @agent
     def redator(self) -> Agent:
         return Agent(
             config=self.agents_config["redator"],
+            llm=self.minimax_cloud(),
             verbose=True,
+            allow_delegation=False,
         )
 
     @agent
     def revisor(self) -> Agent:
         return Agent(
             config=self.agents_config["revisor"],
+            llm=self.ollama_gemma(),
             verbose=True,
+            allow_delegation=False,
         )
 
     @task
@@ -252,7 +465,144 @@ class ManualGatosCrew:
         )
 ```
 
-## 8. Instalar dependências do projeto
+Salvar:
+
+```text
+CTRL + O
+ENTER
+CTRL + X
+```
+
+---
+
+## 10. Alternativa: rodar tudo só com Ollama
+
+Use esta opção se quiser testar sem MiniMax primeiro.
+
+No arquivo `crew.py`, trocar estes dois trechos:
+
+```python
+llm=self.minimax_cloud(),
+```
+
+por:
+
+```python
+llm=self.ollama_phi(),
+```
+
+Assim, todos os agentes rodam pelo Ollama.
+
+---
+
+## 11. Conferir o arquivo main.py
+
+O arquivo `main.py` é o ponto de entrada do projeto.
+
+Ele define o comando que será executado quando rodar:
+
+```bash
+crewai run
+```
+
+Abrir o arquivo:
+
+```bash
+nano "src/manual_gatos/main.py"
+```
+
+Verificar se ele importa a classe correta do arquivo `crew.py`.
+
+Apagar o conteúdo atual e colar:
+
+```python
+#!/usr/bin/env python
+import sys
+
+from manual_gatos.crew import ManualGatosCrew
+
+
+def run():
+    """
+    Executa a equipe.
+    """
+    inputs = {
+        "tema": "Manual com as 10 raças de gatos mais conhecidas"
+    }
+    ManualGatosCrew().crew().kickoff(inputs=inputs)
+
+
+def train():
+    """
+    Treina a equipe por um número de iterações.
+    """
+    inputs = {
+        "tema": "Manual com as 10 raças de gatos mais conhecidas"
+    }
+    try:
+        ManualGatosCrew().crew().train(
+            n_iterations=int(sys.argv[1]),
+            filename=sys.argv[2],
+            inputs=inputs,
+        )
+    except Exception as e:
+        raise Exception(f"Erro ao treinar a equipe: {e}")
+
+
+def replay():
+    """
+    Repete a execução a partir de uma tarefa específica.
+    """
+    try:
+        ManualGatosCrew().crew().replay(task_id=sys.argv[1])
+    except Exception as e:
+        raise Exception(f"Erro ao repetir a execução: {e}")
+
+
+def test():
+    """
+    Testa a execução da equipe.
+    """
+    inputs = {
+        "tema": "Manual com as 10 raças de gatos mais conhecidas"
+    }
+    try:
+        ManualGatosCrew().crew().test(
+            n_iterations=int(sys.argv[1]),
+            eval_llm=sys.argv[2],
+            inputs=inputs,
+        )
+    except Exception as e:
+        raise Exception(f"Erro ao testar a equipe: {e}")
+```
+
+Salvar:
+
+```text
+CTRL + O
+ENTER
+CTRL + X
+```
+
+---
+
+## 12. Criar a pasta de saída
+
+A tarefa final vai salvar o arquivo `manual_racas_gatos.md` dentro da pasta `output`.
+
+Criar a pasta:
+
+```bash
+mkdir -p "output"
+```
+
+---
+
+## 13. Instalar dependências do projeto
+
+O comando `crewai install` instala as dependências declaradas no projeto, usando o ambiente gerenciado pelo `uv`.
+
+Ele deve ser rodado dentro da raiz do projeto, onde está o arquivo `pyproject.toml`.
 
 Na raiz do projeto:
 
@@ -260,24 +610,50 @@ Na raiz do projeto:
 crewai install
 ```
 
-## 9. Rodar a equipe
+Por que este passo fica depois da edição dos arquivos:
+
+```text
+Porque primeiro o projeto é criado e configurado.
+Depois o ambiente do projeto é preparado para executar a equipe.
+Se o projeto usar LiteLLM, Ollama ou outros provedores, as dependências precisam estar instaladas antes do crewai run.
+```
+
+Se for usar Ollama, MiniMax ou outro provedor via LiteLLM, adicionar suporte a LiteLLM:
+
+```bash
+uv add "crewai[litellm]"
+```
+
+Depois rodar novamente:
+
+```bash
+crewai install
+```
+
+---
+
+## 14. Rodar a equipe
+
+Executar a crew:
 
 ```bash
 crewai run
 ```
 
-## 10. Conferir o resultado
+---
+
+## 15. Conferir o resultado
+
+Conferir se o arquivo foi gerado:
+
+```bash
+ls "output"
+```
 
 Abrir o arquivo gerado:
 
 ```bash
 cat "output/manual_racas_gatos.md"
-```
-
-Ou abrir a pasta:
-
-```bash
-ls "output"
 ```
 
 Resultado esperado:
@@ -286,51 +662,206 @@ Resultado esperado:
 manual_racas_gatos.md
 ```
 
-## 11. O que mostrar no vídeo
+---
 
-Mostrar a criação do projeto:
+## 16. Erro: comando crewai não encontrado
 
-```bash
-crewai create crew manual_gatos
-```
-
-Mostrar os arquivos principais:
-
-```bash
-ls
-ls "src/manual_gatos/config"
-```
-
-Mostrar os agentes:
-
-```bash
-cat "src/manual_gatos/config/agents.yaml"
-```
-
-Mostrar as tarefas:
-
-```bash
-cat "src/manual_gatos/config/tasks.yaml"
-```
-
-Rodar a equipe:
-
-```bash
-crewai run
-```
-
-Mostrar o resultado:
-
-```bash
-cat "output/manual_racas_gatos.md"
-```
-
-## 12. Resumo da lógica
+Erro:
 
 ```text
-Agente = papel dentro da equipe
-Tarefa = trabalho que será executado
-Crew = equipe completa
-Process sequential = uma tarefa depois da outra
-output_file = arquivo final gerado
+crewai: command not found
+```
+
+Correção:
+
+```bash
+uv tool update-shell
+```
+
+Fechar e abrir o terminal novamente.
+
+Testar:
+
+```bash
+crewai --help
+```
+
+---
+
+## 17. Erro: chave da MiniMax não configurada
+
+Erro possível:
+
+```text
+MINIMAX_API_KEY não configurada
+```
+
+Correção:
+
+```bash
+nano ".env"
+```
+
+Conferir se existe:
+
+```env
+MINIMAX_API_KEY="SUA_CHAVE_MINIMAX_AQUI"
+MINIMAX_BASE_URL="https://api.minimax.io/v1"
+MINIMAX_MODEL="NOME_EXATO_DO_MODELO_MINIMAX_AQUI"
+```
+
+Salvar:
+
+```text
+CTRL + O
+ENTER
+CTRL + X
+```
+
+---
+
+## 18. Erro: modelo MiniMax não encontrado
+
+Erro possível:
+
+```text
+model not found
+```
+
+Causa provável:
+
+```text
+O nome do modelo MiniMax no .env não é o nome aceito pela API.
+```
+
+Correção:
+
+```bash
+nano ".env"
+```
+
+Corrigir:
+
+```env
+MINIMAX_MODEL="NOME_EXATO_DO_MODELO_MINIMAX_AQUI"
+```
+
+Usar o nome exato informado pela documentação ou painel da MiniMax.
+
+---
+
+## 19. Erro: Ollama não responde
+
+Testar o Ollama:
+
+```bash
+curl "http://localhost:11434/api/tags"
+```
+
+Se não responder, subir o Ollama:
+
+```bash
+ollama serve
+```
+
+---
+
+## 20. Erro: modelo Ollama não encontrado
+
+Listar modelos:
+
+```bash
+ollama list
+```
+
+Corrigir o `.env` com o nome real do modelo instalado.
+
+Exemplo:
+
+```env
+OLLAMA_MODEL_PHI="ollama/phi4-mini:latest"
+```
+
+No teste direto via `curl`, o nome usado não tem o prefixo `ollama/`:
+
+```bash
+curl "http://localhost:11434/api/generate" -d '{
+  "model": "phi4-mini:latest",
+  "prompt": "teste",
+  "stream": false
+}'
+```
+
+No CrewAI, o modelo usa prefixo `ollama/`:
+
+```text
+ollama/phi4-mini:latest
+```
+
+---
+
+## 21. Como remover o projeto
+
+Entrar na pasta onde o projeto foi criado:
+
+```bash
+cd "$HOME"
+```
+
+Remover a pasta do projeto:
+
+```bash
+rm -rf "manual_gatos"
+```
+
+Conferir:
+
+```bash
+ls "$HOME" | grep "manual_gatos"
+```
+
+Se não aparecer nada, a pasta foi removida.
+
+---
+
+## 22. Como remover o CrewAI instalado por uv tool
+
+Listar ferramentas instaladas:
+
+```bash
+uv tool list
+```
+
+Remover o CrewAI:
+
+```bash
+uv tool uninstall crewai
+```
+
+Conferir:
+
+```bash
+uv tool list
+```
+
+---
+
+## 23. Como remover cache opcional
+
+Aviso: este passo remove caches locais usados pelo `uv`. Não é obrigatório.
+
+```bash
+uv cache clean
+```
+
+---
+
+## 24. Fontes usadas
+
+```text
+CrewAI Installation:
+https://docs.crewai.com/en/installation
+
+CrewAI LLMs:
+https://docs.crewai.com/en/concepts/llms
 ```
