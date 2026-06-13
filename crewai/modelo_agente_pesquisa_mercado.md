@@ -2,17 +2,21 @@
 
 ## Objetivo
 
-Instalar o CrewAI Studio da comunidade no Ubuntu sem Docker, configurar Ollama, configurar MiniMax como provedor compatível com OpenAI e criar uma crew simples com dois agentes:
-
-```text
-1. Analista de Pesquisa de Mercado
-2. Avaliador do Relatório
-```
+Instalar o CrewAI Studio da comunidade no Ubuntu sem Docker, configurar Ollama, configurar MiniMax como provedor compatível com OpenAI e criar uma equipe com 4 agentes para produzir um manual simples sobre as 10 raças de gatos mais conhecidas.
 
 Repositório usado:
 
 ```text
 https://github.com/strnad/CrewAI-Studio
+```
+
+Equipe criada:
+
+```text
+1. Coordenador da Equipe
+2. Pesquisador de Raças de Gatos
+3. Redator do Manual
+4. Revisor e Entregador Final
 ```
 
 ---
@@ -76,7 +80,7 @@ OLLAMA_MODELS="ollama/llama3.2,ollama/phi3.5"
 
 OPENAI_API_KEY="SUA_CHAVE_MINIMAX_AQUI"
 OPENAI_API_BASE="URL_BASE_OPENAI_COMPATIBLE_DA_MINIMAX_AQUI"
-OPENAI_PROXY_MODELS="minimax/NOME_DO_MODELO_MINIMAX_AQUI"
+OPENAI_PROXY_MODELS="minimax/M3"
 ```
 
 Salvar no Nano:
@@ -111,13 +115,11 @@ Quando perguntar sobre cache do pip, responder:
 n
 ```
 
-Quando perguntar sobre AgentOps:
+Quando perguntar sobre AgentOps, para teste simples pode responder:
 
 ```text
 n
 ```
-
-Para este teste, AgentOps não é obrigatório.
 
 ---
 
@@ -249,234 +251,393 @@ curl "http://localhost:11434/api/tags"
 
 ---
 
-## 9. Configurar Ollama no CrewAI Studio
+## 9. Configurar modelos no CrewAI Studio
 
-Host:
+Modelo MiniMax:
 
 ```text
-http://localhost:11434
+OpenAI: minimax/M3
 ```
 
-Modelo principal:
+Modelo Ollama principal:
 
 ```text
-ollama/llama3.2
+Ollama: ollama/llama3.2
 ```
 
-Modelo leve:
+Modelo Ollama leve:
 
 ```text
-ollama/phi3.5
+Ollama: ollama/phi3.5
+```
+
+Para este teste, usar preferencialmente:
+
+```text
+OpenAI: minimax/M3
 ```
 
 ---
 
-## 10. Configurar MiniMax no CrewAI Studio
+## 10. Criar o agente 1: Coordenador da Equipe
 
-No `.env`, manter os placeholders:
-
-```env
-OPENAI_API_KEY="SUA_CHAVE_MINIMAX_AQUI"
-OPENAI_API_BASE="URL_BASE_OPENAI_COMPATIBLE_DA_MINIMAX_AQUI"
-OPENAI_PROXY_MODELS="minimax/NOME_DO_MODELO_MINIMAX_AQUI"
-```
-
-Na interface, usar o modelo configurado em:
-
-```text
-OPENAI_PROXY_MODELS
-```
-
-Exemplo:
-
-```text
-minimax/NOME_DO_MODELO_MINIMAX_AQUI
-```
-
-Substituir os placeholders pelos dados reais da conta MiniMax somente no ambiente local.
-
----
-
-## 11. Criar o agente 1: Analista de Pesquisa de Mercado
-
-Criar um novo agente em `Agents`.
+Criar em `Agents`.
 
 Name:
 
 ```text
-Analista de Pesquisa de Mercado
+Coordenador da Equipe
 ```
 
 Role:
 
 ```text
-Analista de Pesquisa de Mercado
+Coordenador de equipe editorial
 ```
 
 Goal:
 
 ```text
-Pesquisar oportunidades de mercado, necessidades do público, concorrentes, riscos e recomendações práticas para conteúdos, produtos e serviços relacionados à inteligência artificial.
+Organizar o trabalho da equipe para criar um manual simples, claro e bem estruturado sobre as 10 raças de gatos mais conhecidas.
 ```
 
 Backstory:
 
 ```text
-Você é um analista especializado em inteligência artificial, educação tecnológica, comportamento de audiência e análise de mercado.
+Você coordena uma pequena equipe de agentes responsáveis por pesquisar, escrever, revisar e entregar um manual final.
 
-Seu trabalho é transformar informações dispersas em relatórios claros, objetivos e acionáveis para apoiar a tomada de decisão.
+Seu trabalho é garantir que o material tenha ordem, clareza e foco no objetivo principal.
 ```
 
-Model:
+Configuração:
 
 ```text
-minimax/NOME_DO_MODELO_MINIMAX_AQUI
-```
-
-Alternativa local:
-
-```text
-ollama/llama3.2
+Allow delegation: desligado
+Verbose: ligado
+Cache: ligado
+Temperature: 0.10
+Max Iterations: 25
+Model: OpenAI: minimax/M3
 ```
 
 ---
 
-## 12. Criar o agente 2: Avaliador do Relatório
+## 11. Criar o agente 2: Pesquisador de Raças de Gatos
 
-Criar outro agente em `Agents`.
+Criar em `Agents`.
 
 Name:
 
 ```text
-Avaliador do Relatório
+Pesquisador de Raças de Gatos
 ```
 
 Role:
 
 ```text
-Avaliador crítico de relatório de pesquisa de mercado
+Pesquisador de conteúdo sobre raças de gatos
 ```
 
 Goal:
 
 ```text
-Avaliar a qualidade do relatório produzido, encontrar falhas, apontar lacunas, verificar clareza e sugerir melhorias práticas.
+Levantar informações simples e úteis sobre as 10 raças de gatos mais conhecidas, incluindo características, comportamento e cuidados básicos.
 ```
 
 Backstory:
 
 ```text
-Você é um avaliador crítico especializado em revisar relatórios estratégicos.
+Você pesquisa informações sobre gatos e organiza os dados de forma simples para ajudar a criação de um manual educativo.
 
-Seu trabalho é verificar se o relatório tem clareza, coerência, profundidade suficiente, recomendações úteis e riscos bem explicados.
-
-Você não deve reescrever tudo. Você deve avaliar o resultado, apontar problemas e sugerir melhorias objetivas.
+Seu trabalho é selecionar informações úteis, evitar excesso de detalhes e preparar uma base clara para o redator.
 ```
 
-Model:
+Configuração:
 
 ```text
-minimax/NOME_DO_MODELO_MINIMAX_AQUI
-```
-
-Alternativa local:
-
-```text
-ollama/llama3.2
+Allow delegation: desligado
+Verbose: ligado
+Cache: ligado
+Temperature: 0.10
+Max Iterations: 25
+Model: OpenAI: minimax/M3
 ```
 
 ---
 
-## 13. Criar a tarefa 1: Relatório de Pesquisa de Mercado
+## 12. Criar o agente 3: Redator do Manual
 
-Criar uma nova tarefa em `Tasks`.
+Criar em `Agents`.
 
 Name:
 
 ```text
-Relatório de Pesquisa de Mercado
+Redator do Manual
+```
+
+Role:
+
+```text
+Redator de manual educativo
+```
+
+Goal:
+
+```text
+Transformar as informações pesquisadas em um manual claro, organizado e fácil de entender sobre as 10 raças de gatos mais conhecidas.
+```
+
+Backstory:
+
+```text
+Você escreve textos educativos simples e bem organizados.
+
+Seu trabalho é transformar informações brutas em um manual com linguagem acessível, boa estrutura e leitura agradável.
+```
+
+Configuração:
+
+```text
+Allow delegation: desligado
+Verbose: ligado
+Cache: ligado
+Temperature: 0.20
+Max Iterations: 25
+Model: OpenAI: minimax/M3
+```
+
+---
+
+## 13. Criar o agente 4: Revisor e Entregador Final
+
+Criar em `Agents`.
+
+Name:
+
+```text
+Revisor e Entregador Final
+```
+
+Role:
+
+```text
+Revisor final e organizador de entrega
+```
+
+Goal:
+
+```text
+Revisar o manual, corrigir falhas, melhorar a clareza e entregar uma versão final organizada em Markdown.
+```
+
+Backstory:
+
+```text
+Você revisa materiais educativos antes da entrega final.
+
+Seu trabalho é verificar clareza, organização, repetição, inconsistências e qualidade geral do texto.
+
+A entrega final deve ser limpa, objetiva e pronta para leitura.
+```
+
+Configuração:
+
+```text
+Allow delegation: desligado
+Verbose: ligado
+Cache: ligado
+Temperature: 0.10
+Max Iterations: 25
+Model: OpenAI: minimax/M3
+```
+
+---
+
+## 14. Criar a tarefa 1: Organizar o plano do manual
+
+Criar em `Tasks`.
+
+Name:
+
+```text
+Organizar o plano do manual
 ```
 
 Description:
 
 ```text
-Analise as oportunidades de mercado para conteúdos sobre agentes de IA, Ollama, modelos locais, modelos em nuvem, provedores compatíveis com OpenAI e fluxos multiagentes.
+Organize o plano de trabalho para criar um manual simples sobre as 10 raças de gatos mais conhecidas.
 
-Identifique público-alvo, dores do público, interesses, oportunidades de conteúdo, ângulos de concorrência, riscos e recomendações práticas.
+Defina a estrutura do manual, a ordem das seções e os critérios para selecionar informações úteis.
 ```
 
 Expected output:
 
 ```text
-Um relatório em Markdown contendo:
+Um plano em Markdown contendo:
 
-1. Visão geral do mercado
-2. Público-alvo
-3. Principais dores do público
-4. Oportunidades de conteúdo
-5. Ângulos de concorrência
-6. Riscos e limitações
-7. Recomendações práticas
-8. Próximos passos
+1. Objetivo do manual
+2. Estrutura recomendada
+3. Critérios para escolher as informações
+4. Lista inicial das 10 raças que devem aparecer
+5. Orientações para o pesquisador, redator e revisor
 ```
 
 Agent:
 
 ```text
-Analista de Pesquisa de Mercado
+Coordenador da Equipe
 ```
 
 ---
 
-## 14. Criar a tarefa 2: Avaliação do Relatório
+## 15. Criar a tarefa 2: Pesquisar as 10 raças de gatos
 
-Criar outra tarefa em `Tasks`.
+Criar em `Tasks`.
 
 Name:
 
 ```text
-Avaliação do Relatório
+Pesquisar as 10 raças de gatos
 ```
 
 Description:
 
 ```text
-Avalie o relatório de pesquisa de mercado produzido pela tarefa anterior.
+Pesquise e organize informações sobre as 10 raças de gatos mais conhecidas.
 
-Verifique se o relatório está claro, útil, coerente e completo.
+Para cada raça, levante:
 
-Aponte falhas, lacunas, pontos fracos, exageros, riscos não explicados e melhorias necessárias.
+1. Nome da raça
+2. Origem resumida
+3. Características físicas
+4. Personalidade
+5. Cuidados básicos
+6. Perfil de tutor mais indicado
 ```
 
 Expected output:
 
 ```text
-Uma avaliação em Markdown contendo:
-
-1. Resumo da qualidade geral do relatório
-2. Pontos fortes
-3. Pontos fracos
-4. Lacunas encontradas
-5. Recomendações de melhoria
-6. Versão final resumida das principais recomendações
+Material de pesquisa em Markdown com 10 raças de gatos, cada uma contendo origem resumida, características físicas, personalidade, cuidados básicos e perfil de tutor indicado.
 ```
 
 Agent:
 
 ```text
-Avaliador do Relatório
+Pesquisador de Raças de Gatos
+```
+
+Context from sync tasks:
+
+```text
+Organizar o plano do manual
 ```
 
 ---
 
-## 15. Criar a crew
+## 16. Criar a tarefa 3: Redigir o manual
 
-Criar uma nova crew em `Crews`.
+Criar em `Tasks`.
 
 Name:
 
 ```text
-Equipe de Pesquisa de Mercado
+Redigir o manual
+```
+
+Description:
+
+```text
+Use o plano e o material de pesquisa para escrever um manual simples sobre as 10 raças de gatos mais conhecidas.
+
+O texto deve ser claro, organizado e fácil de entender.
+```
+
+Expected output:
+
+```text
+Um manual em Markdown contendo:
+
+1. Título
+2. Introdução curta
+3. Lista das 10 raças de gatos
+4. Uma seção para cada raça
+5. Comparação simples entre perfis de gatos
+6. Conclusão curta
+```
+
+Agent:
+
+```text
+Redator do Manual
+```
+
+Context from sync tasks:
+
+```text
+Organizar o plano do manual
+Pesquisar as 10 raças de gatos
+```
+
+---
+
+## 17. Criar a tarefa 4: Revisar e entregar o manual final
+
+Criar em `Tasks`.
+
+Name:
+
+```text
+Revisar e entregar o manual final
+```
+
+Description:
+
+```text
+Revise o manual produzido pela tarefa anterior.
+
+Corrija problemas de clareza, organização, repetição e inconsistência.
+
+Entregue a versão final em Markdown.
+```
+
+Expected output:
+
+```text
+Manual final em Markdown contendo:
+
+1. Título
+2. Introdução
+3. As 10 raças de gatos mais conhecidas
+4. Características principais de cada raça
+5. Cuidados básicos
+6. Para quem cada raça pode ser indicada
+7. Conclusão final
+```
+
+Agent:
+
+```text
+Revisor e Entregador Final
+```
+
+Context from sync tasks:
+
+```text
+Redigir o manual
+```
+
+---
+
+## 18. Criar a crew
+
+Criar em `Crews`.
+
+Name:
+
+```text
+Equipe Manual de Raças de Gatos
 ```
 
 Process:
@@ -488,46 +649,56 @@ Sequential
 Agents:
 
 ```text
-Analista de Pesquisa de Mercado
-Avaliador do Relatório
+Coordenador da Equipe
+Pesquisador de Raças de Gatos
+Redator do Manual
+Revisor e Entregador Final
 ```
 
 Tasks:
 
 ```text
-Relatório de Pesquisa de Mercado
-Avaliação do Relatório
+Organizar o plano do manual
+Pesquisar as 10 raças de gatos
+Redigir o manual
+Revisar e entregar o manual final
 ```
 
-Ordem das tarefas:
+Configuração da crew:
 
 ```text
-1. Relatório de Pesquisa de Mercado
-2. Avaliação do Relatório
+Manager LLM: None
+Manager Agent: None
+Verbose: ligado
+Memory: desligado
+Cache: ligado
+Planning: desligado
+Planning LLM: None
 ```
 
 ---
 
-## 16. Executar teste
+## 19. Executar no Kickoff
 
 Ir em `Kickoff` e executar a crew.
 
 Prompt de teste:
 
 ```text
-Analise a oportunidade de mercado para um canal no YouTube que ensina agentes de IA locais, Ollama, modelos em nuvem, provedores compatíveis com OpenAI e fluxos multiagentes para pessoas iniciantes e intermediárias.
+Crie um manual simples, claro e organizado com as 10 raças de gatos mais conhecidas.
+
+O manual deve explicar as principais características de cada raça, personalidade, cuidados básicos e para quem cada raça pode ser indicada.
 ```
 
 Resultado esperado:
 
 ```text
-1. Um relatório de pesquisa de mercado
-2. Uma avaliação crítica do relatório
+Um manual final em Markdown sobre as 10 raças de gatos mais conhecidas.
 ```
 
 ---
 
-## 17. Checklist
+## 20. Checklist
 
 ```text
 Python instalado
@@ -540,11 +711,13 @@ MiniMax configurado com placeholders
 install_venv.sh executado
 run_venv.sh executado
 Interface aberta em http://localhost:8501
-Agente Analista de Pesquisa de Mercado criado
-Agente Avaliador do Relatório criado
-Tarefa Relatório de Pesquisa de Mercado criada
-Tarefa Avaliação do Relatório criada
+4 agentes criados
+4 tarefas criadas
 Crew criada com processo Sequential
+Memory desligado
+Planning desligado
+Cache ligado
+Verbose ligado
 Teste executado no Kickoff
 Resultado conferido em Results
 ```
