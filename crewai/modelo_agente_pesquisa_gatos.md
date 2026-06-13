@@ -31,59 +31,6 @@ MiniMax cloud oficial como provedor compatível com OpenAI
 
 ---
 
-## O que é o CrewAI
-
-O CrewAI é um framework para criar equipes de agentes de IA.
-
-Em vez de usar apenas um agente para fazer tudo, o CrewAI permite dividir o trabalho em papéis diferentes.
-
-Exemplo:
-
-```text
-Coordenador
-↓
-Pesquisador
-↓
-Redator
-↓
-Revisor
-```
-
-Cada agente recebe uma função, uma tarefa e um objetivo.
-
-Esse formato é útil quando o trabalho precisa passar por etapas, como:
-
-```text
-pesquisa
-organização
-redação
-revisão
-relatórios
-documentação
-planejamento
-automação de tarefas
-```
-
-Neste guia, o exemplo é simples: criar um manual sobre as 10 raças de gatos mais conhecidas.
-
-A ideia é mostrar a lógica de uma equipe de agentes funcionando em sequência.
-
----
-
-## Sobre os modelos
-
-Neste projeto, os modelos são definidos no arquivo:
-
-```text
-src/manual_gatos/crew.py
-```
-
-O arquivo `.env` guarda apenas variáveis, chaves e nomes de modelos.
-
-Não colocar código Python no `.env`.
-
----
-
 ## 1. Instalar o uv
 
 O CrewAI usa `uv` para criar ambiente, instalar dependências e executar o projeto.
@@ -195,7 +142,7 @@ OLLAMA_BASE_URL="http://localhost:11434"
 OLLAMA_MODEL_PHI="ollama/phi4-mini:latest"
 OLLAMA_MODEL_GEMMA="ollama/gemma4:31b-cloud"
 
-# MiniMax cloud oficial
+# MiniMax cloud oficial em endpoint compatível com OpenAI
 MINIMAX_API_KEY="SUA_CHAVE_MINIMAX_AQUI"
 MINIMAX_BASE_URL="https://api.minimax.io/v1"
 MINIMAX_MODEL="MiniMax-M3"
@@ -216,7 +163,7 @@ Importante:
 
 ```text
 Substituir SUA_CHAVE_MINIMAX_AQUI pela chave real somente no ambiente local.
-Usar MiniMax-M3 como nome do modelo, conforme mostrado no painel da MiniMax.
+Substituir NOME_EXATO_DO_MODELO_MINIMAX_AQUI pelo nome correto do modelo no painel/documentação da MiniMax.
 Não publicar o arquivo .env com chave real no GitHub.
 ```
 
@@ -532,12 +479,6 @@ CTRL + X
 
 Use esta opção se quiser testar sem MiniMax primeiro.
 
-Entrar na raiz do projeto:
-
-```bash
-cd "$HOME/manual_gatos"
-```
-
 Abrir o arquivo `crew.py`:
 
 ```bash
@@ -565,6 +506,7 @@ CTRL + O
 ENTER
 CTRL + X
 ```
+
 ---
 
 ## 11. Conferir o arquivo main.py
@@ -676,7 +618,13 @@ O comando `crewai install` instala as dependências declaradas no projeto, usand
 
 Ele deve ser rodado dentro da raiz do projeto, onde está o arquivo `pyproject.toml`.
 
-Na raiz do projeto:
+Neste projeto, como vamos usar MiniMax via camada LiteLLM e também modelos fora do provedor OpenAI nativo, primeiro adicione o suporte ao LiteLLM:
+
+```bash
+uv add "crewai[litellm]"
+```
+
+Depois instale/prepare as dependências do projeto:
 
 ```bash
 crewai install
@@ -699,16 +647,12 @@ instala os pacotes necessários
 deixa o comando crewai run pronto para executar
 ```
 
-Se for usar Ollama, MiniMax ou outro provedor via LiteLLM, adicionar suporte a LiteLLM:
+Por que não usar `pip install litellm`:
 
-```bash
-uv add "crewai[litellm]"
-```
-
-Depois rodar novamente:
-
-```bash
-crewai install
+```text
+Em projetos criados com uv, o ideal é instalar a dependência dentro do projeto com uv add.
+Assim a dependência entra no ambiente correto e também fica registrada no pyproject.toml.
+Em Ubuntu 24.04, o pip global pode ser bloqueado por segurança do sistema.
 ```
 
 ---
@@ -769,7 +713,38 @@ crewai --help
 
 ---
 
-## 17. Erro: chave da MiniMax não configurada
+## 17. Erro: LiteLLM não instalado
+
+Erro possível:
+
+```text
+Unable to initialize LLM with model
+The LiteLLM fallback package is not installed
+```
+
+Correção:
+
+```bash
+uv add "crewai[litellm]"
+```
+
+Depois rodar novamente:
+
+```bash
+crewai install
+```
+
+E executar:
+
+```bash
+crewai run
+```
+
+Esse erro aparece quando o CrewAI precisa de uma camada extra para conversar com provedores como MiniMax ou outros modelos fora dos provedores nativos.
+
+---
+
+## 18. Erro: chave da MiniMax não configurada
 
 Erro possível:
 
@@ -788,7 +763,7 @@ Conferir se existe:
 ```env
 MINIMAX_API_KEY="SUA_CHAVE_MINIMAX_AQUI"
 MINIMAX_BASE_URL="https://api.minimax.io/v1"
-MINIMAX_MODEL="MiniMax-M3"
+MINIMAX_MODEL="NOME_EXATO_DO_MODELO_MINIMAX_AQUI"
 ```
 
 Salvar:
@@ -801,7 +776,7 @@ CTRL + X
 
 ---
 
-## 18. Erro: modelo MiniMax não encontrado
+## 19. Erro: modelo MiniMax não encontrado
 
 Erro possível:
 
@@ -824,14 +799,14 @@ nano ".env"
 Corrigir:
 
 ```env
-MINIMAX_MODEL="MiniMax-M3"
+MINIMAX_MODEL="NOME_EXATO_DO_MODELO_MINIMAX_AQUI"
 ```
 
 Usar o nome exato informado pela documentação ou painel da MiniMax.
 
 ---
 
-## 19. Erro: Ollama não responde
+## 20. Erro: Ollama não responde
 
 Testar o Ollama:
 
@@ -847,7 +822,7 @@ ollama serve
 
 ---
 
-## 20. Erro: modelo Ollama não encontrado
+## 21. Erro: modelo Ollama não encontrado
 
 Listar modelos:
 
@@ -944,7 +919,7 @@ Cada uma atende melhor a um tipo de uso.
 
 ---
 
-## 21. Como remover o projeto
+## 22. Como remover o projeto
 
 Entrar na pasta onde o projeto foi criado:
 
@@ -968,7 +943,7 @@ Se não aparecer nada, a pasta foi removida.
 
 ---
 
-## 22. Como remover o CrewAI instalado por uv tool
+## 23. Como remover o CrewAI instalado por uv tool
 
 Listar ferramentas instaladas:
 
@@ -990,7 +965,7 @@ uv tool list
 
 ---
 
-## 23. Como remover cache opcional
+## 24. Como remover cache opcional
 
 Aviso: este passo remove caches locais usados pelo `uv`. Não é obrigatório.
 
@@ -1000,7 +975,7 @@ uv cache clean
 
 ---
 
-## 24. Fontes usadas
+## 25. Fontes usadas
 
 ```text
 CrewAI Installation:
