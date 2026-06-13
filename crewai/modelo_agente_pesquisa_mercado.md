@@ -1,49 +1,438 @@
-# Como criar um agente de pesquisa de mercado no CrewAI Studio em modo híbrido
+# Como criar um agente de pesquisa de mercado com CrewAI, Crew Studio e CrewAI Studio
 
 ## Objetivo
 
-Criar um agente simples no **CrewAI Studio**, rodando no Linux, usando uma configuração híbrida:
+Este guia mostra três caminhos diferentes para criar e testar um agente de pesquisa de mercado usando o ecossistema CrewAI:
 
 ```text
-CrewAI Studio + Ollama + MiniMax
+1. CrewAI Open Source oficial por CLI e código
+2. Crew Studio oficial dentro do CrewAI AMP
+3. CrewAI Studio da comunidade rodando localmente sem Docker
 ```
 
-Neste modelo:
+O foco prático deste arquivo é instalar localmente o **CrewAI Studio da comunidade**, configurar o arquivo `.env`, corrigir o erro comum do Ubuntu com `python` e `venv`, conectar **Ollama** e deixar um modelo de configuração para **MiniMax como OpenAI compatible** usando placeholders seguros.
+
+---
+
+## 1. Diferença entre CrewAI Open Source, Crew Studio oficial e CrewAI Studio da comunidade
+
+## CrewAI Open Source oficial
+
+O **CrewAI Open Source** é o framework oficial em Python para criar agentes, tarefas, crews e flows usando código.
+
+Uso principal:
 
 ```text
-Ollama = modelo local para testes, economia e tarefas leves
-MiniMax = modelo cloud para tarefas mais pesadas, análise melhor e respostas mais refinadas
+Criar automações com agentes usando Python, YAML, CLI e arquivos de projeto.
+```
+
+Exemplo de fluxo oficial:
+
+```text
+Instalar CrewAI
+Criar projeto com CLI
+Editar agents.yaml
+Editar tasks.yaml
+Editar crew.py
+Executar a crew pelo terminal
+```
+
+Comando comum para criar um projeto:
+
+```bash
+crewai create crew "market_research_crew"
+```
+
+Esse caminho é o mais adequado quando o objetivo é versionar código, criar automações mais controladas e evoluir o projeto tecnicamente.
+
+Referência:
+
+```text
+https://docs.crewai.com
+https://github.com/crewAIInc/crewAI
 ```
 
 ---
 
-## 1. Instalar o CrewAI Studio sem Docker
+## Crew Studio oficial dentro do CrewAI AMP
 
-### Onde rodar
+O **Crew Studio** oficial faz parte do **CrewAI AMP**, a plataforma oficial da CrewAI para criar, operar, monitorar e escalar automações com agentes.
 
-No terminal do Linux.
+Uso principal:
 
-### Baixar o projeto
+```text
+Criar e gerenciar crews em uma interface no-code/low-code oficial dentro da plataforma CrewAI AMP.
+```
+
+Esse caminho é diferente do projeto local da comunidade chamado CrewAI Studio.
+
+Resumo prático:
+
+```text
+Crew Studio oficial = parte do CrewAI AMP
+CrewAI AMP = plataforma oficial gerenciada da CrewAI
+Uso principal = criação, deploy, observabilidade e operação de crews
+```
+
+Referência:
+
+```text
+https://docs.crewai.com/en/enterprise/introduction
+https://app.crewai.com
+```
+
+---
+
+## CrewAI Studio da comunidade
+
+O **CrewAI Studio da comunidade** é um projeto open source separado, criado pela comunidade, com interface em Streamlit para criar e executar agentes e tarefas do CrewAI de forma visual.
+
+Repositório:
+
+```text
+https://github.com/strnad/CrewAI-Studio
+```
+
+Uso principal:
+
+```text
+Testar CrewAI localmente com interface visual, sem precisar escrever todo o projeto em código no primeiro contato.
+```
+
+Importante:
+
+```text
+CrewAI Studio da comunidade não é o Crew Studio oficial do CrewAI AMP.
+```
+
+---
+
+## 2. O que será instalado localmente
+
+O ambiente local deste guia usa:
+
+```text
+Ubuntu ou WSL Ubuntu
+Python
+venv
+Git
+CrewAI Studio da comunidade
+Ollama local
+MiniMax configurado como provedor OpenAI compatible com placeholders
+```
+
+Fluxo final:
+
+```text
+CrewAI Studio comunidade
+        |
+        |-- Ollama local
+        |
+        |-- MiniMax via endpoint OpenAI compatible
+        |
+        |-- Agente: Market Research Analyst
+        |
+        |-- Tarefa: Market Research Report
+```
+
+---
+
+## 3. Onde rodar os comandos
+
+Rodar os comandos no terminal do Ubuntu ou WSL Ubuntu.
+
+```text
+Sistema recomendado para este passo a passo: Ubuntu / WSL Ubuntu
+Pasta de instalação: $HOME/CrewAI-Studio
+Modo de instalação: virtual environment sem Docker
+```
+
+---
+
+## 4. Atualizar pacotes do Ubuntu
+
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install -y git curl python3 python3-pip python3-venv
+```
+
+---
+
+## 5. Corrigir o erro python: command not found
+
+## Erro encontrado
+
+```text
+python: command not found
+```
+
+## Causa provável
+
+Em muitas instalações do Ubuntu, o comando disponível é `python3`, mas o script `install_venv.sh` do CrewAI Studio da comunidade chama:
+
+```bash
+python -m venv venv
+```
+
+Se o comando `python` não existir, a criação do ambiente virtual falha.
+
+## Correção
+
+Instalar o pacote que cria o alias `python` apontando para `python3`:
+
+```bash
+sudo apt install -y python-is-python3
+```
+
+Testar:
+
+```bash
+python --version
+```
+
+```bash
+python3 --version
+```
+
+Resultado esperado:
+
+```text
+Os dois comandos devem mostrar uma versão do Python 3.
+```
+
+---
+
+## 6. Corrigir o erro Failed to create venv
+
+## Erro encontrado
+
+```text
+Failed to create venv
+```
+
+## Causa provável
+
+O pacote `python3-venv` não está instalado, ou o comando `python` não está disponível no Ubuntu.
+
+## Correção
+
+```bash
+sudo apt install -y python3-venv python-is-python3
+```
+
+Testar criação de venv fora do projeto:
 
 ```bash
 cd "$HOME"
+```
+
+```bash
+python -m venv "teste_venv"
+```
+
+```bash
+source "teste_venv/bin/activate"
+```
+
+```bash
+python --version
+```
+
+```bash
+deactivate
+```
+
+Remover o ambiente de teste:
+
+```bash
+rm -rf "$HOME/teste_venv"
+```
+
+---
+
+## 7. Baixar o CrewAI Studio da comunidade
+
+```bash
+cd "$HOME"
+```
+
+```bash
 git clone "https://github.com/strnad/CrewAI-Studio.git"
+```
+
+```bash
 cd "$HOME/CrewAI-Studio"
 ```
 
-### Instalar com ambiente virtual
+Conferir arquivos principais:
+
+```bash
+ls
+```
+
+Arquivos esperados:
+
+```text
+install_venv.sh
+run_venv.sh
+.env_example
+requirements.txt
+app/
+```
+
+---
+
+## 8. Criar o arquivo .env antes de rodar
+
+O repositório fornece um arquivo de exemplo chamado `.env_example`.
+
+Criar o `.env` a partir dele:
+
+```bash
+cd "$HOME/CrewAI-Studio"
+```
+
+```bash
+cp ".env_example" ".env"
+```
+
+Abrir para edição:
+
+```bash
+nano ".env"
+```
+
+---
+
+## 9. Modelo de .env para Ollama e MiniMax
+
+Usar este modelo como base e ajustar os valores conforme o ambiente.
+
+```env
+# =========================================================
+# CrewAI Studio comunidade - configuração local
+# =========================================================
+
+# Interface
+DEFAULT_LANGUAGE="en"
+
+# AgentOps
+AGENTOPS_ENABLED="False"
+
+# =========================================================
+# Ollama local
+# =========================================================
+
+OLLAMA_HOST="http://localhost:11434"
+OLLAMA_MODELS="ollama/llama3.2,ollama/phi3.5,ollama/qwen2.5:7b"
+
+# =========================================================
+# OpenAI compatible genérico
+# Pode ser usado para MiniMax, proxy OpenAI compatible
+# ou outro provedor compatível com a API da OpenAI.
+# =========================================================
+
+OPENAI_API_KEY="SUA_CHAVE_MINIMAX_AQUI"
+OPENAI_API_BASE="URL_BASE_OPENAI_COMPATIBLE_DA_MINIMAX_AQUI"
+OPENAI_PROXY_MODELS="minimax/NOME_DO_MODELO_MINIMAX_AQUI"
+
+# =========================================================
+# Outros provedores opcionais
+# Preencher somente se for usar.
+# =========================================================
+
+# GROQ_API_KEY="SUA_CHAVE_GROQ_AQUI"
+# ANTHROPIC_API_KEY="SUA_CHAVE_ANTHROPIC_AQUI"
+# XAI_API_KEY="SUA_CHAVE_XAI_AQUI"
+# LMSTUDIO_API_BASE="http://localhost:1234/v1"
+# SERPER_API_KEY="SUA_CHAVE_SERPER_AQUI"
+# SCRAPFLY_API_KEY="SUA_CHAVE_SCRAPFLY_AQUI"
+```
+
+Salvar no Nano:
+
+```text
+CTRL + O
+ENTER
+CTRL + X
+```
+
+Importante:
+
+```text
+Nunca colocar chave real em repositório público.
+Nunca gravar a tela mostrando chave real.
+Usar placeholders em documentação pública.
+```
+
+---
+
+## 10. Instalar o CrewAI Studio da comunidade sem Docker
+
+O script oficial do repositório para instalação com venv é:
 
 ```bash
 ./install_venv.sh
 ```
 
-### Rodar o CrewAI Studio
+Antes de rodar, garantir permissão de execução:
+
+```bash
+cd "$HOME/CrewAI-Studio"
+```
+
+```bash
+chmod +x "install_venv.sh" "run_venv.sh"
+```
+
+Rodar a instalação:
+
+```bash
+./install_venv.sh
+```
+
+Durante a instalação, o script pode perguntar se deve usar cache do pip.
+
+Para uma instalação limpa, responder:
+
+```text
+n
+```
+
+Se perguntar sobre instalar AgentOps e o objetivo for apenas teste local simples, responder:
+
+```text
+n
+```
+
+Resultado esperado:
+
+```text
+Installation completed successfully. Do not forget to update the .env file with your credentials. Then run run_venv.sh to start the app.
+```
+
+---
+
+## 11. Rodar o CrewAI Studio da comunidade
+
+```bash
+cd "$HOME/CrewAI-Studio"
+```
 
 ```bash
 ./run_venv.sh
 ```
 
-### Acessar no navegador
+Acessar no navegador:
+
+```text
+http://localhost:8501
+```
+
+Se estiver no WSL e o navegador estiver no Windows, acessar:
 
 ```text
 http://localhost:8501
@@ -51,52 +440,99 @@ http://localhost:8501
 
 ---
 
-## 2. Preparar o Ollama
+## 12. Preparar o Ollama
 
-### Verificar se o Ollama está instalado
+Verificar se o Ollama está instalado:
 
 ```bash
 ollama --version
 ```
 
-### Subir o Ollama
+Se o Ollama não estiver instalado, instalar pelo método oficial do projeto Ollama:
+
+```bash
+curl -fsSL "https://ollama.com/install.sh" | sh
+```
+
+Verificar novamente:
+
+```bash
+ollama --version
+```
+
+---
+
+## 13. Subir o servidor do Ollama
 
 ```bash
 ollama serve
 ```
 
-Se aparecer que a porta já está em uso, provavelmente o Ollama já está rodando.
+Se aparecer mensagem de porta em uso, o Ollama provavelmente já está rodando.
 
-### Baixar um modelo para teste
+Em outro terminal, testar:
 
 ```bash
-ollama pull llama3.2
+curl "http://localhost:11434/api/tags"
 ```
 
-Ou, para máquina mais simples:
+Resultado esperado:
 
-```bash
-ollama pull phi3.5
+```text
+Uma resposta JSON com a lista de modelos instalados, ou uma lista vazia se nenhum modelo tiver sido baixado ainda.
 ```
 
 ---
 
-## 3. Configurar conexão com Ollama no CrewAI Studio
+## 14. Baixar modelos no Ollama
 
-Na tela de conexão ou configuração de modelo, usar:
+Modelo leve para máquina mais simples:
 
-```text
-Provider: Custom OpenAI Compatible
-Connection name: Ollama
-API key: valor ficticio para teste local
-Base URL: http://localhost:11434/v1
+```bash
+ollama pull "phi3.5"
 ```
 
-### Modelo
+Modelo intermediário para testes gerais:
 
-Usar um modelo disponível no Ollama.
+```bash
+ollama pull "llama3.2"
+```
 
-Exemplo:
+Modelo alternativo:
+
+```bash
+ollama pull "qwen2.5:7b"
+```
+
+Listar modelos instalados:
+
+```bash
+ollama list
+```
+
+---
+
+## 15. Configurar Ollama no CrewAI Studio da comunidade
+
+Na interface do CrewAI Studio, usar os dados do `.env`.
+
+Configuração prática:
+
+```text
+Provider: Ollama
+Host: http://localhost:11434
+Model: ollama/llama3.2
+```
+
+Ou:
+
+```text
+Provider: Ollama
+Host: http://localhost:11434
+Model: ollama/phi3.5
+```
+
+Se a interface aceitar apenas o nome sem prefixo, usar:
 
 ```text
 llama3.2
@@ -108,396 +544,441 @@ Ou:
 phi3.5
 ```
 
-Se a interface pedir o nome no formato com prefixo, testar:
-
-```text
-ollama/llama3.2
-```
-
-ou:
-
-```text
-ollama/phi3.5
-```
-
 ---
 
-## 4. Configurar conexão com MiniMax
+## 16. Configurar MiniMax como OpenAI compatible
 
-### Observação
+A configuração do MiniMax depende do endpoint OpenAI compatible disponível na conta ou documentação atual da MiniMax.
 
-O MiniMax deve ser configurado como provedor compatível com OpenAI, caso sua conta/API disponibilize endpoint nesse formato.
+Usar placeholders no `.env`:
 
-Na tela de conexão ou configuração de modelo, usar:
+```env
+OPENAI_API_KEY="SUA_CHAVE_MINIMAX_AQUI"
+OPENAI_API_BASE="URL_BASE_OPENAI_COMPATIBLE_DA_MINIMAX_AQUI"
+OPENAI_PROXY_MODELS="minimax/NOME_DO_MODELO_MINIMAX_AQUI"
+```
+
+Na interface, quando houver opção de provedor compatível com OpenAI, usar:
+
+```text
+Provider: OpenAI compatible / Custom OpenAI compatible
+API key: SUA_CHAVE_MINIMAX_AQUI
+Base URL: URL_BASE_OPENAI_COMPATIBLE_DA_MINIMAX_AQUI
+Model: minimax/NOME_DO_MODELO_MINIMAX_AQUI
+```
+
+Exemplo com placeholders:
 
 ```text
 Provider: Custom OpenAI Compatible
 Connection name: MiniMax
-API key: SUA_CHAVE_MINIMAX
-Base URL: URL_BASE_COMPATIVEL_COM_OPENAI_DA_MINIMAX
+API key: SUA_CHAVE_MINIMAX_AQUI
+Base URL: URL_BASE_OPENAI_COMPATIBLE_DA_MINIMAX_AQUI
+Model: NOME_DO_MODELO_MINIMAX_AQUI
 ```
 
-### Modelo
-
-Usar o nome do modelo MiniMax disponível na sua conta/API.
-
-Exemplo genérico:
+Importante:
 
 ```text
-NOME_DO_MODELO_MINIMAX
-```
-
-### Importante
-
-```text
-Não expor a chave MiniMax no vídeo.
-Não colocar a chave real no GitHub.
-Usar sempre placeholder em documentação pública.
+Confirmar a URL base e o nome exato do modelo na documentação atual da MiniMax ou no painel da conta.
+Não usar chave real em documentação pública.
+Não commitar o arquivo .env com credenciais reais.
 ```
 
 ---
 
-## 5. Estratégia híbrida
+## 17. Criar o agente Market Research Analyst
 
-A ideia é usar cada modelo onde ele faz mais sentido.
+Na interface do CrewAI Studio, criar um novo agente.
 
-```text
-Ollama:
-testes locais
-tarefas simples
-economia de API
-execuções rápidas
-fluxos de baixo risco
-
-MiniMax:
-análise mais elaborada
-respostas mais refinadas
-tarefas com maior exigência de qualidade
-relatórios finais
-síntese estratégica
-```
-
-### Explicação para o vídeo
-
-```text
-Neste teste, eu vou usar o CrewAI Studio em modo híbrido.
-
-A ideia não é escolher apenas local ou apenas nuvem.
-
-Para tarefas mais simples, eu posso usar o Ollama rodando na minha máquina.
-
-Para tarefas que precisam de uma resposta mais forte, eu posso usar um modelo cloud como o MiniMax.
-
-Assim, eu monto uma equipe de agentes mais flexível, escolhendo o modelo mais adequado para cada parte do fluxo.
-```
-
----
-
-## 6. Criar o agente
-
-### Tela
-
-Abrir a tela de criação de agente no CrewAI Studio.
-
-### Agent Configuration
-
-### Role
+## Nome do agente
 
 ```text
 Market Research Analyst
 ```
 
-### Goal
+## Role
 
 ```text
-Gather and synthesize insights from trusted sources to guide strategic decisions.
+Market Research Analyst
 ```
 
-### Backstory
+## Goal
 
 ```text
-You are a seasoned market research analyst with strong experience in industry trends, consumer behavior, competitive analysis, and data interpretation. Your job is to transform scattered information into clear, useful, and practical insights for decision-making.
+Gather and synthesize market insights from reliable sources to support strategic content and product decisions.
 ```
 
----
-
-## 7. Modelo recomendado para este agente
-
-Para o primeiro teste, usar:
+## Backstory
 
 ```text
-MiniMax
+You are an experienced market research analyst specialized in technology, artificial intelligence, digital education, audience behavior, and competitive analysis. Your work is to transform scattered information into clear, practical, and decision-oriented insights.
 ```
 
-Motivo:
+## Modelo sugerido
+
+Para análise mais estruturada:
 
 ```text
-Este agente vai fazer análise, síntese e organização de ideias.
-Para esse tipo de tarefa, um modelo cloud mais forte pode entregar uma resposta mais estruturada.
+MiniMax via OpenAI compatible
 ```
 
-Alternativa econômica:
+Para teste local e econômico:
 
 ```text
 Ollama
 ```
 
-Motivo:
+## Configuração simples para primeiro teste
 
 ```text
-Usar Ollama quando o objetivo for testar a estrutura do fluxo sem gastar API.
+Memory: off
+Tools: none
+Delegation: off
+Verbose: on
 ```
 
 ---
 
-## 8. Versão em português para explicar no vídeo
+## 18. Criar a tarefa Market Research Report
 
-```text
-Aqui eu estou criando um agente com o papel de analista de pesquisa de mercado.
+Criar uma nova tarefa para o agente.
 
-A função dele é buscar, organizar e resumir informações confiáveis para apoiar decisões.
-
-Neste exemplo, eu posso usar um modelo local com Ollama ou um modelo cloud como MiniMax.
-
-O ponto principal é que o CrewAI Studio permite montar o fluxo de agentes e escolher o modelo mais adequado para cada etapa.
-```
-
----
-
-## 9. Capabilities
-
-Para o primeiro teste, manter simples.
-
-```text
-Reasoning: ligado
-Memory: desligado
-```
-
-### Explicação para o vídeo
-
-```text
-Neste primeiro teste, eu vou deixar o raciocínio ligado para o agente conseguir organizar melhor a análise.
-
-A memória eu vou deixar desligada, porque a ideia agora é testar um fluxo simples, sem persistência entre execuções.
-```
-
----
-
-## 10. Tools
-
-Para o primeiro teste, não selecionar ferramentas extras.
-
-```text
-Tools: nenhuma
-Integration apps: nenhuma
-MCP servers: nenhum
-```
-
-### Explicação para o vídeo
-
-```text
-Neste primeiro momento, eu não vou adicionar ferramentas externas.
-
-A ideia é começar simples: criar o agente, conectar os modelos e testar se ele consegue gerar uma análise estruturada.
-
-Depois, em testes mais avançados, esse agente pode receber ferramentas de busca, leitura de arquivos, APIs ou integrações externas.
-```
-
----
-
-## 11. Criar uma tarefa para o agente
-
-### Task name
+## Nome da tarefa
 
 ```text
 Market Research Report
 ```
 
-### Description
+## Description
 
 ```text
-Analyze the current market opportunities for educational content about local AI agents, Ollama, cloud models, and multi-agent systems. Identify audience interests, possible content angles, risks, and practical recommendations.
+Analyze the market opportunity for educational content about local AI agents, Ollama, cloud models, OpenAI compatible providers, and multi-agent workflows.
+
+Identify the target audience, main interests, pain points, content opportunities, risks, limitations, and practical recommendations.
 ```
 
-### Expected output
+## Expected output
 
 ```text
-A structured markdown report with:
+A structured Markdown report with the following sections:
 
 1. Market overview
 2. Target audience
-3. Main interests and pain points
+3. Audience pains and interests
 4. Content opportunities
-5. Risks or limitations
-6. Practical recommendations
+5. Competitive angles
+6. Risks and limitations
+7. Practical recommendations
+8. Suggested next steps
 ```
 
----
-
-## 12. Versão em português da tarefa para explicar no vídeo
+## Agent
 
 ```text
-Agora eu vou criar uma tarefa para esse agente.
-
-A tarefa será analisar oportunidades de conteúdo educacional sobre agentes de IA, Ollama, modelos cloud e sistemas multiagentes.
-
-A saída esperada é um relatório em Markdown, com visão de mercado, público-alvo, interesses, dores, oportunidades de conteúdo, riscos e recomendações práticas.
+Market Research Analyst
 ```
 
 ---
 
-## 13. Criar a Crew
+## 19. Criar a crew Market Research Crew
 
-### Nome da Crew
+Criar uma crew com um agente e uma tarefa.
+
+## Nome da crew
 
 ```text
 Market Research Crew
 ```
 
-### Agente
+## Agente
 
 ```text
 Market Research Analyst
 ```
 
-### Tarefa
+## Tarefa
 
 ```text
 Market Research Report
 ```
 
-### Modelo sugerido
+## Processo
 
 ```text
-MiniMax
+Sequential
 ```
 
-### Alternativa para teste econômico
+## Modelo para primeiro teste
+
+Para validar custo zero/local:
 
 ```text
 Ollama
 ```
 
-### Explicação para o vídeo
+Para testar melhor qualidade de análise:
 
 ```text
-Depois de criar o agente e a tarefa, eu monto a crew.
-
-A crew é a equipe de trabalho.
-
-Neste exemplo inicial, a equipe tem apenas um agente, mas a lógica pode crescer.
-
-Depois eu posso adicionar um agente redator, um agente revisor e um agente estrategista.
-
-Também posso escolher modelos diferentes para diferentes etapas do fluxo.
+MiniMax via OpenAI compatible
 ```
 
 ---
 
-## 14. Teste inicial
+## 20. Executar o teste inicial
 
 Prompt de teste:
 
 ```text
-Analyze the market opportunity for a YouTube channel that teaches local AI agents, Ollama, cloud models, and multi-agent workflows to beginners and intermediate users.
+Analyze the market opportunity for a YouTube channel that teaches local AI agents, Ollama, cloud models, OpenAI compatible providers, and multi-agent workflows to beginner and intermediate users.
 ```
 
 Resultado esperado:
 
 ```text
-Um relatório estruturado em Markdown com análise de mercado, público-alvo, oportunidades, riscos e recomendações.
+Um relatório em Markdown com visão de mercado, público-alvo, dores, oportunidades, riscos e recomendações práticas.
 ```
 
 ---
 
-## 15. Possível evolução com mais agentes
+## 21. Testar se o problema é o modelo ou o CrewAI Studio
 
-Depois do primeiro teste, criar uma equipe com mais agentes.
+Se a execução falhar com MiniMax, testar com Ollama.
 
-### Agente 1
+Se funcionar com Ollama, o problema provavelmente está em:
 
 ```text
-Market Research Analyst
-Modelo: MiniMax
-Função: analisar mercado, público e oportunidades
+API key
+Base URL
+Nome do modelo
+Compatibilidade do endpoint
+Limite da conta
+Formato esperado pelo provedor
 ```
 
-### Agente 2
+Se falhar também com Ollama, verificar:
 
 ```text
-Content Strategist
-Modelo: MiniMax ou Ollama
-Função: transformar a análise em ideias de conteúdo
-```
-
-### Agente 3
-
-```text
-Technical Reviewer
-Modelo: Ollama ou MiniMax
-Função: revisar clareza, consistência e limitações técnicas
+Ollama está rodando?
+Modelo foi baixado?
+OLLAMA_HOST está correto no .env?
+CrewAI Studio foi reiniciado depois de editar o .env?
 ```
 
 ---
 
-## 16. Observação importante
+## 22. Comandos úteis de manutenção
 
-```text
-Este modelo é apenas o primeiro teste.
+Entrar na pasta do projeto:
 
-A proposta não é criar uma automação complexa logo de início.
+```bash
+cd "$HOME/CrewAI-Studio"
+```
 
-A ideia é validar o fluxo básico:
+Rodar novamente:
 
-1. instalar o CrewAI Studio;
-2. conectar com Ollama;
-3. conectar com MiniMax;
-4. criar um agente;
-5. criar uma tarefa;
-6. montar uma crew;
-7. executar o fluxo;
-8. analisar o resultado.
+```bash
+./run_venv.sh
+```
+
+Editar `.env`:
+
+```bash
+nano ".env"
+```
+
+Ativar venv manualmente:
+
+```bash
+source "venv/bin/activate"
+```
+
+Atualizar dependências dentro do venv:
+
+```bash
+pip install -r "requirements.txt" --upgrade
+```
+
+Sair do venv:
+
+```bash
+deactivate
+```
+
+Ver modelos do Ollama:
+
+```bash
+ollama list
+```
+
+Testar API local do Ollama:
+
+```bash
+curl "http://localhost:11434/api/tags"
 ```
 
 ---
 
-## 17. Possíveis evoluções
+## 23. Reinstalar o venv se a instalação quebrar
 
-Depois do primeiro teste, o agente pode ser adaptado para:
+Aviso:
 
 ```text
-Automação de conteúdo
-Pesquisa para vídeos
-Análise de concorrentes
-Relatórios semanais
-Triagem de informações
-Planejamento editorial
-Pesquisa de mercado para produtos digitais
-Análise de tendências em IA
-Comparação entre modelos locais e cloud
-Fluxos híbridos com economia de custo
+Este passo remove apenas o ambiente virtual local do CrewAI Studio.
+Não remove o repositório, o .env nem os arquivos principais do projeto.
+```
+
+```bash
+cd "$HOME/CrewAI-Studio"
+```
+
+```bash
+rm -rf "venv"
+```
+
+```bash
+./install_venv.sh
+```
+
+```bash
+./run_venv.sh
 ```
 
 ---
 
-## 18. Diferença prática para explicar no vídeo
+## 24. Quando usar CrewAI Open Source por código
+
+Usar o CrewAI Open Source oficial quando o objetivo for:
 
 ```text
-O CrewAI Studio é interessante porque permite criar equipes de agentes de forma direta e visual.
+Criar automações versionadas
+Editar agentes em YAML
+Editar tarefas em YAML
+Controlar o fluxo em Python
+Usar GitHub como base do projeto
+Criar ferramentas customizadas
+Evoluir para produção com mais controle
+```
 
-Ele não obriga a usar apenas modelo local, nem apenas modelo cloud.
+Comandos base:
 
-Eu posso usar Ollama para tarefas locais e econômicas.
+```bash
+uv pip install "crewai[tools]"
+```
 
-Também posso usar MiniMax para tarefas que exigem respostas mais fortes.
+```bash
+crewai create crew "market_research_crew"
+```
 
-O foco aqui é montar uma equipe de agentes flexível:
+Estrutura esperada do projeto:
 
-criar agentes,
-definir tarefas,
-escolher modelos,
-montar uma equipe
-e executar um fluxo multiagente.
+```text
+market_research_crew/
+├── .env
+├── pyproject.toml
+├── README.md
+└── src/
+    └── market_research_crew/
+        ├── main.py
+        ├── crew.py
+        └── config/
+            ├── agents.yaml
+            └── tasks.yaml
+```
 
-Para muitos casos, isso já é exatamente o que a pessoa precisa.
+---
+
+## 25. Exemplo de agente em agents.yaml
+
+```yaml
+market_research_analyst:
+  role: >
+    Market Research Analyst
+  goal: >
+    Gather and synthesize market insights from reliable sources to support strategic content and product decisions.
+  backstory: >
+    You are an experienced market research analyst specialized in technology, artificial intelligence, digital education, audience behavior, and competitive analysis. Your work is to transform scattered information into clear, practical, and decision-oriented insights.
+```
+
+---
+
+## 26. Exemplo de tarefa em tasks.yaml
+
+```yaml
+market_research_report:
+  description: >
+    Analyze the market opportunity for educational content about local AI agents, Ollama, cloud models, OpenAI compatible providers, and multi-agent workflows.
+
+    Identify the target audience, main interests, pain points, content opportunities, risks, limitations, and practical recommendations.
+  expected_output: >
+    A structured Markdown report with market overview, target audience, pains and interests, content opportunities, competitive angles, risks, limitations, recommendations, and next steps.
+  agent: market_research_analyst
+  output_file: market_research_report.md
+```
+
+---
+
+## 27. Comparação final: CrewAI, OpenClaw e Hermes
+
+## CrewAI
+
+```text
+Foco principal: criação de agentes, tarefas, crews e flows.
+Ponto forte: framework Python maduro para automações multiagente.
+Melhor uso: criar crews com papéis definidos, tarefas estruturadas e execução programável.
+Interface visual: Crew Studio oficial no AMP ou CrewAI Studio da comunidade.
+```
+
+## OpenClaw
+
+```text
+Foco principal: automação governada com agentes, permissões, memória, ferramentas e regras operacionais.
+Ponto forte: estrutura de governança e controle de execução.
+Melhor uso: automações locais ou híbridas com preocupação maior com segurança, permissões, rastreabilidade e controle humano.
+Interface visual: depende do fluxo montado; o foco é mais arquitetura operacional do que GUI pronta.
+```
+
+## Hermes
+
+```text
+Foco principal: orquestração, coordenação de agentes e integração com modelos e fluxos operacionais.
+Ponto forte: atuar como camada de organização entre modelos, agentes, comandos e interfaces.
+Melhor uso: projetos em que o agente precisa operar como assistente/orquestrador conectado a ferramentas e canais.
+Interface visual: pode variar conforme o setup usado no projeto.
+```
+
+## Escolha prática
+
+```text
+Usar CrewAI quando o objetivo for estudar e construir crews com agentes e tarefas bem definidos.
+Usar CrewAI Studio da comunidade quando o objetivo for testar CrewAI visualmente em ambiente local.
+Usar Crew Studio oficial quando o objetivo for usar a plataforma oficial CrewAI AMP.
+Usar OpenClaw quando o objetivo for automação com governança, permissões e controle operacional.
+Usar Hermes quando o objetivo for orquestração prática de agentes, modelos e canais dentro de um projeto maior.
+```
+
+---
+
+## 28. Checklist final
+
+```text
+Ubuntu atualizado
+Git instalado
+Python instalado
+python-is-python3 instalado
+python3-venv instalado
+CrewAI Studio clonado
+.env criado a partir do .env_example
+.env editado com placeholders seguros
+venv criado com install_venv.sh
+CrewAI Studio iniciado com run_venv.sh
+Interface acessada em http://localhost:8501
+Ollama instalado
+Ollama rodando em http://localhost:11434
+Modelo Ollama baixado
+MiniMax configurado como OpenAI compatible com placeholders
+Agente Market Research Analyst criado
+Tarefa Market Research Report criada
+Crew Market Research Crew criada
+Teste inicial executado
 ```
