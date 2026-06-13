@@ -31,6 +31,59 @@ MiniMax cloud oficial como provedor compatível com OpenAI
 
 ---
 
+## O que é o CrewAI
+
+O CrewAI é um framework para criar equipes de agentes de IA.
+
+Em vez de usar apenas um agente para fazer tudo, o CrewAI permite dividir o trabalho em papéis diferentes.
+
+Exemplo:
+
+```text
+Coordenador
+↓
+Pesquisador
+↓
+Redator
+↓
+Revisor
+```
+
+Cada agente recebe uma função, uma tarefa e um objetivo.
+
+Esse formato é útil quando o trabalho precisa passar por etapas, como:
+
+```text
+pesquisa
+organização
+redação
+revisão
+relatórios
+documentação
+planejamento
+automação de tarefas
+```
+
+Neste guia, o exemplo é simples: criar um manual sobre as 10 raças de gatos mais conhecidas.
+
+A ideia é mostrar a lógica de uma equipe de agentes funcionando em sequência.
+
+---
+
+## Sobre os modelos
+
+Neste projeto, os modelos são definidos no arquivo:
+
+```text
+src/manual_gatos/crew.py
+```
+
+O arquivo `.env` guarda apenas variáveis, chaves e nomes de modelos.
+
+Não colocar código Python no `.env`.
+
+---
+
 ## 1. Instalar o uv
 
 O CrewAI usa `uv` para criar ambiente, instalar dependências e executar o projeto.
@@ -142,10 +195,10 @@ OLLAMA_BASE_URL="http://localhost:11434"
 OLLAMA_MODEL_PHI="ollama/phi4-mini:latest"
 OLLAMA_MODEL_GEMMA="ollama/gemma4:31b-cloud"
 
-# MiniMax cloud oficial em endpoint compatível com OpenAI
+# MiniMax cloud oficial
 MINIMAX_API_KEY="SUA_CHAVE_MINIMAX_AQUI"
 MINIMAX_BASE_URL="https://api.minimax.io/v1"
-MINIMAX_MODEL="NOME_EXATO_DO_MODELO_MINIMAX_AQUI"
+MINIMAX_MODEL="MiniMax-M3"
 
 # Configuração geral
 CREWAI_TELEMETRY_OPT_OUT="true"
@@ -163,7 +216,7 @@ Importante:
 
 ```text
 Substituir SUA_CHAVE_MINIMAX_AQUI pela chave real somente no ambiente local.
-Substituir NOME_EXATO_DO_MODELO_MINIMAX_AQUI pelo nome correto do modelo no painel/documentação da MiniMax.
+Usar MiniMax-M3 como nome do modelo, conforme mostrado no painel da MiniMax.
 Não publicar o arquivo .env com chave real no GitHub.
 ```
 
@@ -479,6 +532,18 @@ CTRL + X
 
 Use esta opção se quiser testar sem MiniMax primeiro.
 
+Entrar na raiz do projeto:
+
+```bash
+cd "$HOME/manual_gatos"
+```
+
+Abrir o arquivo `crew.py`:
+
+```bash
+nano "src/manual_gatos/crew.py"
+```
+
 No arquivo `crew.py`, trocar estes dois trechos:
 
 ```python
@@ -493,6 +558,13 @@ llm=self.ollama_phi(),
 
 Assim, todos os agentes rodam pelo Ollama.
 
+Salvar:
+
+```text
+CTRL + O
+ENTER
+CTRL + X
+```
 ---
 
 ## 11. Conferir o arquivo main.py
@@ -610,12 +682,21 @@ Na raiz do projeto:
 crewai install
 ```
 
-Por que este passo fica depois da edição dos arquivos:
+Por que este passo vem depois da edição dos arquivos:
 
 ```text
-Porque primeiro o projeto é criado e configurado.
+Primeiro o projeto é criado.
+Depois os arquivos são ajustados.
 Depois o ambiente do projeto é preparado para executar a equipe.
-Se o projeto usar LiteLLM, Ollama ou outros provedores, as dependências precisam estar instaladas antes do crewai run.
+```
+
+O que o `crewai install` faz:
+
+```text
+lê o pyproject.toml
+cria/prepara o ambiente do projeto
+instala os pacotes necessários
+deixa o comando crewai run pronto para executar
 ```
 
 Se for usar Ollama, MiniMax ou outro provedor via LiteLLM, adicionar suporte a LiteLLM:
@@ -707,7 +788,7 @@ Conferir se existe:
 ```env
 MINIMAX_API_KEY="SUA_CHAVE_MINIMAX_AQUI"
 MINIMAX_BASE_URL="https://api.minimax.io/v1"
-MINIMAX_MODEL="NOME_EXATO_DO_MODELO_MINIMAX_AQUI"
+MINIMAX_MODEL="MiniMax-M3"
 ```
 
 Salvar:
@@ -743,7 +824,7 @@ nano ".env"
 Corrigir:
 
 ```env
-MINIMAX_MODEL="NOME_EXATO_DO_MODELO_MINIMAX_AQUI"
+MINIMAX_MODEL="MiniMax-M3"
 ```
 
 Usar o nome exato informado pela documentação ou painel da MiniMax.
@@ -797,6 +878,69 @@ No CrewAI, o modelo usa prefixo `ollama/`:
 ```text
 ollama/phi4-mini:latest
 ```
+
+---
+
+## Comparação básica: CrewAI, Hermes e OpenClaw
+
+As três ferramentas podem fazer parte de projetos com agentes de IA, mas cada uma tem um foco diferente.
+
+## CrewAI
+
+Foco principal:
+
+```text
+Criar equipes de agentes para executar tarefas organizadas.
+```
+
+O CrewAI é uma boa escolha quando o objetivo é dividir um trabalho em etapas claras.
+
+Exemplo:
+
+```text
+um agente planeja
+um agente pesquisa
+um agente escreve
+um agente revisa
+```
+
+Ele é forte para fluxos de trabalho baseados em agentes e tarefas.
+
+## Hermes
+
+Foco principal:
+
+```text
+Atuar como ambiente operacional e assistente de trabalho com IA.
+```
+
+O Hermes é mais voltado para o uso contínuo no dia a dia, organização de informações, interação com modelos e apoio operacional.
+
+Ele combina bem com projetos em que a IA funciona como central de trabalho ou assistente integrado ao fluxo pessoal.
+
+## OpenClaw
+
+Foco principal:
+
+```text
+Automação governada com agentes, arquivos, permissões, memória e controle operacional.
+```
+
+O OpenClaw é mais voltado para automações estruturadas, com preocupação maior com governança, rastreabilidade e controle do que os agentes podem ou não fazer.
+
+Ele combina bem com projetos mais longos, fluxos persistentes e automações que precisam de regras claras.
+
+## Resumo
+
+```text
+CrewAI   → equipes de agentes e tarefas
+Hermes   → ambiente operacional e assistente de trabalho
+OpenClaw → automação governada e agentes persistentes
+```
+
+Não é uma questão de uma ferramenta substituir a outra.
+
+Cada uma atende melhor a um tipo de uso.
 
 ---
 
