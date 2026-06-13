@@ -2,7 +2,12 @@
 
 ## Objetivo
 
-Instalar o CrewAI Studio da comunidade no Ubuntu sem Docker, configurar Ollama, configurar MiniMax como provedor compatível com OpenAI e criar uma crew simples de pesquisa de mercado.
+Instalar o CrewAI Studio da comunidade no Ubuntu sem Docker, configurar Ollama, configurar MiniMax como provedor compatível com OpenAI e criar uma crew simples com dois agentes:
+
+```text
+1. Analista de Pesquisa de Mercado
+2. Avaliador do Relatório
+```
 
 Repositório usado:
 
@@ -106,11 +111,13 @@ Quando perguntar sobre cache do pip, responder:
 n
 ```
 
-Quando perguntar sobre AgentOps, responder:
+Quando perguntar sobre AgentOps:
 
 ```text
 n
 ```
+
+Para este teste, AgentOps não é obrigatório.
 
 ---
 
@@ -244,7 +251,11 @@ curl "http://localhost:11434/api/tags"
 
 ## 9. Configurar Ollama no CrewAI Studio
 
-Na interface do CrewAI Studio, usar um dos modelos configurados no `.env`.
+Host:
+
+```text
+http://localhost:11434
+```
 
 Modelo principal:
 
@@ -256,12 +267,6 @@ Modelo leve:
 
 ```text
 ollama/phi3.5
-```
-
-Host:
-
-```text
-http://localhost:11434
 ```
 
 ---
@@ -292,32 +297,34 @@ Substituir os placeholders pelos dados reais da conta MiniMax somente no ambient
 
 ---
 
-## 11. Criar o agente de pesquisa de mercado
+## 11. Criar o agente 1: Analista de Pesquisa de Mercado
 
-Criar um novo agente.
+Criar um novo agente em `Agents`.
 
 Name:
 
 ```text
-Market Research Analyst
+Analista de Pesquisa de Mercado
 ```
 
 Role:
 
 ```text
-Market Research Analyst
+Analista de Pesquisa de Mercado
 ```
 
 Goal:
 
 ```text
-Research market opportunities, audience needs, competitors, risks, and practical recommendations for AI education content.
+Pesquisar oportunidades de mercado, necessidades do público, concorrentes, riscos e recomendações práticas para conteúdos, produtos e serviços relacionados à inteligência artificial.
 ```
 
 Backstory:
 
 ```text
-You are a market research analyst specialized in artificial intelligence, digital education, audience behavior, content strategy, and competitor analysis. Your job is to transform scattered information into a clear and practical market report.
+Você é um analista especializado em inteligência artificial, educação tecnológica, comportamento de audiência e análise de mercado.
+
+Seu trabalho é transformar informações dispersas em relatórios claros, objetivos e acionáveis para apoiar a tomada de decisão.
 ```
 
 Model:
@@ -334,55 +341,142 @@ ollama/llama3.2
 
 ---
 
-## 12. Criar a tarefa de pesquisa de mercado
+## 12. Criar o agente 2: Avaliador do Relatório
 
-Criar uma nova tarefa.
+Criar outro agente em `Agents`.
 
 Name:
 
 ```text
-Market Research Report
+Avaliador do Relatório
+```
+
+Role:
+
+```text
+Avaliador crítico de relatório de pesquisa de mercado
+```
+
+Goal:
+
+```text
+Avaliar a qualidade do relatório produzido, encontrar falhas, apontar lacunas, verificar clareza e sugerir melhorias práticas.
+```
+
+Backstory:
+
+```text
+Você é um avaliador crítico especializado em revisar relatórios estratégicos.
+
+Seu trabalho é verificar se o relatório tem clareza, coerência, profundidade suficiente, recomendações úteis e riscos bem explicados.
+
+Você não deve reescrever tudo. Você deve avaliar o resultado, apontar problemas e sugerir melhorias objetivas.
+```
+
+Model:
+
+```text
+minimax/NOME_DO_MODELO_MINIMAX_AQUI
+```
+
+Alternativa local:
+
+```text
+ollama/llama3.2
+```
+
+---
+
+## 13. Criar a tarefa 1: Relatório de Pesquisa de Mercado
+
+Criar uma nova tarefa em `Tasks`.
+
+Name:
+
+```text
+Relatório de Pesquisa de Mercado
 ```
 
 Description:
 
 ```text
-Analyze the market opportunity for educational content about local AI agents, Ollama, cloud models, OpenAI-compatible providers, and multi-agent workflows.
+Analise as oportunidades de mercado para conteúdos sobre agentes de IA, Ollama, modelos locais, modelos em nuvem, provedores compatíveis com OpenAI e fluxos multiagentes.
 
-Identify the target audience, audience pains, content opportunities, competitor angles, risks, and practical recommendations.
+Identifique público-alvo, dores do público, interesses, oportunidades de conteúdo, ângulos de concorrência, riscos e recomendações práticas.
 ```
 
 Expected output:
 
 ```text
-A Markdown report with:
+Um relatório em Markdown contendo:
 
-1. Market overview
-2. Target audience
-3. Audience pains
-4. Content opportunities
-5. Competitor angles
-6. Risks and limitations
-7. Practical recommendations
-8. Next steps
+1. Visão geral do mercado
+2. Público-alvo
+3. Principais dores do público
+4. Oportunidades de conteúdo
+5. Ângulos de concorrência
+6. Riscos e limitações
+7. Recomendações práticas
+8. Próximos passos
 ```
 
 Agent:
 
 ```text
-Market Research Analyst
+Analista de Pesquisa de Mercado
 ```
 
 ---
 
-## 13. Criar a crew
+## 14. Criar a tarefa 2: Avaliação do Relatório
 
-Criar uma nova crew.
+Criar outra tarefa em `Tasks`.
 
 Name:
 
 ```text
-Market Research Crew
+Avaliação do Relatório
+```
+
+Description:
+
+```text
+Avalie o relatório de pesquisa de mercado produzido pela tarefa anterior.
+
+Verifique se o relatório está claro, útil, coerente e completo.
+
+Aponte falhas, lacunas, pontos fracos, exageros, riscos não explicados e melhorias necessárias.
+```
+
+Expected output:
+
+```text
+Uma avaliação em Markdown contendo:
+
+1. Resumo da qualidade geral do relatório
+2. Pontos fortes
+3. Pontos fracos
+4. Lacunas encontradas
+5. Recomendações de melhoria
+6. Versão final resumida das principais recomendações
+```
+
+Agent:
+
+```text
+Avaliador do Relatório
+```
+
+---
+
+## 15. Criar a crew
+
+Criar uma nova crew em `Crews`.
+
+Name:
+
+```text
+Equipe de Pesquisa de Mercado
 ```
 
 Process:
@@ -391,37 +485,49 @@ Process:
 Sequential
 ```
 
-Agent:
+Agents:
 
 ```text
-Market Research Analyst
+Analista de Pesquisa de Mercado
+Avaliador do Relatório
 ```
 
-Task:
+Tasks:
 
 ```text
-Market Research Report
+Relatório de Pesquisa de Mercado
+Avaliação do Relatório
+```
+
+Ordem das tarefas:
+
+```text
+1. Relatório de Pesquisa de Mercado
+2. Avaliação do Relatório
 ```
 
 ---
 
-## 14. Executar teste
+## 16. Executar teste
+
+Ir em `Kickoff` e executar a crew.
 
 Prompt de teste:
 
 ```text
-Analyze the market opportunity for a YouTube channel that teaches local AI agents, Ollama, cloud models, OpenAI-compatible providers, and multi-agent workflows to beginner and intermediate users.
+Analise a oportunidade de mercado para um canal no YouTube que ensina agentes de IA locais, Ollama, modelos em nuvem, provedores compatíveis com OpenAI e fluxos multiagentes para pessoas iniciantes e intermediárias.
 ```
 
 Resultado esperado:
 
 ```text
-Um relatório em Markdown com público-alvo, dores, oportunidades, riscos e recomendações práticas.
+1. Um relatório de pesquisa de mercado
+2. Uma avaliação crítica do relatório
 ```
 
 ---
 
-## 15. Checklist
+## 17. Checklist
 
 ```text
 Python instalado
@@ -434,8 +540,11 @@ MiniMax configurado com placeholders
 install_venv.sh executado
 run_venv.sh executado
 Interface aberta em http://localhost:8501
-Agente criado
-Tarefa criada
-Crew criada
-Teste executado
+Agente Analista de Pesquisa de Mercado criado
+Agente Avaliador do Relatório criado
+Tarefa Relatório de Pesquisa de Mercado criada
+Tarefa Avaliação do Relatório criada
+Crew criada com processo Sequential
+Teste executado no Kickoff
+Resultado conferido em Results
 ```
