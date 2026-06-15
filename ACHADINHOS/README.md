@@ -167,11 +167,12 @@ Padrão recomendado:
   }
 }
 ```
+
 # Se quiser plugar em um site
 
 Se voce quiser usar a automacao como fonte de um site, basta consumir os arquivos JSON gerados dentro de:
 
-output/catalog/
+- output/catalog/
 
 O objetivo deste kit e justamente separar a geracao dos dados da exibicao.
 
@@ -181,17 +182,19 @@ A partir dai, voce pode escolher a tecnologia que preferir para exibir.
 
 Por exemplo:
 
-categories.json pode ser usado para montar o menu principal de categorias.
-categories/<slug>.json pode alimentar paginas individuais de categoria.
-highlights/best-sellers.json pode preencher a area de produtos mais vendidos.
-highlights/top-discounts.json pode preencher uma secao de promocoes.
-manifest.json pode ser usado para verificar a data da ultima atualizacao do catalogo.
+- categories.json pode ser usado para montar o menu principal de categorias.
+- categories/<slug>.json pode alimentar paginas individuais de categoria.
+- highlights/best-sellers.json pode preencher a area de produtos mais vendidos.
+- highlights/top-discounts.json pode preencher uma secao de promocoes.
+- manifest.json pode ser usado para verificar a data da ultima atualizacao do catalogo.
 
 Uma abordagem comum e configurar o GitHub Actions para atualizar os arquivos automaticamente e publicar os JSONs em uma hospedagem.
 
 Dessa forma, o site apenas le os dados gerados pela automacao, sem precisar consultar a API da Shopee diretamente.
 
 Isso reduz processamento, simplifica a manutencao e permite que o catalogo seja atualizado automaticamente nos horarios definidos no workflow.
+
+
 
 Fluxo completo da automacao
 API Affiliate Shopee
@@ -217,7 +220,9 @@ GitHub Actions
         |
         v
 Site / Loja / Dashboard
-O que este material entrega
+
+
+## O que este material entrega
 
 Este pacote foi pensado para entregar a parte mais importante do processo: a automacao.
 
@@ -229,5 +234,3 @@ Todo o material foi organizado para ser simples de configurar, modificar e expan
 
 Use `mode: "promocoes"` para trazer apenas produtos com desconto.
 Use `mode: "full"` para aceitar produtos mesmo sem desconto.
-
-
