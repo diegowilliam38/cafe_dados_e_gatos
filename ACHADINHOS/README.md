@@ -1,4 +1,4 @@
-# AUTOMAÇÃO ACHADINHO SHOPEE 
+# AUTOMAÇÃO ACHADINHOS SHOPEE 
 
 Esta versão entrega a automação.
 
