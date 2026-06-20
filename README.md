@@ -1,49 +1,120 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/djeannie29/cafe_dados_e_gatos/main/banner_github.png" width="1000" alt="Capa do Projeto"/>
-</p>
+# 🧾 Goose Recipes
 
+Coleção de **recipes YAML** para o [Goose](https://github.com/block/goose). Cada `.yaml` é uma tarefa reutilizável que pode ser executada via CLI ou UI.
 
-# 📊 Café com Dados & Gatos
-
-Bem-vindo(a) ao repositório oficial do **Café com Dados & Gatos**! ☕🐾
-
-Este espaço reúne **códigos, notebooks, visualizações, roteiros e materiais de apoio** usados na produção dos conteúdos sobre **Ciência de Dados**, com leveza, clareza e aplicação prática — com a companhia oficial dos gatos. 😸
-
-## 🎥 Conteúdo
-
-Este repositório está organizado em pastas para facilitar o acesso aos materiais.
-
-### 📺 Observação
-Os códigos são referentes aos **vídeos do canal**.  
-
-## 🧠 Temas abordados
-- **SQL e Banco de Dados** (consultas, joins e lógica)
-- Aprendizado Supervisionado e Não Supervisionado
-- Regressão Linear e Múltipla
-- Naive Bayes
-- PCA, K-Means, Isolation Forest
-- Aprendizado por Reforço (Reinforcement Learning)
-- Técnicas de visualização de dados
-- Avaliação de modelos e métricas
-- Entre outros
-
-## 🛠 Tecnologias utilizadas
-- **Python** (Scikit-learn, Pandas, Matplotlib, Seaborn, etc.)
-- **SQL**
-- Google Colab
-
-## ✨ Contribuições
-Este projeto está em desenvolvimento contínuo. Sugestões e feedbacks são sempre bem-vindos!
-
-## ☕ Apoie o Café com Dados & Gatos
-
-Este projeto faz parte do conteúdo do canal **Café com Dados & Gatos**, onde compartilho tutoriais práticos sobre IA, Ciência de Dados, automações e ferramentas open source.
-
-Se este material te ajudou, você pode apoiar o projeto com um cafezinho:
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/X8X21YHIM2)
+> 📚 Para o **guia completo do formato YAML** (campos, parâmetros, extensions, settings), veja [`../goose-recipes.md`](../goose-recipes.md).
 
 ---
 
-📌 **Criado e mantido por [Denise Marti](https://github.com/djeannie29)**  
-🎬 Canal: *Café com Dados & Gatos* ☕🐱
+## 📦 Recipes Disponíveis
+
+| Recipe                 | Arquivo                                          | Descrição                                                                                            |
+| ---------------------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| ⭐ **File Summarizer** | [`file-summarizer.yaml`](./file-summarizer.yaml) | **🌟 MODELO PÚBLICO** — gera resumo estruturado em `.md` a partir de qualquer arquivo de texto (código, docs, logs, configs, CSVs) |
+
+---
+
+## 🚀 Como Usar
+
+### 1. Importar uma recipe
+
+```bash
+# 1. Validar a sintaxe antes de importar
+goose recipe validate ./file-summarizer.yaml
+
+# 2. Copiar para a pasta padrão do Goose
+#    Linux / macOS / WSL:
+cp ./file-summarizer.yaml ~/.config/goose/recipes/
+
+#    Windows (PowerShell):
+Copy-Item .\file-summarizer.yaml $env:USERPROFILE\.config\goose\recipes\
+```
+
+### 2. Executar via CLI
+
+```bash
+# Sintaxe básica
+goose run --recipe <nome-da-recipe> --parametro1 "valor" --parametro2 "valor"
+
+# Exemplo:
+goose run --recipe file-summarizer --caminho_arquivo "./README.md" --caminho_saida "./resumo-readme.md"
+
+# Com idioma e formato customizados:
+goose run --recipe file-summarizer --caminho_arquivo "./src/api/auth.py" --caminho_saida "./docs/auth-summary.md" --idioma "en-US" --formato "detalhado" --publico_alvo "tecnico"
+```
+
+### 3. Listar recipes instaladas
+
+```bash
+goose recipe list
+```
+
+---
+
+## ⚙️ Configuração de Ambiente
+
+Algumas recipes precisam de **variáveis de ambiente** (API keys, tokens). Configure-as antes de usar:
+
+```powershell
+# Windows (PowerShell)
+setx OPENAI_API_KEY "sk-xxxxxxxxxxxxx"
+```
+
+| Variável | Usada por | Obter em |
+|----------|-----------|----------|
+| `OPENAI_API_KEY` | `file-summarizer` | <https://platform.openai.com/api-keys> |
+
+---
+
+## 🛠️ Criando Sua Própria Recipe
+
+Use qualquer recipe desta pasta como ponto de partida. Estrutura mínima:
+
+```yaml
+version: "1.0.0"
+title: "Minha Recipe"
+description: "Descrição de uma linha"
+
+prompt: |
+  Tarefa para o agente...
+  Entrada: {{ meu_parametro }}
+
+parameters:
+  - key: meu_parametro
+    input_type: string
+    requirement: required
+    description: "Descrição do input"
+
+extensions:
+  - type: builtin
+    name: developer
+
+settings:
+  provider: openai
+  model: gpt-4o
+  temperature: 0.7
+
+retry:                   # obrigatório: bloco retry com 'checks:'
+  max_retries: 1
+  timeout_seconds: 120
+  on_failure: continue
+  checks: []             # pode ser [] se não houver validação extra
+```
+
+Para detalhes completos (todos os campos, tipos de parâmetros, tipos de extensions, retry, response JSON schema), consulte o **[guia completo](../goose-recipes.md)**.
+
+---
+
+## 🤝 Contribuindo
+
+1. Crie sua recipe seguindo o template mínimo acima
+2. Documente todos os parâmetros no campo `description`
+3. Teste localmente com `goose recipe validate`
+4. Adicione uma entrada na tabela acima (ordem alfabética)
+5. Abra um PR 🎉
+
+---
+
+## 📜 Licença
+
+MIT — use, modifique e compartilhe livremente.
