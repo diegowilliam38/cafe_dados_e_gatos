@@ -1,0 +1,323 @@
+# =============================================================================
+# 🧾 File Summarizer — Goose Recipe (Modelo Público)
+# =============================================================================
+# 📌 SOBRE ESTE RECIPE
+# -----------------------------------------------------------------------------
+# Este é um MODELO/TEMPLATE público para a comunidade Goose.
+#
+# O que ele faz:
+#   Gera um resumo estruturado em .md a partir de QUALQUER arquivo de texto:
+#   - Código-fonte (.py, .js, .ts, .go, .rs, .java, etc.)
+#   - Documentação (.md, .txt, .rst)
+#   - Logs e configs (.log, .yaml, .toml, .ini, .env)
+#   - Dados tabulares (.csv, .tsv)
+#   - Qualquer arquivo que tenha conteúdo textual legível
+#
+# Autor original: Denis (@denis-docs)
+# Licença: MIT
+# Versão: 1.0.0
+# Compatibilidade: Goose >= 1.0
+#
+# 🚀 USO RÁPIDO:
+#   goose run --recipe file-summarizer.yaml \
+#     --caminho_arquivo "./README.md" \
+#     --caminho_saida "./resumo-readme.md" \
+#     --idioma "pt-BR"
+#
+# 📖 DOCUMENTAÇÃO DO GOOSE:
+#   https://github.com/block/goose/blob/main/docs/recipes.md
+#
+# =============================================================================
+
+
+# -----------------------------------------------------------------------------
+# 📦 METADADOS OBRIGATÓRIOS
+# -----------------------------------------------------------------------------
+# Todo recipe Goose precisa de: version, title, description.
+# Estes campos aparecem no UI e na listagem `goose recipe list`.
+# -----------------------------------------------------------------------------
+version: "1.0.0"
+title: "File Summarizer — Resumidor Genérico de Arquivos"
+description: "Gera um resumo estruturado em .md a partir de qualquer arquivo de texto (código, docs, logs, configs, CSVs)"
+
+
+# -----------------------------------------------------------------------------
+# 📝 PROMPT — A instrução principal enviada ao LLM
+# -----------------------------------------------------------------------------
+# É o "coração" da recipe. Use interpolação Mustache-like (entre chaves duplas)
+# para referenciar os parâmetros declarados abaixo. Suporta múltiplas linhas com
+# | (literal block scalar do YAML).
+# -----------------------------------------------------------------------------
+prompt: |
+  ## 🎯 Missão
+
+  Gere um **resumo estruturado em Markdown** do arquivo localizado em:
+
+  `{{ caminho_arquivo }}`
+
+  Salve o resumo em:
+
+  `{{ caminho_saida }}`
+
+  ---
+
+  ## 📋 Especificações do Resumo
+
+  | Parâmetro       | Valor                              |
+  | --------------- | ---------------------------------- |
+  | Idioma          | **{{ idioma }}**                   |
+  | Formato         | **{{ formato }}**                  |
+  | Público-alvo    | **{{ publico_alvo }}**             |
+  | Citações        | **{{ incluir_citacoes }}**         |
+
+  ---
+
+  ## 🗂️ Estrutura Recomendada do Resumo
+
+  1. **Visão Geral** (3–5 linhas)
+     → O que é este arquivo, qual seu propósito principal.
+
+  2. **Pontos-Chave** (bullet list)
+     → 5–10 ideias ou funcionalidades principais identificadas.
+
+  3. **Detalhes Relevantes** (sub-seções)
+     → Aprofundamento por tópico, exemplos e observações técnicas.
+
+  4. **Conclusão** (1–2 linhas)
+     → Takeaway final e/ou próximos passos sugeridos.
+
+  ---
+
+  ## ⚙️ Procedimento Passo-a-Passo
+
+  1. Use a tool `read` da extension `developer` para ler `{{ caminho_arquivo }}`
+  2. Analise o conteúdo conforme as **Especificações** acima
+  3. Estruture o resumo seguindo a **Estrutura Recomendada**
+  4. Use a tool `write` da extension `developer` para salvar em `{{ caminho_saida }}`
+  5. Retorne ao usuário um JSON final com:
+     ```json
+     {
+       "arquivo_origem": "{{ caminho_arquivo }}",
+       "arquivo_saida": "{{ caminho_saida }}",
+       "idioma": "{{ idioma }}",
+       "formato": "{{ formato }}",
+       "topicos_identificados": ["tópico 1", "tópico 2", "..."]
+     }
+     ```
+
+  ---
+
+  ## 🚨 Restrições Importantes
+
+  - **NÃO invente informações.** Se algo não está claro no original, escreva
+    "⚠️ Não foi possível determinar a partir do arquivo."
+  - **Preserve dados numéricos e nomes próprios** literalmente.
+  - **Respeite o idioma {{ idioma }}** — escreva TODO o resumo neste idioma,
+    exceto blocos de código e termos técnicos consagrados.
+  - Se o arquivo estiver vazio ou ilegível, escreva um aviso e não produza
+    resumo.
+
+
+# -----------------------------------------------------------------------------
+# 🧠 INSTRUCTIONS — Contexto persistente do sistema
+# -----------------------------------------------------------------------------
+# Funciona como o "system prompt": define persona, tom e regras gerais.
+# Diferente do `prompt` (que tem a tarefa específica), as `instructions` ficam
+# como pano de fundo durante toda a execução.
+# -----------------------------------------------------------------------------
+instructions: |
+  Você é um(a) **Analista Técnico Sênior** especializado(a) em síntese e
+  documentação de software.
+
+  ## Princípios Editoriais
+
+  1. **Fidelidade ao original** — nunca invente dados, números, métricas
+     ou nomes próprios. Se faltar informação, declare a limitação.
+  2. **Conciso + Completo** — capture a essência sem perder nuance importante.
+     Prefira parágrafos curtos a blocos longos.
+  3. **Markdown limpo** — use hierarquia semântica:
+     - `#`, `##`, `###` para títulos
+     - `-` ou `*` para bullets não-ordenados
+     - `1.`, `2.` para listas ordenadas
+     - ` ```linguagem ` para code blocks
+     - `| ... |` para tabelas
+  4. **Citações diretas curtas** ({{ incluir_citacoes }}) — inclua aspas
+     literais apenas se ajudarem a compreensão. Limite a ~10% do resumo.
+
+  ## Guia de Tamanho por Formato
+
+  | Formato      | Linhas aprox. | Profundidade                          |
+  | ------------ | ------------- | ------------------------------------- |
+  | `curto`      | 5–15          | Apenas essência, sem exemplos         |
+  | `medio`      | 30–70         | Visão geral + pontos-chave + detalhes |
+  | `detalhado`  | 100–250       | Análise profunda + citações + exemplos|
+
+  ## Adaptação por Público-Alvo
+
+  - **`geral`** → linguagem acessível, evite jargão
+  - **`tecnico`** → preserve terminologia técnica, inclua detalhes de implementação
+  - **`executivo`** → foco em impacto, decisões e outcomes de negócio
+
+
+# -----------------------------------------------------------------------------
+# 🎛️ PARAMETERS — Inputs do usuário
+# -----------------------------------------------------------------------------
+# Cada parâmetro vira um campo no formulário do Goose (e uma flag --nome na CLI).
+# Tipos disponíveis: string, number, boolean, file, select, date.
+# -----------------------------------------------------------------------------
+parameters:
+
+  # ─── Obrigatórios ─────────────────────────────────────────────────────────
+
+  - key: caminho_arquivo
+    input_type: string
+    requirement: required
+    description: >
+      Caminho do arquivo a resumir. Pode ser absoluto
+      (ex: "C:\\docs\\spec.md") ou relativo ao working directory
+      (ex: "./README.md"). Suporta qualquer formato textual.
+      Para PDFs/binários, converta antes para texto (ex: pdftotext).
+
+  - key: caminho_saida
+    input_type: string
+    requirement: required
+    description: >
+      Caminho completo do arquivo .md de saída
+      (ex: "./resumos/readme-resumido.md"). Será criado/sobrescrito.
+
+  # ─── Opcionais com default sensato ──────────────────────────────────────
+
+  - key: idioma
+    input_type: select
+    requirement: optional
+    description: "Idioma do resumo gerado"
+    default: pt-BR
+    options:
+      - pt-BR
+      - en-US
+      - es-ES
+
+  - key: formato
+    input_type: select
+    requirement: optional
+    description: "Nível de detalhe do resumo"
+    default: medio
+    options:
+      - curto        # ~5-15 linhas (essência apenas)
+      - medio        # ~30-70 linhas (visão geral + pontos-chave)
+      - detalhado    # ~100-250 linhas (análise profunda)
+
+  - key: incluir_citacoes
+    input_type: boolean
+    requirement: optional
+    description: "Incluir citações diretas curtas do arquivo original"
+    default: false
+
+  - key: publico_alvo
+    input_type: select
+    requirement: optional
+    description: "Público-alvo do resumo (adapta linguagem e profundidade)"
+    default: geral
+    options:
+      - geral        # linguagem acessível
+      - tecnico      # jargão preservado
+      - executivo    # foco em impacto/decisões
+
+
+# -----------------------------------------------------------------------------
+# 🔌 EXTENSIONS — Tools que o agente pode usar
+# -----------------------------------------------------------------------------
+# Built-ins disponíveis: developer (read/write/bash), memory, computercontroller.
+# MCP servers via streamable_http (ex: Tavily, GitHub).
+# Veja: https://github.com/block/goose#extensions
+# -----------------------------------------------------------------------------
+extensions:
+  - type: builtin
+    name: developer        # file I/O + shell
+    timeout: 300
+
+  # 💡 Para adicionar busca web, descomente e configure TAVILY_API_KEY:
+  # - type: streamable_http
+  #   name: tavily
+  #   uri: https://mcp.tavily.com/mcp/
+  #   headers:
+  #     Authorization: Bearer ${TAVILY_API_KEY}
+  #   timeout: 300
+
+
+# -----------------------------------------------------------------------------
+# ⚙️ SETTINGS — Modelo e parâmetros de inferência
+# -----------------------------------------------------------------------------
+# Provider/model podem ser sobrescritos via CLI: --provider ollama --model llama3
+# Temperature mais baixa = mais determinístico/factual (bom para resumos).
+# -----------------------------------------------------------------------------
+settings:
+  provider: openai
+  model: gpt-4o
+  temperature: 0.3      # factual, baixa criatividade
+
+
+# -----------------------------------------------------------------------------
+# 🔁 RETRY — Comportamento em caso de falha
+# -----------------------------------------------------------------------------
+# `checks` roda APÓS a execução para validar o resultado.
+# Se um check falhar, o Goose tenta re-executar até `max_retries` vezes.
+# `type: shell` executa o comando no terminal e considera sucesso se exit=0.
+# -----------------------------------------------------------------------------
+retry:
+  max_retries: 1
+  timeout_seconds: 300
+  on_failure: continue  # continua mesmo se check falhar (não bloqueia)
+  checks:
+    - type: shell
+      command: "test -f {{ caminho_saida }}"
+      message: "Arquivo de resumo não foi criado em {{ caminho_saida }}"
+
+
+# =============================================================================
+# 🧪 EXEMPLOS DE INVOCAÇÃO
+# =============================================================================
+#
+# 1. Resumir um README em português (formato médio):
+#    goose run --recipe file-summarizer.yaml \
+#      --caminho_arquivo "./README.md" \
+#      --caminho_saida "./resumo-readme.md"
+#
+# 2. Resumir código Python em inglês, formato detalhado:
+#    goose run --recipe file-summarizer.yaml \
+#      --caminho_arquivo "./src/api/auth.py" \
+#      --caminho_saida "./docs/auth-summary.md" \
+#      --idioma "en-US" \
+#      --formato "detalhado" \
+#      --publico_alvo "tecnico"
+#
+# 3. Resumo executivo curto de um CSV de vendas:
+#    goose run --recipe file-summarizer.yaml \
+#      --caminho_arquivo "./data/vendas-2026q1.csv" \
+#      --caminho_saida "./exec/vendas-resumo.md" \
+#      --formato "curto" \
+#      --publico_alvo "executivo"
+#
+# =============================================================================
+# 🔧 CUSTOMIZAÇÃO SUGERIDA (para forks)
+# =============================================================================
+#
+# - Adicionar suporte a múltiplos arquivos: use um loop no prompt ou
+#   crie uma "recipe pai" que invoca esta N vezes.
+#
+# - Mudar o formato de saída (PDF, HTML): adicione uma extensão como
+#   `pandoc` ou use o output da recipe com outro tool.
+#
+# - Adicionar RAG: descomente a extensão Tavily acima para que o agente
+#   possa buscar contexto externo antes de resumir.
+#
+# - Internacionalização: adicione mais idiomas na lista `idioma.options`.
+#
+# - Limite de tamanho: para arquivos > 1 MB, instrua o agente a chunkear
+#   o conteúdo em partes de ~5000 tokens antes de resumir.
+#
+# =============================================================================
+# 📜 LICENÇA
+# =============================================================================
+# MIT — use, modifique, distribua livremente. Atribuição apreciada.
+# =============================================================================
