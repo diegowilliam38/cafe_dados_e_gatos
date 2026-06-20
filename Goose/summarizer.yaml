@@ -73,16 +73,19 @@ prompt: |
 
   ## 📥 Identificação da Fonte
 
-  Primeiro, identifique qual fonte foi fornecida (use a primeira não-vazia):
+  Identifique qual fonte foi fornecida (use a primeira não-vazia):
 
-  | Prioridade | Parâmetro   | Tipo      | Como carregar                                    |
-  | ---------- | ----------- | --------- | ------------------------------------------------ |
-  | 1ª         | `conteudo`  | string    | Usar o texto diretamente                         |
-  | 2ª         | `arquivo`   | string    | Ler via tool `read` da extension `developer`     |
-  | 3ª         | `url`       | string    | Raspar com `curl -fsSL {{ url }} \| lynx -stdin -dump` |
+  - **Prioridade 1 — `conteudo`**: `{{ conteudo }}`
+    → Se NÃO vazio, use este texto diretamente como conteúdo.
+    → Se vazio, prossiga para a próxima fonte.
 
-  Se nenhum dos três foi fornecido, **pergunte ao usuário** qual fonte usar
-  antes de prosseguir.
+  - **Prioridade 2 — `arquivo`**: `{{ arquivo }}`
+    → Se NÃO vazio, leia o arquivo via tool `read` da extension `developer`.
+    → Se vazio, prossiga para a próxima fonte.
+
+  - **Prioridade 3 — `url`**: `{{ url }}`
+    → Se NÃO vazio, raspe com `curl -fsSL {{ url }} | lynx -stdin -dump`.
+    → Se vazio, **pergunte ao usuário** qual fonte usar antes de prosseguir.
 
   ---
 
@@ -236,10 +239,11 @@ parameters:
   - key: arquivo_saida
     input_type: string
     requirement: optional
+    default: ""           # vazio = saída inline no chat (sem arquivo)
     description: >
       Caminho completo do arquivo .md de saída
-      (ex: "./resumos/artigo-resumido.md"). Se vazio, o resumo é retornado
-      inline no chat.
+      (ex: "./resumos/artigo-resumido.md"). Deixe vazio ("") para o resumo
+      ser retornado inline no chat, sem criar arquivo.
 
   # ─── Configurações de estilo (com defaults sensatos) ────────────────────
 
