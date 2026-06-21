@@ -2,7 +2,9 @@
 
 Curso prático do canal Café com Dados & Gatos para estudar, instalar e testar o OpenJarvis com foco em documentação oficial, teste real e aprendizado progressivo.
 
-Este material organiza o curso em Markdown primeiro. Os PDFs serão gerados por último, depois da revisão dos arquivos das aulas, e usados como anexos no recurso Cursos do YouTube.
+Este repositório mantém os arquivos Markdown de referência técnica do curso.
+
+O material editorial do curso, incluindo apostilas, roteiros de produção, exercícios revisados e PDFs finais para anexar no YouTube, fica no Google Drive da conta Café com Dados & Gatos.
 
 ## Objetivo do curso
 
@@ -90,70 +92,51 @@ Resultado esperado:
 - realizar um teste básico;
 - identificar se o problema está no app, no backend, no modelo ou no ambiente.
 
-## Estrutura de arquivos
+## Organização do GitHub
 
 ```text
 CURSOS/OPENJARVIS/
 ├── README.md
 ├── PLANO_DO_CURSO.md
 ├── REFERENCIAS_OFICIAIS.md
-├── youtube/
-│   ├── CONFIGURACAO_CURSO_YOUTUBE.md
-│   ├── CHECKLIST_PUBLICACAO.md
-│   ├── DESCRICAO_CURSO.md
-│   └── DESCRICAO_PLAYLIST.md
-├── aulas/
-│   ├── aula-01-cli/
-│   │   ├── README.md
-│   │   ├── ROTEIRO_VIDEO.md
-│   │   ├── COMANDOS.md
-│   │   ├── EXERCICIOS.md
-│   │   ├── CHECKLIST.md
-│   │   ├── MATERIAL_COMPLEMENTAR.md
-│   │   └── PDF_AULA_01.md
-│   ├── aula-02-browser-app/
-│   │   ├── README.md
-│   │   ├── ROTEIRO_VIDEO.md
-│   │   ├── COMANDOS.md
-│   │   ├── EXERCICIOS.md
-│   │   ├── CHECKLIST.md
-│   │   ├── MATERIAL_COMPLEMENTAR.md
-│   │   └── PDF_AULA_02.md
-│   └── aula-03-desktop-app/
-│       ├── README.md
-│       ├── ROTEIRO_VIDEO.md
-│       ├── COMANDOS.md
-│       ├── EXERCICIOS.md
-│       ├── CHECKLIST.md
-│       ├── MATERIAL_COMPLEMENTAR.md
-│       └── PDF_AULA_03.md
-└── materiais/
-    ├── arquitetura_openjarvis.md
-    ├── cinco_pilares.md
-    ├── requisitos_hardware.md
-    ├── ollama.md
-    ├── glossario.md
-    ├── faq.md
-    └── problemas_e_solucoes.md
+└── materiais-tecnicos/
+    ├── comandos.md
+    ├── links-oficiais.md
+    └── notas-de-teste.md
 ```
+
+## Organização do Google Drive
+
+```text
+OpenJarvis/
+├── Aula 1 - CLI
+├── Aula 2 Browser App
+├── Aula 3 Desktop App
+└── PDFs Finais
+```
+
+Link da pasta principal:
+
+https://drive.google.com/drive/folders/1UQlQ7XTAvK4JlUhzFUWEw6SbxAvltJRT
+
+Uso do Drive:
+
+- produzir apostilas;
+- produzir roteiros de gravação;
+- revisar exercícios;
+- guardar materiais editoriais;
+- gerar PDFs finais;
+- organizar anexos do Curso do YouTube.
 
 ## Como usar este material
 
-Siga as aulas na ordem proposta.
+Use o GitHub como base de referência técnica e rastreio do curso.
 
-Cada aula deve conter:
-
-- documentação principal;
-- roteiro de vídeo;
-- comandos utilizados;
-- exercícios;
-- checklist de validação;
-- material complementar;
-- versão preparada para PDF.
+Use o Google Drive como área de produção dos materiais finais.
 
 ## PDFs finais
 
-Os PDFs serão produzidos por último, depois da revisão dos materiais em Markdown.
+Os PDFs serão produzidos por último, depois da revisão dos materiais.
 
 Arquivos previstos:
 
