@@ -47,10 +47,12 @@ Desktop App
 
 ## Ambiente usado
 
-- Sistema operacional de teste: Linux
-- Distribuição: a confirmar durante o teste
-- Hardware: a confirmar durante o teste
-- Terminal/shell: a confirmar durante o teste
+- Sistema operacional de teste: Ubuntu 24.04.4 LTS x86_64
+- Kernel: 6.17.0-35-generic
+- Sessão gráfica: X11, ubuntu:GNOME
+- CPU: Intel Core i7-6700K, 4 núcleos / 8 threads
+- RAM: 46 GiB
+- GPU: Intel HD Graphics 530 + NVIDIA GeForce GTX 960
 - Prioridade: instalação simples para testes
 - Preferência: modelos locais quando possível
 - Backend inicial: Ollama
