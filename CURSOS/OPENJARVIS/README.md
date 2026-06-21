@@ -2,26 +2,32 @@
 
 Curso prático do canal Café com Dados & Gatos para estudar, instalar e testar o OpenJarvis com foco em documentação oficial, teste real e aprendizado progressivo.
 
+Este material organiza o curso em Markdown primeiro. Os PDFs serão gerados por último, depois da revisão dos arquivos das aulas, e usados como anexos no recurso Cursos do YouTube.
+
 ## Objetivo do curso
 
-Entender o OpenJarvis como projeto de IA pessoal local, começando pela arquitetura e avançando para testes práticos nas interfaces principais.
+Entender o OpenJarvis como projeto de IA pessoal local, começando pela proposta e arquitetura, avançando para os testes práticos nas interfaces principais.
 
-O curso não parte da ideia de que a ferramenta está pronta para todos os usos. A proposta é testar com honestidade:
+O curso trabalha com foco educacional, técnico e prático:
 
-- o que o OpenJarvis promete;
+- o que o OpenJarvis propõe;
 - o que a documentação oficial mostra;
-- o que funciona na prática;
-- onde aparecem limites;
-- quais requisitos fazem diferença;
-- quando faz sentido estudar, usar ou acompanhar o projeto.
+- como preparar o ambiente;
+- como testar na prática;
+- como validar se funcionou;
+- como registrar limites, erros e ajustes encontrados.
 
-## Estrutura inicial
+## Estrutura oficial do curso
 
 ```text
 Aula 1 - Como entender, preparar e testar o OpenJarvis pela CLI
 Aula 2 - Como testar o OpenJarvis no Browser App
 Aula 3 - Como testar o OpenJarvis no Desktop App
 ```
+
+Esta estrutura de três aulas é específica para o Curso OpenJarvis.
+
+Outros cursos do canal podem ter estruturas diferentes.
 
 ## Aula 1 - Como entender, preparar e testar o OpenJarvis pela CLI
 
@@ -31,6 +37,7 @@ Conteúdo:
 
 - o que é OpenJarvis;
 - proposta do projeto;
+- Stanford Scaling Intelligence Lab;
 - arquitetura geral;
 - cinco pilares: Intelligence, Engine, Agents, Tools & Memory e Learning;
 - modelos locais;
@@ -40,52 +47,123 @@ Conteúdo:
 - preparação do ambiente;
 - primeiro teste pela CLI no Linux.
 
+Resultado esperado:
+
+- preparar o ambiente;
+- iniciar o OpenJarvis pela CLI;
+- executar um teste básico;
+- identificar se houve erro de ambiente, modelo ou dependência.
+
 ## Aula 2 - Como testar o OpenJarvis no Browser App
 
 Conteúdo:
 
-- instalação ou execução do Browser App;
-- acesso pela interface web;
-- primeiro uso;
-- comportamento real;
-- pontos fortes;
-- limitações encontradas;
-- registro dos erros e ajustes.
+- o que é o Browser App;
+- como iniciar a interface web;
+- como acessar pelo navegador;
+- como realizar testes básicos;
+- como validar se o backend está funcionando;
+- como registrar erros e ajustes encontrados.
+
+Resultado esperado:
+
+- iniciar o Browser App;
+- acessar a interface pelo navegador;
+- executar um teste básico;
+- confirmar se a interface está conectada ao backend local.
 
 ## Aula 3 - Como testar o OpenJarvis no Desktop App
 
 Conteúdo:
 
-- instalação ou execução do Desktop App;
-- experiência de uso;
-- dependências gráficas;
-- estabilidade;
-- recursos disponíveis;
-- comparação com CLI e Browser App dentro do próprio OpenJarvis;
-- conclusão prática.
+- o que é o Desktop App;
+- como preparar o aplicativo;
+- como conectar ao backend local;
+- como realizar testes práticos;
+- como validar se a comunicação está funcionando;
+- quais limitações observar durante o teste.
+
+Resultado esperado:
+
+- abrir o Desktop App;
+- conectar ao backend local;
+- realizar um teste básico;
+- identificar se o problema está no app, no backend, no modelo ou no ambiente.
 
 ## Estrutura de arquivos
 
 ```text
 CURSOS/OPENJARVIS/
 ├── README.md
-├── docs/
-│   ├── AULA_01_FUNDAMENTOS_OLLAMA_CLI.md
-│   ├── AULA_02_BROWSER_APP.md
-│   └── AULA_03_DESKTOP_APP.md
-├── recursos/
-│   ├── comandos/
-│   │   └── diagnostico_ambiente_linux.md
-│   └── referencias/
-│       └── links_oficiais.md
-└── videos/
-    ├── aula-01/
-    │   └── roteiro.md
-    ├── aula-02/
-    │   └── roteiro.md
-    └── aula-03/
-        └── roteiro.md
+├── PLANO_DO_CURSO.md
+├── REFERENCIAS_OFICIAIS.md
+├── youtube/
+│   ├── CONFIGURACAO_CURSO_YOUTUBE.md
+│   ├── CHECKLIST_PUBLICACAO.md
+│   ├── DESCRICAO_CURSO.md
+│   └── DESCRICAO_PLAYLIST.md
+├── aulas/
+│   ├── aula-01-cli/
+│   │   ├── README.md
+│   │   ├── ROTEIRO_VIDEO.md
+│   │   ├── COMANDOS.md
+│   │   ├── EXERCICIOS.md
+│   │   ├── CHECKLIST.md
+│   │   ├── MATERIAL_COMPLEMENTAR.md
+│   │   └── PDF_AULA_01.md
+│   ├── aula-02-browser-app/
+│   │   ├── README.md
+│   │   ├── ROTEIRO_VIDEO.md
+│   │   ├── COMANDOS.md
+│   │   ├── EXERCICIOS.md
+│   │   ├── CHECKLIST.md
+│   │   ├── MATERIAL_COMPLEMENTAR.md
+│   │   └── PDF_AULA_02.md
+│   └── aula-03-desktop-app/
+│       ├── README.md
+│       ├── ROTEIRO_VIDEO.md
+│       ├── COMANDOS.md
+│       ├── EXERCICIOS.md
+│       ├── CHECKLIST.md
+│       ├── MATERIAL_COMPLEMENTAR.md
+│       └── PDF_AULA_03.md
+└── materiais/
+    ├── arquitetura_openjarvis.md
+    ├── cinco_pilares.md
+    ├── requisitos_hardware.md
+    ├── ollama.md
+    ├── glossario.md
+    ├── faq.md
+    └── problemas_e_solucoes.md
 ```
+
+## Como usar este material
+
+Siga as aulas na ordem proposta.
+
+Cada aula deve conter:
+
+- documentação principal;
+- roteiro de vídeo;
+- comandos utilizados;
+- exercícios;
+- checklist de validação;
+- material complementar;
+- versão preparada para PDF.
+
+## PDFs finais
+
+Os PDFs serão produzidos por último, depois da revisão dos materiais em Markdown.
+
+Arquivos previstos:
+
+```text
+OpenJarvis_Aula_01_CLI.pdf
+OpenJarvis_Aula_02_Browser_App.pdf
+OpenJarvis_Aula_03_Desktop_App.pdf
+```
+
+Cada PDF deve acompanhar a aula correspondente no recurso Curso do YouTube.
 
 ## Fontes oficiais
 
@@ -98,4 +176,4 @@ CURSOS/OPENJARVIS/
 
 ## Observação
 
-Este curso será ampliado conforme os testes forem avançando. A estrutura inicial tem três aulas para manter o curso enxuto, prático e fácil de publicar.
+Este curso será ampliado conforme os testes forem avançando. A estrutura inicial tem três aulas para manter o curso direto, prático e fácil de publicar.
