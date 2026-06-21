@@ -1,6 +1,6 @@
 # Como estudar e testar OpenJarvis
 
-Documentação e testes práticos do projeto OpenJarvis, do Stanford Scaling Intelligence Lab, para o canal Café com Dados & Gatos.
+Este material reúne estudos, documentação técnica e testes práticos sobre o OpenJarvis, elaborados com base em pesquisa realizada no paper oficial, na documentação oficial, no repositório oficial e nos materiais públicos disponibilizados pelo Stanford Scaling Intelligence Lab.
 
 ## Objetivo da série
 
@@ -47,12 +47,25 @@ Desktop App
 
 ## Ambiente usado
 
-- Sistema operacional principal: Windows 11
-- Ambiente de teste: Linux / WSL Ubuntu
-- Hardware: i7 2018 + GTX 960 2GB
+- Sistema operacional de teste: Linux
+- Distribuição: a confirmar durante o teste
+- Hardware: a confirmar durante o teste
+- Terminal/shell: a confirmar durante o teste
 - Prioridade: instalação simples para testes
 - Preferência: modelos locais quando possível
 - Backend inicial: Ollama
+
+## Como registrar as informações da máquina
+
+```bash
+cat /etc/os-release
+uname -a
+lscpu
+free -h
+lsblk
+glxinfo -B 2>/dev/null || true
+nvidia-smi 2>/dev/null || true
+```
 
 ## Documentos da série
 
