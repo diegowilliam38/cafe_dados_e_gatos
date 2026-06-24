@@ -2,6 +2,11 @@
 
 Guia pratico para instalar o **OpenJarvis** no Windows seguindo apenas o caminho **recomendado pela documentacao oficial do projeto**.
 
+Neste guia:
+
+- o **WSL2 + Ubuntu** instala o **backend**
+- a interface pode ser pelo **navegador** ou pelo **app desktop do Windows**
+
 ## Recomendacao
 
 A documentacao oficial do OpenJarvis recomenda, no Windows:
@@ -58,12 +63,36 @@ Quando terminar, teste:
 jarvis
 ```
 
-## Usando com o app desktop no Windows
+## Como abrir o OpenJarvis depois da instalacao
+
+Depois que o OpenJarvis estiver instalado no Ubuntu/WSL2, voce pode usar de duas formas:
+
+- **browser**
+- **app desktop do Windows**
+
+Em ambos os casos, o que roda no WSL2 e o **backend**.
+
+### Opcao 1. Usar no navegador
+
+Inicie o backend dentro do Ubuntu/WSL:
+
+```bash
+jarvis serve
+```
+
+Depois abra no Windows:
+
+```text
+http://localhost:8000
+```
+
+### Opcao 2. Usar com o app desktop do Windows
 
 Se voce quiser usar o app desktop do OpenJarvis no Windows:
 
 1. Inicie o backend dentro do Ubuntu/WSL
-2. Depois abra o app desktop no Windows
+2. Baixe e instale o app desktop do Windows
+3. Depois abra o app desktop no Windows
 
 Para subir o backend:
 
@@ -75,6 +104,12 @@ O app desktop do Windows deve se conectar em:
 
 ```text
 http://localhost:8000
+```
+
+Baixe o app desktop pela pagina oficial de releases:
+
+```text
+https://github.com/open-jarvis/OpenJarvis/releases
 ```
 
 ## Erros comuns
