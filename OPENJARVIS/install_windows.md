@@ -74,29 +74,20 @@ Em ambos os casos, o que roda no WSL2 e o **backend**.
 
 ### Antes de usar `jarvis serve`
 
-Em algumas instalacoes, o comando abaixo pode falhar:
+Em algumas instalacoes, o comando abaixo pode falhar por falta das dependencias do servidor:
 
 ```bash
 jarvis serve
 ```
 
-Se aparecer a mensagem:
-
-```text
-Server dependencies not installed.
-
-Install the server extra:
-  uv sync --extra server
-```
-
-entre na pasta do projeto instalada pelo OpenJarvis e rode:
+Se isso acontecer, rode antes:
 
 ```bash
 cd ~/.openjarvis/src
 uv sync --extra server
 ```
 
-Depois disso, inicie novamente:
+Depois tente novamente:
 
 ```bash
 jarvis serve
@@ -207,7 +198,7 @@ Se voce quer instalar o OpenJarvis no Windows do jeito recomendado pelo projeto:
 curl -fsSL https://open-jarvis.github.io/OpenJarvis/install.sh | bash
 ```
 
-5. se for usar interface web ou app desktop, rode tambem:
+5. se for usar navegador ou app desktop, rode tambem:
 
 ```bash
 cd ~/.openjarvis/src
