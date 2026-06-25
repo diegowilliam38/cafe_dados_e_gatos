@@ -72,6 +72,39 @@ Depois que o OpenJarvis estiver instalado no Ubuntu/WSL2, voce pode usar de duas
 
 Em ambos os casos, o que roda no WSL2 e o **backend**.
 
+### Antes de usar `jarvis serve`
+
+Em algumas instalacoes, o comando abaixo pode falhar:
+
+```bash
+jarvis serve
+```
+
+Se aparecer a mensagem:
+
+```text
+Server dependencies not installed.
+
+Install the server extra:
+  uv sync --extra server
+```
+
+entre na pasta do projeto instalada pelo OpenJarvis e rode:
+
+```bash
+cd ~/.openjarvis/src
+uv sync --extra server
+```
+
+Depois disso, inicie novamente:
+
+```bash
+jarvis serve
+```
+
+> Observacao:
+> O `jarvis` pode funcionar no modo chat antes disso, mas o modo `serve` precisa dessas dependencias extras.
+
 ### Opcao 1. Usar no navegador
 
 Inicie o backend dentro do Ubuntu/WSL:
@@ -91,8 +124,9 @@ http://localhost:8000
 Se voce quiser usar o app desktop do OpenJarvis no Windows:
 
 1. Inicie o backend dentro do Ubuntu/WSL
-2. Baixe e instale o app desktop do Windows
-3. Depois abra o app desktop no Windows
+2. Se necessario, instale antes as dependencias do servidor com `cd ~/.openjarvis/src` e `uv sync --extra server`
+3. Baixe e instale o app desktop do Windows
+4. Depois abra o app desktop no Windows
 
 Para subir o backend:
 
@@ -138,6 +172,28 @@ Se quiser listar as distribuicoes disponiveis:
 wsl --list --online
 ```
 
+### 3. `jarvis serve` falha mesmo depois da instalacao principal
+
+Isso normalmente significa que o OpenJarvis foi instalado, mas o extra do servidor ainda nao foi sincronizado.
+
+Rode:
+
+```bash
+cd ~/.openjarvis/src
+uv sync --extra server
+jarvis serve
+```
+
+Se o comando `uv` nao existir, instale-o e tente novamente:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source ~/.bashrc
+cd ~/.openjarvis/src
+uv sync --extra server
+jarvis serve
+```
+
 ## Resumo rapido
 
 Se voce quer instalar o OpenJarvis no Windows do jeito recomendado pelo projeto:
@@ -149,6 +205,14 @@ Se voce quer instalar o OpenJarvis no Windows do jeito recomendado pelo projeto:
 
 ```bash
 curl -fsSL https://open-jarvis.github.io/OpenJarvis/install.sh | bash
+```
+
+5. se for usar interface web ou app desktop, rode tambem:
+
+```bash
+cd ~/.openjarvis/src
+uv sync --extra server
+jarvis serve
 ```
 
 Esse e o caminho mais indicado para quem quer reproduzir a instalacao em casa com menos chance de erro.
