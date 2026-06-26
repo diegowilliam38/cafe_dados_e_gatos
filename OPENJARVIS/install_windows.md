@@ -30,18 +30,90 @@ Este fluxo e bom para video porque separa bem as partes:
 | Forma de uso | Onde aparece | Porta | Precisa do backend? |
 | --- | --- | --- | --- |
 | Terminal | Ubuntu/WSL2 | nao usa browser | Sim |
-| API | Ubuntu/WSL2 | `8000` | Sim |
+| REST API server | Ubuntu/WSL2 | `8000` | Sim |
 | Browser | Navegador do Windows | `5173` | Sim |
 | Desktop App | Aplicativo instalado no Windows | app | Sim |
 
 O ponto principal:
 
 ```text
-http://localhost:8000 = API/backend
+http://localhost:8000 = REST API server / backend
 http://localhost:5173 = interface web/browser
 ```
 
 Se abrir `http://localhost:8000` e aparecer `404 Not Found`, isso nao significa que esta quebrado. A API pode estar viva mesmo assim. A interface visual fica no `5173`.
+
+## Checklist do `jarvis doctor`
+
+Depois da instalacao, rode:
+
+```bash
+jarvis doctor
+```
+
+O objetivo nao e zerar todos os warnings. Alguns itens sao opcionais ou nao fazem sentido no Windows/WSL. O foco para este video e deixar funcionando:
+
+| Item no doctor | Vale instalar agora? | Para que serve | Comando principal |
+| --- | --- | --- | --- |
+| `Engine: ollama` | Sim | Motor local para rodar modelo | Instalador oficial ja costuma preparar |
+| `Models: ollama` | Sim | Modelo local usado pelo Jarvis | `ollama pull qwen3.5:2b` ou outro modelo |
+| `Optional: REST API server` | Sim | Backend/API usado pelo browser e Desktop App | `uv sync --extra server` |
+| `Speech backend` | Sim | Voz/transcricao com faster-whisper | `uv sync --extra desktop` |
+| `Node.js` | Sim | Frontend web, ClaudeCodeAgent e WhatsApp/Baileys | instalar Node 22+ |
+| `Security profile` | Sim | Perfil de seguranca local | adicionar `security.profile = "personal"` no config |
+| `Rust extension` | Sim, se falhar | Melhor desempenho/extensao Rust | scripts sugeridos pelo doctor |
+| `NVIDIA energy monitoring` | Opcional | Monitoramento de energia da GPU NVIDIA | ja pode aparecer instalado |
+| `ColBERT memory backend` | Depois | Memoria semantica mais avancada | instalar depois, se for usar memoria |
+| `SFT/GRPO training` | Nao agora | Treinamento/fine-tuning | nao precisa para teste |
+| `AMD energy monitoring` | Nao agora | Monitoramento AMD | nao precisa se nao for AMD |
+| `Apple Silicon energy monitoring` | Nao | Recurso de Mac Apple Silicon | nao serve para Windows/WSL |
+
+## Instalar os itens que valem a pena
+
+Execute estes comandos dentro da pasta real do projeto:
+
+```bash
+cd ~/.openjarvis/src
+uv sync --extra server --extra desktop
+```
+
+Isso instala dois pontos importantes:
+
+```text
+REST API server
+Speech backend / faster-whisper
+```
+
+Depois instale o Node.js 22+:
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt install -y nodejs
+node -v
+npm -v
+```
+
+Para configurar o perfil de seguranca, abra o arquivo:
+
+```bash
+nano ~/.openjarvis/config.toml
+```
+
+Adicione ou ajuste esta linha:
+
+```toml
+security.profile = "personal"
+```
+
+Salve com `Ctrl + O`, confirme com `Enter` e saia com `Ctrl + X`.
+
+Depois rode novamente:
+
+```bash
+jarvis doctor
+```
+
+Se o doctor ainda mostrar warnings em coisas como `ColBERT`, `AMD energy monitoring`, `Apple Silicon energy monitoring` ou `SFT/GRPO training`, tudo bem. Esses nao sao obrigatorios para testar browser e Desktop App.
 
 ## Onde o instalador oficial coloca os arquivos
 
@@ -207,11 +279,11 @@ ou aperte `Ctrl + C`.
 
 ---
 
-# Modo browser: API em 8000 + frontend em 5173
+# Modo browser: REST API server em 8000 + frontend em 5173
 
 Para usar no browser do Windows, voce precisa de **dois terminais WSL2 abertos**.
 
-## Terminal 1: subir a API/backend
+## Terminal 1: subir a REST API/backend
 
 ```bash
 cd ~/.openjarvis/src
@@ -282,7 +354,7 @@ http://localhost:5173
 
 # Desktop App no Windows
 
-Depois que a API estiver funcionando, baixe o Desktop App pela pagina oficial de releases:
+Depois que a REST API estiver funcionando, baixe o Desktop App pela pagina oficial de releases:
 
 ```text
 https://github.com/open-jarvis/OpenJarvis/releases/latest
@@ -377,7 +449,7 @@ A porta `8000` e o backend/API. A interface visual fica em:
 http://localhost:5173
 ```
 
-## `jarvis serve` abre so a API
+## `jarvis serve` abre so a REST API
 
 Isso e esperado.
 
@@ -391,7 +463,7 @@ ou:
 uv run jarvis serve --port 8000
 ```
 
-sobe apenas a API.
+sobe apenas a REST API.
 
 Para browser, suba tambem o frontend:
 
@@ -432,6 +504,28 @@ Se o comando global `jarvis serve` continuar reclamando, use:
 
 ```bash
 cd ~/.openjarvis/src
+uv run jarvis serve --port 8000
+```
+
+## `Optional: REST API server Not installed`
+
+Se o `jarvis doctor` mostrar:
+
+```text
+Optional: REST API server    Not installed (openjarvis)
+```
+
+instale o extra do servidor:
+
+```bash
+cd ~/.openjarvis/src
+uv sync --extra server
+jarvis doctor
+```
+
+Depois suba a API:
+
+```bash
 uv run jarvis serve --port 8000
 ```
 
@@ -508,6 +602,33 @@ node -v
 npm -v
 ```
 
+## Security profile nao configurado
+
+Se o doctor mostrar:
+
+```text
+No security profile set
+Recommended: add security.profile = 'personal' to config.toml
+```
+
+abra o config:
+
+```bash
+nano ~/.openjarvis/config.toml
+```
+
+adicione:
+
+```toml
+security.profile = "personal"
+```
+
+salve e rode:
+
+```bash
+jarvis doctor
+```
+
 ## Rust extension failed
 
 Se o `jarvis doctor` mostrar:
@@ -574,11 +695,17 @@ jarvis doctor
 jarvis ask "Explique o que e o OpenJarvis em poucas palavras."
 ```
 
-Preparar API/backend:
+Preparar componentes principais:
 
 ```bash
 cd ~/.openjarvis/src
 uv sync --extra server --extra desktop
+```
+
+Preparar REST API/backend:
+
+```bash
+cd ~/.openjarvis/src
 uv run jarvis serve --port 8000
 ```
 
@@ -611,11 +738,15 @@ Para o video, o fluxo mais claro e:
 ```text
 1. Instalar no WSL2.
 2. Rodar jarvis doctor.
-3. Testar no terminal com jarvis ask.
-4. Subir a API com uv run jarvis serve --port 8000.
-5. Subir o frontend em outro terminal com npm run dev.
-6. Abrir http://localhost:5173 no browser do Windows.
-7. Depois baixar e testar o Desktop App.
+3. Instalar REST API server com uv sync --extra server.
+4. Instalar speech/faster-whisper com uv sync --extra desktop.
+5. Instalar Node.js 22+.
+6. Configurar security.profile = "personal".
+7. Testar no terminal com jarvis ask.
+8. Subir a REST API com uv run jarvis serve --port 8000.
+9. Subir o frontend em outro terminal com npm run dev.
+10. Abrir http://localhost:5173 no browser do Windows.
+11. Depois baixar e testar o Desktop App.
 ```
 
 Nao misture com instalacao Windows pura neste video. O modo hibrido ja cobre o que interessa: backend no WSL2, interface no browser e aplicativo desktop no Windows.
