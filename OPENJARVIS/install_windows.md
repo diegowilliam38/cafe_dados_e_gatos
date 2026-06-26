@@ -2,15 +2,60 @@
 
 Passo a passo para instalar o **OpenJarvis diretamente no Windows**, sem WSL2.
 
-## Instalar o OpenJarvis
+> A instalacao nativa no Windows ainda e marcada como avancada pela documentacao oficial do projeto. Antes de rodar o instalador, confira os pre-requisitos.
+
+## Pre-requisitos
+
+- Windows 10 1809 ou superior, ou Windows 11
+- Python 3.10 ate 3.13 no PATH
+- Git no PATH
+- Aproximadamente 5 GB livres em `%LOCALAPPDATA%`
+- PowerShell
+- Internet ativa
+
+## Instalar pre-requisitos com winget
 
 Abra o **PowerShell como Administrador** e rode:
+
+```powershell
+winget install Python.Python.3.13
+winget install Git.Git
+winget install Ollama.Ollama
+```
+
+Feche o PowerShell e abra novamente.
+
+## Verificar pre-requisitos
+
+```powershell
+python --version
+git --version
+ollama --version
+winget --version
+```
+
+O Python precisa estar entre 3.10 e 3.13.
+
+> Evite Python 3.14 por enquanto. A documentacao oficial informa que o OpenJarvis usa Python 3.10 a 3.13 no Windows.
+
+## Instalar o OpenJarvis
+
+No PowerShell, rode:
 
 ```powershell
 irm https://open-jarvis.github.io/OpenJarvis/install.ps1 | iex
 ```
 
-Feche o PowerShell e abra novamente.
+O instalador deve:
+
+- verificar Windows;
+- verificar Python;
+- verificar Git;
+- instalar `uv`, se estiver ausente;
+- clonar o OpenJarvis em `%LOCALAPPDATA%\OpenJarvis\src`;
+- rodar `uv sync --extra desktop`.
+
+Quando terminar, feche o PowerShell e abra novamente.
 
 ## Verificar a instalacao
 
@@ -19,31 +64,16 @@ jarvis --version
 jarvis doctor
 ```
 
-## Instalar o Ollama
-
-Baixe e instale o Ollama:
-
-```text
-https://ollama.com
-```
-
-Feche o PowerShell e abra novamente.
-
-Verifique:
+Se `jarvis` nao for reconhecido, rode pelo caminho direto:
 
 ```powershell
-ollama --version
+& "$env:LOCALAPPDATA\OpenJarvis\bin\jarvis.cmd" doctor
 ```
 
-Baixe um modelo pequeno para testar:
+## Baixar modelo no Ollama
 
 ```powershell
 ollama pull qwen3.5:2b
-```
-
-Veja os modelos instalados:
-
-```powershell
 ollama list
 ```
 
@@ -61,58 +91,68 @@ jarvis chat
 
 ## Iniciar o servidor local
 
-```powershell
-jarvis serve --port 8000
-```
+A documentacao oficial do Windows nativo manda rodar o servidor dentro da pasta do projeto:
 
-Deixe esse PowerShell aberto.
+```powershell
+cd "$env:LOCALAPPDATA\OpenJarvis\src"
+uv run jarvis serve
+```
 
 A API local fica em:
 
 ```text
-http://localhost:8000
+http://127.0.0.1:8000/health
 ```
+
+Deixe esse PowerShell aberto.
 
 ## Baixar o Desktop App
 
-Baixe o instalador do Desktop App para Windows:
-
-```text
-https://github.com/open-jarvis/OpenJarvis/releases/download/desktop-v1.0.2/OpenJarvis_1.0.1_x64-setup.exe
-```
-
-Ou acesse a pagina de releases:
+Pagina de releases:
 
 ```text
 https://github.com/open-jarvis/OpenJarvis/releases/latest
 ```
 
+Download direto Windows 64-bit:
+
+```text
+https://github.com/open-jarvis/OpenJarvis/releases/download/desktop-v1.0.2/OpenJarvis_1.0.1_x64-setup.exe
+```
+
 Instale e abra o Desktop App.
 
-O servidor local precisa continuar rodando no PowerShell:
-
-```powershell
-jarvis serve --port 8000
-```
+O servidor local precisa continuar rodando no PowerShell.
 
 ## Resumo rapido
 
 ```powershell
-irm https://open-jarvis.github.io/OpenJarvis/install.ps1 | iex
+winget install Python.Python.3.13
+winget install Git.Git
+winget install Ollama.Ollama
 ```
 
 Feche e abra o PowerShell.
 
 ```powershell
-jarvis --version
+python --version
+git --version
+ollama --version
+irm https://open-jarvis.github.io/OpenJarvis/install.ps1 | iex
+```
+
+Feche e abra o PowerShell novamente.
+
+```powershell
 jarvis doctor
 ollama pull qwen3.5:2b
 jarvis ask "Explique o que e o OpenJarvis em poucas palavras."
-jarvis serve --port 8000
+cd "$env:LOCALAPPDATA\OpenJarvis\src"
+uv run jarvis serve
 ```
 
 Depois instale o Desktop App:
 
 ```text
-https://github.com/open-jarvis/OpenJarvis/releases/download/desktop-v1.0.2/OpenJarvis_1.0.1_x64-setup.exe
+https://github.com/open-jarvis/OpenJarvis/releases/latest
 ```
