@@ -1,48 +1,74 @@
-# OpenJarvis no Windows: WSL2 primeiro, Windows puro depois
+# OpenJarvis no Windows: modo hibrido com WSL2, browser e Desktop App
 
-Guia pratico para instalar e testar o **OpenJarvis no Windows** sem misturar os caminhos.
+Guia pratico para instalar e testar o **OpenJarvis no Windows** usando o fluxo hibrido:
 
-A ordem deste documento e proposital:
+```text
+WSL2 + Ubuntu -> backend do OpenJarvis -> browser no Windows -> Desktop App no Windows
+```
 
-- primeiro: **instalacao pelo WSL2 + Ubuntu**;
-- depois: **instalacao no Windows puro**;
-- no final: **app desktop, erros comuns e resumo copy-paste**.
+Este e o fluxo mais didatico para o video, porque separa bem as partes:
 
-> Nao misture os dois caminhos no mesmo teste. Escolha WSL2 ou Windows puro, siga ate o fim, e so depois teste o outro.
+- o **backend** roda dentro do WSL2/Ubuntu;
+- o **browser** abre no Windows em `http://localhost:8000`;
+- o **Desktop App** e baixado e instalado no Windows;
+- o Desktop App tambem precisa que o backend esteja rodando.
+
+> Nao rode `uv sync --extra server` em qualquer pasta. Ele precisa ser executado dentro da pasta do projeto, onde existe o arquivo `pyproject.toml`.
 
 ## Fontes oficiais consultadas
 
 - Repositorio oficial: https://github.com/open-jarvis/OpenJarvis
 - Documentacao oficial: https://open-jarvis.github.io/OpenJarvis/
 - Instalacao oficial: https://open-jarvis.github.io/OpenJarvis/getting-started/installation/
-- Releases do app desktop: https://github.com/open-jarvis/OpenJarvis/releases
+- Releases do Desktop App: https://github.com/open-jarvis/OpenJarvis/releases/latest
 - Ollama: https://ollama.com
 - uv: https://docs.astral.sh/uv/
-- Git for Windows: https://git-scm.com/downloads/win
-- Python: https://www.python.org/downloads/windows/
-- Rust: https://rustup.rs/
-- Node.js: https://nodejs.org/
 
-## O que sera instalado
+## O que sera testado
 
-O OpenJarvis pode ser usado de algumas formas:
+Neste guia vamos testar tres formas de uso:
 
-| Forma de uso | Onde aparece | Precisa do backend local? |
+| Forma de uso | Onde aparece | Precisa do backend? |
 | --- | --- | --- |
-| CLI | Terminal | Sim |
-| Browser App | Navegador | Sim |
-| Desktop App | Janela nativa no Windows | Sim |
+| Terminal | Ubuntu/WSL2 | Sim |
+| Browser | Navegador do Windows | Sim |
+| Desktop App | Aplicativo instalado no Windows | Sim |
 
-O ponto mais importante:
+O ponto principal:
 
 ```text
-O app desktop nao substitui o backend.
+O Desktop App nao substitui o backend.
 ```
 
-Mesmo usando o app desktop, o backend precisa estar rodando em:
+Antes de abrir o browser ou o Desktop App, o backend precisa estar rodando em:
 
 ```text
 http://localhost:8000
+```
+
+## Onde o instalador oficial coloca os arquivos
+
+Pela documentacao oficial, o instalador Linux/WSL2 faz o seguinte:
+
+| Item | Local |
+| --- | --- |
+| Codigo-fonte do OpenJarvis | `~/.openjarvis/src/` |
+| Ambiente Python/venv | `~/.openjarvis/.venv/` |
+| Comando `jarvis` | `~/.local/bin/jarvis` |
+| Configuracao | `~/.openjarvis/config.toml` |
+
+Por isso, se aparecer este erro:
+
+```text
+No pyproject.toml found in current directory or any parent directory
+```
+
+significa que voce rodou `uv sync --extra server` na pasta errada.
+
+O comando precisa ser rodado aqui:
+
+```bash
+cd ~/.openjarvis/src
 ```
 
 ## Ambiente testado no video
@@ -50,32 +76,18 @@ http://localhost:8000
 Preencha depois do teste:
 
 ```text
-Sistema operacional:
-Versao do Windows:
-Caminho usado: WSL2 + Ubuntu ou Windows puro
-Terminal:
-Python:
-Node.js:
-Rust:
-Ollama:
+Sistema operacional: Windows
+Ambiente: WSL2 + Ubuntu
+Terminal: Ubuntu no Windows Terminal
+Backend: OpenJarvis no WSL2
+Interface: browser do Windows e Desktop App do Windows
 Modelo usado:
 Data do teste:
 ```
 
 ---
 
-# Caminho 1: instalacao pelo WSL2 + Ubuntu
-
-Este e o primeiro caminho do documento. Siga esta parte inteira se voce quiser rodar o OpenJarvis em ambiente Linux dentro do Windows.
-
-## Quando usar WSL2
-
-Use WSL2 se voce quer:
-
-- ambiente mais parecido com Linux;
-- menos conflito com permissao de arquivos Python;
-- evitar problemas com `.venv` dentro do disco do Windows;
-- seguir um fluxo bom para projetos com Python, Rust e Node.js.
+# Instalacao hibrida: WSL2 + browser + Desktop App
 
 ## Instalar o WSL2
 
@@ -98,15 +110,13 @@ sudo apt update
 sudo apt upgrade -y
 ```
 
-## Instalar dependencias basicas no Ubuntu
+## Instalar dependencias basicas
 
 ```bash
 sudo apt install -y curl git build-essential ca-certificates
 ```
 
-## Criar a pasta correta dentro do Linux
-
-No WSL2, trabalhe dentro da home do Linux:
+## Criar pasta de trabalho no WSL2
 
 ```bash
 cd ~
@@ -114,462 +124,235 @@ mkdir -p projetos
 cd ~/projetos
 ```
 
-O caminho recomendado fica assim:
+Use a home do Linux para seus testes:
 
 ```text
 ~/projetos
 ```
 
-Nao use este caminho para rodar projeto Python no WSL2:
+Evite rodar projeto Python no WSL2 dentro de:
 
 ```text
-/mnt/c/Users/seu_usuario/OpenJarvis
+/mnt/c/Users/seu_usuario/...
 ```
 
-Esse caminho aponta para o disco do Windows. Ele funciona para copiar arquivos, mas pode dar erro com `.venv`, permissao e desempenho.
+Esse caminho aponta para o disco do Windows e pode gerar erro de permissao, lentidao ou problema com `.venv`.
 
-## Instalar o OpenJarvis pelo script oficial no WSL2
+## Instalar o OpenJarvis pelo instalador oficial
 
-Dentro do Ubuntu:
+Dentro do Ubuntu/WSL2:
 
 ```bash
 curl -fsSL https://open-jarvis.github.io/OpenJarvis/install.sh | bash
 ```
 
-Depois feche e abra o terminal Ubuntu novamente, ou rode:
+Depois recarregue o terminal:
 
 ```bash
 source ~/.bashrc
 ```
 
-Teste:
+Teste se o comando `jarvis` ficou disponivel:
 
 ```bash
 jarvis --version
 jarvis doctor
 ```
 
-## Instalar o Ollama no WSL2
-
-Se voce quer deixar tudo dentro do WSL2, instale o Ollama tambem no Ubuntu:
-
-```bash
-curl -fsSL https://ollama.com/install.sh | sh
-```
-
-Inicie o Ollama:
-
-```bash
-ollama serve
-```
-
-Abra outro terminal Ubuntu e baixe um modelo pequeno para teste:
-
-```bash
-ollama pull qwen3:0.6b
-ollama list
-```
-
-> Para teste didatico, evite misturar Ollama do Windows com OpenJarvis no WSL2 logo no primeiro teste. Primeiro faca tudo em um lugar so.
-
-## Rodar o OpenJarvis no terminal pelo WSL2
-
-Pergunta simples:
+## Testar o OpenJarvis no terminal
 
 ```bash
 jarvis ask "Explique o que e o OpenJarvis em poucas palavras."
 ```
 
-Chat no terminal:
+Para abrir o chat no terminal:
 
 ```bash
 jarvis chat
 ```
 
-## Subir o servidor local pelo WSL2
+## Preparar o modo browser/server
 
-```bash
-jarvis serve --port 8000
-```
+Para abrir o OpenJarvis no navegador, precisa instalar o extra do servidor.
 
-Depois abra no navegador do Windows:
-
-```text
-http://localhost:8000
-```
-
-## Se `jarvis serve` falhar no WSL2
-
-Em algumas instalacoes, o modo servidor pode precisar das dependencias extras do servidor.
-
-Tente:
+Entre na pasta real do projeto:
 
 ```bash
 cd ~/.openjarvis/src
+```
+
+Instale as dependencias do servidor:
+
+```bash
 uv sync --extra server
-uv run jarvis serve --port 8000
 ```
 
-Se o comando `uv` nao existir:
-
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-source ~/.bashrc
-cd ~/.openjarvis/src
-uv sync --extra server
-uv run jarvis serve --port 8000
-```
-
-## Instalacao manual pelo codigo-fonte no WSL2
-
-Use esta parte somente se voce quiser clonar o repositorio e rodar o projeto manualmente.
-
-```bash
-cd ~/projetos
-git clone https://github.com/open-jarvis/OpenJarvis.git
-cd OpenJarvis
-```
-
-Instale o `uv`:
-
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-source ~/.bashrc
-uv --version
-```
-
-Instale o Rust:
-
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-source ~/.cargo/env
-rustc --version
-```
-
-Sincronize as dependencias:
-
-```bash
-uv sync --extra desktop
-```
-
-Compile/registre a extensao Rust usada pelo projeto:
-
-```bash
-uv run maturin develop -m rust/crates/openjarvis-python/Cargo.toml
-```
-
-Instale as dependencias do frontend:
-
-```bash
-cd frontend
-npm install
-cd ..
-```
-
-Suba o backend:
+Agora suba o backend:
 
 ```bash
 uv run jarvis serve --port 8000
 ```
 
-Em outro terminal Ubuntu, suba o frontend:
+Deixe esse terminal aberto.
 
-```bash
-cd ~/projetos/OpenJarvis/frontend
-npm run dev
-```
+## Abrir no browser do Windows
 
-Abra no navegador:
-
-```text
-http://localhost:5173
-```
-
-## Resumo copy-paste do caminho WSL2
-
-PowerShell como Administrador:
-
-```powershell
-wsl --install
-```
-
-Ubuntu:
-
-```bash
-sudo apt update
-sudo apt upgrade -y
-sudo apt install -y curl git build-essential ca-certificates
-cd ~
-mkdir -p projetos
-cd ~/projetos
-curl -fsSL https://open-jarvis.github.io/OpenJarvis/install.sh | bash
-source ~/.bashrc
-jarvis --version
-jarvis doctor
-```
-
-Teste no terminal:
-
-```bash
-jarvis ask "Explique o que e o OpenJarvis em poucas palavras."
-jarvis chat
-```
-
-Servidor local:
-
-```bash
-jarvis serve --port 8000
-```
-
-Abrir no Windows:
+Com o backend rodando no WSL2, abra no navegador do Windows:
 
 ```text
 http://localhost:8000
 ```
 
----
+Se abrir, o modo browser esta funcionando.
 
-# Caminho 2: instalacao no Windows puro
+## Baixar o Desktop App do Windows
 
-Agora comeca o segundo caminho. Use esta parte se voce quer instalar e rodar o OpenJarvis diretamente no Windows, sem WSL2.
-
-## Quando usar Windows puro
-
-Use Windows puro se voce quer:
-
-- testar o instalador PowerShell oficial;
-- usar tudo direto no PowerShell;
-- evitar abrir Ubuntu/WSL2;
-- testar o app desktop com backend tambem rodando no Windows.
-
-## Criar pasta de trabalho no Windows
-
-Use uma pasta simples, sem acento e sem espaco no caminho:
-
-```powershell
-mkdir C:\Projetos
-cd C:\Projetos
-```
-
-## Instalar o OpenJarvis pelo instalador oficial Windows
-
-Abra o **PowerShell como Administrador**:
-
-```powershell
-irm https://open-jarvis.github.io/OpenJarvis/install.ps1 | iex
-```
-
-Feche e abra o PowerShell novamente.
-
-Teste:
-
-```powershell
-jarvis --version
-jarvis doctor
-```
-
-## Instalar o Ollama no Windows
-
-Baixe e instale pelo site oficial:
+Depois que o backend estiver funcionando no browser, baixe o Desktop App pela pagina oficial de releases:
 
 ```text
-https://ollama.com
+https://github.com/open-jarvis/OpenJarvis/releases/latest
 ```
 
-Depois feche e abra o PowerShell novamente.
-
-Teste:
-
-```powershell
-ollama --version
-ollama pull qwen3:0.6b
-ollama list
-```
-
-## Rodar o OpenJarvis no terminal pelo Windows puro
-
-Pergunta simples:
-
-```powershell
-jarvis ask "Explique o que e o OpenJarvis em poucas palavras."
-```
-
-Chat no terminal:
-
-```powershell
-jarvis chat
-```
-
-## Subir o servidor local pelo Windows puro
-
-```powershell
-jarvis serve --port 8000
-```
-
-Depois abra no navegador:
-
-```text
-http://localhost:8000
-```
-
-## Clone manual no Windows puro
-
-Use esta parte somente se voce quiser clonar o projeto no Windows.
-
-Instale antes:
-
-- Git for Windows;
-- Python 3.10 a 3.13;
-- Node.js 18+;
-- Rust;
-- uv.
-
-Depois:
-
-```powershell
-cd C:\Projetos
-git clone https://github.com/open-jarvis/OpenJarvis.git
-cd OpenJarvis
-```
-
-Instale o `uv`, se ainda nao existir:
-
-```powershell
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
-
-Feche e abra o PowerShell novamente.
-
-Sincronize as dependencias:
-
-```powershell
-uv sync --extra desktop
-```
-
-Compile/registre a extensao Rust:
-
-```powershell
-uv run maturin develop -m rust/crates/openjarvis-python/Cargo.toml
-```
-
-Instale o frontend:
-
-```powershell
-cd frontend
-npm install
-cd ..
-```
-
-Suba o backend:
-
-```powershell
-uv run jarvis serve --port 8000
-```
-
-Em outro PowerShell, suba o frontend:
-
-```powershell
-cd C:\Projetos\OpenJarvis\frontend
-npm run dev
-```
-
-Abra:
-
-```text
-http://localhost:5173
-```
-
-## Resumo copy-paste do caminho Windows puro
-
-PowerShell como Administrador:
-
-```powershell
-irm https://open-jarvis.github.io/OpenJarvis/install.ps1 | iex
-```
-
-Novo PowerShell:
-
-```powershell
-jarvis --version
-jarvis doctor
-jarvis ask "Explique o que e o OpenJarvis em poucas palavras."
-jarvis chat
-```
-
-Servidor local:
-
-```powershell
-jarvis serve --port 8000
-```
-
-Abrir no navegador:
-
-```text
-http://localhost:8000
-```
-
----
-
-# App desktop do Windows
-
-Use esta parte depois que voce ja tiver escolhido um caminho e conseguido subir o backend.
-
-O app desktop conecta no backend local:
-
-```text
-http://localhost:8000
-```
-
-Primeiro suba o backend pelo caminho escolhido.
-
-WSL2:
-
-```bash
-jarvis serve --port 8000
-```
-
-Windows puro:
-
-```powershell
-jarvis serve --port 8000
-```
-
-Depois baixe o instalador na pagina oficial de releases:
-
-```text
-https://github.com/open-jarvis/OpenJarvis/releases
-```
-
-Procure pelo instalador Windows, por exemplo:
+Na pagina de releases, procure o instalador do Windows. O nome pode variar conforme a versao, mas deve ser algo como:
 
 ```text
 OpenJarvis-setup.exe
 ```
 
-Instale e abra o app.
+ou outro arquivo `.exe` / `.msi` listado nos assets da release.
 
-Se nao conectar, confira se o backend esta rodando e se a porta usada e `8000`.
+Baixe, instale e abra o Desktop App.
+
+> O Desktop App precisa que o backend continue rodando no terminal WSL2. Se voce fechar o `jarvis serve`, o app pode nao conectar.
+
+## Fluxo correto para usar o Desktop App
+
+Terminal WSL2:
+
+```bash
+cd ~/.openjarvis/src
+uv run jarvis serve --port 8000
+```
+
+Windows:
+
+```text
+1. Abra o browser em http://localhost:8000 para confirmar que o backend esta ativo.
+2. Abra o Desktop App instalado no Windows.
+3. Mantenha o terminal WSL2 aberto enquanto usa o app.
+```
 
 ---
 
-# Erros comuns
+# Erros comuns no fluxo hibrido
 
-## `quickstart.sh` abriu uma janela pedindo aplicativo
+## `jarvis serve --port` sem numero da porta
 
-Isso acontece quando um script `.sh` foi executado no PowerShell do Windows.
-
-Script `.sh` e para Linux/macOS/WSL2, nao para PowerShell.
-
-No Windows puro, use:
-
-```powershell
-irm https://open-jarvis.github.io/OpenJarvis/install.ps1 | iex
-```
-
-No WSL2/Ubuntu, use:
+Se voce rodar:
 
 ```bash
-curl -fsSL https://open-jarvis.github.io/OpenJarvis/install.sh | bash
+jarvis serve --port
+```
+
+vai aparecer:
+
+```text
+Error: Option '--port' requires an argument.
+```
+
+O correto e passar o numero da porta:
+
+```bash
+jarvis serve --port 8000
+```
+
+## `Server dependencies not installed`
+
+Erro:
+
+```text
+Server dependencies not installed.
+Install the server extra:
+uv sync --extra server
+```
+
+Correcao:
+
+```bash
+cd ~/.openjarvis/src
+uv sync --extra server
+uv run jarvis serve --port 8000
+```
+
+## `No pyproject.toml found`
+
+Erro:
+
+```text
+No pyproject.toml found in current directory or any parent directory
+```
+
+Isso acontece quando voce roda:
+
+```bash
+uv sync --extra server
+```
+
+em uma pasta qualquer, por exemplo:
+
+```text
+~/projetos
+```
+
+Correcao:
+
+```bash
+cd ~/.openjarvis/src
+uv sync --extra server
+```
+
+## `which` nao instalado
+
+Se voce tentar:
+
+```bash
+which jarvis
+```
+
+e aparecer que `which` nao foi encontrado, instale:
+
+```bash
+sudo apt install -y debianutils
+```
+
+Depois rode:
+
+```bash
+which jarvis
+```
+
+Alternativa sem instalar nada:
+
+```bash
+command -v jarvis
+```
+
+## Ver onde esta o comando `jarvis`
+
+```bash
+command -v jarvis
+```
+
+Normalmente o resultado sera:
+
+```text
+/home/seu_usuario/.local/bin/jarvis
+```
+
+Esse e apenas o atalho do comando. A pasta do projeto fica em:
+
+```text
+~/.openjarvis/src
 ```
 
 ## WSL diz que nao ha distribuicao instalada
@@ -586,81 +369,32 @@ Ou liste as distribuicoes disponiveis:
 wsl --list --online
 ```
 
-## Erro de permissao na `.venv` dentro de `/mnt/c`
+## Desktop App nao conecta
 
-Exemplo:
+Confira primeiro se o backend esta rodando.
+
+No navegador do Windows, abra:
 
 ```text
-failed to remove file 'C:\Users\seu_usuario\OpenJarvis\.venv\lib64': Acesso negado
+http://localhost:8000
 ```
 
-Corrija movendo o projeto para dentro da home do Linux:
+Se o browser nao abrir, o Desktop App tambem nao vai conectar.
 
-```bash
-cd ~
-mkdir -p projetos
-cd ~/projetos
-git clone https://github.com/open-jarvis/OpenJarvis.git
-cd OpenJarvis
-uv sync --extra desktop
-```
-
-Se ja existir uma `.venv` antiga:
-
-```bash
-cd ~/projetos/OpenJarvis
-rm -rf .venv
-uv sync --extra desktop
-```
-
-## `jarvis serve` nao sobe
-
-No WSL2, tente:
+Volte ao terminal WSL2 e rode:
 
 ```bash
 cd ~/.openjarvis/src
-uv sync --extra server
 uv run jarvis serve --port 8000
 ```
-
-No Windows puro com clone manual, tente:
-
-```powershell
-cd C:\Projetos\OpenJarvis
-uv sync --extra server
-uv run jarvis serve --port 8000
-```
-
-## `ollama` nao encontrado
-
-No Windows, instale pelo site oficial:
-
-```text
-https://ollama.com
-```
-
-No WSL2:
-
-```bash
-curl -fsSL https://ollama.com/install.sh | sh
-```
-
-Depois feche e abra o terminal novamente.
 
 ## Porta 8000 ocupada
 
 Teste outra porta:
 
-WSL2:
-
 ```bash
-jarvis serve --port 8010
-```
-
-Windows puro:
-
-```powershell
-jarvis serve --port 8010
+cd ~/.openjarvis/src
+uv run jarvis serve --port 8010
 ```
 
 Depois abra:
@@ -669,52 +403,69 @@ Depois abra:
 http://localhost:8010
 ```
 
-## Python 3.14 ou superior dando problema
+> Se mudar a porta, o Desktop App pode continuar tentando conectar na porta padrao `8000`. Para o Desktop App, prefira usar `8000` quando possivel.
 
-A documentacao oficial indica Python 3.10 a 3.13.
+---
 
-Confira:
+# Resumo copy-paste do fluxo hibrido
 
-WSL2:
-
-```bash
-python --version
-```
-
-Windows puro:
+PowerShell como Administrador:
 
 ```powershell
-python --version
+wsl --install
 ```
 
-Se estiver usando Python 3.14+, instale Python 3.13 ou use um ambiente com Python 3.10 a 3.13.
+Ubuntu/WSL2:
+
+```bash
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y curl git build-essential ca-certificates
+cd ~
+mkdir -p projetos
+cd ~/projetos
+curl -fsSL https://open-jarvis.github.io/OpenJarvis/install.sh | bash
+source ~/.bashrc
+jarvis --version
+jarvis doctor
+jarvis ask "Explique o que e o OpenJarvis em poucas palavras."
+```
+
+Preparar browser e Desktop App:
+
+```bash
+cd ~/.openjarvis/src
+uv sync --extra server
+uv run jarvis serve --port 8000
+```
+
+Abrir no browser do Windows:
+
+```text
+http://localhost:8000
+```
+
+Baixar Desktop App:
+
+```text
+https://github.com/open-jarvis/OpenJarvis/releases/latest
+```
 
 ---
 
 # Veredito pratico
 
-Para video e para quem esta instalando junto, o melhor e seguir um caminho por vez.
-
-Primeiro caminho:
+Para o video, o fluxo mais claro e:
 
 ```text
-WSL2 + Ubuntu -> install.sh -> jarvis serve -> navegador ou app desktop
+Instalar no WSL2
+Testar no terminal
+Entrar em ~/.openjarvis/src
+Rodar uv sync --extra server
+Subir uv run jarvis serve --port 8000
+Abrir http://localhost:8000 no browser do Windows
+Baixar o Desktop App no GitHub Releases
+Abrir o Desktop App com o backend ainda rodando
 ```
 
-Segundo caminho:
-
-```text
-Windows puro -> install.ps1 -> jarvis serve -> navegador ou app desktop
-```
-
-Se o objetivo for reduzir chance de erro com ambiente Python, comece pelo WSL2.
-
-Se o objetivo for testar o instalador oficial do Windows, use Windows puro.
-
-O que nao recomendo no primeiro teste:
-
-```text
-instalar parte no Windows, parte no WSL2, Ollama em um lado e OpenJarvis no outro, tudo ao mesmo tempo
-```
-
-Isso ate pode funcionar, mas confunde a gravacao e dificulta explicar para quem esta seguindo o tutorial.
+Nao misture com instalacao Windows pura neste video. O modo hibrido ja cobre o que interessa: backend no WSL2, interface no browser e aplicativo desktop no Windows.
