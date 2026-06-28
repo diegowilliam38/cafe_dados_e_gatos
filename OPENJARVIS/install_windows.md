@@ -18,6 +18,7 @@ Passo a passo para instalar o **OpenJarvis diretamente no Windows**, sem WSL2.
 Abra o **PowerShell como Administrador** e rode:
 
 ```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 winget install Python.Python.3.13
 winget install Git.Git
 irm https://ollama.com/install.ps1 | iex
