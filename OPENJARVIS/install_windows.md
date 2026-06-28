@@ -117,7 +117,7 @@ https://github.com/open-jarvis/OpenJarvis/releases/latest
 Download direto Windows 64-bit:
 
 ```text
-https://github.com/open-jarvis/OpenJarvis/releases/download/desktop-v1.0.2/OpenJarvis_1.0.1_x64-setup.exe
+https://github.com/open-jarvis/OpenJarvis/releases/download/desktop-edge/OpenJarvis_1.0.1_x64-setup.exe
 ```
 
 Instale e abra o Desktop App.
