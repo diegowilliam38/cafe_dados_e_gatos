@@ -20,7 +20,7 @@ Abra o **PowerShell como Administrador** e rode:
 ```powershell
 winget install Python.Python.3.13
 winget install Git.Git
-winget install Ollama.Ollama
+irm https://ollama.com/install.ps1 | iex
 ```
 
 Feche o PowerShell e abra novamente.
