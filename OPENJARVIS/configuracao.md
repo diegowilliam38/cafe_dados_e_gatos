@@ -1,6 +1,6 @@
 # OpenJarvis no Windows: servidor, Google OAuth, conectores e skills
 
-Nesta aula, vamos continuar depois da instalação do OpenJarvis no Windows.
+Vamos continuar depois da instalação do OpenJarvis no Windows.
 
 O objetivo é deixar o ambiente pronto para uso real: iniciar o Jarvis Server da forma correta, conectar Google Drive/Gmail/Calendar/Tasks via OAuth, entender os conectores e conhecer a ideia de presets, agentes e skills.
 
