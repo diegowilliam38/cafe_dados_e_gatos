@@ -1,4 +1,4 @@
-# OpenJarvis no Windows: servidor, Google OAuth, conectores e skills
+#OpenJarvis no Windows: servidor, Google OAuth, conectores e skills
 
 Vamos continuar depois da instalação do OpenJarvis no Windows.
 
@@ -62,7 +62,7 @@ Isso geralmente acontece porque o comando foi executado fora da pasta do projeto
 Abra o PowerShell e rode:
 
 ```powershell
-Get-ChildItem -Path C:\Users\Users -Filter pyproject.toml -Recurse -ErrorAction SilentlyContinue
+Get-ChildItem -Path C:\Users\denis -Filter pyproject.toml -Recurse -ErrorAction SilentlyContinue
 ```
 
 O arquivo `pyproject.toml` indica a raiz do projeto.
@@ -252,7 +252,40 @@ uv run jarvis serve 8000
 
 ---
 
-## 11. Presets do OpenJarvis
+## 11. Backend status e fala/voz
+
+Na tela de status do backend, o OpenJarvis pode mostrar uma mensagem parecida com:
+
+```text
+Backend status
+Requires Whisper, Deepgram, or another speech backend
+```
+
+Isso significa que a parte de fala/transcrição precisa de um backend de áudio. Pode ser:
+
+- Whisper
+- Deepgram
+- outro backend compatível
+
+No meu caso, o Whisper funciona na minha máquina, mas ele não veio instalado por padrão junto com o OpenJarvis. Ou seja: se eu quiser usar recursos de voz, preciso instalar e configurar o Whisper separadamente.
+
+Importante para explicar no vídeo:
+
+- O OpenJarvis pode abrir e funcionar mesmo sem o backend de voz.
+- A mensagem não significa necessariamente que o Jarvis Server está quebrado.
+- Ela indica que falta configurar o componente de áudio/fala.
+- Para quem não vai usar voz no início, dá para deixar essa parte para depois.
+
+Resumo:
+
+```text
+Jarvis Server rodando = backend principal funcionando
+Whisper/Deepgram ausente = recurso de fala ainda não configurado
+```
+
+---
+
+## 12. Presets do OpenJarvis
 
 O OpenJarvis tem presets prontos para alguns fluxos.
 
@@ -272,7 +305,7 @@ jarvis digest --fresh
 
 ---
 
-## 12. Skills no OpenJarvis
+## 13. Skills no OpenJarvis
 
 Skills são capacidades extras que ensinam os agentes a usar ferramentas e executar tarefas específicas.
 
@@ -297,7 +330,7 @@ O OpenJarvis pode importar skills de fontes como:
 
 ---
 
-## 13. Comandos avançados de skills
+## 14. Comandos avançados de skills
 
 A documentação também mostra comandos para otimização e benchmark:
 
@@ -313,7 +346,7 @@ Esses comandos são mais avançados e podem ficar para testes posteriores.
 
 ---
 
-## 14. Agentes internos do OpenJarvis
+## 15. Agentes internos do OpenJarvis
 
 O OpenJarvis vem com agentes internos para diferentes tipos de tarefa:
 
@@ -332,7 +365,7 @@ Nem todo agente serve para tudo. Alguns são para tarefas rápidas, outros para 
 
 ---
 
-## 15. Sugestão de roteiro do vídeo
+## 16. Sugestão de roteiro do vídeo
 
 ### Abertura
 
@@ -400,7 +433,17 @@ Explicar que o token deve ser salvo em:
 C:\Users\denis\.openjarvis\connectors
 ```
 
-### Parte 6 — Skills e agentes
+### Parte 6 — Backend status e voz
+
+Mostrar a mensagem:
+
+```text
+Requires Whisper, Deepgram, or another speech backend
+```
+
+Explicar que o Whisper funciona na minha máquina, mas não veio instalado por padrão. Então, para recursos de fala, será necessário instalar/configurar o Whisper ou usar outro backend, como Deepgram.
+
+### Parte 7 — Skills e agentes
 
 Mostrar rapidamente:
 
@@ -412,7 +455,7 @@ E explicar a diferença entre agentes como `simple`, `orchestrator`, `deep_resea
 
 ---
 
-## 16. Fechamento
+## 17. Fechamento
 
 Neste vídeo, configuramos o OpenJarvis para deixar de ser apenas uma instalação e começar a funcionar como um agente conectado a ferramentas reais.
 
