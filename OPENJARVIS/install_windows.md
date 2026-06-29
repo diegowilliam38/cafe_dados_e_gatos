@@ -7,7 +7,7 @@ Passo a passo para instalar o **OpenJarvis diretamente no Windows**, sem WSL2.
 ## Pre-requisitos
 
 - Windows 10 1809 ou superior, ou Windows 11
-- Python 3.10 ate 3.13 no PATH
+- winget install Python.Python.3.12
 - Git no PATH
 - Aproximadamente 5 GB livres em `%LOCALAPPDATA%`
 - PowerShell
