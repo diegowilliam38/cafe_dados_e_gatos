@@ -62,7 +62,7 @@ Isso geralmente acontece porque o comando foi executado fora da pasta do projeto
 Abra o PowerShell e rode:
 
 ```powershell
-Get-ChildItem -Path C:\Users\denis -Filter pyproject.toml -Recurse -ErrorAction SilentlyContinue
+Get-ChildItem -Path C:\Users\Users -Filter pyproject.toml -Recurse -ErrorAction SilentlyContinue
 ```
 
 O arquivo `pyproject.toml` indica a raiz do projeto.
