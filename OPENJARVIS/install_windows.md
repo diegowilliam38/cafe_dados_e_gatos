@@ -11,6 +11,7 @@ Passo a passo para instalar o **OpenJarvis diretamente no Windows**, sem WSL2.
 - Git no PATH
 - uv
 - Ollama instalado
+- Node.js e npm, caso queira subir a interface web/frontend pelo navegador
 - Aproximadamente 5 GB livres em `%LOCALAPPDATA%`
 - PowerShell
 - Internet ativa
@@ -25,6 +26,7 @@ Abra o **PowerShell como Administrador** e rode:
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 winget install Python.Python.3.12
 winget install Git.Git
+winget install OpenJS.NodeJS.LTS
 irm https://ollama.com/install.ps1 | iex
 ```
 
@@ -144,6 +146,8 @@ git --version
 ollama --version
 winget --version
 uv --version
+node --version
+npm --version
 ```
 
 O Python precisa estar entre 3.10 e 3.13.
@@ -416,6 +420,101 @@ http://127.0.0.1:8000/health
 
 Deixe esse PowerShell aberto.
 
+> Importante: no Windows nativo, `uv run jarvis serve` sobe apenas o backend/API. Ele nao abre automaticamente a interface no navegador. No Linux/WSL, o quickstart pode subir tudo junto, mas no Windows nativo a API e o frontend podem precisar ser iniciados separadamente.
+
+## Subir a interface web no navegador
+
+Se voce quiser usar a interface web pelo navegador, abra **outro PowerShell** e rode:
+
+```powershell
+cd "$env:LOCALAPPDATA\OpenJarvis\src\frontend"
+npm install
+npm run dev
+```
+
+Se voce clonou o repositorio manualmente em `C:\Users\denis\OpenJarvis`, use:
+
+```powershell
+cd C:\Users\denis\OpenJarvis\frontend
+npm install
+npm run dev
+```
+
+O frontend normalmente fica em:
+
+```text
+http://localhost:5173
+```
+
+Se aparecer o erro:
+
+```text
+'vite' nao e reconhecido como um comando interno ou externo, um programa operavel ou um arquivo em lotes.
+```
+
+rode primeiro:
+
+```powershell
+npm install
+```
+
+Depois tente novamente:
+
+```powershell
+npm run dev
+```
+
+Resumo:
+
+```text
+Backend/API: http://127.0.0.1:8000
+Frontend/Web UI: http://localhost:5173
+```
+
+## Criar um atalho para iniciar o Jarvis Server
+
+Se voce nao quiser digitar o caminho toda vez, crie um arquivo chamado:
+
+```text
+iniciar_jarvis_server.bat
+```
+
+Conteudo para instalacao oficial em `%LOCALAPPDATA%`:
+
+```bat
+@echo off
+cd /d "%LOCALAPPDATA%\OpenJarvis\src"
+uv run jarvis serve
+pause
+```
+
+Conteudo para repositorio clonado manualmente em `C:\Users\denis\OpenJarvis`:
+
+```bat
+@echo off
+cd /d "C:\Users\denis\OpenJarvis"
+uv run jarvis serve
+pause
+```
+
+Para descobrir a pasta certa, procure o arquivo `pyproject.toml`:
+
+```powershell
+Get-ChildItem -Path C:\Users\denis -Filter pyproject.toml -Recurse -ErrorAction SilentlyContinue
+```
+
+A pasta correta e aquela onde aparece o `pyproject.toml` do OpenJarvis, por exemplo:
+
+```text
+C:\Users\denis\OpenJarvis\pyproject.toml
+```
+
+Nesse caso, a pasta do projeto e:
+
+```text
+C:\Users\denis\OpenJarvis
+```
+
 ## Baixar o Desktop App
 
 Pagina de releases:
@@ -440,6 +539,7 @@ O servidor local precisa continuar rodando no PowerShell.
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 winget install Python.Python.3.12
 winget install Git.Git
+winget install OpenJS.NodeJS.LTS
 irm https://ollama.com/install.ps1 | iex
 ```
 
@@ -454,6 +554,8 @@ where.exe python3
 git --version
 ollama --version
 uv --version
+node --version
+npm --version
 ```
 
 Se `python3` chamar a Microsoft Store, corrija os aliases do Windows:
@@ -478,6 +580,14 @@ ollama pull qwen3.5:0.8b
 jarvis ask "Explique o que e o OpenJarvis em poucas palavras."
 cd "$env:LOCALAPPDATA\OpenJarvis\src"
 uv run jarvis serve
+```
+
+Em outro PowerShell, para abrir a interface web:
+
+```powershell
+cd "$env:LOCALAPPDATA\OpenJarvis\src\frontend"
+npm install
+npm run dev
 ```
 
 Depois instale o Desktop App:
