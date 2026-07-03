@@ -150,6 +150,70 @@ uv run jarvis doctor
 
 Importante: mesmo com o backend `faster-whisper` existindo no projeto, a ferramenta `audio_transcribe` atual ainda pode não usar `provider="local"` diretamente, porque o próprio código da ferramenta retorna que o provider local ainda não foi implementado nessa chamada.
 
+### 4.1 Configuração para copiar e colar quando o Faster-Whisper já está instalado
+
+Se o `faster-whisper` já está instalado, não precisa instalar de novo. O próximo passo é ajustar o arquivo de configuração do OpenJarvis para usar o backend local.
+
+Procure no arquivo de configuração uma área parecida com `speech`, `stt`, `backend`, `whisper` ou `speech-to-text`.
+
+Cole ou adapte este bloco:
+
+```yaml
+speech:
+  stt:
+    backend: faster-whisper
+    model_size: base
+    device: auto
+    compute_type: int8
+```
+
+Se a versão instalada não aceitar o nome com hífen, teste o mesmo bloco usando underscore:
+
+```yaml
+speech:
+  stt:
+    backend: faster_whisper
+    model_size: base
+    device: auto
+    compute_type: int8
+```
+
+Para máquinas mais fracas, troque `model_size: base` por:
+
+```yaml
+model_size: tiny
+```
+
+ou:
+
+```yaml
+model_size: small
+```
+
+Depois reinicie o OpenJarvis:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis serve
+```
+
+Atualize a interface no navegador. O status esperado é sair de `Not configured`.
+
+Se continuar como `Not configured`, rode o teste de import dentro do ambiente do OpenJarvis:
+
+```bash
+cd ~/OpenJarvis
+uv run python - <<'PY'
+try:
+    import faster_whisper
+    print('faster-whisper instalado: OK')
+except Exception as e:
+    print('faster-whisper erro:', e)
+PY
+```
+
+Observação: dependendo da versão do OpenJarvis, o backend local pode existir no código, mas ainda não estar conectado diretamente à chave usada pela interface. Nesse caso, o pacote está instalado, mas a interface ainda mostra `Not configured` até o arquivo de configuração ou a integração interna reconhecer esse backend.
+
 ---
 
 ## 5. Texto para voz com `text_to_speech`
@@ -331,6 +395,24 @@ Configurar OpenAI Whisper:
 
 ```bash
 export OPENAI_API_KEY="COLE_SUA_CHAVE_AQUI"
+```
+
+Configuração local para Faster-Whisper já instalado:
+
+```yaml
+speech:
+  stt:
+    backend: faster-whisper
+    model_size: base
+    device: auto
+    compute_type: int8
+```
+
+Reiniciar o OpenJarvis:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis serve
 ```
 
 Testar instalação:
