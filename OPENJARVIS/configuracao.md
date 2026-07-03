@@ -2,7 +2,7 @@
 
 Este documento continua a configuração depois que o OpenJarvis já está instalado no Linux.
 
-O objetivo aqui não é reinstalar tudo. A ideia é deixar o ambiente pronto para uso real: iniciar o servidor corretamente, configurar modelo local ou em nuvem, conectar Google Drive/Gmail/Calendar/Tasks via OAuth, entender onde ficam os arquivos de configuração e testar conectores, agentes e skills.
+O objetivo aqui não é reinstalar tudo. A ideia é deixar o ambiente pronto para uso real: deixar o comando `jarvis` disponível no terminal, iniciar o servidor corretamente, configurar modelo local ou em nuvem, conectar Google Drive/Gmail/Calendar/Tasks via OAuth, entender onde ficam os arquivos de configuração e testar conectores, agentes e skills.
 
 > Referências usadas nesta documentação:
 >
@@ -14,57 +14,37 @@ O objetivo aqui não é reinstalar tudo. A ideia é deixar o ambiente pronto par
 
 ---
 
-## Observação importante sobre `jarvis` e `uv run jarvis`
+## Adicionar o Jarvis ao PATH
 
-A documentação oficial mostra comandos usando `jarvis` direto depois da instalação do CLI.
-
-No ambiente testado neste vídeo, o projeto estava instalado em:
+Depois da instalação, o executável do OpenJarvis pode ficar dentro do ambiente virtual do projeto:
 
 ```text
-~/OpenJarvis
+~/OpenJarvis/.venv/bin/jarvis
 ```
 
-A pasta `.venv` existia dentro do projeto:
-
-```text
-~/OpenJarvis/.venv
-```
-
-Mesmo assim, ao rodar o comando direto:
-
-```bash
-jarvis
-```
-
-o terminal retornou:
-
-```text
-jarvis: command not found
-```
-
-Isso significa que o OpenJarvis pode estar instalado dentro do ambiente do projeto, mas o comando `jarvis` ainda não está disponível globalmente no `PATH` do sistema.
-
-Por isso, neste guia, o caminho mais seguro para o teste é sempre entrar na pasta do projeto e executar com `uv run`:
+Para conseguir rodar `jarvis` direto em qualquer terminal, adicione esse caminho ao `PATH`:
 
 ```bash
 cd ~/OpenJarvis
-uv run jarvis --version
-uv run jarvis doctor
+echo 'export PATH="$HOME/OpenJarvis/.venv/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
 ```
 
-Se o comando `jarvis` direto funcionar no seu terminal, você pode usar os comandos curtos da documentação oficial. Se não funcionar, use sempre o formato:
+Teste:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis <comando>
+which jarvis
+jarvis --version
+jarvis doctor
 ```
 
-Exemplo:
+O esperado é que `which jarvis` mostre algo parecido com:
 
-```bash
-cd ~/OpenJarvis
-uv run jarvis ask "Responda apenas: OpenJarvis funcionando."
+```text
+/home/denise/OpenJarvis/.venv/bin/jarvis
 ```
+
+Depois disso, os comandos deste guia usam `jarvis` direto.
 
 ---
 
@@ -108,14 +88,7 @@ Confira se existe executável do Jarvis dentro do ambiente:
 ls .venv/bin | grep jarvis
 ```
 
-Se aparecer `jarvis`, também é possível testar diretamente:
-
-```bash
-./.venv/bin/jarvis --version
-./.venv/bin/jarvis doctor
-```
-
-Se `.venv` existe, mas `jarvis` não aparece dentro de `.venv/bin`, o ambiente foi criado, mas o CLI ainda não foi registrado corretamente.
+Se aparecer `jarvis`, coloque `~/OpenJarvis/.venv/bin` no `PATH`, conforme a seção anterior.
 
 ---
 
@@ -130,60 +103,55 @@ uv sync
 uv run maturin develop -m rust/crates/openjarvis-python/Cargo.toml
 ```
 
-Depois, a verificação oficial é:
+Depois da instalação, adicione o ambiente virtual ao `PATH`:
 
 ```bash
-jarvis --version
+echo 'export PATH="$HOME/OpenJarvis/.venv/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
 ```
 
-Se `jarvis --version` retornar `command not found`, use o diagnóstico abaixo.
+Verifique:
+
+```bash
+which jarvis
+jarvis --version
+jarvis doctor
+```
 
 ---
 
-## Diagnóstico quando `jarvis` dá command not found
+## Diagnóstico rápido
 
-Confirme se está na pasta certa:
+Se `jarvis` não for encontrado:
 
 ```bash
 cd ~/OpenJarvis
-pwd
-ls -la
+ls -la .venv/bin | grep jarvis
 ```
 
-Confirme se o `uv` está instalado:
+Se o executável existir, atualize o `PATH`:
 
 ```bash
-uv --version
+echo 'export PATH="$HOME/OpenJarvis/.venv/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
 ```
 
-Confirme se o ambiente virtual existe:
+Teste novamente:
 
 ```bash
-ls -la .venv
+which jarvis
+jarvis --version
+jarvis doctor
 ```
 
-Tente rodar pelo `uv`:
-
-```bash
-uv run jarvis --version
-uv run jarvis doctor
-```
-
-Se ainda falhar, rode novamente a etapa que registra o pacote Python/Rust no ambiente:
+Se o executável não existir dentro de `.venv/bin`, rode novamente a etapa que registra o pacote Python/Rust no ambiente:
 
 ```bash
 cd ~/OpenJarvis
 uv run maturin develop -m rust/crates/openjarvis-python/Cargo.toml
 ```
 
-Depois teste:
-
-```bash
-uv run jarvis --version
-uv run jarvis doctor
-```
-
-Se funcionar com `uv run`, mas não funcionar com `jarvis` direto, o problema é apenas o comando global não estar no `PATH`.
+Depois atualize o `PATH` e teste de novo.
 
 ---
 
@@ -255,18 +223,16 @@ code ~/.openjarvis/config.toml
 
 Se ainda não existir configuração, rode um preset inicial.
 
-Caminho seguro usando `uv`:
+Para chat simples:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis init --preset chat-simple
+jarvis init --preset chat-simple
 ```
 
 Para resumo matinal no Linux:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis init --preset morning-digest-linux
+jarvis init --preset morning-digest-linux
 ```
 
 > Atenção: regenerar configuração pode alterar escolhas anteriores de engine, agente, modelo e ferramentas. Se você já ajustou o `config.toml`, faça backup antes.
@@ -284,15 +250,13 @@ cp ~/.openjarvis/config.toml ~/.openjarvis/config.toml.bak
 Para iniciar o backend local:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis serve --port 8000
+jarvis serve --port 8000
 ```
 
 Se quiser restringir o servidor apenas ao próprio computador:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis serve --host 127.0.0.1 --port 8000
+jarvis serve --host 127.0.0.1 --port 8000
 ```
 
 A documentação oficial informa que a seção `[server]` do `config.toml` controla host, porta, agente e modelo do servidor.
@@ -335,8 +299,7 @@ ollama pull qwen3:0.6b
 Teste pelo Jarvis:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis model list
+jarvis model list
 ```
 
 Exemplo de configuração local no `~/.openjarvis/config.toml`:
@@ -362,8 +325,7 @@ context_from_memory = true
 Teste:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis ask "Explique em uma frase o que é o OpenJarvis."
+jarvis ask "Explique em uma frase o que é o OpenJarvis."
 ```
 
 ---
@@ -492,18 +454,17 @@ PY
 
 Esta parte é para conectar serviços da sua conta Google.
 
-O fluxo básico recomendado no teste é:
+O fluxo básico recomendado é:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis init --preset morning-digest-linux
-uv run jarvis connect gdrive
-uv run jarvis digest --fresh
+jarvis init --preset morning-digest-linux
+jarvis connect gdrive
+jarvis digest --fresh
 ```
 
 Na prática:
 
-- `uv run jarvis connect gdrive` inicia a autenticação OAuth.
+- `jarvis connect gdrive` inicia a autenticação OAuth.
 - O navegador abre para autorizar sua conta Google.
 - Depois da autorização, os tokens são salvos localmente.
 - Os conectores Google passam a usar esses tokens.
@@ -592,8 +553,7 @@ Guarde:
 Com o projeto configurado no Google Cloud e o OpenJarvis rodando, execute:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis connect gdrive
+jarvis connect gdrive
 ```
 
 O esperado:
@@ -633,22 +593,19 @@ Os nomes podem variar conforme a versão, mas a pasta correta é:
 Depois do `connect gdrive`, teste o digest:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis digest --fresh
+jarvis digest --fresh
 ```
 
 Você também pode testar uma pergunta simples usando agente com ferramentas, se seu preset já habilitou conectores:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis ask --agent orchestrator "Verifique se meus conectores Google estão disponíveis e responda quais parecem configurados."
+jarvis ask --agent orchestrator "Verifique se meus conectores Google estão disponíveis e responda quais parecem configurados."
 ```
 
 Se o comando informar falta de credenciais, rode novamente:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis connect gdrive
+jarvis connect gdrive
 ```
 
 ---
@@ -682,8 +639,7 @@ mkdir -p ~/.openjarvis/connectors
 Depois rode novamente:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis connect gdrive
+jarvis connect gdrive
 ```
 
 > Atenção: o comando acima não apaga sua conta Google. Ele apenas tira do caminho os tokens locais do OpenJarvis para forçar uma nova autenticação.
@@ -752,16 +708,14 @@ Skills são capacidades extras que ensinam os agentes a usar ferramentas e execu
 Exemplos:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis skill install hermes:arxiv
-uv run jarvis skill sync hermes --category research
+jarvis skill install hermes:arxiv
+jarvis skill sync hermes --category research
 ```
 
 Também é possível chamar uma skill diretamente:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis ask "Use the code-explainer skill to explain this Python code: for i in range(5): print(i*2)"
+jarvis ask "Use the code-explainer skill to explain this Python code: for i in range(5): print(i*2)"
 ```
 
 Configuração típica no `config.toml`:
@@ -803,15 +757,13 @@ O OpenJarvis vem com agentes internos para tipos diferentes de tarefa.
 Exemplo de pergunta com agente específico:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis ask --agent simple "Explique o que é um conector em uma frase."
+jarvis ask --agent simple "Explique o que é um conector em uma frase."
 ```
 
 Exemplo com orquestrador:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis ask --agent orchestrator "Liste três formas de testar se o Google Drive está conectado."
+jarvis ask --agent orchestrator "Liste três formas de testar se o Google Drive está conectado."
 ```
 
 ---
@@ -844,55 +796,64 @@ Para começar, teste primeiro texto e conectores. Voz fica para uma etapa separa
 Verificar instalação:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis doctor
+jarvis doctor
 ```
 
 Listar modelos:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis model list
+jarvis model list
 ```
 
 Abrir chat no terminal:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis chat
+jarvis chat
 ```
 
 Pergunta simples:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis ask "O OpenJarvis está respondendo?"
+jarvis ask "O OpenJarvis está respondendo?"
 ```
 
 Subir servidor:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis serve --host 127.0.0.1 --port 8000
+jarvis serve --host 127.0.0.1 --port 8000
 ```
 
 Conectar Google:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis connect gdrive
+jarvis connect gdrive
 ```
 
 Gerar resumo matinal:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis digest --fresh
+jarvis digest --fresh
 ```
 
 ---
 
 ## Fluxo recomendado para gravar o vídeo
+
+### Garantir que o Jarvis está no PATH
+
+```bash
+cd ~/OpenJarvis
+echo 'export PATH="$HOME/OpenJarvis/.venv/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+which jarvis
+jarvis --version
+```
+
+Fala sugerida:
+
+```text
+Antes de configurar qualquer coisa, eu vou garantir que o comando jarvis está disponível no terminal. Assim eu não preciso ficar entrando na pasta do projeto toda vez.
+```
 
 ### Mostrar que o projeto existe
 
@@ -903,38 +864,11 @@ ls -la
 ls -la .venv
 ```
 
-Fala sugerida:
-
-```text
-Aqui tem uma pegadinha importante: a pasta existe, o ambiente virtual existe, mas isso não significa que o comando jarvis esteja disponível globalmente no terminal.
-```
-
-### Mostrar o erro do comando global
+### Testar o Jarvis
 
 ```bash
-jarvis
-which jarvis
-whereis jarvis
-```
-
-Fala sugerida:
-
-```text
-Quando aparece command not found, o problema não é necessariamente que o OpenJarvis não foi instalado. Pode ser apenas que o comando não está no PATH do sistema.
-```
-
-### Usar o caminho seguro
-
-```bash
-cd ~/OpenJarvis
-uv run jarvis --version
-uv run jarvis doctor
-```
-
-Fala sugerida:
-
-```text
-Por isso, neste teste, eu vou usar o caminho mais seguro: entrar na pasta do projeto e rodar os comandos com uv run.
+jarvis doctor
+jarvis ask "Responda apenas: funcionando."
 ```
 
 ### Mostrar onde ficam as configurações
@@ -948,30 +882,26 @@ nano ~/.openjarvis/config.toml
 
 ```bash
 ollama list
-cd ~/OpenJarvis
-uv run jarvis model list
+jarvis model list
 ```
 
 ### Conectar Google
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis connect gdrive
+jarvis connect gdrive
 ls -la ~/.openjarvis/connectors
 ```
 
 ### Testar uso real
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis digest --fresh
+jarvis digest --fresh
 ```
 
 ou:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis ask --agent orchestrator "Verifique quais conectores parecem disponíveis."
+jarvis ask --agent orchestrator "Verifique quais conectores parecem disponíveis."
 ```
 
 ---
@@ -982,56 +912,42 @@ uv run jarvis ask --agent orchestrator "Verifique quais conectores parecem dispo
 
 **O que aconteceu:**
 
-O projeto `~/OpenJarvis` existia e a pasta `.venv` também existia, mas o comando direto `jarvis` não foi encontrado pelo terminal.
+O executável do Jarvis estava dentro do ambiente virtual do projeto, mas a pasta `.venv/bin` não estava no `PATH` do sistema.
 
-**Onde apareceu:**
+**Correção:**
+
+Adicionar `~/OpenJarvis/.venv/bin` ao `PATH`:
 
 ```bash
-jarvis
+cd ~/OpenJarvis
+echo 'export PATH="$HOME/OpenJarvis/.venv/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
 ```
 
-Retorno:
-
-```text
-jarvis: command not found
-```
-
-**Diagnóstico usado:**
+**Verificação:**
 
 ```bash
 which jarvis
-whereis jarvis
-cd ~/OpenJarvis
-ls -la
-ls -la .venv
+jarvis --version
+jarvis doctor
 ```
-
-**Correção usada no guia:**
-
-Rodar os comandos dentro da pasta do projeto usando `uv run`:
-
-```bash
-cd ~/OpenJarvis
-uv run jarvis doctor
-```
-
-**Observação:**
-
-Na documentação oficial, a verificação aparece como `jarvis --version` depois da instalação do CLI. No ambiente testado, o caminho seguro foi usar `uv run jarvis`, porque o comando global não estava disponível.
 
 ---
 
 ## Resumo final
 
-Fluxo principal no Linux usando o caminho seguro:
+Fluxo principal no Linux:
 
 ```bash
 cd ~/OpenJarvis
-uv run jarvis --version
-uv run jarvis doctor
-uv run jarvis init --preset morning-digest-linux
-uv run jarvis connect gdrive
-uv run jarvis digest --fresh
+echo 'export PATH="$HOME/OpenJarvis/.venv/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+which jarvis
+jarvis --version
+jarvis doctor
+jarvis init --preset morning-digest-linux
+jarvis connect gdrive
+jarvis digest --fresh
 ```
 
 Arquivos importantes:
