@@ -216,14 +216,14 @@ Quando `model = ""`, o OpenJarvis usa o modelo padrão definido na seção de in
 
 O `jarvis serve` sobe o backend/API, normalmente na porta `8000`. Para abrir a interface no navegador, suba também o frontend em outro terminal.
 
-Deixe o backend rodando no primeiro terminal:
+Primeiro terminal, backend:
 
 ```bash
 cd ~/OpenJarvis
 uv run jarvis serve --host 127.0.0.1 --port 8000
 ```
 
-Abra um segundo terminal e suba o frontend:
+Segundo terminal, frontend:
 
 ```bash
 cd ~/OpenJarvis/frontend
@@ -249,12 +249,6 @@ Se aparecer erro dizendo que `vite` não é reconhecido, normalmente falta insta
 cd ~/OpenJarvis/frontend
 npm install
 npm run dev
-```
-
-Resumo para vídeo:
-
-```text
-O OpenJarvis usa dois processos: o backend na porta 8000 e a interface web no navegador pela porta 5173. Por isso eu deixo dois terminais abertos: um para o servidor e outro para o frontend.
 ```
 
 ---
@@ -362,7 +356,7 @@ print('GOOGLE_API_KEY configurada:', bool(os.getenv('GOOGLE_API_KEY')))
 PY
 ```
 
-> Importante: não grave vídeo mostrando a chave. Não coloque API Key em repositório público.
+> Importante: não mostre API Key em vídeo, print, live ou repositório público.
 
 ---
 
@@ -555,6 +549,20 @@ Guarde:
 - Client Secret
 
 > Não mostre o Client Secret em vídeo, print, live ou GitHub.
+
+### 10.5 Adicionar URI de redirecionamento
+
+Se a tela de OAuth reclamar de `redirect_uri_mismatch`, abra o OAuth Client ID e adicione:
+
+```text
+http://localhost:8789/callback
+```
+
+ou:
+
+```text
+http://127.0.0.1:8789/callback
+```
 
 ---
 
@@ -831,13 +839,6 @@ A documentação/API do OpenJarvis lista componentes relacionados a fala, como:
 - kokoro_tts
 - cartesia_tts
 
-Resumo para vídeo:
-
-```text
-Jarvis Server rodando = backend principal funcionando.
-Whisper/Deepgram ausente = recurso de fala ainda não configurado.
-```
-
 Para começar, teste primeiro texto e conectores. Voz fica para uma etapa separada.
 
 ---
@@ -902,146 +903,9 @@ jarvis digest --fresh
 
 ---
 
-## 20. Fluxo recomendado para gravar o vídeo
+## 20. Resumo técnico
 
-### Parte 1 — Mostrar que já está instalado
-
-Comandos:
-
-```bash
-which jarvis
-jarvis doctor
-jarvis ask "Responda: funcionando."
-```
-
-Explicar:
-
-```text
-Aqui eu não vou reinstalar o OpenJarvis. Eu já tenho ele rodando no Linux. Agora vou configurar a parte que transforma a instalação em uso real: modelo, Google, conectores e skills.
-```
-
-### Parte 2 — Mostrar onde ficam as configurações
-
-Comandos:
-
-```bash
-ls -la ~/.openjarvis
-nano ~/.openjarvis/config.toml
-```
-
-Explicar:
-
-```text
-No Linux, o OpenJarvis guarda as configurações na pasta .openjarvis dentro da home do usuário.
-```
-
-### Parte 3 — Configurar ou conferir modelo
-
-Comandos:
-
-```bash
-ollama list
-jarvis model list
-```
-
-Explicar:
-
-```text
-Eu posso usar modelo local via Ollama ou API em nuvem. Para Gemini, OpenAI, Anthropic e MiniMax, usamos variáveis de ambiente.
-```
-
-### Parte 4 — Subir backend e interface web
-
-Terminal 1, backend:
-
-```bash
-cd ~/OpenJarvis
-uv run jarvis serve --host 127.0.0.1 --port 8000
-```
-
-Terminal 2, frontend:
-
-```bash
-cd ~/OpenJarvis/frontend
-npm install
-npm run dev -- --host 127.0.0.1 --port 5173
-```
-
-Abrir no navegador:
-
-```text
-http://127.0.0.1:5173
-```
-
-Explicar:
-
-```text
-Aqui tem uma pegadinha importante: o backend sobe na porta 8000, mas a tela do navegador fica no frontend, normalmente na porta 5173. Então eu deixo dois terminais abertos.
-```
-
-### Parte 5 — Google Cloud
-
-Mostrar no navegador:
-
-- Criar projeto.
-- Ativar APIs.
-- Configurar tela de consentimento.
-- Adicionar usuário de teste.
-- Criar OAuth Client ID como Desktop app.
-
-Explicar:
-
-```text
-Google API Key é para Gemini. OAuth é para acessar Drive, Gmail, Calendar e Tasks com autorização da minha conta.
-```
-
-### Parte 6 — Conectar no OpenJarvis
-
-Comando:
-
-```bash
-jarvis connect gdrive
-```
-
-Depois:
-
-```bash
-ls -la ~/.openjarvis/connectors
-```
-
-Explicar:
-
-```text
-O OpenJarvis salva os tokens localmente. A documentação oficial informa que os conectores Google compartilham o mesmo fluxo OAuth.
-```
-
-### Parte 7 — Testar uso real
-
-Comando:
-
-```bash
-jarvis digest --fresh
-```
-
-ou:
-
-```bash
-jarvis ask --agent orchestrator "Verifique quais conectores parecem disponíveis."
-```
-
-### Parte 8 — Fechamento
-
-Sugestão de fala:
-
-```text
-Agora o OpenJarvis deixou de ser só uma instalação local e começou a virar um agente pessoal conectado: ele pode usar modelo local, modelo em nuvem, Google Workspace, memória, conectores e skills. No próximo teste, dá para fazer um fluxo prático: resumir agenda, consultar arquivos do Drive, organizar e-mails ou testar skills com Hermes e OpenClaw.
-```
-
----
-
-## 21. Resumo final
-
-O fluxo principal no Linux fica assim:
+Fluxo principal no Linux:
 
 ```bash
 which jarvis
@@ -1061,7 +925,7 @@ uv run jarvis connect gdrive
 uv run jarvis digest --fresh
 ```
 
-Para subir também a interface web no navegador:
+Para subir a interface web no navegador:
 
 ```bash
 cd ~/OpenJarvis
