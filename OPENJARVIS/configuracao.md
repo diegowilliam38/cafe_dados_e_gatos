@@ -212,6 +212,51 @@ workers = 1
 
 Quando `model = ""`, o OpenJarvis usa o modelo padrão definido na seção de inteligência ou o primeiro modelo disponível.
 
+### 5.1 Subir a interface web no navegador
+
+O `jarvis serve` sobe o backend/API, normalmente na porta `8000`. Para abrir a interface no navegador, suba também o frontend em outro terminal.
+
+Deixe o backend rodando no primeiro terminal:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis serve --host 127.0.0.1 --port 8000
+```
+
+Abra um segundo terminal e suba o frontend:
+
+```bash
+cd ~/OpenJarvis/frontend
+npm install
+npm run dev -- --host 127.0.0.1 --port 5173
+```
+
+Depois abra no navegador:
+
+```text
+http://127.0.0.1:5173
+```
+
+Resultado esperado no terminal do frontend:
+
+```text
+Local: http://127.0.0.1:5173/
+```
+
+Se aparecer erro dizendo que `vite` não é reconhecido, normalmente falta instalar as dependências do frontend. Rode:
+
+```bash
+cd ~/OpenJarvis/frontend
+npm install
+npm run dev
+```
+
+Resumo para vídeo:
+
+```text
+O OpenJarvis usa dois processos: o backend na porta 8000 e a interface web no navegador pela porta 5173. Por isso eu deixo dois terminais abertos: um para o servidor e outro para o frontend.
+```
+
 ---
 
 ## 6. Configurar engine local com Ollama
@@ -829,6 +874,20 @@ Subir servidor:
 jarvis serve --host 127.0.0.1 --port 8000
 ```
 
+Subir interface web no navegador:
+
+```bash
+cd ~/OpenJarvis/frontend
+npm install
+npm run dev -- --host 127.0.0.1 --port 5173
+```
+
+Abrir no navegador:
+
+```text
+http://127.0.0.1:5173
+```
+
 Conectar Google:
 
 ```bash
@@ -891,7 +950,36 @@ Explicar:
 Eu posso usar modelo local via Ollama ou API em nuvem. Para Gemini, OpenAI, Anthropic e MiniMax, usamos variáveis de ambiente.
 ```
 
-### Parte 4 — Google Cloud
+### Parte 4 — Subir backend e interface web
+
+Terminal 1, backend:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis serve --host 127.0.0.1 --port 8000
+```
+
+Terminal 2, frontend:
+
+```bash
+cd ~/OpenJarvis/frontend
+npm install
+npm run dev -- --host 127.0.0.1 --port 5173
+```
+
+Abrir no navegador:
+
+```text
+http://127.0.0.1:5173
+```
+
+Explicar:
+
+```text
+Aqui tem uma pegadinha importante: o backend sobe na porta 8000, mas a tela do navegador fica no frontend, normalmente na porta 5173. Então eu deixo dois terminais abertos.
+```
+
+### Parte 5 — Google Cloud
 
 Mostrar no navegador:
 
@@ -907,7 +995,7 @@ Explicar:
 Google API Key é para Gemini. OAuth é para acessar Drive, Gmail, Calendar e Tasks com autorização da minha conta.
 ```
 
-### Parte 5 — Conectar no OpenJarvis
+### Parte 6 — Conectar no OpenJarvis
 
 Comando:
 
@@ -927,7 +1015,7 @@ Explicar:
 O OpenJarvis salva os tokens localmente. A documentação oficial informa que os conectores Google compartilham o mesmo fluxo OAuth.
 ```
 
-### Parte 6 — Testar uso real
+### Parte 7 — Testar uso real
 
 Comando:
 
@@ -941,7 +1029,7 @@ ou:
 jarvis ask --agent orchestrator "Verifique quais conectores parecem disponíveis."
 ```
 
-### Parte 7 — Fechamento
+### Parte 8 — Fechamento
 
 Sugestão de fala:
 
@@ -971,6 +1059,27 @@ uv run jarvis doctor
 uv run jarvis init --preset morning-digest-linux
 uv run jarvis connect gdrive
 uv run jarvis digest --fresh
+```
+
+Para subir também a interface web no navegador:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis serve --host 127.0.0.1 --port 8000
+```
+
+Em outro terminal:
+
+```bash
+cd ~/OpenJarvis/frontend
+npm install
+npm run dev -- --host 127.0.0.1 --port 5173
+```
+
+Depois abra:
+
+```text
+http://127.0.0.1:5173
 ```
 
 Arquivos importantes:
