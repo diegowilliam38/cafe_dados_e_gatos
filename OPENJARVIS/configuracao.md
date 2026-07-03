@@ -1,28 +1,28 @@
 # OpenJarvis no Linux: configuração, Google OAuth, Gemini, conectores e skills
 
-Este documento continua a configuração depois que o OpenJarvis já está instalado no Linux.
+Este documento continua a configuração depois que o OpenJarvis já está instalado e rodando no Linux.
 
-O objetivo aqui não é reinstalar tudo. A ideia é deixar o ambiente pronto para uso real: deixar o comando `jarvis` disponível no terminal, iniciar o servidor corretamente, configurar modelo local ou em nuvem, conectar Google Drive/Gmail/Calendar/Tasks via OAuth, entender onde ficam os arquivos de configuração e testar conectores, agentes e skills.
+O objetivo aqui não é reinstalar o OpenJarvis. A ideia é deixar o ambiente pronto para uso real: iniciar o servidor corretamente, configurar o modelo local ou em nuvem, conectar Google Drive/Gmail/Calendar/Tasks via OAuth, entender onde ficam os arquivos de configuração e testar conectores, agentes e skills.
 
 > Referências usadas nesta documentação:
 >
 > - Documentação oficial do OpenJarvis: https://open-jarvis.github.io/OpenJarvis/
-> - Instalação oficial do OpenJarvis: https://open-jarvis.github.io/OpenJarvis/getting-started/installation/
 > - Configuração oficial do OpenJarvis: https://open-jarvis.github.io/OpenJarvis/getting-started/configuration/
+> - Instalação oficial do OpenJarvis: https://open-jarvis.github.io/OpenJarvis/getting-started/installation/
 > - Google Workspace - criação de credenciais: https://developers.google.com/workspace/guides/create-credentials
 > - Google Workspace - tela de consentimento OAuth: https://developers.google.com/workspace/guides/configure-oauth-consent
 
 ---
 
-## Adicionar o Jarvis ao PATH
+## 0. Garantir que o comando `jarvis` está no PATH
 
-Depois da instalação, o executável do OpenJarvis pode ficar dentro do ambiente virtual do projeto:
+Antes de começar, confirme se o comando `jarvis` está disponível no terminal:
 
-```text
-~/OpenJarvis/.venv/bin/jarvis
+```bash
+which jarvis
 ```
 
-Para conseguir rodar `jarvis` direto em qualquer terminal, adicione esse caminho ao `PATH`:
+Se não aparecer nenhum caminho, adicione o executável do ambiente virtual do OpenJarvis ao `PATH`:
 
 ```bash
 cd ~/OpenJarvis
@@ -30,132 +30,56 @@ echo 'export PATH="$HOME/OpenJarvis/.venv/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-Teste:
+Confira novamente:
 
 ```bash
 which jarvis
 jarvis --version
-jarvis doctor
 ```
 
-O esperado é que `which jarvis` mostre algo parecido com:
+O esperado é aparecer algo parecido com:
 
 ```text
 /home/denise/OpenJarvis/.venv/bin/jarvis
 ```
 
-Depois disso, os comandos deste guia usam `jarvis` direto.
+Depois disso, siga normalmente com os comandos `jarvis` do guia.
 
 ---
 
-## Conferir onde o OpenJarvis está instalado
+## 1. Antes de configurar
 
-Para verificar se a pasta do projeto existe:
+Este guia assume que você já consegue rodar o OpenJarvis no Linux.
 
-```bash
-ls -la ~ | grep OpenJarvis
-```
-
-Ou procure pela pasta:
+Teste rápido:
 
 ```bash
-find ~ -type d -iname "OpenJarvis" 2>/dev/null
-```
-
-Entre na pasta:
-
-```bash
-cd ~/OpenJarvis
-pwd
-ls -la
-```
-
-O `pwd` deve mostrar algo parecido com:
-
-```text
-/home/denise/OpenJarvis
-```
-
-Confira se o ambiente virtual existe:
-
-```bash
-ls -la .venv
-```
-
-Confira se existe executável do Jarvis dentro do ambiente:
-
-```bash
-ls .venv/bin | grep jarvis
-```
-
-Se aparecer `jarvis`, coloque `~/OpenJarvis/.venv/bin` no `PATH`, conforme a seção anterior.
-
----
-
-## Instalação oficial do CLI
-
-Segundo a documentação oficial do OpenJarvis, a instalação do CLI a partir do repositório usa este fluxo:
-
-```bash
-git clone https://github.com/open-jarvis/OpenJarvis.git
-cd OpenJarvis
-uv sync
-uv run maturin develop -m rust/crates/openjarvis-python/Cargo.toml
-```
-
-Depois da instalação, adicione o ambiente virtual ao `PATH`:
-
-```bash
-echo 'export PATH="$HOME/OpenJarvis/.venv/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-```
-
-Verifique:
-
-```bash
-which jarvis
-jarvis --version
 jarvis doctor
 ```
 
----
-
-## Diagnóstico rápido
-
-Se `jarvis` não for encontrado:
+Se você instalou a partir do repositório e usa `uv`, rode dentro da pasta do projeto:
 
 ```bash
 cd ~/OpenJarvis
-ls -la .venv/bin | grep jarvis
+uv run jarvis doctor
 ```
 
-Se o executável existir, atualize o `PATH`:
+Também vale testar uma pergunta simples:
 
 ```bash
-echo 'export PATH="$HOME/OpenJarvis/.venv/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
+jarvis ask "Responda apenas: OpenJarvis funcionando no Linux."
 ```
 
-Teste novamente:
-
-```bash
-which jarvis
-jarvis --version
-jarvis doctor
-```
-
-Se o executável não existir dentro de `.venv/bin`, rode novamente a etapa que registra o pacote Python/Rust no ambiente:
+ou, usando `uv`:
 
 ```bash
 cd ~/OpenJarvis
-uv run maturin develop -m rust/crates/openjarvis-python/Cargo.toml
+uv run jarvis ask "Responda apenas: OpenJarvis funcionando no Linux."
 ```
-
-Depois atualize o `PATH` e teste de novo.
 
 ---
 
-## Estrutura básica do OpenJarvis
+## 2. Estrutura básica do OpenJarvis
 
 No uso diário, existem três partes importantes:
 
@@ -177,7 +101,7 @@ http://127.0.0.1:5173
 
 ---
 
-## Onde ficam os arquivos principais
+## 3. Onde ficam os arquivos principais
 
 No Linux, o OpenJarvis usa a pasta local do usuário para guardar configurações, memória, skills, traces e conectores.
 
@@ -205,13 +129,13 @@ Para ver conectores autenticados:
 ls -la ~/.openjarvis/connectors
 ```
 
-Para abrir a configuração no Nano:
+Para abrir a configuração no editor Nano:
 
 ```bash
 nano ~/.openjarvis/config.toml
 ```
 
-Se usa VS Code:
+Se você usa VS Code:
 
 ```bash
 code ~/.openjarvis/config.toml
@@ -219,7 +143,7 @@ code ~/.openjarvis/config.toml
 
 ---
 
-## Gerar ou regenerar configuração
+## 4. Gerar ou regenerar configuração
 
 Se ainda não existir configuração, rode um preset inicial.
 
@@ -235,6 +159,13 @@ Para resumo matinal no Linux:
 jarvis init --preset morning-digest-linux
 ```
 
+Se estiver usando `uv` dentro do repositório:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis init --preset morning-digest-linux
+```
+
 > Atenção: regenerar configuração pode alterar escolhas anteriores de engine, agente, modelo e ferramentas. Se você já ajustou o `config.toml`, faça backup antes.
 
 Backup simples:
@@ -245,12 +176,19 @@ cp ~/.openjarvis/config.toml ~/.openjarvis/config.toml.bak
 
 ---
 
-## Iniciar o Jarvis Server no Linux
+## 5. Iniciar o Jarvis Server no Linux
 
 Para iniciar o backend local:
 
 ```bash
 jarvis serve --port 8000
+```
+
+Ou, se usa `uv` na pasta do projeto:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis serve --port 8000
 ```
 
 Se quiser restringir o servidor apenas ao próprio computador:
@@ -276,7 +214,7 @@ Quando `model = ""`, o OpenJarvis usa o modelo padrão definido na seção de in
 
 ---
 
-## Configurar engine local com Ollama
+## 6. Configurar engine local com Ollama
 
 Se você quer usar modelo local com Ollama, confirme que o Ollama está rodando:
 
@@ -330,7 +268,7 @@ jarvis ask "Explique em uma frase o que é o OpenJarvis."
 
 ---
 
-## Configurar Google Gemini como modelo
+## 7. Configurar Google Gemini como modelo
 
 Aqui existem duas coisas diferentes:
 
@@ -370,7 +308,7 @@ Recarregue:
 source ~/.bashrc
 ```
 
-Teste sem revelar a chave:
+Teste se a variável está disponível sem revelar a chave:
 
 ```bash
 python3 - <<'PY'
@@ -383,9 +321,9 @@ PY
 
 ---
 
-## Configurar OpenAI, Anthropic, MiniMax e Tavily
+## 8. Configurar OpenAI, Anthropic, MiniMax e Tavily
 
-A documentação oficial lista variáveis de ambiente para provedores em nuvem.
+A documentação oficial lista estas variáveis de ambiente:
 
 ```bash
 export OPENAI_API_KEY="COLE_SUA_CHAVE_AQUI"
@@ -450,16 +388,27 @@ PY
 
 ---
 
-## Google Workspace OAuth: Drive, Gmail, Calendar, Contacts e Tasks
+## 9. Google Workspace OAuth: Drive, Gmail, Calendar, Contacts e Tasks
 
 Esta parte é para conectar serviços da sua conta Google.
 
-O fluxo básico recomendado é:
+Segundo a documentação do OpenJarvis, um único fluxo OAuth do Google pode cobrir os conectores Google. A documentação do `google_auth` informa que Gmail, Calendar, Contacts, Drive e Tasks usam o mesmo fluxo OAuth e salvam tokens em `~/.openjarvis/connectors/*.json`, normalmente com um arquivo compartilhado `google.json` e cópias por produto.
+
+A documentação também mostra este fluxo:
 
 ```bash
 jarvis init --preset morning-digest-linux
 jarvis connect gdrive
 jarvis digest --fresh
+```
+
+Ou, usando `uv`:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis init --preset morning-digest-linux
+uv run jarvis connect gdrive
+uv run jarvis digest --fresh
 ```
 
 Na prática:
@@ -471,9 +420,11 @@ Na prática:
 
 ---
 
-## Criar credenciais OAuth no Google Cloud
+## 10. Criar credenciais OAuth no Google Cloud
 
 Para o OAuth funcionar, você precisa criar credenciais no Google Cloud.
+
+### 10.1 Criar ou selecionar um projeto
 
 Acesse:
 
@@ -489,13 +440,15 @@ Sugestão de nome:
 OpenJarvis Local
 ```
 
+### 10.2 Ativar APIs necessárias
+
 No Google Cloud Console, vá em:
 
 ```text
 APIs e serviços > Biblioteca
 ```
 
-Ative as APIs que pretende usar:
+Ative as APIs que você pretende usar:
 
 - Google Drive API
 - Gmail API
@@ -503,7 +456,9 @@ Ative as APIs que pretende usar:
 - Google Tasks API
 - People API, se for usar contatos
 
-Depois configure a tela de consentimento OAuth:
+### 10.3 Configurar a tela de consentimento OAuth
+
+Vá em:
 
 ```text
 Google Auth Platform > Branding / OAuth consent screen
@@ -521,10 +476,18 @@ Depois, adicione seu Gmail como usuário de teste.
 
 > Se o app ficar em modo de teste e seu e-mail não estiver como usuário de teste, a autorização pode falhar.
 
-Crie o OAuth Client ID:
+### 10.4 Criar OAuth Client ID
+
+Vá em:
 
 ```text
-Google Auth Platform > Clients > Create Client
+Google Auth Platform > Clients
+```
+
+Clique em:
+
+```text
+Create Client
 ```
 
 Escolha:
@@ -539,6 +502,8 @@ Nome sugerido:
 OpenJarvis Linux
 ```
 
+Clique em **Create**.
+
 Guarde:
 
 - Client ID
@@ -548,7 +513,7 @@ Guarde:
 
 ---
 
-## Rodar o OAuth no OpenJarvis
+## 11. Rodar o OAuth no OpenJarvis
 
 Com o projeto configurado no Google Cloud e o OpenJarvis rodando, execute:
 
@@ -556,13 +521,20 @@ Com o projeto configurado no Google Cloud e o OpenJarvis rodando, execute:
 jarvis connect gdrive
 ```
 
+Ou:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis connect gdrive
+```
+
 O esperado:
 
-- O OpenJarvis inicia o fluxo OAuth.
-- O navegador abre.
-- Você escolhe sua conta Google.
-- Você aceita os escopos/permissões.
-- O OpenJarvis salva os tokens em `~/.openjarvis/connectors/`.
+1. O OpenJarvis inicia o fluxo OAuth.
+2. O navegador abre.
+3. Você escolhe sua conta Google.
+4. Você aceita os escopos/permissões.
+5. O OpenJarvis salva os tokens em `~/.openjarvis/connectors/`.
 
 Depois, confira:
 
@@ -588,12 +560,19 @@ Os nomes podem variar conforme a versão, mas a pasta correta é:
 
 ---
 
-## Testar Google depois da autenticação
+## 12. Testar Google depois da autenticação
 
-Depois do `connect gdrive`, teste o digest:
+Depois do `jarvis connect gdrive`, teste o digest:
 
 ```bash
 jarvis digest --fresh
+```
+
+Ou:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis digest --fresh
 ```
 
 Você também pode testar uma pergunta simples usando agente com ferramentas, se seu preset já habilitou conectores:
@@ -610,18 +589,18 @@ jarvis connect gdrive
 
 ---
 
-## Se o Google OAuth falhar
+## 13. Se o Google OAuth falhar
 
 Verifique estes pontos:
 
-- Você ativou as APIs corretas no Google Cloud?
-- O app está com tela de consentimento configurada?
-- Seu e-mail foi adicionado como usuário de teste?
-- O tipo de credencial é **Desktop app**?
-- Você está rodando o comando no mesmo usuário Linux que executa o OpenJarvis?
-- A pasta `~/.openjarvis/connectors/` existe?
-- O navegador abriu durante o fluxo OAuth?
-- Você autorizou todos os escopos solicitados?
+1. Você ativou as APIs corretas no Google Cloud?
+2. O app está com tela de consentimento configurada?
+3. Seu e-mail foi adicionado como usuário de teste?
+4. O tipo de credencial é **Desktop app**?
+5. Você está rodando o comando no mesmo usuário Linux que executa o OpenJarvis?
+6. A pasta `~/.openjarvis/connectors/` existe?
+7. O navegador abriu durante o fluxo OAuth?
+8. Você autorizou todos os escopos solicitados?
 
 Para ver se existem tokens:
 
@@ -646,7 +625,7 @@ jarvis connect gdrive
 
 ---
 
-## Configurar memória local
+## 14. Configurar memória local
 
 A documentação oficial informa que o backend padrão de memória é SQLite, sem dependências extras.
 
@@ -687,9 +666,19 @@ Para começar, SQLite é suficiente.
 
 ---
 
-## Configurar MCP
+## 15. Configurar MCP
 
 O OpenJarvis tem seção própria para MCP:
+
+```toml
+[tools.mcp]
+enabled = true
+# servers = ""
+```
+
+A documentação informa que `servers` recebe uma lista JSON codificada como string.
+
+Para começar, deixe MCP habilitado, mas sem servidores externos:
 
 ```toml
 [tools.mcp]
@@ -701,15 +690,23 @@ Depois você pode adicionar servidores externos quando for testar ferramentas es
 
 ---
 
-## Skills no OpenJarvis
+## 16. Skills no OpenJarvis
 
 Skills são capacidades extras que ensinam os agentes a usar ferramentas e executar tarefas específicas.
 
-Exemplos:
+A documentação oficial mostra exemplos como:
 
 ```bash
 jarvis skill install hermes:arxiv
 jarvis skill sync hermes --category research
+```
+
+Usando `uv`:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis skill install hermes:arxiv
+uv run jarvis skill sync hermes --category research
 ```
 
 Também é possível chamar uma skill diretamente:
@@ -739,7 +736,7 @@ ls -la ~/.openjarvis/skills
 
 ---
 
-## Agentes internos do OpenJarvis
+## 17. Agentes internos do OpenJarvis
 
 O OpenJarvis vem com agentes internos para tipos diferentes de tarefa.
 
@@ -768,7 +765,7 @@ jarvis ask --agent orchestrator "Liste três formas de testar se o Google Drive 
 
 ---
 
-## Voz, Whisper e Deepgram
+## 18. Voz, Whisper e Deepgram
 
 Se aparecer mensagem parecida com:
 
@@ -779,6 +776,15 @@ Requires Whisper, Deepgram, or another speech backend
 isso não significa necessariamente que o Jarvis Server está quebrado.
 
 Significa que o backend principal pode estar funcionando, mas a parte de voz/transcrição ainda precisa ser configurada.
+
+A documentação/API do OpenJarvis lista componentes relacionados a fala, como:
+
+- faster_whisper
+- deepgram
+- openai_whisper
+- openai_tts
+- kokoro_tts
+- cartesia_tts
 
 Resumo para vídeo:
 
@@ -791,7 +797,7 @@ Para começar, teste primeiro texto e conectores. Voz fica para uma etapa separa
 
 ---
 
-## Comandos úteis de diagnóstico
+## 19. Comandos úteis de diagnóstico
 
 Verificar instalação:
 
@@ -837,62 +843,93 @@ jarvis digest --fresh
 
 ---
 
-## Fluxo recomendado para gravar o vídeo
+## 20. Fluxo recomendado para gravar o vídeo
 
-### Garantir que o Jarvis está no PATH
+### Parte 1 — Mostrar que já está instalado
+
+Comandos:
 
 ```bash
-cd ~/OpenJarvis
-echo 'export PATH="$HOME/OpenJarvis/.venv/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
 which jarvis
-jarvis --version
+jarvis doctor
+jarvis ask "Responda: funcionando."
 ```
 
-Fala sugerida:
+Explicar:
 
 ```text
-Antes de configurar qualquer coisa, eu vou garantir que o comando jarvis está disponível no terminal. Assim eu não preciso ficar entrando na pasta do projeto toda vez.
+Aqui eu não vou reinstalar o OpenJarvis. Eu já tenho ele rodando no Linux. Agora vou configurar a parte que transforma a instalação em uso real: modelo, Google, conectores e skills.
 ```
 
-### Mostrar que o projeto existe
+### Parte 2 — Mostrar onde ficam as configurações
 
-```bash
-cd ~/OpenJarvis
-pwd
-ls -la
-ls -la .venv
-```
-
-### Testar o Jarvis
-
-```bash
-jarvis doctor
-jarvis ask "Responda apenas: funcionando."
-```
-
-### Mostrar onde ficam as configurações
+Comandos:
 
 ```bash
 ls -la ~/.openjarvis
 nano ~/.openjarvis/config.toml
 ```
 
-### Conferir modelo
+Explicar:
+
+```text
+No Linux, o OpenJarvis guarda as configurações na pasta .openjarvis dentro da home do usuário.
+```
+
+### Parte 3 — Configurar ou conferir modelo
+
+Comandos:
 
 ```bash
 ollama list
 jarvis model list
 ```
 
-### Conectar Google
+Explicar:
+
+```text
+Eu posso usar modelo local via Ollama ou API em nuvem. Para Gemini, OpenAI, Anthropic e MiniMax, usamos variáveis de ambiente.
+```
+
+### Parte 4 — Google Cloud
+
+Mostrar no navegador:
+
+- Criar projeto.
+- Ativar APIs.
+- Configurar tela de consentimento.
+- Adicionar usuário de teste.
+- Criar OAuth Client ID como Desktop app.
+
+Explicar:
+
+```text
+Google API Key é para Gemini. OAuth é para acessar Drive, Gmail, Calendar e Tasks com autorização da minha conta.
+```
+
+### Parte 5 — Conectar no OpenJarvis
+
+Comando:
 
 ```bash
 jarvis connect gdrive
+```
+
+Depois:
+
+```bash
 ls -la ~/.openjarvis/connectors
 ```
 
-### Testar uso real
+Explicar:
+
+```text
+O OpenJarvis salva os tokens localmente. A documentação oficial informa que os conectores Google compartilham o mesmo fluxo OAuth.
+```
+
+### Parte 6 — Testar uso real
+
+Comando:
 
 ```bash
 jarvis digest --fresh
@@ -904,50 +941,36 @@ ou:
 jarvis ask --agent orchestrator "Verifique quais conectores parecem disponíveis."
 ```
 
----
+### Parte 7 — Fechamento
 
-## Erros encontrados e ajustes necessários
+Sugestão de fala:
 
-### `jarvis: command not found`
-
-**O que aconteceu:**
-
-O executável do Jarvis estava dentro do ambiente virtual do projeto, mas a pasta `.venv/bin` não estava no `PATH` do sistema.
-
-**Correção:**
-
-Adicionar `~/OpenJarvis/.venv/bin` ao `PATH`:
-
-```bash
-cd ~/OpenJarvis
-echo 'export PATH="$HOME/OpenJarvis/.venv/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-```
-
-**Verificação:**
-
-```bash
-which jarvis
-jarvis --version
-jarvis doctor
+```text
+Agora o OpenJarvis deixou de ser só uma instalação local e começou a virar um agente pessoal conectado: ele pode usar modelo local, modelo em nuvem, Google Workspace, memória, conectores e skills. No próximo teste, dá para fazer um fluxo prático: resumir agenda, consultar arquivos do Drive, organizar e-mails ou testar skills com Hermes e OpenClaw.
 ```
 
 ---
 
-## Resumo final
+## 21. Resumo final
 
-Fluxo principal no Linux:
+O fluxo principal no Linux fica assim:
 
 ```bash
-cd ~/OpenJarvis
-echo 'export PATH="$HOME/OpenJarvis/.venv/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
 which jarvis
-jarvis --version
 jarvis doctor
 jarvis init --preset morning-digest-linux
 jarvis connect gdrive
 jarvis digest --fresh
+```
+
+Se usa `uv` dentro do repositório:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis doctor
+uv run jarvis init --preset morning-digest-linux
+uv run jarvis connect gdrive
+uv run jarvis digest --fresh
 ```
 
 Arquivos importantes:
