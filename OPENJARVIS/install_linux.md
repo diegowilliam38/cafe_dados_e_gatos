@@ -14,7 +14,6 @@ Instalar o OpenJarvis em Linux, validar a CLI, subir o backend local, abrir a in
 - Instalacao oficial: https://open-jarvis.github.io/OpenJarvis/getting-started/installation/
 - Configuracao oficial: https://open-jarvis.github.io/OpenJarvis/getting-started/configuration/
 - Repositorio oficial: https://github.com/open-jarvis/OpenJarvis
-- Releases oficiais: https://github.com/open-jarvis/OpenJarvis/releases
 - uv: https://docs.astral.sh/uv/
 - Rust: https://rustup.rs/
 - Ollama: https://ollama.com/
@@ -186,7 +185,7 @@ ollama serve
 Em outro terminal, baixe um modelo leve:
 
 ```bash
-ollama pull qwen3:0.6b
+ollama pull qwen3.5:2b
 ollama list
 ```
 
@@ -204,6 +203,8 @@ uv sync --extra desktop
 uv run maturin develop -m rust/crates/openjarvis-python/Cargo.toml
 cd frontend && npm install && cd ..
 ```
+
+> O `cd ..` no final e importante: ele devolve o terminal para `~/OpenJarvis` depois de instalar as dependencias do frontend.
 
 ## Verificar a CLI
 
@@ -273,17 +274,31 @@ Abra no navegador:
 http://127.0.0.1:5173
 ```
 
-## Instalar app desktop no Linux
+> Enquanto o frontend estiver rodando, deixe esse terminal aberto. Para continuar outros comandos, abra outro terminal e volte para `~/OpenJarvis`.
 
-O app desktop e opcional. O backend continua rodando localmente pela porta `8000`.
+## Desktop app no Linux
 
-Baixe pela pagina oficial de releases:
+O app desktop e opcional. O fluxo testado neste guia e o Browser App: backend em `http://127.0.0.1:8000` e frontend em `http://127.0.0.1:5173`.
 
-```text
-https://github.com/open-jarvis/OpenJarvis/releases/latest
+Nao use este guia assumindo que `https://github.com/open-jarvis/OpenJarvis/releases/latest` sempre tera instaladores Linux disponiveis. Na pratica, confira a pagina oficial de instalacao do OpenJarvis e os links de download listados nela no momento do teste.
+
+A documentacao oficial diz que o app desktop conecta automaticamente ao backend local em `http://localhost:8000` e lista opcoes de download para Linux em DEB, RPM e AppImage. Se esses links nao estiverem disponiveis ou nao abrirem, trate o app desktop como pendente e continue usando o Browser App.
+
+Para voltar para a raiz do projeto em um novo terminal:
+
+```bash
+cd ~/OpenJarvis
 ```
 
-A documentacao oficial lista pacotes Linux em formato DEB, RPM e AppImage.
+Se quiser tentar compilar o desktop app a partir do codigo-fonte, a documentacao oficial mostra:
+
+```bash
+cd ~/OpenJarvis/desktop
+npm install
+npm run tauri build
+```
+
+> Esta parte nao foi validada no teste principal. O instalador Linux do desktop app deve ser tratado como opcional e pendente quando os links oficiais nao estiverem funcionando.
 
 ## Teste rapido
 
@@ -406,6 +421,28 @@ cd OpenJarvis
 uv sync --extra desktop
 ```
 
+### Avisos do npm e `npm audit fix`
+
+**O que aconteceu:**
+
+Depois de `npm install`, podem aparecer avisos de pacotes depreciados e vulnerabilidades.
+
+**Orientacao usada:**
+
+Nao rode `npm audit fix` automaticamente durante a instalacao do OpenJarvis. Esse comando pode alterar versoes de dependencias e quebrar o frontend. Primeiro valide se o projeto sobe.
+
+Se `npm audit fix` for executado fora de `frontend`, pode aparecer erro de lockfile, porque o `package-lock.json` pertence ao projeto frontend.
+
+### Desktop app Linux sem instalador disponivel
+
+**O que aconteceu:**
+
+A documentacao oficial menciona downloads para Linux em DEB, RPM e AppImage, mas os links podem nao estar disponiveis ou podem nao abrir corretamente no momento do teste.
+
+**Orientacao usada:**
+
+Nao tratar o desktop app como etapa obrigatoria. Usar o Browser App como fluxo principal. Se quiser testar desktop app, conferir primeiro a pagina oficial de instalacao ou compilar a partir de `~/OpenJarvis/desktop`.
+
 ### `maturin` precisa de Rust
 
 **O que aconteceu:**
@@ -457,7 +494,7 @@ Se o Ollama nao estiver ativo, o OpenJarvis pode nao listar modelos ou falhar ao
 
 ```bash
 ollama serve
-ollama pull qwen3:0.6b
+ollama pull qwen3.5:2b
 ollama list
 ```
 
@@ -472,7 +509,7 @@ Modelos maiores podem ficar lentos ou nao carregar bem em GPU antiga com pouca V
 Comecar com modelo pequeno:
 
 ```bash
-ollama pull qwen3:0.6b
+ollama pull qwen3.5:2b
 ```
 
 Depois testar modelos maiores apenas quando a instalacao basica estiver funcionando.
@@ -483,7 +520,7 @@ Depois testar modelos maiores apenas quando a instalacao basica estiver funciona
 - validacao da CLI;
 - backend;
 - frontend;
-- desktop app;
+- observacao sobre desktop app opcional;
 - remocao e troubleshooting basico.
 
 ## O que nao fica neste arquivo
