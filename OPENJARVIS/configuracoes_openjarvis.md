@@ -6,12 +6,14 @@ A instalacao Linux fica em [`install_linux.md`](./install_linux.md). A instalaca
 
 ## Objetivo
 
-Centralizar a configuracao real usada no teste:
+Centralizar a configuracao real usada nos testes:
 
-- Ollama local como engine principal;
-- MiniMax como API opcional;
+- Ollama local como fluxo principal do Desktop;
+- MiniMax Cloud como teste via CLI;
 - Google OAuth para conectores Google;
 - som, microfone, speech-to-text e text-to-speech.
+
+> Resultado importante do teste: MiniMax Cloud funcionou no OpenJarvis via CLI. Na build testada do OpenJarvis Desktop, MiniMax nao aparece como provedor configuravel na interface.
 
 Este arquivo substitui:
 
@@ -25,6 +27,7 @@ Este arquivo substitui:
 - Instalacao oficial: https://open-jarvis.github.io/OpenJarvis/getting-started/installation/
 - Configuracao oficial: https://open-jarvis.github.io/OpenJarvis/getting-started/configuration/
 - Tools do OpenJarvis: https://open-jarvis.github.io/OpenJarvis/user-guide/tools/
+- API Server do OpenJarvis: https://open-jarvis.github.io/OpenJarvis/deployment/api-server/
 - API de audio: https://open-jarvis.github.io/OpenJarvis/api-reference/openjarvis/tools/audio_tool/
 - API de text-to-speech: https://open-jarvis.github.io/OpenJarvis/api-reference/openjarvis/tools/text_to_speech/
 - Google Workspace OAuth: https://developers.google.com/workspace/guides/configure-oauth-consent
@@ -101,6 +104,8 @@ Se voce ja tem configuracao funcionando, nao rode `init --force` sem backup.
 
 ## Configuracao com Ollama local
 
+Este e o fluxo mais seguro para o Desktop na build testada.
+
 Confirme que o Ollama esta rodando:
 
 ```bash
@@ -132,18 +137,6 @@ max_tokens = 2048
 default_agent = "simple"
 ```
 
-A linha do host precisa estar ativa, sem `#`:
-
-```toml
-host = "http://127.0.0.1:11434"
-```
-
-Nao deixe assim:
-
-```toml
-# host = "http://localhost:11434"
-```
-
 Depois teste:
 
 ```bash
@@ -151,11 +144,56 @@ cd ~/OpenJarvis
 uv run jarvis ask "Explique em uma frase o que e o OpenJarvis."
 ```
 
+## MiniMax Cloud: funciona via CLI
+
+MiniMax Cloud foi validado no OpenJarvis pelo modo CLI.
+
+Resultado observado no terminal:
+
+```text
+OpenJarvis Chat
+  Engine: cloud  Model: MiniMax-M3  Agent: orchestrator
+```
+
+Isso confirma que o `~/.openjarvis/config.toml` foi lido corretamente pela CLI e que a engine cloud conseguiu selecionar o modelo MiniMax.
+
+## MiniMax no Desktop: limitacao encontrada
+
+Na build testada do OpenJarvis Desktop, a interface de modelos em nuvem mostrou apenas:
+
+```text
+OpenAI
+Anthropic
+Google
+OpenRouter
+```
+
+A tela do Desktop nao exibiu:
+
+```text
+MiniMax
+MINIMAX_API_KEY
+```
+
+Por isso, nesta versao, MiniMax Cloud deve ser tratado como funcionando via CLI, nao como configuracao direta pelo Desktop.
+
+Nao coloque a URL da MiniMax no campo `API URL` do Desktop. Esse campo e para o backend local do OpenJarvis, normalmente:
+
+```text
+http://127.0.0.1:8000
+```
+
+O endpoint da MiniMax usado internamente pelo backend cloud e:
+
+```text
+https://api.minimax.io/v1
+```
+
+Mas esse endpoint nao foi exposto como opcao direta na interface do Desktop testada.
+
 ## Variavel de ambiente para MiniMax
 
-Esta documentacao nao configura OpenAI, Anthropic, Google Gemini ou Tavily no fluxo principal.
-
-Para este teste, a unica API de modelo em nuvem prevista e MiniMax.
+A chave da MiniMax deve ficar fora do repositorio.
 
 Abra o arquivo do shell:
 
@@ -163,7 +201,7 @@ Abra o arquivo do shell:
 nano ~/.bashrc
 ```
 
-Adicione somente se voce realmente for usar MiniMax:
+Adicione:
 
 ```bash
 export MINIMAX_API_KEY="COLE_SUA_CHAVE_AQUI"
@@ -186,46 +224,24 @@ PY
 
 > Nunca publique API Key em print, video, live, commit ou repositorio publico.
 
-## MiniMax como modelo/API opcional
+## Configuracao MiniMax Cloud para CLI
 
-O fluxo principal do guia usa Ollama local.
-
-Use MiniMax apenas quando quiser testar modelo em nuvem ou quando o modelo local ficar pesado.
-
-Instale extras de cloud inference se forem necessarios na versao instalada:
-
-```bash
-cd ~/OpenJarvis
-uv sync --extra inference-cloud
-```
-
-Depois confirme se o OpenJarvis reconhece a configuracao disponivel na sua versao:
-
-```bash
-cd ~/OpenJarvis
-uv run jarvis model list
-uv run jarvis doctor
-```
-
-### Configuracao MiniMax Cloud com M3
-
-Se o MiniMax M2.7 ja funcionou, a chave e a engine cloud estao corretas. Para testar o MiniMax M3, edite o arquivo:
+Edite:
 
 ```bash
 nano ~/.openjarvis/config.toml
 ```
 
-Cole ou ajuste:
+Use este bloco para testar MiniMax Cloud pela CLI:
 
 ```toml
 # OpenJarvis configuration
-# MiniMax Cloud
+# MiniMax Cloud via CLI
+# Endpoint usado internamente pelo backend cloud:
+# https://api.minimax.io/v1
 
 [engine]
 default = "cloud"
-
-[engine.ollama]
-host = "http://localhost:11434"
 
 [intelligence]
 default_model = "MiniMax-M3"
@@ -247,8 +263,20 @@ enabled = ["code_interpreter", "web_search", "file_read", "shell_exec"]
 Teste:
 
 ```bash
-cd ~/OpenJarvis
-uv run jarvis ask "Responda apenas: MiniMax-M3 funcionando."
+jarvis
+```
+
+Resultado esperado:
+
+```text
+OpenJarvis Chat
+  Engine: cloud  Model: MiniMax-M3  Agent: orchestrator
+```
+
+Depois envie uma mensagem:
+
+```text
+Responda apenas: MiniMax-M3 funcionando no OpenJarvis CLI.
 ```
 
 Se o M3 nao estiver liberado ou o nome do modelo nao for aceito na sua conta, volte temporariamente para:
@@ -263,7 +291,36 @@ temperature = 0.7
 max_tokens = 2048
 ```
 
-Se o comando ou a engine MiniMax nao aparecerem, confira a documentacao da versao atual antes de forcar configuracao manual.
+## REST API Server do OpenJarvis
+
+O servidor REST do OpenJarvis e opcional. Ele sobe uma API local compativel com OpenAI.
+
+Instale o extra do servidor:
+
+```bash
+cd ~/OpenJarvis
+uv sync --extra server
+```
+
+Suba localmente:
+
+```bash
+uv run jarvis serve --host 127.0.0.1 --port 8000
+```
+
+Teste:
+
+```bash
+curl http://127.0.0.1:8000/health
+```
+
+Resultado esperado:
+
+```json
+{"status":"ok"}
+```
+
+Importante: abrir o Desktop pode usar o fluxo proprio da interface. Na build testada, o Desktop continuou preso ao fluxo visual de Ollama/OpenAI/Anthropic/Google/OpenRouter e nao herdou MiniMax como provedor direto.
 
 ## Google OAuth para Drive, Gmail, Calendar, Contacts e Tasks
 
@@ -295,8 +352,6 @@ Crie uma credencial OAuth Client ID:
 APIs & Services > Credentials > Create Credentials > OAuth client ID
 ```
 
-Use o tipo recomendado pela documentacao do conector/fluxo local da sua versao do OpenJarvis.
-
 Baixe o arquivo JSON de credenciais e guarde fora do repositorio publico.
 
 Sugestao local:
@@ -320,8 +375,6 @@ Google Tasks API
 ```
 
 ### Conectar pelo OpenJarvis
-
-A documentacao do OpenJarvis mostra o fluxo com `jarvis connect` para conectores.
 
 Exemplo:
 
@@ -347,8 +400,6 @@ cd ~/OpenJarvis
 uv run jarvis --help
 uv run jarvis connect --help
 ```
-
-### Onde ficam tokens Google
 
 Os tokens normalmente ficam na pasta de conectores:
 
@@ -459,35 +510,6 @@ Speech: faster-whisper
 ```
 
 Se aparecer, o backend de voz foi carregado.
-
-## Testar API local
-
-Com o servidor rodando:
-
-```bash
-curl http://127.0.0.1:8000/health
-```
-
-Para procurar endpoints relacionados a speech na sua versao:
-
-```bash
-curl http://127.0.0.1:8000/openapi.json | python3 -m json.tool | grep -i speech -n
-```
-
-Tambem pode abrir:
-
-```text
-http://127.0.0.1:8000/docs
-```
-
-Procure por:
-
-```text
-speech
-transcribe
-audio
-whisper
-```
 
 ## Se a interface mostra `Not configured`
 
@@ -660,6 +682,7 @@ cd ~/OpenJarvis
 uv run jarvis --version
 uv run jarvis doctor
 uv run jarvis model list
+jarvis
 ```
 
 Ollama:
@@ -688,12 +711,14 @@ aplay teste_microfone.wav
 - Confirmar em cada versao do OpenJarvis quais nomes de conectores Google estao disponiveis no `jarvis connect --help`.
 - Confirmar se a interface web da versao instalada ja reconhece automaticamente o backend local `faster-whisper`.
 - Confirmar quais vozes Kokoro estao disponiveis na versao instalada.
-- Confirmar a configuracao exata de MiniMax na versao atual antes de tratar MiniMax como engine principal.
+- Confirmar se uma build futura do OpenJarvis Desktop passara a expor MiniMax diretamente na tela de Cloud Models / API Keys.
 
 ## Regra de ouro
 
 - Instalacao fica em `install_linux.md` ou `install_windows.md`.
 - Configuracao fica neste arquivo.
+- MiniMax Cloud, nesta build testada, fica documentado como funcionando via CLI.
+- Desktop, nesta build testada, segue limitado ao fluxo local/Ollama e aos provedores exibidos na propria interface.
 - No fluxo principal, nao configure chaves que voce nao vai usar.
 - Google OAuth nao e `GOOGLE_API_KEY`.
 - Nunca colocar tokens, OAuth JSON, API keys ou arquivos de `~/.openjarvis/connectors/` no repositorio.
