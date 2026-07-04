@@ -159,19 +159,7 @@ uv 0.11.26
 uvx 0.11.26
 ```
 
-Se ainda assim o terminal chamar o `uv` errado, use o caminho completo temporariamente:
-
-```bash
-~/.local/bin/uv --version
-~/.local/bin/uvx --version
-```
-
-E nos comandos do OpenJarvis, substitua `uv` por `~/.local/bin/uv` ate corrigir o PATH:
-
-```bash
-cd ~/OpenJarvis
-~/.local/bin/uv sync --extra desktop
-```
+Depois que `which uv` apontar para `~/.local/bin/uv`, use normalmente o comando `uv` nos proximos passos. Nao rode `uv sync` antes de clonar o OpenJarvis, porque esse comando precisa estar dentro da pasta do projeto, onde existe o arquivo `pyproject.toml`.
 
 ## Instalar Rust
 
@@ -205,6 +193,8 @@ ollama list
 Para maquina com pouca VRAM, comece por modelo pequeno. Depois de tudo funcionando, teste modelos maiores.
 
 ## Instalar OpenJarvis manualmente
+
+Agora sim entra a parte do `uv sync`, porque o repositorio sera clonado antes.
 
 ```bash
 cd ~
@@ -387,6 +377,33 @@ source ~/.bashrc
 hash -r
 which uv
 uv --version
+```
+
+**Observacao:**
+
+Depois que `which uv` apontar para `~/.local/bin/uv`, nao precisa usar `~/.local/bin/uv` nos comandos seguintes. Use apenas `uv`.
+
+### `uv sync` antes de clonar o projeto
+
+**O que aconteceu:**
+
+Ao rodar `uv sync --extra desktop` fora da pasta do OpenJarvis, aparece erro parecido com:
+
+```text
+No `pyproject.toml` found in current directory or any parent directory
+```
+
+**Por que acontece:**
+
+`uv sync` precisa ser executado dentro da pasta do projeto, depois do `git clone`, porque ele procura o arquivo `pyproject.toml`.
+
+**Correcao usada:**
+
+```bash
+cd ~
+git clone https://github.com/open-jarvis/OpenJarvis.git
+cd OpenJarvis
+uv sync --extra desktop
 ```
 
 ### `maturin` precisa de Rust
