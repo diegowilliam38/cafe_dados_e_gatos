@@ -2,17 +2,24 @@
 
 Este guia documenta a instalacao do OpenJarvis no Linux usando o repositorio oficial via Git.
 
-O objetivo aqui e usar o projeto clonado como backend real do OpenJarvis e, se quiser usar o Desktop, apontar a interface para esse backend local.
+Objetivo: instalar o OpenJarvis via Git, usar Ollama/local, configurar Google OAuth e speech local com `faster-whisper`.
 
-Este arquivo cobre apenas:
+Este guia nao usa MiniMax.
 
-- instalacao via Git;
-- backend local;
-- Desktop apontando para o backend do Git;
-- Google OAuth;
-- voz e speech-to-text local.
+## Regra principal sobre porta
 
-Este arquivo nao cobre MiniMax.
+Nao troque a porta por padrao.
+
+O OpenJarvis Desktop e o comando `jarvis serve` usam o mesmo servico. Se voce subir o backend manualmente e depois abrir o Desktop, o Desktop pode tentar subir/gerenciar o mesmo backend e derrubar o processo anterior.
+
+Por isso, o padrao deste guia e:
+
+```text
+Backend/API: http://127.0.0.1:8000
+Desktop: usa o mesmo backend/API em http://127.0.0.1:8000
+```
+
+A porta 8001 nao resolve esse caso se o Desktop tambem tentar subir o mesmo servico nela. O problema nao e a porta em si; e abrir dois processos tentando gerenciar o mesmo backend.
 
 ## Fontes oficiais consultadas
 
@@ -22,32 +29,6 @@ Este arquivo nao cobre MiniMax.
 - Releases oficiais do OpenJarvis Desktop: https://github.com/open-jarvis/OpenJarvis/releases/latest
 - Google Workspace OAuth: https://developers.google.com/workspace/guides/configure-oauth-consent
 - Credenciais Google Workspace: https://developers.google.com/workspace/guides/create-credentials
-
-## Ideia deste metodo
-
-Na instalacao via Desktop, pode acontecer de a interface abrir um backend proprio que nao enxerga as dependencias instaladas no projeto clonado.
-
-Neste metodo, usamos o backend do proprio repositorio clonado:
-
-```text
-~/OpenJarvis
-```
-
-E subimos a API local manualmente em uma porta separada, por exemplo:
-
-```text
-http://127.0.0.1:8001
-```
-
-Depois, no OpenJarvis Desktop, apontamos o campo `API URL` para essa porta.
-
-Assim:
-
-```text
-Desktop visual  ->  http://127.0.0.1:8001
-Backend real    ->  ~/OpenJarvis via uv run jarvis serve
-Speech local    ->  faster-whisper instalado no projeto clonado
-```
 
 ## Pre-requisitos
 
@@ -75,6 +56,47 @@ Depois feche e abra o terminal ou rode:
 ```bash
 source "$HOME/.cargo/env"
 ```
+
+## Instalacao limpa opcional
+
+Use esta etapa apenas se voce quer apagar uma instalacao anterior e comecar do zero.
+
+```bash
+pkill -f jarvis
+pkill -f OpenJarvis
+
+rm -rf ~/OpenJarvis
+rm -rf ~/OpenJarvis_old_*
+
+rm -rf ~/.openjarvis
+rm -rf ~/.config/OpenJarvis
+rm -rf ~/.local/share/OpenJarvis
+rm -rf ~/.cache/OpenJarvis
+
+rm -rf ~/.config/openjarvis
+rm -rf ~/.local/share/openjarvis
+rm -rf ~/.cache/openjarvis
+
+rm -rf ~/.config/Jarvis
+rm -rf ~/.local/share/Jarvis
+rm -rf ~/.cache/Jarvis
+
+rm -rf ~/.local/share/com.openjarvis.desktop
+rm -rf ~/.cache/uv
+rm -rf ~/.cache/gnome-software/odrs/OpenJarvis.desktop.json
+
+rm -f ~/Downloads/OpenJarvis*.deb
+rm -f ~/Downloads/openjarvis*.deb
+rm -f ~/Downloads/OpenJarvis_*.AppImage
+```
+
+Confira se sobrou algo:
+
+```bash
+find ~ -iname "*openjarvis*" 2>/dev/null
+```
+
+Arquivos pessoais, como anotacoes `.md` ou `.txt`, podem aparecer no resultado. Apague apenas se tiver certeza.
 
 ## Clonar o repositorio
 
@@ -117,7 +139,7 @@ cd ~/OpenJarvis
 
 ## Baixar e instalar o OpenJarvis Desktop
 
-O repositorio clonado em `~/OpenJarvis` sera usado como backend real. O Desktop precisa ser instalado separadamente para servir como interface visual.
+O repositorio clonado em `~/OpenJarvis` sera usado como base local. O Desktop pode ser instalado separadamente para servir como interface visual.
 
 Baixe o Desktop pela pagina oficial de releases:
 
@@ -149,18 +171,6 @@ sudo apt install ./OpenJarvis_1.0.1_amd64.deb
 
 Depois abra o OpenJarvis Desktop pelo menu de aplicativos.
 
-Importante: neste metodo, o Desktop sera usado apenas como interface visual. O backend real continuara sendo o projeto clonado em:
-
-```text
-~/OpenJarvis
-```
-
-Depois de subir o backend na porta 8001, configure o Desktop para apontar para:
-
-```text
-http://127.0.0.1:8001
-```
-
 ## Configuracao local com Ollama
 
 Este guia usa Ollama como fluxo local principal.
@@ -186,6 +196,7 @@ ollama pull qwen3.5:2b
 Edite a configuracao:
 
 ```bash
+mkdir -p ~/.openjarvis
 nano ~/.openjarvis/config.toml
 ```
 
@@ -214,21 +225,21 @@ cd ~/OpenJarvis
 uv run jarvis ask "Responda apenas: OpenJarvis funcionando."
 ```
 
-## Subir backend local em porta separada
+## Subir backend local no padrao
 
-Para evitar conflito com o Desktop na porta 8000, suba o backend do projeto na porta 8001:
+Use a porta padrao 8000.
 
 ```bash
 cd ~/OpenJarvis
-uv run jarvis serve --host 127.0.0.1 --port 8001
+uv run jarvis serve --host 127.0.0.1 --port 8000
 ```
 
-Deixe este terminal aberto.
+Deixe este terminal aberto somente se voce for testar o backend manualmente.
 
 Em outro terminal, teste:
 
 ```bash
-curl http://127.0.0.1:8001/health
+curl http://127.0.0.1:8000/health
 ```
 
 Resultado esperado:
@@ -237,23 +248,21 @@ Resultado esperado:
 {"status":"ok"}
 ```
 
-## Apontar o Desktop para o backend do Git
+## Importante sobre Desktop e backend
 
-Abra o OpenJarvis Desktop.
+Se o backend manual ja estiver rodando na porta 8000 e voce abrir o Desktop, o Desktop pode tentar subir o mesmo servico e derrubar o processo anterior.
 
-Va em:
+Fluxo recomendado:
 
-```text
-Settings > Connection > API URL
-```
-
-Troque para:
+1. Para testar backend/API, use `uv run jarvis serve --host 127.0.0.1 --port 8000`.
+2. Para usar o Desktop, feche o backend manual antes ou deixe o Desktop gerenciar o backend.
+3. No Desktop, mantenha a API URL no padrao:
 
 ```text
-http://127.0.0.1:8001
+http://127.0.0.1:8000
 ```
 
-A ideia e usar o Desktop apenas como interface visual, enquanto o backend real fica rodando pelo projeto clonado em `~/OpenJarvis`.
+Nao mude para 8001 por padrao.
 
 ## Google OAuth
 
@@ -410,10 +419,10 @@ Se gravou sua voz, o Linux esta capturando audio corretamente.
 
 ## Testar speech no backend local
 
-Com o backend rodando na porta 8001:
+Com o backend rodando na porta 8000:
 
 ```bash
-curl http://127.0.0.1:8001/v1/speech/health
+curl http://127.0.0.1:8000/v1/speech/health
 ```
 
 Resultado esperado:
@@ -444,20 +453,20 @@ Depois reinicie o backend.
 Se uma porta ficar presa:
 
 ```bash
-lsof -i :8001
+lsof -i :8000
 ```
 
-Para matar processo na porta 8001:
+Para matar processo na porta 8000:
 
 ```bash
-fuser -k 8001/tcp
+fuser -k 8000/tcp
 ```
 
 Depois suba novamente:
 
 ```bash
 cd ~/OpenJarvis
-uv run jarvis serve --host 127.0.0.1 --port 8001
+uv run jarvis serve --host 127.0.0.1 --port 8000
 ```
 
 ## Fluxo recomendado para gravacao
@@ -468,36 +477,37 @@ Terminal 1:
 ollama serve
 ```
 
-Terminal 2:
+Terminal 2, apenas se for testar backend manual:
 
 ```bash
 cd ~/OpenJarvis
-uv run jarvis serve --host 127.0.0.1 --port 8001
+uv run jarvis serve --host 127.0.0.1 --port 8000
 ```
 
 Desktop:
 
 ```text
-Settings > Connection > API URL = http://127.0.0.1:8001
+API URL = http://127.0.0.1:8000
 ```
 
 Teste:
 
 ```bash
-curl http://127.0.0.1:8001/health
-curl http://127.0.0.1:8001/v1/speech/health
+curl http://127.0.0.1:8000/health
+curl http://127.0.0.1:8000/v1/speech/health
 ```
 
 ## O que este metodo resolve
 
-Este metodo evita depender do backend embutido que o Desktop pode abrir sozinho na porta 8000.
+Este metodo documenta a instalacao limpa via Git, com configuracao local do Ollama, Google OAuth e speech local.
 
-Em vez disso, voce controla o backend do projeto clonado, com as dependencias instaladas no ambiente correto.
+Ele nao tenta resolver conflito usando outra porta, porque o Desktop pode subir o mesmo servico de qualquer forma.
 
 ## Regra de ouro
 
-- Backend real: `~/OpenJarvis`.
-- Porta recomendada para este metodo: `8001`.
-- Desktop: apenas interface visual apontando para `http://127.0.0.1:8001`.
+- Porta padrao: `8000`.
+- Nao trocar para `8001` por padrao.
+- Se o Desktop derrubar o `serve`, nao e bug da porta: e conflito de gerenciamento do mesmo backend.
+- Para usar Desktop, deixe o Desktop gerenciar o backend ou feche o `serve` manual antes de abrir.
 - OAuth JSON, tokens e API keys nunca devem ir para o GitHub.
 - Este guia nao usa MiniMax.
