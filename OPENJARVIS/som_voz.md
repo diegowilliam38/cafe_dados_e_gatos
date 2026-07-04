@@ -1,166 +1,194 @@
 # OpenJarvis no Linux: som, microfone, voz e speech backend
 
-Este documento é focado apenas na parte de som e voz do OpenJarvis no Linux.
+Este guia organiza apenas a parte de áudio e voz do OpenJarvis no Linux.
 
-A ideia é separar esta etapa da configuração geral. Primeiro o OpenJarvis precisa estar instalado, rodando e respondendo por texto. Depois configuramos microfone, entrada de voz, Speech-to-Text e, se necessário, TTS.
-
-> Este material é para teste prático em Linux. A documentação oficial do OpenJarvis ainda não deixa todos os detalhes de voz em formato de passo a passo único, então este arquivo separa o que foi confirmado na documentação/código do projeto e o que precisa ser validado no ambiente real.
+Objetivo: fazer o OpenJarvis reconhecer o microfone e usar Speech-to-Text local com `faster-whisper`, sem API paga.
 
 ---
 
-## Fontes oficiais consultadas
+## 1. Referências oficiais verificadas
 
-- Documentação oficial do OpenJarvis: https://open-jarvis.github.io/OpenJarvis/
-- Instalação oficial: https://open-jarvis.github.io/OpenJarvis/getting-started/installation/
-- Configuração oficial: https://open-jarvis.github.io/OpenJarvis/getting-started/configuration/
-- Repositório oficial: https://github.com/open-jarvis/OpenJarvis
-- `pyproject.toml` oficial do OpenJarvis: confirma os extras `desktop`, `speech` e `speech-deepgram`.
-- Interface de configurações do OpenJarvis: mostra a seção **Speech**, o toggle **Speech-to-Text** e o status **Requires Whisper, Deepgram, or another speech backend**.
+- Documentação oficial de configuração: https://open-jarvis.github.io/OpenJarvis/getting-started/configuration/
+- Documentação oficial de instalação: https://open-jarvis.github.io/OpenJarvis/getting-started/installation/
+- Código oficial de descoberta de speech: `src/openjarvis/speech/_discovery.py`
+- Código oficial de configuração: `src/openjarvis/core/config.py`
+- Código oficial do Faster-Whisper: `src/openjarvis/speech/faster_whisper.py`
 
----
+Pontos confirmados:
 
-## Ambiente testado no vídeo
+- O arquivo de configuração padrão fica em:
 
-Preencher durante a gravação:
-
-```markdown
-- Sistema operacional:
-- Versão:
-- Ambiente gráfico:
-- Terminal/shell:
-- Microfone usado:
-- Placa de som:
-- Instalação do OpenJarvis:
-- Modelo usado:
-- Data do teste:
+```bash
+~/.openjarvis/config.toml
 ```
 
----
+- Também é possível confirmar o caminho real com:
 
-## O que esta etapa configura
+```bash
+jarvis config path
+```
 
-Esta etapa pode envolver três coisas diferentes:
+- A seção correta para voz no `config.toml` é:
 
-| Recurso | Função |
-|---|---|
-| Microfone no Linux | Capturar sua voz no sistema operacional |
-| Speech-to-Text / STT | Transformar sua fala em texto |
-| Text-to-Speech / TTS | Transformar resposta do agente em áudio |
+```toml
+[speech]
+```
 
-No OpenJarvis, a mensagem mais comum na tela de configurações é:
+- Os campos oficiais da seção `[speech]` são:
+
+```toml
+backend = "auto"
+model = "base"
+language = ""
+device = "auto"
+compute_type = "float16"
+```
+
+- Backends oficiais detectados automaticamente:
 
 ```text
-Requires Whisper, Deepgram, or another speech backend
-```
-
-Isso significa que o backend principal pode estar funcionando, mas a parte de fala ainda não está configurada.
-
-Resumo:
-
-```text
-OpenJarvis respondendo por texto = instalação principal funcionando.
-Speech backend ausente = voz/microfone ainda não configurado.
+faster-whisper
+openai
+deepgram
 ```
 
 ---
 
-## Verificar se o OpenJarvis está funcionando por texto
+## 2. Importante: erro anterior corrigido
 
-Antes de mexer em áudio, confirme que o básico funciona.
+Não use YAML no `config.toml`.
 
-Se o comando `jarvis` está disponível globalmente:
+Errado para `config.toml`:
 
-```bash
-jarvis doctor
-jarvis ask "Responda apenas: OpenJarvis funcionando por texto."
+```yaml
+speech:
+  stt:
+    backend: faster-whisper
 ```
 
-Se você usa `uv` dentro da pasta do projeto:
+Isso dá erro porque `config.toml` usa sintaxe TOML, não YAML.
 
-```bash
-cd ~/OpenJarvis
-uv run jarvis doctor
-uv run jarvis ask "Responda apenas: OpenJarvis funcionando por texto."
+Correto para `config.toml`:
+
+```toml
+[speech]
+backend = "faster-whisper"
+model = "base"
+device = "auto"
+compute_type = "int8"
+language = ""
 ```
-
-Se isso falhar, resolva a instalação principal antes de configurar voz.
 
 ---
 
-## Verificar microfone no Linux
+## 3. Arquivo que deve ser editado
 
-Antes de culpar o OpenJarvis, teste se o Linux está capturando áudio.
-
-Instale ferramentas úteis de áudio:
+O arquivo padrão é:
 
 ```bash
-sudo apt update
-sudo apt install -y alsa-utils pulseaudio-utils pavucontrol
+~/.openjarvis/config.toml
 ```
 
-Liste dispositivos de captura:
+Para abrir no terminal:
 
 ```bash
-arecord -l
+nano ~/.openjarvis/config.toml
 ```
 
-Teste gravação curta:
+Ou, antes, confirme o caminho real:
 
 ```bash
-arecord -d 5 -f cd teste_microfone.wav
+jarvis config path
 ```
 
-Reproduza o teste:
-
-```bash
-aplay teste_microfone.wav
-```
-
-Se estiver usando PipeWire/PulseAudio, confira fontes de entrada:
-
-```bash
-pactl list short sources
-```
-
-Abra o controle gráfico de áudio:
-
-```bash
-pavucontrol
-```
-
-No `pavucontrol`, confira:
-
-- aba **Input Devices**;
-- microfone correto selecionado;
-- volume de entrada;
-- se o microfone não está mutado;
-- se o navegador/app do OpenJarvis tem permissão de microfone.
+Se você usa variável de ambiente como `OPENJARVIS_HOME`, o caminho pode mudar. Por isso, o comando `jarvis config path` é o mais seguro.
 
 ---
 
-## Instalar dependência de fala local com Whisper
+## 4. Configuração recomendada para Faster-Whisper local
 
-No `pyproject.toml` oficial do OpenJarvis, o extra `speech` instala:
+Cole ou ajuste este bloco no `~/.openjarvis/config.toml`:
 
-```text
-faster-whisper>=1.0
+```toml
+[speech]
+backend = "faster-whisper"
+model = "base"
+device = "auto"
+compute_type = "int8"
+language = ""
 ```
 
-Se você usa OpenJarvis a partir do repositório com `uv`, rode:
+Explicação rápida:
+
+| Campo | Valor | Função |
+|---|---|---|
+| `backend` | `faster-whisper` | força o backend local |
+| `model` | `base` | modelo Whisper local inicial |
+| `device` | `auto` | deixa o OpenJarvis escolher CPU/GPU |
+| `compute_type` | `int8` | mais leve para máquinas comuns |
+| `language` | `""` | deixa detectar idioma automaticamente |
+
+Se quiser tentar melhor qualidade e a máquina aguentar:
+
+```toml
+[speech]
+backend = "faster-whisper"
+model = "small"
+device = "auto"
+compute_type = "int8"
+language = ""
+```
+
+Se ficar pesado:
+
+```toml
+[speech]
+backend = "faster-whisper"
+model = "tiny"
+device = "auto"
+compute_type = "int8"
+language = ""
+```
+
+---
+
+## 5. Alternativa sem editar o arquivo manualmente
+
+Também dá para tentar configurar pelo próprio CLI:
 
 ```bash
-cd ~/OpenJarvis
-uv sync --extra speech
+jarvis config set speech.backend faster-whisper
+jarvis config set speech.model base
+jarvis config set speech.device auto
+jarvis config set speech.compute_type int8
+jarvis config set speech.language ""
 ```
 
-Se você usa o extra desktop, ele também inclui `faster-whisper`:
+Depois confira:
+
+```bash
+cat ~/.openjarvis/config.toml | grep -A 10 '\[speech\]'
+```
+
+---
+
+## 6. Instalar ou confirmar Faster-Whisper
+
+Se ainda não instalou os extras de voz/desktop:
 
 ```bash
 cd ~/OpenJarvis
 uv sync --extra desktop
 ```
 
-Para conferir se o pacote está disponível no ambiente do projeto:
+Ou apenas o extra de speech:
+
+```bash
+cd ~/OpenJarvis
+uv sync --extra speech
+```
+
+Teste se o pacote está disponível dentro do ambiente do OpenJarvis:
 
 ```bash
 cd ~/OpenJarvis
@@ -178,119 +206,55 @@ faster_whisper instalado: True
 
 ---
 
-## Configuração para copiar e colar quando o Faster-Whisper já está instalado
+## 7. Rodar o servidor
 
-Se o `faster-whisper` já está instalado, não precisa instalar de novo. O próximo passo é garantir que o OpenJarvis esteja apontando para o backend local.
-
-Procure no arquivo de configuração uma área parecida com `speech`, `stt`, `backend`, `whisper` ou `speech-to-text`.
-
-Cole ou adapte este bloco:
-
-```yaml
-speech:
-  stt:
-    backend: faster-whisper
-    model_size: base
-    device: auto
-    compute_type: int8
-```
-
-Se a versão instalada não aceitar o nome com hífen, teste o mesmo bloco usando underscore:
-
-```yaml
-speech:
-  stt:
-    backend: faster_whisper
-    model_size: base
-    device: auto
-    compute_type: int8
-```
-
-Para máquinas mais fracas, troque `model_size: base` por:
-
-```yaml
-model_size: tiny
-```
-
-ou:
-
-```yaml
-model_size: small
-```
-
-Depois reinicie o OpenJarvis:
+Depois de ajustar o `config.toml`, reinicie o servidor:
 
 ```bash
 cd ~/OpenJarvis
-uv run jarvis serve
+uv run jarvis serve --host 127.0.0.1 --port 8000
 ```
 
-Atualize a interface no navegador. O status esperado é sair de `Not configured`.
-
-Se continuar como `Not configured`, rode o teste de import dentro do ambiente do OpenJarvis:
-
-```bash
-cd ~/OpenJarvis
-uv run python - <<'PY'
-try:
-    import faster_whisper
-    print('faster-whisper instalado: OK')
-except Exception as e:
-    print('faster-whisper erro:', e)
-PY
-```
-
-Observação: dependendo da versão do OpenJarvis, o backend local pode existir no código, mas ainda não estar conectado diretamente à chave usada pela interface. Nesse caso, o pacote está instalado, mas a interface ainda pode mostrar `Not configured` até o arquivo de configuração ou a integração interna reconhecer esse backend.
-
----
-
-## Leitura do log ao rodar `jarvis serve`
-
-Exemplo real do log:
-
-```text
-  ___                       _                  _
- / _ \ _ __   ___ _ __     | | __ _ _ ____   _(_)___
-| | | | '_ \ / _ \ '_ \ _  | |/ _` | '__\ \ / / / __|
-| |_| | |_) |  __/ | | | |_| | (_| | |   \ V /| \__ \
- \___/| .__/ \___|_| |_|\___/ \__,_|_|    \_/ |_|___/
-      |_|
-      Personal AI, On Personal Devices
-
-  Energy: nvidia (polling)
-  Speech: faster-whisper
-WARNING openjarvis.agents.scheduler: croniter not installed, treating cron as 3600s interval
-  Scheduler: active
-Starting OpenJarvis API server
-  Engine: ollama
-  Model:  qwen3.5:2b
-  Agent:  orchestrator
-  URL:    http://127.0.0.1:8000
-INFO:     Started server process [111570]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-```
-
-Como interpretar:
+No log, procure esta linha:
 
 ```text
 Speech: faster-whisper
 ```
 
-Essa linha é boa. Ela indica que o OpenJarvis carregou o backend de fala como `faster-whisper`. Ou seja: o pacote/local speech backend foi reconhecido pelo servidor.
+Se aparecer, o backend local de fala foi reconhecido pelo OpenJarvis.
+
+Exemplo real:
 
 ```text
 Energy: nvidia (polling)
+Speech: faster-whisper
+WARNING openjarvis.agents.scheduler: croniter not installed, treating cron as 3600s interval
+Scheduler: active
+Starting OpenJarvis API server
+Engine: ollama
+Model:  qwen3.5:2b
+Agent:  orchestrator
+URL:    http://127.0.0.1:8000
+Uvicorn running on http://127.0.0.1:8000
 ```
 
-Indica que o OpenJarvis detectou energia/telemetria relacionada à NVIDIA. Não é erro.
+Interpretação:
+
+```text
+Speech: faster-whisper = backend de voz carregado corretamente.
+Uvicorn running = API do OpenJarvis subiu corretamente.
+croniter not installed = aviso do scheduler, não é erro de voz.
+```
+
+---
+
+## 8. Corrigir aviso `croniter not installed`
+
+Esse aviso não impede a voz de funcionar:
 
 ```text
 WARNING openjarvis.agents.scheduler: croniter not installed, treating cron as 3600s interval
 ```
-
-É apenas um aviso do agendador. Significa que o pacote `croniter` não está instalado e, por isso, expressões cron serão tratadas como intervalo de 3600 segundos. Isso não impede o servidor nem a voz de funcionarem.
 
 Se quiser remover o aviso:
 
@@ -299,482 +263,199 @@ cd ~/OpenJarvis
 uv add croniter
 ```
 
-ou, se estiver apenas sincronizando dependências do projeto:
+Depois reinicie:
 
 ```bash
-cd ~/OpenJarvis
-uv sync --extra desktop
-```
-
-```text
-Uvicorn running on http://127.0.0.1:8000
-```
-
-Essa linha confirma que a API subiu corretamente na porta `8000`.
-
-Conclusão desse log:
-
-```text
-O servidor subiu.
-O backend speech foi detectado como faster-whisper.
-O problema, se ainda existir na interface, provavelmente está entre navegador/interface/permissão de microfone/endpoint de status, não mais na instalação do faster-whisper.
-```
-
----
-
-## Instalar backend Deepgram
-
-O `pyproject.toml` oficial também mostra o extra:
-
-```text
-speech-deepgram = ["deepgram-sdk>=3.0"]
-```
-
-Para instalar:
-
-```bash
-cd ~/OpenJarvis
-uv sync --extra speech-deepgram
-```
-
-Configure a chave da Deepgram como variável de ambiente:
-
-```bash
-export DEEPGRAM_API_KEY="COLE_SUA_CHAVE_AQUI"
-```
-
-Para persistir no terminal Bash:
-
-```bash
-nano ~/.bashrc
-```
-
-Adicione:
-
-```bash
-export DEEPGRAM_API_KEY="COLE_SUA_CHAVE_AQUI"
-```
-
-Recarregue:
-
-```bash
-source ~/.bashrc
-```
-
-Teste sem mostrar a chave:
-
-```bash
-python3 - <<'PY'
-import os
-print('DEEPGRAM_API_KEY configurada:', bool(os.getenv('DEEPGRAM_API_KEY')))
-PY
-```
-
-> Não encontrei, na documentação oficial aberta, um passo a passo completo dizendo qual nome de backend selecionar dentro do `config.toml` para Deepgram. O extra oficial existe, mas o teste prático precisa confirmar como a versão instalada expõe essa opção.
-
----
-
-## Conferir status de voz na interface
-
-Com o servidor rodando:
-
-```bash
-cd ~/OpenJarvis
 uv run jarvis serve --host 127.0.0.1 --port 8000
 ```
 
-Abra a interface do OpenJarvis.
-
-Vá em:
-
-```text
-Settings > Speech
-```
-
-Confira:
-
-- **Speech-to-Text** ativado;
-- **Backend status**;
-- se aparece `Available` ou `Not configured`;
-- se o navegador/app pediu permissão de microfone.
-
-Se o log do terminal mostra:
-
-```text
-Speech: faster-whisper
-```
-
-mas a interface ainda mostra:
-
-```text
-Not configured
-```
-
-então o backend provavelmente foi carregado pelo servidor, mas a interface ainda não está conseguindo confirmar o status. Nesse caso, teste:
-
-```bash
-curl http://127.0.0.1:8000/health
-curl http://127.0.0.1:8000/openapi.json | python3 -m json.tool | grep -i speech -n
-```
-
-E confira também a permissão do microfone no navegador.
-
 ---
 
-## Testar endpoint de saúde do backend de voz
+## 9. Testar microfone no Linux antes da interface
 
-A interface do OpenJarvis consulta um status de speech no backend.
+Antes de culpar o OpenJarvis, confirme que o Linux grava áudio.
 
-Com o servidor rodando na porta `8000`, teste:
-
-```bash
-curl http://127.0.0.1:8000/health
-```
-
-Depois tente localizar endpoints relacionados a speech na documentação aberta da API, se disponível na sua versão local:
-
-```bash
-curl http://127.0.0.1:8000/openapi.json | python3 -m json.tool | grep -i speech -n
-```
-
-Se o projeto expuser documentação automática, abra:
-
-```text
-http://127.0.0.1:8000/docs
-```
-
-Procure por termos como:
-
-```text
-speech
-transcribe
-audio
-microphone
-whisper
-```
-
-> Este ponto precisa ser validado na versão instalada, porque os endpoints podem mudar entre builds.
-
----
-
-## Testar microfone no navegador
-
-Se você usa a interface web, o navegador precisa liberar o microfone.
-
-No Chromium/Chrome/Edge:
-
-```text
-Clique no cadeado ao lado do endereço > Site settings > Microphone > Allow
-```
-
-Endereço comum da interface:
-
-```text
-http://127.0.0.1:5173
-```
-
-ou:
-
-```text
-http://localhost:5173
-```
-
-Depois recarregue a página.
-
----
-
-## Fluxo copy-paste recomendado para Linux
-
-Este bloco é o fluxo principal para testar voz local com Whisper/faster-whisper.
+Instale ferramentas úteis:
 
 ```bash
 sudo apt update
 sudo apt install -y alsa-utils pulseaudio-utils pavucontrol
+```
 
+Liste dispositivos de captura:
+
+```bash
 arecord -l
+```
+
+Grave 5 segundos:
+
+```bash
 arecord -d 5 -f cd teste_microfone.wav
+```
+
+Reproduza:
+
+```bash
 aplay teste_microfone.wav
-
-cd ~/OpenJarvis
-uv sync --extra speech
-uv run python - <<'PY'
-import importlib.util
-print('faster_whisper instalado:', importlib.util.find_spec('faster_whisper') is not None)
-PY
-uv run jarvis serve --host 127.0.0.1 --port 8000
 ```
 
-Depois abra a interface e confira:
-
-```text
-Settings > Speech > Backend status
-```
-
----
-
-## Fluxo alternativo com Deepgram
-
-Use este caminho se quiser testar STT em nuvem com Deepgram.
-
-```bash
-cd ~/OpenJarvis
-uv sync --extra speech-deepgram
-export DEEPGRAM_API_KEY="COLE_SUA_CHAVE_AQUI"
-python3 - <<'PY'
-import os
-print('DEEPGRAM_API_KEY configurada:', bool(os.getenv('DEEPGRAM_API_KEY')))
-PY
-uv run jarvis serve --host 127.0.0.1 --port 8000
-```
-
-Depois abra:
-
-```text
-Settings > Speech
-```
-
-> Ponto pendente: confirmar na prática se a versão instalada detecta Deepgram automaticamente ou se exige ajuste adicional no `config.toml`.
-
----
-
-## Possíveis problemas e correções
-
-### Microfone não aparece no Linux
-
-**O que verificar:**
-
-```bash
-arecord -l
-pactl list short sources
-```
-
-**Correção provável:**
-
-Abrir o controle de áudio:
+Se não gravar, abra:
 
 ```bash
 pavucontrol
 ```
 
-Selecionar o dispositivo correto em **Input Devices**.
+Confira em **Input Devices**:
+
+- microfone correto;
+- volume de entrada;
+- se não está mutado;
+- se o navegador/app tem permissão de microfone.
 
 ---
 
-### Microfone grava mudo
+## 10. Testar status da API
 
-**O que verificar:**
+Com o servidor rodando em `127.0.0.1:8000`:
 
 ```bash
-alsamixer
+curl http://127.0.0.1:8000/health
 ```
 
-No `alsamixer`:
+Para procurar endpoints relacionados a speech na sua versão local:
 
-- pressione `F4` para captura;
-- veja se o microfone está mutado;
-- aumente o volume de captura.
+```bash
+curl http://127.0.0.1:8000/openapi.json | python3 -m json.tool | grep -i speech -n
+```
+
+Também pode abrir:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+Procure por:
+
+```text
+speech
+transcribe
+audio
+whisper
+```
 
 ---
 
-### Interface mostra `Not configured`
+## 11. Se a interface mostra `Not configured`
 
-**O que aconteceu:**
+Primeiro olhe o terminal.
 
-O OpenJarvis está rodando, mas a interface não confirmou o backend de fala.
-
-**Primeira checagem:** olhe o log do `jarvis serve`.
-
-Se aparecer:
+Se o terminal mostra:
 
 ```text
 Speech: faster-whisper
 ```
 
-isso é um bom sinal: o servidor reconheceu o backend de fala.
+então o backend foi carregado pelo servidor.
 
-**Correção para Whisper local:**
+Nesse caso, o problema provavelmente não é mais a instalação do Faster-Whisper. Verifique:
+
+1. Permissão de microfone no navegador.
+2. Se a interface está falando com a API certa em `http://127.0.0.1:8000`.
+3. Se a interface foi recarregada depois de reiniciar o backend.
+4. Se existe endpoint de speech na versão atual.
+
+No navegador Chromium/Chrome/Edge:
+
+```text
+Clique no cadeado ao lado do endereço > Site settings > Microphone > Allow
+```
+
+Depois recarregue a interface.
+
+---
+
+## 12. Fluxo copy-paste completo
 
 ```bash
+# 1. Entrar na pasta do projeto
 cd ~/OpenJarvis
-uv sync --extra speech
+
+# 2. Instalar extras de desktop/speech
+uv sync --extra desktop
+
+# 3. Confirmar pacote local
 uv run python - <<'PY'
 import importlib.util
 print('faster_whisper instalado:', importlib.util.find_spec('faster_whisper') is not None)
 PY
+
+# 4. Confirmar caminho do config
+jarvis config path
+
+# 5. Editar config
+nano ~/.openjarvis/config.toml
 ```
 
-Reinicie o servidor:
+Dentro do `config.toml`, colocar:
+
+```toml
+[speech]
+backend = "faster-whisper"
+model = "base"
+device = "auto"
+compute_type = "int8"
+language = ""
+```
+
+Depois rodar:
 
 ```bash
-cd ~/OpenJarvis
 uv run jarvis serve --host 127.0.0.1 --port 8000
 ```
 
-Se o terminal mostrar `Speech: faster-whisper`, mas a interface continuar como `Not configured`, verifique permissão de microfone e endpoints da API:
-
-```bash
-curl http://127.0.0.1:8000/health
-curl http://127.0.0.1:8000/openapi.json | python3 -m json.tool | grep -i speech -n
-```
-
----
-
-### Aviso `croniter not installed`
-
-Esse aviso não é erro de voz:
-
-```text
-WARNING openjarvis.agents.scheduler: croniter not installed, treating cron as 3600s interval
-```
-
-Ele apenas diz que o agendador vai tratar cron como intervalo de 3600 segundos.
-
-Para tentar remover o aviso:
-
-```bash
-cd ~/OpenJarvis
-uv add croniter
-```
-
-ou:
-
-```bash
-cd ~/OpenJarvis
-uv sync --extra desktop
-```
-
----
-
-### Navegador não pede microfone
-
-**O que verificar:**
-
-No navegador:
-
-```text
-Site settings > Microphone > Allow
-```
-
-Depois recarregue a página.
-
----
-
-### Deepgram instalado, mas não funciona
-
-**O que verificar:**
-
-```bash
-python3 - <<'PY'
-import os
-print('DEEPGRAM_API_KEY configurada:', bool(os.getenv('DEEPGRAM_API_KEY')))
-PY
-```
-
-Se aparecer `False`, configure a variável:
-
-```bash
-export DEEPGRAM_API_KEY="COLE_SUA_CHAVE_AQUI"
-```
-
-Se ainda assim não funcionar, registrar no teste:
-
-```text
-O extra speech-deepgram existe oficialmente, mas a versão testada não detectou automaticamente o backend sem configuração adicional.
-```
-
----
-
-## O que mostrar no vídeo
-
-### Abertura
-
-```text
-Neste vídeo eu não vou reinstalar o OpenJarvis. Ele já está rodando. Agora eu vou separar uma parte que costuma confundir bastante: som, microfone e voz. Uma coisa é o Jarvis responder por texto. Outra coisa é ele conseguir ouvir sua voz e transformar áudio em texto.
-```
-
-### Explicação curta
-
-```text
-Quando aparece a mensagem Requires Whisper, Deepgram, or another speech backend, não significa necessariamente que o OpenJarvis quebrou. Significa que o backend principal está funcionando, mas a parte de fala ainda precisa de um motor de speech-to-text.
-```
-
-### Demonstração
-
-Mostrar:
-
-```bash
-arecord -l
-arecord -d 5 -f cd teste_microfone.wav
-aplay teste_microfone.wav
-```
-
-Depois:
-
-```bash
-cd ~/OpenJarvis
-uv sync --extra speech
-uv run jarvis serve --host 127.0.0.1 --port 8000
-```
-
-Mostrar no log:
+Resultado esperado no log:
 
 ```text
 Speech: faster-whisper
 ```
 
-E explicar:
+---
+
+## 13. Roteiro curto para o vídeo
 
 ```text
-Essa linha indica que o OpenJarvis reconheceu o backend local de fala. Se a interface ainda mostrar Not configured, eu passo a investigar a permissão do microfone, a comunicação da interface com a API e os endpoints de speech.
+A primeira coisa importante: o arquivo correto é ~/.openjarvis/config.toml. E ele usa TOML, não YAML. Então a configuração de voz não entra como speech: stt: backend. Ela entra como uma seção [speech].
 ```
 
-E conferir na interface:
-
 ```text
-Settings > Speech
+No meu caso, o backend local é o faster-whisper. Quando eu rodo jarvis serve e aparece Speech: faster-whisper no terminal, isso quer dizer que o OpenJarvis reconheceu o backend local de fala.
 ```
 
-### Fechamento
-
 ```text
-Então o raciocínio é: primeiro o Linux precisa enxergar o microfone. Depois o OpenJarvis precisa ter um backend de fala, como Whisper ou Deepgram. Se o log mostra Speech: faster-whisper, a instalação do backend local já foi reconhecida. A partir daí, o diagnóstico passa para navegador, permissão de microfone e status da interface.
+Se mesmo assim a interface mostrar Not configured, eu não reinstalo o faster-whisper. Eu passo a verificar permissão de microfone, se a interface está apontando para a API correta e se os endpoints de speech aparecem no openapi.json.
 ```
 
 ---
 
-## O que ficou pendente
+## 14. Resumo final
 
-- Confirmar, na instalação real, se `uv sync --extra speech` é suficiente para o status aparecer como `Available`.
-- Confirmar se Deepgram é detectado automaticamente ou se precisa de configuração adicional no `config.toml`.
-- Confirmar se a versão atual expõe endpoints específicos de speech em `/docs` ou `/openapi.json`.
-- Testar TTS separadamente, porque a parte visível da interface consultada fala principalmente de **Speech-to-Text**.
-- Confirmar se, quando o log mostra `Speech: faster-whisper`, a interface muda para disponível depois de liberar microfone/recarregar navegador.
-
----
-
-## Resumo final
-
-Para áudio funcionar, siga esta ordem:
+O caminho correto é:
 
 ```text
-Linux reconhece o microfone
-↓
-OpenJarvis responde por texto
-↓
-Backend de fala instalado: Whisper/faster-whisper ou Deepgram
-↓
-Log do servidor mostra Speech: faster-whisper
-↓
-Servidor reiniciado
-↓
-Permissão de microfone liberada no navegador/app
-↓
-Settings > Speech mostra backend disponível
+Arquivo: ~/.openjarvis/config.toml
+Seção: [speech]
+Backend local: backend = "faster-whisper"
+Log esperado: Speech: faster-whisper
 ```
 
-Resumo do diagnóstico atual:
+Configuração principal:
 
-```text
-Se o log mostra Speech: faster-whisper, o backend local foi reconhecido pelo OpenJarvis.
-Se a interface ainda mostra Not configured, o próximo foco é navegador, permissão de microfone ou endpoint de status.
+```toml
+[speech]
+backend = "faster-whisper"
+model = "base"
+device = "auto"
+compute_type = "int8"
+language = ""
 ```
