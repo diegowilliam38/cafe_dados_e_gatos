@@ -207,6 +207,62 @@ uv run jarvis model list
 uv run jarvis doctor
 ```
 
+### Configuracao MiniMax Cloud com M3
+
+Se o MiniMax M2.7 ja funcionou, a chave e a engine cloud estao corretas. Para testar o MiniMax M3, edite o arquivo:
+
+```bash
+nano ~/.openjarvis/config.toml
+```
+
+Cole ou ajuste:
+
+```toml
+# OpenJarvis configuration
+# MiniMax Cloud
+
+[engine]
+default = "cloud"
+
+[engine.ollama]
+host = "http://localhost:11434"
+
+[intelligence]
+default_model = "MiniMax-M3"
+fallback_model = "MiniMax-M2.7"
+preferred_engine = "cloud"
+provider = "minimax"
+temperature = 0.7
+max_tokens = 2048
+
+[agent]
+default_agent = "orchestrator"
+max_turns = 10
+context_from_memory = true
+
+[tools]
+enabled = ["code_interpreter", "web_search", "file_read", "shell_exec"]
+```
+
+Teste:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis ask "Responda apenas: MiniMax-M3 funcionando."
+```
+
+Se o M3 nao estiver liberado ou o nome do modelo nao for aceito na sua conta, volte temporariamente para:
+
+```toml
+[intelligence]
+default_model = "MiniMax-M2.7"
+fallback_model = "MiniMax-M2.7-highspeed"
+preferred_engine = "cloud"
+provider = "minimax"
+temperature = 0.7
+max_tokens = 2048
+```
+
 Se o comando ou a engine MiniMax nao aparecerem, confira a documentacao da versao atual antes de forcar configuracao manual.
 
 ## Google OAuth para Drive, Gmail, Calendar, Contacts e Tasks
