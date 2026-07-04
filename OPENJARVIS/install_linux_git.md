@@ -19,6 +19,7 @@ Este arquivo nao cobre MiniMax.
 - Instalacao oficial do OpenJarvis: https://open-jarvis.github.io/OpenJarvis/getting-started/installation/
 - Configuracao oficial do OpenJarvis: https://open-jarvis.github.io/OpenJarvis/getting-started/configuration/
 - API Server do OpenJarvis: https://open-jarvis.github.io/OpenJarvis/deployment/api-server/
+- Releases oficiais do OpenJarvis Desktop: https://github.com/open-jarvis/OpenJarvis/releases/latest
 - Google Workspace OAuth: https://developers.google.com/workspace/guides/configure-oauth-consent
 - Credenciais Google Workspace: https://developers.google.com/workspace/guides/create-credentials
 
@@ -112,6 +113,52 @@ uv run maturin develop -m rust/crates/openjarvis-python/Cargo.toml
 cd ~/OpenJarvis/frontend
 npm install
 cd ~/OpenJarvis
+```
+
+## Baixar e instalar o OpenJarvis Desktop
+
+O repositorio clonado em `~/OpenJarvis` sera usado como backend real. O Desktop precisa ser instalado separadamente para servir como interface visual.
+
+Baixe o Desktop pela pagina oficial de releases:
+
+```text
+https://github.com/open-jarvis/OpenJarvis/releases/latest
+```
+
+No Ubuntu/Debian, baixe o arquivo `.deb` disponivel na release.
+
+Exemplo usado na release desktop-v1.0.2:
+
+```text
+OpenJarvis_1.0.1_amd64.deb
+```
+
+Download direto:
+
+```bash
+cd ~/Downloads
+wget https://github.com/open-jarvis/OpenJarvis/releases/download/desktop-v1.0.2/OpenJarvis_1.0.1_amd64.deb
+```
+
+Instale:
+
+```bash
+cd ~/Downloads
+sudo apt install ./OpenJarvis_1.0.1_amd64.deb
+```
+
+Depois abra o OpenJarvis Desktop pelo menu de aplicativos.
+
+Importante: neste metodo, o Desktop sera usado apenas como interface visual. O backend real continuara sendo o projeto clonado em:
+
+```text
+~/OpenJarvis
+```
+
+Depois de subir o backend na porta 8001, configure o Desktop para apontar para:
+
+```text
+http://127.0.0.1:8001
 ```
 
 ## Configuracao local com Ollama
