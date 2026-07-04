@@ -411,25 +411,12 @@ Nunca suba estes arquivos para o GitHub.
 
 ## Configurar som e microfone no Linux
 
-Antes de culpar o OpenJarvis, confirme que o Linux reconhece o microfone.
+Como o microfone ja funciona no sistema, nao troque o dispositivo manualmente.
 
-Instale ferramentas de audio:
-
-```bash
-sudo apt update
-sudo apt install -y alsa-utils pulseaudio-utils pavucontrol
-```
-
-Liste dispositivos de captura:
+Para validar rapidamente a captura padrao, grave 5 segundos:
 
 ```bash
-arecord -l
-```
-
-Grave 5 segundos:
-
-```bash
-arecord -d 5 -f cd teste_microfone.wav
+arecord -d 5 teste_microfone.wav
 ```
 
 Reproduza:
@@ -437,6 +424,8 @@ Reproduza:
 ```bash
 aplay teste_microfone.wav
 ```
+
+Se gravou sua voz, o Linux ja esta capturando audio corretamente.
 
 Se nao gravar, abra o controle de audio:
 
@@ -701,8 +690,7 @@ curl http://127.0.0.1:8000/health
 Audio:
 
 ```bash
-arecord -l
-arecord -d 5 -f cd teste_microfone.wav
+arecord -d 5 teste_microfone.wav
 aplay teste_microfone.wav
 ```
 
