@@ -2,13 +2,16 @@
 
 Guia unico para configurar o OpenJarvis depois da instalacao.
 
-Use este documento para organizar `config.toml`, engines, modelos, variaveis de ambiente, Google OAuth, conectores, som, microfone, speech-to-text e text-to-speech.
-
 A instalacao Linux fica em [`install_linux.md`](./install_linux.md). A instalacao Windows fica em [`install_windows.md`](./install_windows.md).
 
 ## Objetivo
 
-Centralizar a configuracao real do OpenJarvis sem espalhar informacao em varios arquivos soltos.
+Centralizar a configuracao real usada no teste:
+
+- Ollama local como engine principal;
+- MiniMax como API opcional;
+- Google OAuth para conectores Google;
+- som, microfone, speech-to-text e text-to-speech.
 
 Este arquivo substitui:
 
@@ -31,16 +34,12 @@ Este arquivo substitui:
 
 Confirme que a instalacao basica funciona.
 
-No Linux:
-
 ```bash
 cd ~/OpenJarvis
 uv run jarvis doctor
 uv run jarvis model list
 uv run jarvis ask "Responda apenas: OpenJarvis funcionando."
 ```
-
-No Windows, use o guia [`install_windows.md`](./install_windows.md).
 
 ## Onde ficam os arquivos principais
 
@@ -125,14 +124,12 @@ default = "ollama"
 host = "http://127.0.0.1:11434"
 
 [intelligence]
-default_model = "qwen3:0.6b"
+default_model = "qwen3.5:2b"
 temperature = 0.7
 max_tokens = 2048
 
 [agent]
-default_agent = "orchestrator"
-max_turns = 10
-context_from_memory = true
+default_agent = "simple"
 ```
 
 A linha do host precisa estar ativa, sem `#`:
@@ -144,7 +141,7 @@ host = "http://127.0.0.1:11434"
 Nao deixe assim:
 
 ```toml
-# host = "http://127.0.0.1:11434"
+# host = "http://localhost:11434"
 ```
 
 Depois teste:
@@ -154,9 +151,11 @@ cd ~/OpenJarvis
 uv run jarvis ask "Explique em uma frase o que e o OpenJarvis."
 ```
 
-## Variaveis de ambiente para APIs
+## Variavel de ambiente para MiniMax
 
-A documentacao oficial lista variaveis para engines em nuvem e ferramentas.
+Esta documentacao nao configura OpenAI, Anthropic, Google Gemini ou Tavily no fluxo principal.
+
+Para este teste, a unica API de modelo em nuvem prevista e MiniMax.
 
 Abra o arquivo do shell:
 
@@ -164,14 +163,10 @@ Abra o arquivo do shell:
 nano ~/.bashrc
 ```
 
-Adicione somente as chaves que voce realmente usa:
+Adicione somente se voce realmente for usar MiniMax:
 
 ```bash
-export OPENAI_API_KEY="COLE_SUA_CHAVE_AQUI"
-export ANTHROPIC_API_KEY="COLE_SUA_CHAVE_AQUI"
-export GOOGLE_API_KEY="COLE_SUA_CHAVE_AQUI"
 export MINIMAX_API_KEY="COLE_SUA_CHAVE_AQUI"
-export TAVILY_API_KEY="COLE_SUA_CHAVE_AQUI"
 ```
 
 Recarregue:
@@ -180,86 +175,49 @@ Recarregue:
 source ~/.bashrc
 ```
 
-Confira sem mostrar os valores:
+Confira sem mostrar a chave:
 
 ```bash
 python3 - <<'PY'
 import os
-for key in ['OPENAI_API_KEY','ANTHROPIC_API_KEY','GOOGLE_API_KEY','MINIMAX_API_KEY','TAVILY_API_KEY']:
-    print(key, 'OK' if os.getenv(key) else 'NAO CONFIGURADA')
+print('MINIMAX_API_KEY', 'OK' if os.getenv('MINIMAX_API_KEY') else 'NAO CONFIGURADA')
 PY
 ```
 
 > Nunca publique API Key em print, video, live, commit ou repositorio publico.
 
-## Google Gemini como modelo
+## MiniMax como modelo/API opcional
 
-Google Gemini via API Key e diferente de Google OAuth.
+O fluxo principal do guia usa Ollama local.
 
-- `GOOGLE_API_KEY`: chave para usar Gemini como modelo.
-- Google OAuth: login/autorizacao para Gmail, Drive, Calendar, Contacts e Tasks.
+Use MiniMax apenas quando quiser testar modelo em nuvem ou quando o modelo local ficar pesado.
 
-Para instalar extra de Gemini:
-
-```bash
-cd ~/OpenJarvis
-uv sync --extra inference-google
-```
-
-Configure a variavel:
-
-```bash
-export GOOGLE_API_KEY="COLE_SUA_CHAVE_AQUI"
-```
-
-Para persistir:
-
-```bash
-nano ~/.bashrc
-```
-
-Adicione:
-
-```bash
-export GOOGLE_API_KEY="COLE_SUA_CHAVE_AQUI"
-```
-
-Recarregue:
-
-```bash
-source ~/.bashrc
-```
-
-## OpenAI, Anthropic, MiniMax e Tavily
-
-Para OpenAI e Anthropic:
+Instale extras de cloud inference se forem necessarios na versao instalada:
 
 ```bash
 cd ~/OpenJarvis
 uv sync --extra inference-cloud
 ```
 
-Para cloud + Google:
+Depois confirme se o OpenJarvis reconhece a configuracao disponivel na sua versao:
 
 ```bash
 cd ~/OpenJarvis
-uv sync --extra inference-cloud --extra inference-google
+uv run jarvis model list
+uv run jarvis doctor
 ```
 
-Variaveis:
-
-```bash
-export OPENAI_API_KEY="COLE_SUA_CHAVE_AQUI"
-export ANTHROPIC_API_KEY="COLE_SUA_CHAVE_AQUI"
-export MINIMAX_API_KEY="COLE_SUA_CHAVE_AQUI"
-export TAVILY_API_KEY="COLE_SUA_CHAVE_AQUI"
-```
+Se o comando ou a engine MiniMax nao aparecerem, confira a documentacao da versao atual antes de forcar configuracao manual.
 
 ## Google OAuth para Drive, Gmail, Calendar, Contacts e Tasks
 
-Esta parte conecta a sua conta Google ao OpenJarvis.
+Google OAuth nao e a mesma coisa que `GOOGLE_API_KEY`.
 
-Ela nao e a mesma coisa que `GOOGLE_API_KEY`.
+Neste guia:
+
+- `MINIMAX_API_KEY` e chave de API para MiniMax;
+- Google OAuth e login/autorizacao para acessar Drive, Gmail, Calendar, Contacts e Tasks;
+- `GOOGLE_API_KEY` nao faz parte do fluxo principal.
 
 ### Criar projeto no Google Cloud
 
@@ -421,13 +379,6 @@ compute_type = "int8"
 language = ""
 ```
 
-Para instalar extras de voz/desktop:
-
-```bash
-cd ~/OpenJarvis
-uv sync --extra desktop
-```
-
 Teste se `faster_whisper` esta disponivel:
 
 ```bash
@@ -512,33 +463,23 @@ Depois recarregue a interface.
 
 ## Transcricao via OpenAI Whisper
 
-A ferramenta de transcricao por OpenAI depende de:
+Esta parte nao faz parte do fluxo principal deste guia.
+
+Use somente se voce decidir testar OpenAI para transcricao.
+
+Nesse caso, a ferramenta de transcricao por OpenAI depende de:
 
 ```bash
 export OPENAI_API_KEY="COLE_SUA_CHAVE_AQUI"
 ```
 
-Teste sem revelar a chave:
-
-```bash
-python3 - <<'PY'
-import os
-print('OPENAI_API_KEY configurada:', bool(os.getenv('OPENAI_API_KEY')))
-PY
-```
-
-Se faltar pacote, sincronize o ambiente:
-
-```bash
-cd ~/OpenJarvis
-uv sync --extra inference-cloud
-```
+Nao configure essa variavel se voce nao for usar OpenAI.
 
 ## Text-to-speech local com Kokoro
 
 O backend local de TTS citado no codigo do OpenJarvis e `kokoro`.
 
-Instale dentro do ambiente do projeto:
+Instale dentro do ambiente do projeto apenas se for testar TTS local:
 
 ```bash
 cd ~/OpenJarvis
@@ -599,7 +540,7 @@ cd ~/OpenJarvis
 ollama serve
 
 # Modelo pequeno para teste
-ollama pull qwen3:0.6b
+ollama pull qwen3.5:2b
 ollama list
 
 # Backup da configuracao
@@ -619,14 +560,12 @@ default = "ollama"
 host = "http://127.0.0.1:11434"
 
 [intelligence]
-default_model = "qwen3:0.6b"
+default_model = "qwen3.5:2b"
 temperature = 0.7
 max_tokens = 2048
 
 [agent]
-default_agent = "orchestrator"
-max_turns = 10
-context_from_memory = true
+default_agent = "simple"
 
 [speech]
 backend = "faster-whisper"
@@ -640,7 +579,6 @@ Depois rode:
 
 ```bash
 cd ~/OpenJarvis
-uv sync --extra desktop
 uv run jarvis doctor
 uv run jarvis model list
 uv run jarvis ask "Responda apenas: configuracao funcionando."
@@ -657,7 +595,6 @@ uv --version
 rustc --version
 node --version
 npm --version
-ollama --version
 ```
 
 OpenJarvis:
@@ -695,9 +632,12 @@ aplay teste_microfone.wav
 - Confirmar em cada versao do OpenJarvis quais nomes de conectores Google estao disponiveis no `jarvis connect --help`.
 - Confirmar se a interface web da versao instalada ja reconhece automaticamente o backend local `faster-whisper`.
 - Confirmar quais vozes Kokoro estao disponiveis na versao instalada.
+- Confirmar a configuracao exata de MiniMax na versao atual antes de tratar MiniMax como engine principal.
 
 ## Regra de ouro
 
 - Instalacao fica em `install_linux.md` ou `install_windows.md`.
 - Configuracao fica neste arquivo.
+- No fluxo principal, nao configure chaves que voce nao vai usar.
+- Google OAuth nao e `GOOGLE_API_KEY`.
 - Nunca colocar tokens, OAuth JSON, API keys ou arquivos de `~/.openjarvis/connectors/` no repositorio.
