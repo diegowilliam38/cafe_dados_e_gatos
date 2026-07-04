@@ -19,6 +19,7 @@ Instalar o OpenJarvis em Linux, validar a CLI, subir o backend local, abrir a in
 - Rust: https://rustup.rs/
 - Ollama: https://ollama.com/
 - Node.js: https://nodejs.org/
+- NodeSource: https://deb.nodesource.com/
 
 ## Ambiente testado no video
 
@@ -54,7 +55,7 @@ A documentacao oficial informa estes requisitos principais:
 
 ```bash
 sudo apt update
-sudo apt install -y git curl build-essential pkg-config libssl-dev python3 python3-venv python3-pip nodejs npm
+sudo apt install -y git curl build-essential pkg-config libssl-dev python3 python3-venv python3-pip nodejs
 ```
 
 Confira as versoes:
@@ -64,9 +65,41 @@ python3 --version
 git --version
 node --version
 npm --version
+npx --version
 ```
 
-Se o Node.js do repositario do Ubuntu estiver antigo, instale pelo metodo oficial do NodeSource ou pelo metodo recomendado no site do Node.js.
+Se `node`, `npm` e `npx` responderem versao, nao instale o pacote separado `npm` pelo `apt`.
+
+## Observacao sobre Node.js e npm no Ubuntu
+
+Se voce usa Node.js instalado pelo NodeSource, o pacote `nodejs` ja inclui `npm` e `npx`. Nesse caso, nao rode:
+
+```bash
+sudo apt install nodejs npm
+```
+
+Esse comando pode gerar conflito como:
+
+```text
+nodejs : Conflicts: npm
+E: Unable to correct problems, you have held broken packages.
+```
+
+O comando correto, quando NodeSource ja esta configurado, e instalar apenas `nodejs`:
+
+```bash
+sudo apt install -y nodejs
+```
+
+Teste:
+
+```bash
+node --version
+npm --version
+npx --version
+```
+
+Se o Node.js do repositorio do Ubuntu estiver antigo, instale pelo metodo oficial do NodeSource ou pelo metodo recomendado no site do Node.js.
 
 ## Instalar uv
 
@@ -77,6 +110,68 @@ uv --version
 ```
 
 Se o comando `uv` nao aparecer, feche e abra o terminal.
+
+## Corrigir `uv` sombreado por Homebrew ou instalacao antiga
+
+Se, depois de instalar o `uv`, aparecer aviso parecido com:
+
+```text
+WARN: The following commands are shadowed by other commands in your PATH: uv uvx
+```
+
+ou se o `uv --version` mostrar uma versao diferente da que acabou de ser instalada, confira todos os caminhos encontrados:
+
+```bash
+which -a uv
+which -a uvx
+```
+
+Exemplo de problema:
+
+```text
+/home/linuxbrew/.linuxbrew/bin/uv
+/home/denise/.local/bin/uv
+```
+
+Nesse caso, o terminal esta encontrando primeiro o `uv` do Homebrew/Linuxbrew ou de outra instalacao antiga. Para priorizar o `uv` instalado em `~/.local/bin`, adicione esta linha no final do `~/.bashrc`:
+
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+hash -r
+```
+
+Teste novamente:
+
+```bash
+which uv
+uv --version
+which uvx
+uvx --version
+```
+
+O esperado e algo parecido com:
+
+```text
+/home/denise/.local/bin/uv
+uv 0.11.26
+/home/denise/.local/bin/uvx
+uvx 0.11.26
+```
+
+Se ainda assim o terminal chamar o `uv` errado, use o caminho completo temporariamente:
+
+```bash
+~/.local/bin/uv --version
+~/.local/bin/uvx --version
+```
+
+E nos comandos do OpenJarvis, substitua `uv` por `~/.local/bin/uv` ate corrigir o PATH:
+
+```bash
+cd ~/OpenJarvis
+~/.local/bin/uv sync --extra desktop
+```
 
 ## Instalar Rust
 
@@ -238,6 +333,61 @@ rm -rf ~/.openjarvis
 Se quiser manter configuracoes, memoria e conectores, nao apague `~/.openjarvis`.
 
 ## Erros encontrados e ajustes necessarios
+
+### Conflito entre `nodejs` do NodeSource e `npm` do apt
+
+**O que aconteceu:**
+
+Ao rodar:
+
+```bash
+sudo apt install -y nodejs npm
+```
+
+pode aparecer:
+
+```text
+nodejs : Conflicts: npm
+E: Unable to correct problems, you have held broken packages.
+```
+
+**Por que acontece:**
+
+Quando o Node.js vem do NodeSource, o pacote `nodejs` ja inclui `npm` e `npx`. Instalar o pacote separado `npm` do Ubuntu pode causar conflito de dependencias.
+
+**Correcao usada:**
+
+```bash
+sudo apt install -y nodejs
+node --version
+npm --version
+npx --version
+```
+
+### `uv` instalado, mas o terminal chama outro `uv`
+
+**O que aconteceu:**
+
+O instalador do `uv` instalou a versao nova em `~/.local/bin`, mas o terminal chamou uma versao antiga do Homebrew/Linuxbrew.
+
+Exemplo:
+
+```text
+WARN: The following commands are shadowed by other commands in your PATH: uv uvx
+uv 0.11.7 (Homebrew ...)
+```
+
+**Correcao usada:**
+
+```bash
+which -a uv
+which -a uvx
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+hash -r
+which uv
+uv --version
+```
 
 ### `maturin` precisa de Rust
 
