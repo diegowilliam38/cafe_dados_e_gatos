@@ -1,38 +1,30 @@
 # Instalacao Linux via Git do OpenJarvis
 
-Este guia documenta a instalacao do OpenJarvis no Linux usando o repositorio oficial via Git.
+Guia basico para instalar o OpenJarvis no Linux usando o repositorio oficial via Git.
 
-Objetivo: instalar o OpenJarvis via Git, usar Ollama/local, configurar Google OAuth e speech local com `faster-whisper`.
+Este guia cobre:
+
+- instalacao via Git;
+- backend local na porta padrao `8000`;
+- configuracao local com Ollama;
+- Google OAuth;
+- speech local com `faster-whisper`;
+- correcoes comuns.
 
 Este guia nao usa MiniMax.
 
-## Regra principal sobre porta
+## Fontes oficiais
 
-Nao troque a porta por padrao.
+- Instalacao: https://open-jarvis.github.io/OpenJarvis/getting-started/installation/
+- Configuracao: https://open-jarvis.github.io/OpenJarvis/getting-started/configuration/
+- API Server: https://open-jarvis.github.io/OpenJarvis/deployment/api-server/
+- Releases Desktop: https://github.com/open-jarvis/OpenJarvis/releases/latest
+- Google OAuth: https://developers.google.com/workspace/guides/configure-oauth-consent
+- Credenciais Google: https://developers.google.com/workspace/guides/create-credentials
 
-O OpenJarvis Desktop e o comando `jarvis serve` usam o mesmo servico. Se voce subir o backend manualmente e depois abrir o Desktop, o Desktop pode tentar subir/gerenciar o mesmo backend e derrubar o processo anterior.
+## 1. Pre-requisitos
 
-Por isso, o padrao deste guia e:
-
-```text
-Backend/API: http://127.0.0.1:8000
-Desktop: usa o mesmo backend/API em http://127.0.0.1:8000
-```
-
-A porta 8001 nao resolve esse caso se o Desktop tambem tentar subir o mesmo servico nela. O problema nao e a porta em si; e abrir dois processos tentando gerenciar o mesmo backend.
-
-## Fontes oficiais consultadas
-
-- Instalacao oficial do OpenJarvis: https://open-jarvis.github.io/OpenJarvis/getting-started/installation/
-- Configuracao oficial do OpenJarvis: https://open-jarvis.github.io/OpenJarvis/getting-started/configuration/
-- API Server do OpenJarvis: https://open-jarvis.github.io/OpenJarvis/deployment/api-server/
-- Releases oficiais do OpenJarvis Desktop: https://github.com/open-jarvis/OpenJarvis/releases/latest
-- Google Workspace OAuth: https://developers.google.com/workspace/guides/configure-oauth-consent
-- Credenciais Google Workspace: https://developers.google.com/workspace/guides/create-credentials
-
-## Pre-requisitos
-
-Confirme que voce tem:
+Confira se ja tem as ferramentas principais:
 
 ```bash
 python3 --version
@@ -43,62 +35,14 @@ uv --version
 rustc --version
 ```
 
-A documentacao oficial pede Python 3.10+, Node.js 18+ e Rust para compilar partes do projeto.
-
-Se o Rust nao estiver instalado, instale pelo metodo oficial:
+Se nao tiver Rust:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
-
-Depois feche e abra o terminal ou rode:
-
-```bash
 source "$HOME/.cargo/env"
 ```
 
-## Instalacao limpa opcional
-
-Use esta etapa apenas se voce quer apagar uma instalacao anterior e comecar do zero.
-
-```bash
-pkill -f jarvis
-pkill -f OpenJarvis
-
-rm -rf ~/OpenJarvis
-rm -rf ~/OpenJarvis_old_*
-
-rm -rf ~/.openjarvis
-rm -rf ~/.config/OpenJarvis
-rm -rf ~/.local/share/OpenJarvis
-rm -rf ~/.cache/OpenJarvis
-
-rm -rf ~/.config/openjarvis
-rm -rf ~/.local/share/openjarvis
-rm -rf ~/.cache/openjarvis
-
-rm -rf ~/.config/Jarvis
-rm -rf ~/.local/share/Jarvis
-rm -rf ~/.cache/Jarvis
-
-rm -rf ~/.local/share/com.openjarvis.desktop
-rm -rf ~/.cache/uv
-rm -rf ~/.cache/gnome-software/odrs/OpenJarvis.desktop.json
-
-rm -f ~/Downloads/OpenJarvis*.deb
-rm -f ~/Downloads/openjarvis*.deb
-rm -f ~/Downloads/OpenJarvis_*.AppImage
-```
-
-Confira se sobrou algo:
-
-```bash
-find ~ -iname "*openjarvis*" 2>/dev/null
-```
-
-Arquivos pessoais, como anotacoes `.md` ou `.txt`, podem aparecer no resultado. Apague apenas se tiver certeza.
-
-## Clonar o repositorio
+## 2. Clonar o repositorio
 
 ```bash
 cd ~
@@ -113,23 +57,15 @@ cd ~/OpenJarvis
 git pull
 ```
 
-## Instalar dependencias do backend e Desktop
-
-Use o extra `desktop`, porque ele inclui dependencias necessarias para o app e para speech local.
+## 3. Instalar dependencias
 
 ```bash
 cd ~/OpenJarvis
 uv sync --extra desktop
-```
-
-Depois compile/desenvolva o modulo Rust/Python:
-
-```bash
-cd ~/OpenJarvis
 uv run maturin develop -m rust/crates/openjarvis-python/Cargo.toml
 ```
 
-## Instalar dependencias do frontend
+Frontend:
 
 ```bash
 cd ~/OpenJarvis/frontend
@@ -137,43 +73,25 @@ npm install
 cd ~/OpenJarvis
 ```
 
-## Baixar e instalar o OpenJarvis Desktop
+## 4. Instalar o Desktop
 
-O repositorio clonado em `~/OpenJarvis` sera usado como base local. O Desktop pode ser instalado separadamente para servir como interface visual.
-
-Baixe o Desktop pela pagina oficial de releases:
+Baixe o `.deb` na pagina oficial de releases:
 
 ```text
 https://github.com/open-jarvis/OpenJarvis/releases/latest
 ```
 
-No Ubuntu/Debian, baixe o arquivo `.deb` disponivel na release.
-
-Exemplo usado na release desktop-v1.0.2:
-
-```text
-OpenJarvis_1.0.1_amd64.deb
-```
-
-Download direto:
+Exemplo:
 
 ```bash
 cd ~/Downloads
 wget https://github.com/open-jarvis/OpenJarvis/releases/download/desktop-v1.0.2/OpenJarvis_1.0.1_amd64.deb
-```
-
-Instale:
-
-```bash
-cd ~/Downloads
 sudo apt install ./OpenJarvis_1.0.1_amd64.deb
 ```
 
 Depois abra o OpenJarvis Desktop pelo menu de aplicativos.
 
-## Configuracao local com Ollama
-
-Este guia usa Ollama como fluxo local principal.
+## 5. Configurar Ollama
 
 Confirme que o Ollama esta rodando:
 
@@ -187,20 +105,20 @@ Em outro terminal:
 ollama list
 ```
 
-Se precisar de um modelo pequeno para teste:
+Baixe um modelo pequeno para teste, se precisar:
 
 ```bash
 ollama pull qwen3.5:2b
 ```
 
-Edite a configuracao:
+Crie/edite a configuracao:
 
 ```bash
 mkdir -p ~/.openjarvis
 nano ~/.openjarvis/config.toml
 ```
 
-Use um bloco simples:
+Configuracao basica:
 
 ```toml
 [engine]
@@ -225,18 +143,16 @@ cd ~/OpenJarvis
 uv run jarvis ask "Responda apenas: OpenJarvis funcionando."
 ```
 
-## Subir backend local no padrao
+## 6. Subir backend local
 
-Use a porta padrao 8000.
+Use a porta padrao `8000`.
 
 ```bash
 cd ~/OpenJarvis
 uv run jarvis serve --host 127.0.0.1 --port 8000
 ```
 
-Deixe este terminal aberto somente se voce for testar o backend manualmente.
-
-Em outro terminal, teste:
+Teste em outro terminal:
 
 ```bash
 curl http://127.0.0.1:8000/health
@@ -248,33 +164,23 @@ Resultado esperado:
 {"status":"ok"}
 ```
 
-## Importante sobre Desktop e backend
+## 7. Desktop e porta
 
-Se o backend manual ja estiver rodando na porta 8000 e voce abrir o Desktop, o Desktop pode tentar subir o mesmo servico e derrubar o processo anterior.
-
-Fluxo recomendado:
-
-1. Para testar backend/API, use `uv run jarvis serve --host 127.0.0.1 --port 8000`.
-2. Para usar o Desktop, feche o backend manual antes ou deixe o Desktop gerenciar o backend.
-3. No Desktop, mantenha a API URL no padrao:
+Padrao:
 
 ```text
 http://127.0.0.1:8000
 ```
 
-Nao mude para 8001 por padrao.
+Nao troque para `8001` por padrao.
 
-## Google OAuth
+Se o Desktop derrubar o `jarvis serve`, provavelmente os dois estao tentando iniciar/gerenciar o mesmo backend. Nesse caso, feche o `serve` manual antes de abrir o Desktop ou deixe apenas um processo ativo.
 
-Google OAuth nao e a mesma coisa que `GOOGLE_API_KEY`.
+## 8. Google OAuth
 
-Neste guia, OAuth e usado para autorizar conectores como Drive, Gmail, Calendar, Contacts e Tasks.
+OAuth e usado para autorizar conectores como Drive, Gmail, Calendar, Contacts e Tasks.
 
-### Criar projeto no Google Cloud
-
-Acesse o Google Cloud Console e crie um projeto para o OpenJarvis.
-
-Depois configure a tela de consentimento OAuth:
+Crie um projeto no Google Cloud e configure a tela de consentimento:
 
 ```text
 https://console.cloud.google.com/apis/credentials/consent
@@ -282,17 +188,13 @@ https://console.cloud.google.com/apis/credentials/consent
 
 Para uso pessoal/teste, mantenha o app em modo de teste e adicione sua propria conta Google como usuaria de teste.
 
-### Criar credencial OAuth
-
 Crie uma credencial OAuth Client ID:
 
 ```text
 APIs & Services > Credentials > Create Credentials > OAuth client ID
 ```
 
-Baixe o arquivo JSON de credenciais e guarde fora do repositorio publico.
-
-Sugestao local:
+Baixe o JSON e guarde localmente:
 
 ```bash
 mkdir -p ~/.openjarvis/credentials
@@ -300,9 +202,7 @@ mv ~/Downloads/client_secret*.json ~/.openjarvis/credentials/google_client_secre
 chmod 600 ~/.openjarvis/credentials/google_client_secret.json
 ```
 
-### Ativar APIs Google
-
-Ative apenas o que voce vai testar:
+Ative apenas as APIs que for usar:
 
 ```text
 Google Drive API
@@ -312,55 +212,31 @@ People API / Contacts
 Google Tasks API
 ```
 
-### Conectar pelo OpenJarvis
-
-A documentacao do OpenJarvis mostra o fluxo com `jarvis connect` para conectores.
-
-Exemplo:
+Conecte pelo OpenJarvis:
 
 ```bash
 cd ~/OpenJarvis
 uv run jarvis connect gdrive
-```
-
-Depois teste outros conectores, se estiverem disponiveis na sua versao:
-
-```bash
-cd ~/OpenJarvis
 uv run jarvis connect gmail
 uv run jarvis connect gcalendar
 uv run jarvis connect gcontacts
 uv run jarvis connect google_tasks
 ```
 
-Se algum nome nao existir, liste os comandos disponiveis:
+Se algum comando nao existir:
 
 ```bash
-cd ~/OpenJarvis
 uv run jarvis --help
 uv run jarvis connect --help
 ```
 
-Os tokens normalmente ficam em:
+Nunca envie credenciais, tokens ou API keys para o GitHub.
 
-```bash
-ls -la ~/.openjarvis/connectors
-```
+## 9. Speech local com faster-whisper
 
-Nunca suba estes arquivos para o GitHub.
+O extra `desktop` deve instalar o `faster-whisper`.
 
-## Voz e speech-to-text local
-
-Este guia usa `faster-whisper` para speech-to-text local.
-
-O extra `desktop` deve instalar o `faster-whisper`:
-
-```bash
-cd ~/OpenJarvis
-uv sync --extra desktop
-```
-
-Confirme:
+Confira:
 
 ```bash
 cd ~/OpenJarvis
@@ -370,19 +246,7 @@ print('faster_whisper instalado:', importlib.util.find_spec('faster_whisper') is
 PY
 ```
 
-Resultado esperado:
-
-```text
-faster_whisper instalado: True
-```
-
-Edite a configuracao:
-
-```bash
-nano ~/.openjarvis/config.toml
-```
-
-Adicione:
+Adicione ao `~/.openjarvis/config.toml`:
 
 ```toml
 [speech]
@@ -393,33 +257,14 @@ compute_type = "int8"
 language = "pt"
 ```
 
-Para melhor qualidade, depois de validar com `tiny`, voce pode testar:
-
-```toml
-[speech]
-backend = "faster-whisper"
-model = "base"
-device = "auto"
-compute_type = "int8"
-language = "pt"
-```
-
-## Testar microfone
-
-Se o microfone ja funciona no sistema, nao troque o dispositivo manualmente.
-
-Teste a captura padrao:
+Teste o microfone:
 
 ```bash
 arecord -d 5 teste_microfone.wav
 aplay teste_microfone.wav
 ```
 
-Se gravou sua voz, o Linux esta capturando audio corretamente.
-
-## Testar speech no backend local
-
-Com o backend rodando na porta 8000:
+Teste o endpoint de speech:
 
 ```bash
 curl http://127.0.0.1:8000/v1/speech/health
@@ -431,83 +276,83 @@ Resultado esperado:
 {"available":true,"backend":"faster-whisper"}
 ```
 
-Se retornar `available: false`, leia o campo `reason`.
+## Correcoes comuns
 
-Exemplo de erro comum:
+### Porta 8000 presa
 
-```json
-{"available":false,"backend":"faster-whisper","reason":"faster-whisper is not installed. Install with: uv sync --extra desktop"}
-```
-
-Nesse caso, rode dentro do projeto:
-
-```bash
-cd ~/OpenJarvis
-uv sync --extra desktop
-```
-
-Depois reinicie o backend.
-
-## Reiniciar backend limpo
-
-Se uma porta ficar presa:
+Ver processo usando a porta:
 
 ```bash
 lsof -i :8000
 ```
 
-Para matar processo na porta 8000:
+Matar processo na porta:
 
 ```bash
 fuser -k 8000/tcp
 ```
 
-Depois suba novamente:
+Subir de novo:
 
 ```bash
 cd ~/OpenJarvis
 uv run jarvis serve --host 127.0.0.1 --port 8000
 ```
 
-## Fluxo recomendado para gravacao
+### Desktop derruba o backend manual
 
-Terminal 1:
+Nao rode dois backends ao mesmo tempo.
 
-```bash
-ollama serve
-```
-
-Terminal 2, apenas se for testar backend manual:
-
-```bash
-cd ~/OpenJarvis
-uv run jarvis serve --host 127.0.0.1 --port 8000
-```
-
-Desktop:
+Use um destes fluxos:
 
 ```text
-API URL = http://127.0.0.1:8000
+Fluxo A: backend manual aberto + teste via curl
+Fluxo B: Desktop aberto gerenciando o backend
 ```
 
-Teste:
+Evite abrir o Desktop depois de ja ter iniciado manualmente o `jarvis serve`, se a versao do Desktop tentar iniciar o mesmo servico.
+
+### Modelo vazio ou configuracao antiga
+
+Se aparecer erro como modelo vazio, configuracao antiga ou provider errado, renomeie a configuracao local:
 
 ```bash
-curl http://127.0.0.1:8000/health
-curl http://127.0.0.1:8000/v1/speech/health
+mv ~/.openjarvis ~/.openjarvis_old_$(date +%Y%m%d_%H%M%S) 2>/dev/null
+mkdir -p ~/.openjarvis
+nano ~/.openjarvis/config.toml
 ```
 
-## O que este metodo resolve
+Depois recrie apenas o bloco necessario do Ollama.
 
-Este metodo documenta a instalacao limpa via Git, com configuracao local do Ollama, Google OAuth e speech local.
+### Limpeza completa para reinstalar
 
-Ele nao tenta resolver conflito usando outra porta, porque o Desktop pode subir o mesmo servico de qualquer forma.
+Use apenas se quiser apagar a instalacao anterior.
 
-## Regra de ouro
+```bash
+pkill -f jarvis
+pkill -f OpenJarvis
 
-- Porta padrao: `8000`.
-- Nao trocar para `8001` por padrao.
-- Se o Desktop derrubar o `serve`, nao e bug da porta: e conflito de gerenciamento do mesmo backend.
-- Para usar Desktop, deixe o Desktop gerenciar o backend ou feche o `serve` manual antes de abrir.
-- OAuth JSON, tokens e API keys nunca devem ir para o GitHub.
-- Este guia nao usa MiniMax.
+rm -rf ~/OpenJarvis
+rm -rf ~/OpenJarvis_old_*
+rm -rf ~/.openjarvis
+rm -rf ~/.config/OpenJarvis
+rm -rf ~/.local/share/OpenJarvis
+rm -rf ~/.cache/OpenJarvis
+rm -rf ~/.config/openjarvis
+rm -rf ~/.local/share/openjarvis
+rm -rf ~/.cache/openjarvis
+rm -rf ~/.local/share/com.openjarvis.desktop
+rm -rf ~/.cache/uv
+rm -rf ~/.cache/gnome-software/odrs/OpenJarvis.desktop.json
+rm -f ~/Downloads/OpenJarvis*.deb
+rm -f ~/Downloads/openjarvis*.deb
+rm -f ~/Downloads/OpenJarvis_*.AppImage
+```
+
+Conferir:
+
+```bash
+find ~ -iname "*openjarvis*" 2>/dev/null
+```
+
+Apague manualmente apenas arquivos pessoais se tiver certeza.
