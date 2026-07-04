@@ -18,6 +18,8 @@ Este guia nao usa MiniMax.
 - Instalacao: https://open-jarvis.github.io/OpenJarvis/getting-started/installation/
 - Configuracao: https://open-jarvis.github.io/OpenJarvis/getting-started/configuration/
 - API Server: https://open-jarvis.github.io/OpenJarvis/deployment/api-server/
+- Tools: https://open-jarvis.github.io/OpenJarvis/user-guide/tools/
+- Faster Whisper: https://open-jarvis.github.io/OpenJarvis/api-reference/openjarvis/speech/faster_whisper/
 - Releases Desktop: https://github.com/open-jarvis/OpenJarvis/releases/latest
 - Google OAuth: https://developers.google.com/workspace/guides/configure-oauth-consent
 - Credenciais Google: https://developers.google.com/workspace/guides/create-credentials
@@ -188,19 +190,21 @@ https://console.cloud.google.com/apis/credentials/consent
 
 Para uso pessoal/teste, mantenha o app em modo de teste e adicione sua propria conta Google como usuaria de teste.
 
-Crie uma credencial OAuth Client ID:
+Crie uma credencial OAuth Client ID do tipo `App para computador` / `Desktop app`:
 
 ```text
 APIs & Services > Credentials > Create Credentials > OAuth client ID
 ```
 
-Baixe o JSON e guarde localmente:
+Baixe o JSON e guarde uma copia. Depois copie para o caminho usado pelo OpenJarvis:
 
 ```bash
 mkdir -p ~/.openjarvis/credentials
-mv ~/Downloads/client_secret*.json ~/.openjarvis/credentials/google_client_secret.json
+cp ~/Downloads/client_secret*.json ~/.openjarvis/credentials/google_client_secret.json
 chmod 600 ~/.openjarvis/credentials/google_client_secret.json
 ```
+
+Use `cp`, nao `mv`, para manter o arquivo original em Downloads.
 
 Ative apenas as APIs que for usar:
 
@@ -246,6 +250,13 @@ print('faster_whisper instalado:', importlib.util.find_spec('faster_whisper') is
 PY
 ```
 
+Se retornar `False`, rode:
+
+```bash
+cd ~/OpenJarvis
+uv sync --extra desktop
+```
+
 Adicione ao `~/.openjarvis/config.toml`:
 
 ```toml
@@ -255,6 +266,14 @@ model = "tiny"
 device = "auto"
 compute_type = "int8"
 language = "pt"
+```
+
+Importante: se o backend ja estava aberto antes de instalar o `faster-whisper`, reinicie o backend.
+
+```bash
+fuser -k 8000/tcp
+cd ~/OpenJarvis
+uv run jarvis serve --host 127.0.0.1 --port 8000
 ```
 
 Teste o microfone:
@@ -311,6 +330,40 @@ Fluxo B: Desktop aberto gerenciando o backend
 ```
 
 Evite abrir o Desktop depois de ja ter iniciado manualmente o `jarvis serve`, se a versao do Desktop tentar iniciar o mesmo servico.
+
+### faster-whisper instalado, mas health ainda retorna false
+
+Isso geralmente acontece quando o backend ficou aberto antes da instalacao do pacote.
+
+```bash
+cd ~/OpenJarvis
+uv run python -c "import faster_whisper; print('ok')"
+fuser -k 8000/tcp
+uv run jarvis serve --host 127.0.0.1 --port 8000
+```
+
+Depois teste novamente:
+
+```bash
+curl http://127.0.0.1:8000/v1/speech/health
+```
+
+### OAuth usando cliente antigo
+
+Se o OAuth continuar usando um Client ID antigo, remova os conectores/tokens locais e tente novamente:
+
+```bash
+rm -rf ~/.openjarvis/connectors
+rm -rf ~/.openjarvis/tokens
+rm -rf ~/.openjarvis/oauth*
+rm -rf ~/.openjarvis/auth*
+```
+
+Confira se o JSON atual esta no caminho correto:
+
+```bash
+grep client_id ~/.openjarvis/credentials/google_client_secret.json
+```
 
 ### Modelo vazio ou configuracao antiga
 
