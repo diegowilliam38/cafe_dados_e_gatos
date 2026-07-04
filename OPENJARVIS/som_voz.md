@@ -178,6 +178,150 @@ faster_whisper instalado: True
 
 ---
 
+## Configuração para copiar e colar quando o Faster-Whisper já está instalado
+
+Se o `faster-whisper` já está instalado, não precisa instalar de novo. O próximo passo é garantir que o OpenJarvis esteja apontando para o backend local.
+
+Procure no arquivo de configuração uma área parecida com `speech`, `stt`, `backend`, `whisper` ou `speech-to-text`.
+
+Cole ou adapte este bloco:
+
+```yaml
+speech:
+  stt:
+    backend: faster-whisper
+    model_size: base
+    device: auto
+    compute_type: int8
+```
+
+Se a versão instalada não aceitar o nome com hífen, teste o mesmo bloco usando underscore:
+
+```yaml
+speech:
+  stt:
+    backend: faster_whisper
+    model_size: base
+    device: auto
+    compute_type: int8
+```
+
+Para máquinas mais fracas, troque `model_size: base` por:
+
+```yaml
+model_size: tiny
+```
+
+ou:
+
+```yaml
+model_size: small
+```
+
+Depois reinicie o OpenJarvis:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis serve
+```
+
+Atualize a interface no navegador. O status esperado é sair de `Not configured`.
+
+Se continuar como `Not configured`, rode o teste de import dentro do ambiente do OpenJarvis:
+
+```bash
+cd ~/OpenJarvis
+uv run python - <<'PY'
+try:
+    import faster_whisper
+    print('faster-whisper instalado: OK')
+except Exception as e:
+    print('faster-whisper erro:', e)
+PY
+```
+
+Observação: dependendo da versão do OpenJarvis, o backend local pode existir no código, mas ainda não estar conectado diretamente à chave usada pela interface. Nesse caso, o pacote está instalado, mas a interface ainda pode mostrar `Not configured` até o arquivo de configuração ou a integração interna reconhecer esse backend.
+
+---
+
+## Leitura do log ao rodar `jarvis serve`
+
+Exemplo real do log:
+
+```text
+  ___                       _                  _
+ / _ \ _ __   ___ _ __     | | __ _ _ ____   _(_)___
+| | | | '_ \ / _ \ '_ \ _  | |/ _` | '__\ \ / / / __|
+| |_| | |_) |  __/ | | | |_| | (_| | |   \ V /| \__ \
+ \___/| .__/ \___|_| |_|\___/ \__,_|_|    \_/ |_|___/
+      |_|
+      Personal AI, On Personal Devices
+
+  Energy: nvidia (polling)
+  Speech: faster-whisper
+WARNING openjarvis.agents.scheduler: croniter not installed, treating cron as 3600s interval
+  Scheduler: active
+Starting OpenJarvis API server
+  Engine: ollama
+  Model:  qwen3.5:2b
+  Agent:  orchestrator
+  URL:    http://127.0.0.1:8000
+INFO:     Started server process [111570]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+```
+
+Como interpretar:
+
+```text
+Speech: faster-whisper
+```
+
+Essa linha é boa. Ela indica que o OpenJarvis carregou o backend de fala como `faster-whisper`. Ou seja: o pacote/local speech backend foi reconhecido pelo servidor.
+
+```text
+Energy: nvidia (polling)
+```
+
+Indica que o OpenJarvis detectou energia/telemetria relacionada à NVIDIA. Não é erro.
+
+```text
+WARNING openjarvis.agents.scheduler: croniter not installed, treating cron as 3600s interval
+```
+
+É apenas um aviso do agendador. Significa que o pacote `croniter` não está instalado e, por isso, expressões cron serão tratadas como intervalo de 3600 segundos. Isso não impede o servidor nem a voz de funcionarem.
+
+Se quiser remover o aviso:
+
+```bash
+cd ~/OpenJarvis
+uv add croniter
+```
+
+ou, se estiver apenas sincronizando dependências do projeto:
+
+```bash
+cd ~/OpenJarvis
+uv sync --extra desktop
+```
+
+```text
+Uvicorn running on http://127.0.0.1:8000
+```
+
+Essa linha confirma que a API subiu corretamente na porta `8000`.
+
+Conclusão desse log:
+
+```text
+O servidor subiu.
+O backend speech foi detectado como faster-whisper.
+O problema, se ainda existir na interface, provavelmente está entre navegador/interface/permissão de microfone/endpoint de status, não mais na instalação do faster-whisper.
+```
+
+---
+
 ## Instalar backend Deepgram
 
 O `pyproject.toml` oficial também mostra o extra:
@@ -254,19 +398,26 @@ Confira:
 - se aparece `Available` ou `Not configured`;
 - se o navegador/app pediu permissão de microfone.
 
-Se aparecer:
+Se o log do terminal mostra:
+
+```text
+Speech: faster-whisper
+```
+
+mas a interface ainda mostra:
 
 ```text
 Not configured
 ```
 
-ou:
+então o backend provavelmente foi carregado pelo servidor, mas a interface ainda não está conseguindo confirmar o status. Nesse caso, teste:
 
-```text
-Requires Whisper, Deepgram, or another speech backend
+```bash
+curl http://127.0.0.1:8000/health
+curl http://127.0.0.1:8000/openapi.json | python3 -m json.tool | grep -i speech -n
 ```
 
-significa que o backend de voz ainda não foi reconhecido.
+E confira também a permissão do microfone no navegador.
 
 ---
 
@@ -429,7 +580,17 @@ No `alsamixer`:
 
 **O que aconteceu:**
 
-O OpenJarvis está rodando, mas não encontrou backend de fala.
+O OpenJarvis está rodando, mas a interface não confirmou o backend de fala.
+
+**Primeira checagem:** olhe o log do `jarvis serve`.
+
+Se aparecer:
+
+```text
+Speech: faster-whisper
+```
+
+isso é um bom sinal: o servidor reconheceu o backend de fala.
 
 **Correção para Whisper local:**
 
@@ -447,6 +608,39 @@ Reinicie o servidor:
 ```bash
 cd ~/OpenJarvis
 uv run jarvis serve --host 127.0.0.1 --port 8000
+```
+
+Se o terminal mostrar `Speech: faster-whisper`, mas a interface continuar como `Not configured`, verifique permissão de microfone e endpoints da API:
+
+```bash
+curl http://127.0.0.1:8000/health
+curl http://127.0.0.1:8000/openapi.json | python3 -m json.tool | grep -i speech -n
+```
+
+---
+
+### Aviso `croniter not installed`
+
+Esse aviso não é erro de voz:
+
+```text
+WARNING openjarvis.agents.scheduler: croniter not installed, treating cron as 3600s interval
+```
+
+Ele apenas diz que o agendador vai tratar cron como intervalo de 3600 segundos.
+
+Para tentar remover o aviso:
+
+```bash
+cd ~/OpenJarvis
+uv add croniter
+```
+
+ou:
+
+```bash
+cd ~/OpenJarvis
+uv sync --extra desktop
 ```
 
 ---
@@ -522,6 +716,18 @@ uv sync --extra speech
 uv run jarvis serve --host 127.0.0.1 --port 8000
 ```
 
+Mostrar no log:
+
+```text
+Speech: faster-whisper
+```
+
+E explicar:
+
+```text
+Essa linha indica que o OpenJarvis reconheceu o backend local de fala. Se a interface ainda mostrar Not configured, eu passo a investigar a permissão do microfone, a comunicação da interface com a API e os endpoints de speech.
+```
+
 E conferir na interface:
 
 ```text
@@ -531,7 +737,7 @@ Settings > Speech
 ### Fechamento
 
 ```text
-Então o raciocínio é: primeiro o Linux precisa enxergar o microfone. Depois o OpenJarvis precisa ter um backend de fala, como Whisper ou Deepgram. Só depois faz sentido testar voz dentro da interface.
+Então o raciocínio é: primeiro o Linux precisa enxergar o microfone. Depois o OpenJarvis precisa ter um backend de fala, como Whisper ou Deepgram. Se o log mostra Speech: faster-whisper, a instalação do backend local já foi reconhecida. A partir daí, o diagnóstico passa para navegador, permissão de microfone e status da interface.
 ```
 
 ---
@@ -542,6 +748,7 @@ Então o raciocínio é: primeiro o Linux precisa enxergar o microfone. Depois o
 - Confirmar se Deepgram é detectado automaticamente ou se precisa de configuração adicional no `config.toml`.
 - Confirmar se a versão atual expõe endpoints específicos de speech em `/docs` ou `/openapi.json`.
 - Testar TTS separadamente, porque a parte visível da interface consultada fala principalmente de **Speech-to-Text**.
+- Confirmar se, quando o log mostra `Speech: faster-whisper`, a interface muda para disponível depois de liberar microfone/recarregar navegador.
 
 ---
 
@@ -556,9 +763,18 @@ OpenJarvis responde por texto
 ↓
 Backend de fala instalado: Whisper/faster-whisper ou Deepgram
 ↓
+Log do servidor mostra Speech: faster-whisper
+↓
 Servidor reiniciado
 ↓
 Permissão de microfone liberada no navegador/app
 ↓
 Settings > Speech mostra backend disponível
+```
+
+Resumo do diagnóstico atual:
+
+```text
+Se o log mostra Speech: faster-whisper, o backend local foi reconhecido pelo OpenJarvis.
+Se a interface ainda mostra Not configured, o próximo foco é navegador, permissão de microfone ou endpoint de status.
 ```
