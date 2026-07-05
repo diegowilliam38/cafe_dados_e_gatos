@@ -8,6 +8,7 @@ Este guia cobre:
 - backend local na porta padrao `8000`;
 - configuracao local com Ollama;
 - Google OAuth;
+- skills do Hermes Agent e OpenClaw;
 - speech local com `faster-whisper`;
 - correcoes comuns.
 
@@ -19,6 +20,7 @@ Este guia nao usa MiniMax.
 - Configuracao: https://open-jarvis.github.io/OpenJarvis/getting-started/configuration/
 - API Server: https://open-jarvis.github.io/OpenJarvis/deployment/api-server/
 - Tools: https://open-jarvis.github.io/OpenJarvis/user-guide/tools/
+- Skills: https://open-jarvis.github.io/OpenJarvis/user-guide/skills/
 - Faster Whisper: https://open-jarvis.github.io/OpenJarvis/api-reference/openjarvis/speech/faster_whisper/
 - Releases Desktop: https://github.com/open-jarvis/OpenJarvis/releases/latest
 - Google OAuth: https://developers.google.com/workspace/guides/configure-oauth-consent
@@ -215,7 +217,85 @@ uv run jarvis connect --help
 
 Nunca envie credenciais, tokens ou API keys para o GitHub.
 
-## 8. Speech local com faster-whisper
+## 8. Skills do Hermes Agent e OpenClaw
+
+Skills sao pacotes reutilizaveis de instrucoes e ferramentas para os agentes. Elas nao sao a mesma coisa que conectores Google nem configuracao de personalidade.
+
+Listar skills instaladas:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis skill list
+```
+
+Instalar uma skill do Hermes Agent:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis skill install hermes:apple-notes
+```
+
+Instalar por categoria do Hermes Agent:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis skill sync hermes --category research
+uv run jarvis skill sync hermes --category coding
+```
+
+Instalar todas as skills disponiveis do Hermes Agent:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis skill sync hermes
+```
+
+Instalar uma skill do OpenClaw:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis skill install openclaw:0xv4l3nt1n3/etherscan
+```
+
+Sincronizar skills do OpenClaw por busca:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis skill sync openclaw --search "web3|crypto"
+```
+
+Ver detalhes de uma skill:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis skill info nome-da-skill
+```
+
+Rodar uma skill diretamente:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis skill run nome-da-skill
+```
+
+Tambem e possivel configurar auto-sync no `~/.openjarvis/config.toml`:
+
+```toml
+[skills]
+enabled = true
+auto_sync = true
+
+[[skills.sources]]
+source = "hermes"
+filter = { category = ["research", "coding", "productivity"] }
+auto_update = true
+
+[[skills.sources]]
+source = "openclaw"
+filter = { search = "web3|crypto" }
+```
+
+## 9. Speech local com faster-whisper
 
 Instale o `faster-whisper` diretamente no projeto clonado pelo Git:
 
@@ -292,15 +372,7 @@ Para uso normal do Desktop, prefira abrir apenas o Desktop.
 
 ### faster-whisper nao aparece habilitado no Desktop
 
-Instale pelo projeto Git e confira o import:
-
-```bash
-cd ~/OpenJarvis
-uv add faster-whisper
-uv run python -c "import faster_whisper; print('ok')"
-```
-
-Depois feche e abra novamente o Desktop.
+Siga a secao `Speech local com faster-whisper`: instale pelo projeto Git com `uv add faster-whisper`, confira o import e abra novamente o Desktop.
 
 ### OAuth usando cliente antigo
 
