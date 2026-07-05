@@ -250,18 +250,20 @@ cd ~/OpenJarvis
 uv run jarvis skill sync hermes
 ```
 
-Instalar uma skill do OpenClaw:
+OpenClaw aparece na documentacao oficial como fonte de skills, mas o repositorio padrao pode nao estar disponivel em algumas instalacoes. Se retornar `repository not found`, ignore o OpenClaw e use Hermes/GitHub.
 
-```bash
-cd ~/OpenJarvis
-uv run jarvis skill install openclaw:0xv4l3nt1n3/etherscan
-```
-
-Sincronizar skills do OpenClaw por busca:
+Sincronizar OpenClaw por busca, se a fonte estiver disponivel:
 
 ```bash
 cd ~/OpenJarvis
 uv run jarvis skill sync openclaw --search "web3|crypto"
+```
+
+Instalar skill de qualquer repositorio GitHub:
+
+```bash
+cd ~/OpenJarvis
+uv run jarvis skill install github:user/repo/path/to/skill --url https://github.com/user/repo
 ```
 
 Ver detalhes de uma skill:
@@ -289,10 +291,6 @@ auto_sync = true
 source = "hermes"
 filter = { category = ["research", "coding", "productivity"] }
 auto_update = true
-
-[[skills.sources]]
-source = "openclaw"
-filter = { search = "web3|crypto" }
 ```
 
 ## 9. Speech local com faster-whisper
@@ -402,36 +400,3 @@ nano ~/.openjarvis/config.toml
 ```
 
 Depois recrie apenas o bloco necessario do Ollama.
-
-### Limpeza completa para reinstalar
-
-Use apenas se quiser apagar a instalacao anterior.
-
-```bash
-pkill -f jarvis
-pkill -f OpenJarvis
-
-rm -rf ~/OpenJarvis
-rm -rf ~/OpenJarvis_old_*
-rm -rf ~/.openjarvis
-rm -rf ~/.config/OpenJarvis
-rm -rf ~/.local/share/OpenJarvis
-rm -rf ~/.cache/OpenJarvis
-rm -rf ~/.config/openjarvis
-rm -rf ~/.local/share/openjarvis
-rm -rf ~/.cache/openjarvis
-rm -rf ~/.local/share/com.openjarvis.desktop
-rm -rf ~/.cache/uv
-rm -rf ~/.cache/gnome-software/odrs/OpenJarvis.desktop.json
-rm -f ~/Downloads/OpenJarvis*.deb
-rm -f ~/Downloads/openjarvis*.deb
-rm -f ~/Downloads/OpenJarvis_*.AppImage
-```
-
-Conferir:
-
-```bash
-find ~ -iname "*openjarvis*" 2>/dev/null
-```
-
-Apague manualmente apenas arquivos pessoais se tiver certeza.
