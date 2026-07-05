@@ -294,7 +294,35 @@ filter = { category = ["research", "coding", "productivity"] }
 auto_update = true
 ```
 
-## 9. Speech local com faster-whisper
+## 9. Testar no Desktop via Tauri
+
+Para testar o Desktop Linux pelo codigo-fonte, pode ser necessario instalar dependencias nativas:
+
+```bash
+sudo apt update
+sudo apt install -y \
+  build-essential \
+  pkg-config \
+  libglib2.0-dev \
+  libgtk-3-dev \
+  libwebkit2gtk-4.1-dev \
+  libayatana-appindicator3-dev \
+  librsvg2-dev \
+  patchelf
+```
+
+Depois rode:
+
+```bash
+cd ~/OpenJarvis/frontend
+npm run tauri dev
+```
+
+Esse comando sobe o frontend de desenvolvimento e abre o Desktop Tauri.
+
+Se o navegador funciona, mas o Desktop retorna `Microphone access denied`, o problema tende a estar na permissao de microfone do runtime grafico, e nao no `faster-whisper`.
+
+## 10. Speech local com faster-whisper
 
 Para usar transcricao de voz local, sem custo por token, configure o OpenJarvis com `faster-whisper`.
 
@@ -358,7 +386,7 @@ aplay teste_microfone.wav
 
 Se gravou sua voz, o Linux esta capturando audio corretamente.
 
-## 10. Voz local com kokoro
+## 11. Voz local com kokoro
 
 O `kokoro` e um backend local de text-to-speech (TTS). Ele permite que o OpenJarvis gere fala sem usar API paga.
 
@@ -455,7 +483,7 @@ Ou seja:
 - para ouvir sua voz no OpenJarvis: `faster-whisper`.
 - para o OpenJarvis responder falando: `kokoro`.
 
-## 11. Testar no navegador
+## 12. Testar no navegador
 
 Com o backend rodando:
 
@@ -473,32 +501,6 @@ http://localhost:5173
 Ative Speech-to-Text nas configuracoes e teste o microfone.
 
 Se o navegador funcionar, o backend de transcricao esta correto.
-
-## 12. Testar no Desktop via Tauri
-
-Para testar o Desktop Linux pelo codigo-fonte, pode ser necessario instalar dependencias nativas:
-
-```bash
-sudo apt update
-sudo apt install -y \
-  build-essential \
-  pkg-config \
-  libglib2.0-dev \
-  libgtk-3-dev \
-  libwebkit2gtk-4.1-dev \
-  libayatana-appindicator3-dev \
-  librsvg2-dev \
-  patchelf
-```
-
-Depois rode:
-
-```bash
-cd ~/OpenJarvis/frontend
-npm run tauri dev
-```
-
-Se o navegador funciona, mas o Desktop retorna `Microphone access denied`, o problema tende a estar na permissao de microfone do runtime grafico, e nao no `faster-whisper`.
 
 ## Correcoes comuns
 
