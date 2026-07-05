@@ -10,6 +10,7 @@ Este guia cobre:
 - Google OAuth;
 - skills do Hermes Agent e OpenClaw;
 - speech local com `faster-whisper`;
+- voz local com `kokoro`;
 - correcoes comuns.
 
 Este guia nao usa MiniMax.
@@ -357,7 +358,104 @@ aplay teste_microfone.wav
 
 Se gravou sua voz, o Linux esta capturando audio corretamente.
 
-## 10. Testar no navegador
+## 10. Voz local com kokoro
+
+O `kokoro` e um backend local de text-to-speech (TTS). Ele permite que o OpenJarvis gere fala sem usar API paga.
+
+Instale as dependencias no diretorio do projeto:
+
+```bash
+cd ~/OpenJarvis
+uv pip install kokoro soundfile numpy
+```
+
+O backend local de fala fica em:
+
+```text
+src/openjarvis/speech/kokoro_tts.py
+```
+
+Ele e registrado com o nome:
+
+```text
+kokoro
+```
+
+Teste uma voz:
+
+```bash
+cd ~/OpenJarvis
+uv run python - <<'PY'
+from openjarvis.speech.kokoro_tts import KokoroTTSBackend
+
+tts = KokoroTTSBackend()
+result = tts.synthesize(
+    "Ola. Este e um teste de voz local do OpenJarvis.",
+    voice_id="af_heart",
+    speed=1.0,
+    output_format="wav",
+)
+
+with open("/tmp/openjarvis_kokoro.wav", "wb") as f:
+    f.write(result.audio)
+
+print("/tmp/openjarvis_kokoro.wav")
+PY
+```
+
+Ouça o audio gerado:
+
+```bash
+xdg-open /tmp/openjarvis_kokoro.wav
+```
+
+Vozes disponiveis no backend atual:
+
+- `af_heart`
+- `af_bella`
+- `am_adam`
+- `am_michael`
+
+Teste outra voz:
+
+```bash
+cd ~/OpenJarvis
+uv run python - <<'PY'
+from openjarvis.speech.kokoro_tts import KokoroTTSBackend
+
+tts = KokoroTTSBackend()
+result = tts.synthesize(
+    "Este e outro teste de voz local com Kokoro.",
+    voice_id="am_michael",
+    speed=1.0,
+    output_format="wav",
+)
+
+with open("/tmp/openjarvis_kokoro_michael.wav", "wb") as f:
+    f.write(result.audio)
+
+print("/tmp/openjarvis_kokoro_michael.wav")
+PY
+```
+
+Se aparecer erro de pacote ausente, rode novamente:
+
+```bash
+cd ~/OpenJarvis
+uv pip install kokoro soundfile numpy
+```
+
+Resumo:
+
+- `faster-whisper`: audio para texto.
+- `kokoro`: texto para audio.
+
+Ou seja:
+
+- para ouvir sua voz no OpenJarvis: `faster-whisper`.
+- para o OpenJarvis responder falando: `kokoro`.
+
+## 11. Testar no navegador
 
 Com o backend rodando:
 
@@ -376,7 +474,7 @@ Ative Speech-to-Text nas configuracoes e teste o microfone.
 
 Se o navegador funcionar, o backend de transcricao esta correto.
 
-## 11. Testar no Desktop via Tauri
+## 12. Testar no Desktop via Tauri
 
 Para testar o Desktop Linux pelo codigo-fonte, pode ser necessario instalar dependencias nativas:
 
