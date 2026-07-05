@@ -295,7 +295,9 @@ auto_update = true
 
 ## 9. Speech local com faster-whisper
 
-Instale o `faster-whisper` diretamente no projeto clonado pelo Git:
+Para usar transcricao de voz local, sem custo por token, configure o OpenJarvis com `faster-whisper`.
+
+Instale o pacote diretamente no projeto clonado pelo Git:
 
 ```bash
 cd ~/OpenJarvis
@@ -315,22 +317,38 @@ Resultado esperado:
 ok
 ```
 
-Adicione ao `~/.openjarvis/config.toml`:
+Edite o arquivo `~/.openjarvis/config.toml` e adicione:
 
 ```toml
 [speech]
 backend = "faster-whisper"
 model = "tiny"
-device = "auto"
+device = "cpu"
 compute_type = "int8"
 language = "pt"
 ```
 
-Depois abra o OpenJarvis Desktop normalmente.
+Significado da configuracao:
 
-No Desktop, o speech deve aparecer habilitado se o ambiente local estiver reconhecendo o pacote.
+- `backend = "faster-whisper"`: ativa o backend local de speech-to-text.
+- `model = "tiny"`: usa um modelo leve e rapido para testes.
+- `device = "cpu"`: forca execucao na CPU.
+- `compute_type = "int8"`: reduz uso de memoria e funciona bem em CPU.
+- `language = "pt"`: forca transcricao em portugues.
 
-Teste o microfone:
+Verifique se o backend esta ativo:
+
+```bash
+curl http://127.0.0.1:8000/v1/speech/health
+```
+
+Resultado esperado:
+
+```json
+{"available":true,"backend":"faster-whisper"}
+```
+
+Teste o microfone no Linux:
 
 ```bash
 arecord -d 5 teste_microfone.wav
@@ -339,7 +357,71 @@ aplay teste_microfone.wav
 
 Se gravou sua voz, o Linux esta capturando audio corretamente.
 
+## 10. Testar no navegador
+
+Com o backend rodando:
+
+```bash
+cd ~/OpenJarvis/frontend
+npm run dev
+```
+
+Abra no navegador:
+
+```text
+http://localhost:5173
+```
+
+Ative Speech-to-Text nas configuracoes e teste o microfone.
+
+Se o navegador funcionar, o backend de transcricao esta correto.
+
+## 11. Testar no Desktop via Tauri
+
+Para testar o Desktop Linux pelo codigo-fonte, pode ser necessario instalar dependencias nativas:
+
+```bash
+sudo apt update
+sudo apt install -y \
+  build-essential \
+  pkg-config \
+  libglib2.0-dev \
+  libgtk-3-dev \
+  libwebkit2gtk-4.1-dev \
+  libayatana-appindicator3-dev \
+  librsvg2-dev \
+  patchelf
+```
+
+Depois rode:
+
+```bash
+cd ~/OpenJarvis/frontend
+npm run tauri dev
+```
+
+Se o navegador funciona, mas o Desktop retorna `Microphone access denied`, o problema tende a estar na permissao de microfone do runtime grafico, e nao no `faster-whisper`.
+
 ## Correcoes comuns
+
+### Erro de CUDA no faster-whisper
+
+Se surgir a mensagem abaixo, ainda pode haver processo antigo tentando usar CUDA:
+
+```text
+Library libcublas.so.12 is not found or cannot be loaded
+```
+
+Encerre os processos do OpenJarvis e suba novamente:
+
+```bash
+pkill -f "jarvis serve"
+pkill -f "openjarvis-desktop"
+pkill -f "vite"
+
+cd ~/OpenJarvis
+uv run jarvis serve --port 8000
+```
 
 ### Porta 8000 presa
 
