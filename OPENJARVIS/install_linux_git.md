@@ -145,30 +145,9 @@ cd ~/OpenJarvis
 uv run jarvis ask "Responda apenas: OpenJarvis funcionando."
 ```
 
-## 6. Subir backend local
+## 6. Backend local e Desktop
 
-Use a porta padrao `8000`.
-
-```bash
-cd ~/OpenJarvis
-uv run jarvis serve --host 127.0.0.1 --port 8000
-```
-
-Teste em outro terminal:
-
-```bash
-curl http://127.0.0.1:8000/health
-```
-
-Resultado esperado:
-
-```json
-{"status":"ok"}
-```
-
-## 7. Desktop e porta
-
-Padrao:
+A porta padrao do backend local e `8000`:
 
 ```text
 http://127.0.0.1:8000
@@ -176,9 +155,9 @@ http://127.0.0.1:8000
 
 Nao troque para `8001` por padrao.
 
-Se o Desktop derrubar o `jarvis serve`, provavelmente os dois estao tentando iniciar/gerenciar o mesmo backend. Nesse caso, feche o `serve` manual antes de abrir o Desktop ou deixe apenas um processo ativo.
+Para usar o Desktop, abra o OpenJarvis Desktop normalmente. Em algumas versoes, o Desktop gerencia o backend automaticamente. Evite rodar dois backends ao mesmo tempo.
 
-## 8. Google OAuth
+## 7. Google OAuth
 
 OAuth e usado para autorizar conectores como Drive, Gmail, Calendar, Contacts e Tasks.
 
@@ -236,25 +215,26 @@ uv run jarvis connect --help
 
 Nunca envie credenciais, tokens ou API keys para o GitHub.
 
-## 9. Speech local com faster-whisper
+## 8. Speech local com faster-whisper
 
-O extra `desktop` deve instalar o `faster-whisper`.
-
-Confira:
+Instale o `faster-whisper` diretamente no projeto clonado pelo Git:
 
 ```bash
 cd ~/OpenJarvis
-uv run python - <<'PY'
-import importlib.util
-print('faster_whisper instalado:', importlib.util.find_spec('faster_whisper') is not None)
-PY
+uv add faster-whisper
 ```
 
-Se retornar `False`, rode:
+Confira se ficou disponivel no ambiente do projeto:
 
 ```bash
 cd ~/OpenJarvis
-uv sync --extra desktop
+uv run python -c "import faster_whisper; print('ok')"
+```
+
+Resultado esperado:
+
+```text
+ok
 ```
 
 Adicione ao `~/.openjarvis/config.toml`:
@@ -268,13 +248,9 @@ compute_type = "int8"
 language = "pt"
 ```
 
-Importante: se o backend ja estava aberto antes de instalar o `faster-whisper`, reinicie o backend.
+Depois abra o OpenJarvis Desktop normalmente.
 
-```bash
-fuser -k 8000/tcp
-cd ~/OpenJarvis
-uv run jarvis serve --host 127.0.0.1 --port 8000
-```
+No Desktop, o speech deve aparecer habilitado se o ambiente local estiver reconhecendo o pacote.
 
 Teste o microfone:
 
@@ -283,17 +259,7 @@ arecord -d 5 teste_microfone.wav
 aplay teste_microfone.wav
 ```
 
-Teste o endpoint de speech:
-
-```bash
-curl http://127.0.0.1:8000/v1/speech/health
-```
-
-Resultado esperado:
-
-```json
-{"available":true,"backend":"faster-whisper"}
-```
+Se gravou sua voz, o Linux esta capturando audio corretamente.
 
 ## Correcoes comuns
 
@@ -311,13 +277,6 @@ Matar processo na porta:
 fuser -k 8000/tcp
 ```
 
-Subir de novo:
-
-```bash
-cd ~/OpenJarvis
-uv run jarvis serve --host 127.0.0.1 --port 8000
-```
-
 ### Desktop derruba o backend manual
 
 Nao rode dois backends ao mesmo tempo.
@@ -325,28 +284,23 @@ Nao rode dois backends ao mesmo tempo.
 Use um destes fluxos:
 
 ```text
-Fluxo A: backend manual aberto + teste via curl
+Fluxo A: backend manual aberto para testes via API/curl
 Fluxo B: Desktop aberto gerenciando o backend
 ```
 
-Evite abrir o Desktop depois de ja ter iniciado manualmente o `jarvis serve`, se a versao do Desktop tentar iniciar o mesmo servico.
+Para uso normal do Desktop, prefira abrir apenas o Desktop.
 
-### faster-whisper instalado, mas health ainda retorna false
+### faster-whisper nao aparece habilitado no Desktop
 
-Isso geralmente acontece quando o backend ficou aberto antes da instalacao do pacote.
+Instale pelo projeto Git e confira o import:
 
 ```bash
 cd ~/OpenJarvis
+uv add faster-whisper
 uv run python -c "import faster_whisper; print('ok')"
-fuser -k 8000/tcp
-uv run jarvis serve --host 127.0.0.1 --port 8000
 ```
 
-Depois teste novamente:
-
-```bash
-curl http://127.0.0.1:8000/v1/speech/health
-```
+Depois feche e abra novamente o Desktop.
 
 ### OAuth usando cliente antigo
 
