@@ -8,7 +8,7 @@ Este guia cobre:
 - backend local na porta padrao `8000`;
 - configuracao local com Ollama;
 - Google OAuth;
-- skills do Hermes Agent e OpenClaw;
+- skills do Hermes Agent;
 - speech local com `faster-whisper`;
 - voz local com `kokoro`;
 - correcoes comuns.
@@ -218,9 +218,11 @@ uv run jarvis connect --help
 
 Nunca envie credenciais, tokens ou API keys para o GitHub.
 
-## 8. Skills do Hermes Agent e OpenClaw
+## 8. Skills do Hermes Agent
 
 Skills sao pacotes reutilizaveis de instrucoes e ferramentas para os agentes. Elas nao sao a mesma coisa que conectores Google nem configuracao de personalidade.
+
+Este guia deixa como fluxo testado apenas o Hermes Agent. A documentacao oficial tambem cita OpenClaw como fonte de skills, mas nesta instalacao ele retornou erro de repositorio nao encontrado.
 
 Listar skills instaladas:
 
@@ -249,15 +251,6 @@ Instalar todas as skills disponiveis do Hermes Agent:
 ```bash
 cd ~/OpenJarvis
 uv run jarvis skill sync hermes
-```
-
-OpenClaw aparece na documentacao oficial como fonte de skills, mas o repositorio padrao pode nao estar disponivel em algumas instalacoes. Se retornar `repository not found`, ignore o OpenClaw e use Hermes/GitHub.
-
-Sincronizar OpenClaw por busca, se a fonte estiver disponivel:
-
-```bash
-cd ~/OpenJarvis
-uv run jarvis skill sync openclaw --search "web3|crypto"
 ```
 
 Instalar skill de qualquer repositorio GitHub:
