@@ -287,7 +287,7 @@ filter = { category = ["research", "coding", "productivity"] }
 auto_update = true
 ```
 
-## 9. Testar no Desktop via Tauri
+## 9. Acessar OpenJarvis Desktop e OpenJarvis Browser
 
 Para testar o Desktop Linux pelo codigo-fonte, pode ser necessario instalar dependencias nativas:
 
