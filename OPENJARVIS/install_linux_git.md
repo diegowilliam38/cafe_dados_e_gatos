@@ -289,7 +289,7 @@ auto_update = true
 
 ## 9. Acessar OpenJarvis Desktop e OpenJarvis Browser
 
-Para testar o Desktop Linux pelo codigo-fonte, pode ser necessario instalar dependencias nativas:
+Para usar o Desktop e o Browser pelo codigo-fonte (funciona de forma adequada o Faster-Whisper, pode ser necessario instalar dependencias nativas:
 
 ```bash
 sudo apt update
