@@ -82,7 +82,7 @@ Cada empresa tem um perfil diferente. Algumas são mais simples para testes ráp
 | Lambda | https://lambda.ai/pricing |
 | DigitalOcean GPU Droplets | https://www.digitalocean.com/pricing/gpu-droplets#reserved-plans |
 | Paperspace | https://www.paperspace.com/pricing |
-| Vast.ai | https://vast.ai/pricing |
+| Vast.ai | https://cloud.vast.ai/?ref_id=607758 |
 | Salad | https://salad.com/pricing |
 
 ## Aviso
