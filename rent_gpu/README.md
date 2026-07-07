@@ -64,22 +64,26 @@ Em cloud, um dos maiores riscos não é apenas escolher uma GPU cara. É esquece
 
 ## Empresas citadas na pesquisa
 
-A pesquisa inclui provedores como:
-
-- Salad;
-- Vast.ai;
-- Massed Compute;
-- ThunderCompute;
-- VERDA;
-- Radiant / Ori;
-- DigitalOcean;
-- Paperspace;
-- Scaleway;
-- LeaderGPU;
-- Lambda Labs;
-- Vultr.
+A pesquisa inclui provedores como Salad, Vast.ai, Massed Compute, ThunderCompute, VERDA, Radiant / Ori, DigitalOcean, Paperspace, Scaleway, LeaderGPU, Lambda Labs e Vultr.
 
 Cada empresa tem um perfil diferente. Algumas são mais simples para testes rápidos, outras são mais técnicas, e outras fazem mais sentido para times, clusters, inferência em produção ou workloads enterprise.
+
+## Links oficiais das empresas
+
+| Empresa | Link |
+|---|---|
+| VERDA | https://verda.com/pricing |
+| Ori / Radiant | https://docs.ori.co/kubernetes/billing/ |
+| Vultr | https://www.vultr.com/pricing/#cloud-gpu |
+| Scaleway | https://www.scaleway.com/en/pricing/gpu/ |
+| Massed Compute | https://vm.massedcompute.com/pricing |
+| LeaderGPU | https://www.leadergpu.com/lead/new?operating_system%5B%5D=Ubuntu+22.04+Server&operating_system%5B%5D=Windows%C2%AE+Server+2019&operating_system%5B%5D=Windows%C2%AE+Server+2022&product_ids%5B%5D=961&product_ids%5B%5D=962&product_ids%5B%5D=963&product_ids%5B%5D=964&server_conf_id=106 |
+| ThunderCompute | https://www.thundercompute.com/pricing |
+| Lambda | https://lambda.ai/pricing |
+| DigitalOcean GPU Droplets | https://www.digitalocean.com/pricing/gpu-droplets#reserved-plans |
+| Paperspace | https://www.paperspace.com/pricing |
+| Vast.ai | https://vast.ai/pricing |
+| Salad | https://salad.com/pricing |
 
 ## Uso sugerido
 
