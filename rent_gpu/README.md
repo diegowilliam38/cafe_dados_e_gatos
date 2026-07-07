@@ -7,10 +7,10 @@ A ideia deste material não é apontar uma única empresa como "a melhor", mas a
 ## Arquivos da pasta
 
 - [`precos_por_empresa_gpu_cafe_com_dados_e_gatos.pdf`](./precos_por_empresa_gpu_cafe_com_dados_e_gatos.pdf)  
-  Base de pesquisa organizada por empresa, com observações sobre tipo de cobrança, perfil do serviço, modelos de GPU encontrados e pontos de atenção.
+  PDF visual com a base da pesquisa organizada por empresa. Ele reúne o perfil de cada provedor, tipo de cobrança, GPUs encontradas e pontos de atenção antes de contratar.
 
 - [`melhores_precos_por_gpu_cafe_com_dados_e_gatos.pdf`](./melhores_precos_por_gpu_cafe_com_dados_e_gatos.pdf)  
-  Ranking consolidado por tipo de GPU, selecionando o menor preço encontrado dentro do recorte pesquisado e trazendo uma leitura prática para cada categoria.
+  PDF visual com o ranking consolidado por tipo de GPU, destacando o menor preço encontrado no recorte pesquisado e uma leitura prática para cada categoria.
 
 ## Data da consulta
 
