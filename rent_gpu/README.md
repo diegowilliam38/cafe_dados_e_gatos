@@ -85,23 +85,12 @@ Cada empresa tem um perfil diferente. Algumas são mais simples para testes ráp
 | Vast.ai | https://vast.ai/pricing |
 | Salad | https://salad.com/pricing |
 
-## Uso sugerido
-
-Este material pode ser usado como apoio para:
-
-- roteiro de vídeo no YouTube;
-- comparação inicial entre provedores;
-- escolha de GPU para ComfyUI ou Flux;
-- estudo sobre custos de IA generativa;
-- planejamento de testes com GPU por hora;
-- material complementar para a comunidade Café com Dados & Gatos.
-
 ## Aviso
 
 Confira sempre a página oficial do provedor antes de contratar qualquer serviço. Preço, disponibilidade, região, GPU, condições de uso e modelo de cobrança podem mudar a qualquer momento.
 
 ## Créditos
 
-Pesquisa organizada por **Denise Jeanne**, do canal **Café com Dados & Gatos**.
+Pesquisa organizada por **Café com Dados & Gatos**.
 
 Conteúdo voltado para quem estuda IA, dados, automação e ferramentas de forma prática, sem hype e sem enrolação.
