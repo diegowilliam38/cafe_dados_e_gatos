@@ -116,7 +116,7 @@ Adicione no final:
 
 ```bash
 export ANTHROPIC_AUTH_TOKEN="COLE_SUA_CHAVE_DA_MINIMAX_AQUI"
-export ANTHROPIC_BASE_URL="COLE_A_URL_OFICIAL_DA_MINIMAX_AQUI"
+export ANTHROPIC_BASE_URL="https://api.minimax.chat/v1"
 export ANTHROPIC_MODEL="MiniMax-M3"
 ```
 
