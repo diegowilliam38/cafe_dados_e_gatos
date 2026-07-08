@@ -25,6 +25,7 @@ Por isso a ordem correta é:
 - Atualizar o ambiente Linux do Android
 - Instalar Node.js, Git e ferramentas básicas
 - Instalar o Claude Code
+- Criar o arquivo `~/.bashrc`, caso ele não exista
 - Configurar a chave da MiniMax
 - Configurar o endpoint/modelo MiniMax M3
 - Testar se o Claude Code abre usando o M3
@@ -72,9 +73,33 @@ node -v
 npm -v
 ```
 
-## 4. Instalar o Claude Code
+## 4. Preparar o arquivo de configuração do Termux
 
-Agora sim, com o Termux instalado, atualizado e com Node.js disponível, instale o Claude Code.
+No Termux, o arquivo `~/.bashrc` pode não existir por padrão.
+
+Antes de usar `source ~/.bashrc`, crie o arquivo:
+
+```bash
+touch ~/.bashrc
+```
+
+Agora confira se ele existe:
+
+```bash
+ls -la ~/.bashrc
+```
+
+Resultado esperado:
+
+```text
+/data/data/com.termux/files/home/.bashrc
+```
+
+Se aparecer o arquivo, pode continuar.
+
+## 5. Instalar o Claude Code
+
+Agora sim, com o Termux instalado, atualizado, com Node.js disponível e com o `~/.bashrc` criado, instale o Claude Code.
 
 Tente primeiro pelo instalador oficial:
 
@@ -106,11 +131,11 @@ E teste novamente:
 claude --version
 ```
 
-## 5. Configurar MiniMax M3 no Claude Code
+## 6. Configurar MiniMax M3 no Claude Code
 
 A MiniMax disponibiliza o M3 por API. Para usar com o Claude Code, a configuração normalmente é feita apontando o Claude Code para o endpoint compatível indicado pela MiniMax e passando a chave de API.
 
-Crie ou edite o arquivo de configuração do shell:
+Edite o arquivo de configuração do shell:
 
 ```bash
 nano ~/.bashrc
@@ -151,7 +176,7 @@ A chave não deve ser exibida no terminal. Para conferir apenas se ela existe:
 [ -n "$ANTHROPIC_AUTH_TOKEN" ] && echo "Token configurado" || echo "Token ausente"
 ```
 
-## 6. Testar o Claude Code com MiniMax M3
+## 7. Testar o Claude Code com MiniMax M3
 
 Entre em uma pasta de teste:
 
@@ -172,7 +197,7 @@ Faça um teste simples:
 Crie um README.md simples explicando que este projeto é um teste do Claude Code no Android usando MiniMax M3.
 ```
 
-## 7. Se quiser manter a configuração separada
+## 8. Se quiser manter a configuração separada
 
 Em vez de colocar tudo direto no `~/.bashrc`, você pode criar um arquivo separado:
 
@@ -191,7 +216,7 @@ export ANTHROPIC_MODEL="MiniMax-M3"
 Depois adicione ao `~/.bashrc`:
 
 ```bash
-source ~/.minimax-m3.env
+echo 'source ~/.minimax-m3.env' >> ~/.bashrc
 ```
 
 Recarregue:
@@ -200,7 +225,7 @@ Recarregue:
 source ~/.bashrc
 ```
 
-## 8. Cuidados importantes
+## 9. Cuidados importantes
 
 Nunca publique sua chave da MiniMax no GitHub.
 
@@ -214,25 +239,40 @@ Se o Claude Code abrir, mas não responder, verifique:
 - se a URL do endpoint está exatamente igual à documentação da MiniMax;
 - se o nome do modelo está correto;
 - se o celular está com internet;
-- se o Termux está com Node.js atualizado.
+- se o Termux está com Node.js atualizado;
+- se o arquivo `~/.bashrc` existe.
 
-## 9. Comandos rápidos
+## 10. Comandos rápidos
 
-A ordem resumida também respeita a lógica: primeiro Termux atualizado, depois dependências, depois Claude Code.
+A ordem resumida também respeita a lógica: primeiro Termux atualizado, depois dependências, depois `~/.bashrc`, depois Claude Code.
 
 ```bash
 pkg update && pkg upgrade -y
 pkg install -y nodejs git curl nano
+touch ~/.bashrc
 npm install -g @anthropic-ai/claude-code
+source ~/.bashrc
 claude --version
 ```
 
 Configuração:
 
 ```bash
+nano ~/.bashrc
+```
+
+Depois adicione:
+
+```bash
 export ANTHROPIC_AUTH_TOKEN="COLE_SUA_CHAVE_DA_MINIMAX_AQUI"
 export ANTHROPIC_BASE_URL="COLE_A_URL_OFICIAL_DA_MINIMAX_AQUI"
 export ANTHROPIC_MODEL="MiniMax-M3"
+```
+
+Recarregue:
+
+```bash
+source ~/.bashrc
 ```
 
 Teste:
@@ -243,6 +283,6 @@ cd ~/teste-claude-minimax
 claude
 ```
 
-## 10. Nota para revisão
+## 11. Nota para revisão
 
 Este guia deixa os campos da URL oficial e da chave como placeholders para evitar publicar informação sensível. Antes de gravar o vídeo ou seguir em produção, confira a página oficial da MiniMax usada no seu PC e substitua `COLE_A_URL_OFICIAL_DA_MINIMAX_AQUI` pelo endpoint correto informado por eles.
