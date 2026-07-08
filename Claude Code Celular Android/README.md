@@ -4,6 +4,26 @@ Este guia é para rodar o **Claude Code direto no celular Android**, usando o **
 
 O app Claude da Play Store não é o Claude Code CLI. Para usar Claude Code no celular, precisamos de terminal.
 
+## Importante sobre versões
+
+Nos testes com a versão atual `2.1.205`, o Claude Code falhou no Termux/Android com o erro de binário nativo ausente.
+
+O motivo é que versões a partir da `2.1.113` passaram a depender de um binário nativo Linux com glibc. O Termux roda sobre Android, que usa Bionic libc, então esse binário não funciona corretamente ali.
+
+A versão indicada no issue do GitHub como última versão funcional no Termux é:
+
+```text
+2.1.112
+```
+
+Por isso, neste guia, vamos instalar fixando a versão:
+
+```bash
+npm install -g @anthropic-ai/claude-code@2.1.112
+```
+
+---
+
 ## 1. Instalar o Termux
 
 Instale o Termux pelo F-Droid ou pelo GitHub oficial.
@@ -24,6 +44,8 @@ Para a maioria dos celulares atuais, use o APK universal mais recente.
 
 Depois de instalar, abra o Termux uma vez.
 
+---
+
 ## 2. Atualizar o Termux
 
 ```bash
@@ -31,6 +53,8 @@ pkg update && pkg upgrade -y
 ```
 
 Se aparecer pergunta com `[Y/n]`, digite `Y` e pressione Enter.
+
+---
 
 ## 3. Instalar Node.js
 
@@ -45,21 +69,16 @@ node -v
 npm -v
 ```
 
-## 4. Instalar o Claude Code
+---
+
+## 4. Instalar o Claude Code no Termux
+
+Não instale o `latest` no Termux, porque as versões novas podem falhar no Android.
+
+Instale a versão `2.1.112`:
 
 ```bash
-npm install -g @anthropic-ai/claude-code
-```
-
-## 5. Corrigir o caminho do Claude Code no Termux
-
-No Termux, o comando `claude` pode precisar apontar explicitamente para o Node.js do Termux.
-
-Rode:
-
-```bash
-sed -i '1s|.*|#!/data/data/com.termux/files/usr/bin/node|' /data/data/com.termux/files/usr/bin/claude
-chmod +x /data/data/com.termux/files/usr/bin/claude
+npm install -g @anthropic-ai/claude-code@2.1.112
 ```
 
 Teste:
@@ -68,7 +87,11 @@ Teste:
 claude --version
 ```
 
-## 6. Rodar o Claude Code
+Se aparecer a versão, a instalação funcionou.
+
+---
+
+## 5. Rodar o Claude Code
 
 ```bash
 claude
@@ -78,7 +101,9 @@ Ele deve abrir o assistente de configuração.
 
 Você poderá escolher assinatura, chave de API ou conexão third-party, dependendo da sua conta e do provedor que vai usar.
 
-## 7. Configurar MiniMax M3
+---
+
+## 6. Configurar MiniMax M3
 
 Crie e edite o `.bashrc`:
 
@@ -123,7 +148,9 @@ Depois rode:
 claude
 ```
 
-## 8. Opção grátis com Ollama
+---
+
+## 7. Opção grátis com Ollama
 
 Este caminho é opcional e experimental.
 
@@ -157,7 +184,9 @@ ollama launch claude --model qwen3:0.6b
 
 Esse modo pode ficar lento no celular. É melhor para estudo e teste.
 
-## 9. Teste com Python
+---
+
+## 8. Teste com Python
 
 ```bash
 pkg install -y python
@@ -178,7 +207,9 @@ Depois rode:
 python hello.py
 ```
 
-## 10. Teste com HTML no navegador do celular
+---
+
+## 9. Teste com HTML no navegador do celular
 
 Peça ao Claude Code:
 
@@ -198,77 +229,40 @@ No navegador do celular, abra:
 http://localhost:8080
 ```
 
-## 11. Se aparecer `npm warn allow-scripts`
+---
 
-Se o npm bloquear o script de instalação, rode:
+## 10. Não use estes comandos com versões novas
 
-```bash
-npm install -g @anthropic-ai/claude-code --allow-scripts=@anthropic-ai/claude-code
-```
-
-Depois repita a correção do Termux:
-
-```bash
-sed -i '1s|.*|#!/data/data/com.termux/files/usr/bin/node|' /data/data/com.termux/files/usr/bin/claude
-chmod +x /data/data/com.termux/files/usr/bin/claude
-```
-
-E teste:
-
-```bash
-claude --version
-```
-
-## 12. Se aparecer erro `ENOENT package.json`
-
-Se aparecer algo como:
+Com versões novas do Claude Code, pode aparecer erro como:
 
 ```text
-npm error code ENOENT
-npm error path /data/data/com.termux/files/home/package.json
+Error: claude native binary not installed.
 ```
 
-Não crie `package.json`.
+Também pode aparecer mensagem dizendo que não existe binário para:
 
-Rode o comando completo:
+```text
+linux-arm64-android
+```
+
+Nesse caso, não adianta corrigir com `sed` nem forçar `install.cjs`.
+
+A solução no Termux é usar a versão funcional:
 
 ```bash
-npm install -g @anthropic-ai/claude-code --allow-scripts=@anthropic-ai/claude-code
+npm install -g @anthropic-ai/claude-code@2.1.112
 ```
 
-## 13. Comandos rápidos
+---
 
-Instalação básica:
+## 11. Comandos rápidos
 
 ```bash
 pkg update && pkg upgrade -y
 pkg install nodejs
-npm install -g @anthropic-ai/claude-code
-sed -i '1s|.*|#!/data/data/com.termux/files/usr/bin/node|' /data/data/com.termux/files/usr/bin/claude
-chmod +x /data/data/com.termux/files/usr/bin/claude
+npm install -g @anthropic-ai/claude-code@2.1.112
 claude --version
-```
-
-Rodar:
-
-```bash
 claude
-```
-
-Ollama opcional:
-
-```bash
-pkg install -y ollama
-ollama serve
-```
-
-Em outra sessão:
-
-```bash
-export ANTHROPIC_AUTH_TOKEN=ollama
-export ANTHROPIC_API_KEY=""
-export ANTHROPIC_BASE_URL=http://localhost:11434
-ollama launch claude --model qwen3:0.6b
 ```
 
 ## Aviso final
