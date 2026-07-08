@@ -122,19 +122,28 @@ npm warn allow-scripts @anthropic-ai/claude-code@2.1.205 (postinstall: node inst
 npm warn allow-scripts Run `npm install -g --allow-scripts=@anthropic-ai/claude-code` to allow these scripts once
 ```
 
-Se isso aparecer, rode o comando completo:
+Primeiro tente o comando completo:
 
 ```bash
 npm install -g @anthropic-ai/claude-code --allow-scripts=@anthropic-ai/claude-code
 ```
-
-> Importante: não rode apenas `npm install -g --allow-scripts=@anthropic-ai/claude-code`, porque aí o npm pode tentar procurar um `package.json` na pasta atual e retornar erro `ENOENT`.
 
 Depois teste:
 
 ```bash
 claude --version
 ```
+
+Se continuar dando erro, tente o método de configuração do npm:
+
+```bash
+npm uninstall -g @anthropic-ai/claude-code
+npm config set allow-scripts=@anthropic-ai/claude-code --location=user
+npm install -g @anthropic-ai/claude-code
+claude --version
+```
+
+> Importante: não rode apenas `npm install -g --allow-scripts=@anthropic-ai/claude-code`, porque aí o npm pode tentar procurar um `package.json` na pasta atual e retornar erro `ENOENT`.
 
 ## 7. Se aparecer erro `ENOENT package.json`
 
@@ -154,6 +163,14 @@ Rode o comando correto:
 
 ```bash
 npm install -g @anthropic-ai/claude-code --allow-scripts=@anthropic-ai/claude-code
+```
+
+Se continuar com problema, use o método de configuração:
+
+```bash
+npm uninstall -g @anthropic-ai/claude-code
+npm config set allow-scripts=@anthropic-ai/claude-code --location=user
+npm install -g @anthropic-ai/claude-code
 ```
 
 Depois teste:
