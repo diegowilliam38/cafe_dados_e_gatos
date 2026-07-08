@@ -1,120 +1,133 @@
-# 🧾 Goose Recipes
+# Café com Dados & Gatos ☕🐈‍⬛
 
-Coleção de **recipes YAML** para o [Goose](https://github.com/block/goose). Cada `.yaml` é uma tarefa reutilizável que pode ser executada via CLI ou UI.
+Bem-vindo ao repositório do **Café com Dados & Gatos**.
 
-> 📚 Para o **guia completo do formato YAML** (campos, parâmetros, extensions, settings), veja [`../goose-recipes.md`](../goose-recipes.md).
+Este espaço reúne materiais de apoio, códigos, anotações, experimentos e documentações usados nos conteúdos do canal. A ideia é simples: testar ferramentas de IA e ciência de dados na prática, sem hype, mostrando o que funciona, o que falha e como qualquer pessoa curiosa pode aprender fazendo.
 
----
-
-## 📦 Recipes Disponíveis
-
-| Recipe                 | Arquivo                                          | Descrição                                                                                            |
-| ---------------------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| ⭐ **File Summarizer** | [`file-summarizer.yaml`](./file-summarizer.yaml) | **🌟 MODELO PÚBLICO** — gera resumo estruturado em `.md` a partir de qualquer arquivo de texto (código, docs, logs, configs, CSVs) |
+Aqui tem café, dados, gatos e muita tentativa real de transformar tecnologia em algo mais acessível.
 
 ---
 
-## 🚀 Como Usar
+## Sobre o projeto
 
-### 1. Importar uma recipe
+O **Café com Dados & Gatos** é um canal e comunidade voltados para quem quer aprender sobre:
 
-```bash
-# 1. Validar a sintaxe antes de importar
-goose recipe validate ./file-summarizer.yaml
+- Inteligência artificial aplicada
+- Ciência de dados
+- Python
+- Automação
+- Agentes de IA
+- Ferramentas open source
+- Modelos locais e APIs de LLMs
+- Testes práticos de ferramentas como OpenJarvis, Hermes, Goose, Ollama, Claude Code, Codex, MiniMax e outras
 
-# 2. Copiar para a pasta padrão do Goose
-#    Linux / macOS / WSL:
-cp ./file-summarizer.yaml ~/.config/goose/recipes/
-
-#    Windows (PowerShell):
-Copy-Item .\file-summarizer.yaml $env:USERPROFILE\.config\goose\recipes\
-```
-
-### 2. Executar via CLI
-
-```bash
-# Sintaxe básica
-goose run --recipe <nome-da-recipe> --parametro1 "valor" --parametro2 "valor"
-
-# Exemplo:
-goose run --recipe file-summarizer --caminho_arquivo "./README.md" --caminho_saida "./resumo-readme.md"
-
-# Com idioma e formato customizados:
-goose run --recipe file-summarizer --caminho_arquivo "./src/api/auth.py" --caminho_saida "./docs/auth-summary.md" --idioma "en-US" --formato "detalhado" --publico_alvo "tecnico"
-```
-
-### 3. Listar recipes instaladas
-
-```bash
-goose recipe list
-```
+O foco não é vender fórmula mágica. O foco é abrir a ferramenta, instalar, testar, errar, corrigir e mostrar o caminho de um jeito simples, honesto e técnico o suficiente para a pessoa sair pensando: **“agora eu entendi.”**
 
 ---
 
-## ⚙️ Configuração de Ambiente
+## O que você vai encontrar aqui
 
-Algumas recipes precisam de **variáveis de ambiente** (API keys, tokens). Configure-as antes de usar:
+Este repositório pode reunir diferentes tipos de materiais, conforme os vídeos e projetos forem sendo publicados:
+
+- Scripts em Python
+- Notebooks de estudo
+- Exemplos de automação
+- Arquivos de configuração
+- Prompts e workflows
+- Tutoriais em Markdown
+- Materiais de apoio para vídeos
+- Testes com agentes de IA
+- Projetos experimentais de ciência de dados e IA
+
+Nem tudo aqui é um produto final polido. Muitas pastas podem representar testes reais, estudos em andamento ou materiais usados durante gravações. Isso faz parte do processo.
+
+---
+
+## Como usar este repositório
+
+Você pode clonar o projeto com:
+
+```bash
+git clone https://github.com/djeannie29/cafe_dados_e_gatos.git
+cd cafe_dados_e_gatos
+```
+
+Depois, entre na pasta do projeto ou material que você quer testar e leia o arquivo `README.md` específico, quando existir.
+
+Quando houver dependências Python, normalmente o fluxo será parecido com:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+No Windows PowerShell:
 
 ```powershell
-# Windows (PowerShell)
-setx OPENAI_API_KEY "sk-xxxxxxxxxxxxx"
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
 ```
 
-| Variável | Usada por | Obter em |
-|----------|-----------|----------|
-| `OPENAI_API_KEY` | `file-summarizer` | <https://platform.openai.com/api-keys> |
+Cada projeto pode ter instruções próprias, então sempre confira a documentação da pasta antes de rodar comandos.
 
 ---
 
-## 🛠️ Criando Sua Própria Recipe
+## Organização
 
-Use qualquer recipe desta pasta como ponto de partida. Estrutura mínima:
+A estrutura do repositório pode mudar conforme novos conteúdos forem publicados. Em geral, os materiais serão organizados por tema, ferramenta ou vídeo.
 
-```yaml
-version: "1.0.0"
-title: "Minha Recipe"
-description: "Descrição de uma linha"
+Exemplos de categorias possíveis:
 
-prompt: |
-  Tarefa para o agente...
-  Entrada: {{ meu_parametro }}
-
-parameters:
-  - key: meu_parametro
-    input_type: string
-    requirement: required
-    description: "Descrição do input"
-
-extensions:
-  - type: builtin
-    name: developer
-
-settings:
-  provider: openai
-  model: gpt-4o
-  temperature: 0.7
-
-retry:                   # obrigatório: bloco retry com 'checks:'
-  max_retries: 1
-  timeout_seconds: 120
-  on_failure: continue
-  checks: []             # pode ser [] se não houver validação extra
+```text
+.
+├── automacoes/
+├── ciencia-de-dados/
+├── agentes-ia/
+├── ferramentas-ia/
+├── tutoriais/
+├── materiais-youtube/
+└── docs/
 ```
 
-Para detalhes completos (todos os campos, tipos de parâmetros, tipos de extensions, retry, response JSON schema), consulte o **[guia completo](../goose-recipes.md)**.
+Se alguma pasta ainda não existir, é porque ela será criada conforme os conteúdos forem sendo adicionados.
 
 ---
 
-## 🤝 Contribuindo
+## Comunidade e links
 
-1. Crie sua recipe seguindo o template mínimo acima
-2. Documente todos os parâmetros no campo `description`
-3. Teste localmente com `goose recipe validate`
-4. Adicione uma entrada na tabela acima (ordem alfabética)
-5. Abra um PR 🎉
+- Site: <https://cafecomdadosegatos.com.br>
+- Telegram: <https://t.me/comunidadecafecomdadosegatos>
+- GitHub: <https://github.com/djeannie29/cafe_dados_e_gatos>
 
 ---
 
-## 📜 Licença
+## Filosofia do Café
 
-MIT — use, modifique e compartilhe livremente.
+Aqui a tecnologia é tratada como ferramenta de autonomia, aprendizado e criação.
+
+A proposta é testar de verdade, explicar sem complicar e manter os pés no chão. IA não é mágica, mas pode ser uma baita parceira quando a gente entende seus limites, suas possibilidades e seus riscos.
+
+E, como todo bom gato, às vezes o código simplesmente derruba o copo da mesa. A diferença é que aqui a gente mostra como limpar a bagunça e continuar.
+
+---
+
+## Contribuições
+
+Sugestões, correções e melhorias são bem-vindas.
+
+Se você encontrou algum erro, pode abrir uma issue ou enviar um pull request. Só peço que mantenha o espírito do projeto: clareza, honestidade, respeito e vontade de aprender junto.
+
+---
+
+## Licença
+
+Este repositório está disponível sob a licença MIT, salvo indicação diferente em algum projeto ou arquivo específico.
+
+Você pode estudar, adaptar e compartilhar, dando os devidos créditos quando usar algum material daqui.
+
+---
+
+**Café com Dados & Gatos**  
+Tecnologia com café, curiosidade e alguns pelos de gato pelo caminho. ☕🐾
