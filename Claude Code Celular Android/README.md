@@ -109,7 +109,7 @@ Primeiro, teste a configuração de forma temporária no próprio Termux:
 
 ```bash
 export ANTHROPIC_AUTH_TOKEN="COLE_SUA_CHAVE_DA_MINIMAX_AQUI"
-export ANTHROPIC_BASE_URL="https://api.minimax.io/v1"
+export ANTHROPIC_BASE_URL="https://api.minimax.io/anthropic"
 export ANTHROPIC_MODEL="MiniMax-M3"
 
 claude
@@ -126,7 +126,7 @@ Adicione no final:
 
 ```bash
 export ANTHROPIC_AUTH_TOKEN="COLE_SUA_CHAVE_DA_MINIMAX_AQUI"
-export ANTHROPIC_BASE_URL="https://api.minimax.io/v1"
+export ANTHROPIC_BASE_URL="https://api.minimax.io/anthropic"
 export ANTHROPIC_MODEL="MiniMax-M3"
 ```
 
