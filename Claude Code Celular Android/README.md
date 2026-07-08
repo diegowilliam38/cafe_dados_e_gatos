@@ -105,7 +105,17 @@ Você poderá escolher assinatura, chave de API ou conexão third-party, depende
 
 ## 6. Configurar MiniMax M3
 
-Crie e edite o `.bashrc`:
+Primeiro, teste a configuração de forma temporária no próprio Termux:
+
+```bash
+export ANTHROPIC_AUTH_TOKEN="COLE_SUA_CHAVE_DA_MINIMAX_AQUI"
+export ANTHROPIC_BASE_URL="https://api.minimax.io/v1"
+export ANTHROPIC_MODEL="MiniMax-M3"
+
+claude
+```
+
+Se funcionar e você quiser deixar definitivo, salve no `.bashrc`:
 
 ```bash
 touch ~/.bashrc
@@ -116,7 +126,7 @@ Adicione no final:
 
 ```bash
 export ANTHROPIC_AUTH_TOKEN="COLE_SUA_CHAVE_DA_MINIMAX_AQUI"
-export ANTHROPIC_BASE_URL="https://api.minimax.chat/v1"
+export ANTHROPIC_BASE_URL="https://api.minimax.io/v1"
 export ANTHROPIC_MODEL="MiniMax-M3"
 ```
 
