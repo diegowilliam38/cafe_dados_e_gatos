@@ -4,6 +4,21 @@ Este guia mostra como preparar um celular Android para rodar o Claude Code pelo 
 
 > Observação importante: no Android, o Claude Code não roda como aplicativo comum. Ele roda dentro de um terminal Linux no celular, normalmente pelo Termux.
 
+## Lógica da instalação
+
+Antes de instalar o Claude Code, precisamos primeiro instalar e atualizar o Termux.
+
+Sem Termux, não existe terminal Linux no Android. E sem terminal, não existe onde rodar os comandos do Claude Code.
+
+Por isso a ordem correta é:
+
+1. Instalar o Termux
+2. Atualizar o Termux
+3. Instalar os pacotes básicos
+4. Instalar o Claude Code
+5. Configurar o MiniMax M3
+6. Testar
+
 ## O que vamos fazer
 
 - Instalar o Termux pelo F-Droid
@@ -16,7 +31,9 @@ Este guia mostra como preparar um celular Android para rodar o Claude Code pelo 
 
 ## Onde rodar
 
-Todos os comandos abaixo são para rodar dentro do Termux, no celular Android.
+Os comandos só começam depois que o Termux estiver instalado no celular Android.
+
+Dentro do Termux, os comandos funcionam como em um pequeno Linux no Android.
 
 ## 1. Instalar o Termux
 
@@ -28,13 +45,21 @@ https://f-droid.org/packages/com.termux/
 
 Evite a versão antiga da Play Store, porque ela costuma ficar desatualizada.
 
+Depois de instalar, abra o Termux uma vez para ele criar o ambiente inicial.
+
 ## 2. Atualizar o Termux
+
+Com o Termux aberto, rode:
 
 ```bash
 pkg update && pkg upgrade -y
 ```
 
+Esse passo vem antes de instalar o Claude Code porque atualiza os repositórios e pacotes do ambiente Linux do Android.
+
 ## 3. Instalar pacotes básicos
+
+Agora instale as ferramentas que o Claude Code vai precisar:
 
 ```bash
 pkg install -y nodejs git curl nano
@@ -48,6 +73,8 @@ npm -v
 ```
 
 ## 4. Instalar o Claude Code
+
+Agora sim, com o Termux instalado, atualizado e com Node.js disponível, instale o Claude Code.
 
 Tente primeiro pelo instalador oficial:
 
@@ -190,6 +217,8 @@ Se o Claude Code abrir, mas não responder, verifique:
 - se o Termux está com Node.js atualizado.
 
 ## 9. Comandos rápidos
+
+A ordem resumida também respeita a lógica: primeiro Termux atualizado, depois dependências, depois Claude Code.
 
 ```bash
 pkg update && pkg upgrade -y
