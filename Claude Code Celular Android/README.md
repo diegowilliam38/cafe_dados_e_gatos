@@ -17,8 +17,9 @@ Por isso a ordem correta é:
 3. Instalar os pacotes básicos
 4. Criar o arquivo de configuração do Termux
 5. Instalar o Claude Code via npm
-6. Configurar o MiniMax M3
-7. Testar
+6. Corrigir o aviso `npm warn allow-scripts`, caso apareça
+7. Configurar o MiniMax M3
+8. Testar
 
 ## O que vamos fazer
 
@@ -127,11 +128,13 @@ npm warn allow-scripts @anthropic-ai/claude-code@2.1.205 (postinstall: node inst
 npm warn allow-scripts Run `npm install -g --allow-scripts=@anthropic-ai/claude-code` to allow these scripts once
 ```
 
-Se isso aparecer, rode:
+Se isso aparecer, rode este comando completo:
 
 ```bash
-npm install -g --allow-scripts=@anthropic-ai/claude-code
+npm install -g @anthropic-ai/claude-code --allow-scripts=@anthropic-ai/claude-code
 ```
+
+> Importante: não rode apenas `npm install -g --allow-scripts=@anthropic-ai/claude-code`, porque aí o npm pode tentar procurar um `package.json` na pasta atual e retornar erro `ENOENT`.
 
 Depois teste:
 
@@ -146,6 +149,32 @@ source ~/.bashrc
 ```
 
 Depois teste de novo:
+
+```bash
+claude --version
+```
+
+## 5.2. Se aparecer erro `ENOENT package.json`
+
+Se você rodou o comando incompleto e apareceu algo assim:
+
+```text
+npm error code ENOENT
+npm error path /data/data/com.termux/files/home/package.json
+npm error enoent Could not read package.json
+```
+
+Não precisa criar `package.json`.
+
+Esse erro apareceu porque o comando foi executado sem informar o pacote que deveria ser instalado.
+
+Rode o comando correto:
+
+```bash
+npm install -g @anthropic-ai/claude-code --allow-scripts=@anthropic-ai/claude-code
+```
+
+Depois teste:
 
 ```bash
 claude --version
@@ -173,10 +202,10 @@ Se isso acontecer, não continue insistindo no instalador `curl`. Use o npm:
 npm install -g @anthropic-ai/claude-code
 ```
 
-Se aparecer o aviso `npm warn allow-scripts`, rode também:
+Se aparecer o aviso `npm warn allow-scripts`, rode também o comando completo:
 
 ```bash
-npm install -g --allow-scripts=@anthropic-ai/claude-code
+npm install -g @anthropic-ai/claude-code --allow-scripts=@anthropic-ai/claude-code
 ```
 
 ## 6. Configurar MiniMax M3 no Claude Code
@@ -289,7 +318,7 @@ Se o Claude Code abrir, mas não responder, verifique:
 - se o celular está com internet;
 - se o Termux está com Node.js atualizado;
 - se o arquivo `~/.bashrc` existe;
-- se o npm mostrou o aviso `allow-scripts` e se você rodou o comando de correção.
+- se o npm mostrou o aviso `allow-scripts` e se você rodou o comando completo de correção.
 
 ## 10. Comandos rápidos
 
@@ -300,7 +329,7 @@ pkg update && pkg upgrade -y
 pkg install -y nodejs git curl nano
 touch ~/.bashrc
 npm install -g @anthropic-ai/claude-code
-npm install -g --allow-scripts=@anthropic-ai/claude-code
+npm install -g @anthropic-ai/claude-code --allow-scripts=@anthropic-ai/claude-code
 source ~/.bashrc
 claude --version
 ```
