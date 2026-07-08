@@ -1,0 +1,219 @@
+# Claude Code no celular Android com MiniMax M3
+
+Este guia mostra como preparar um celular Android para rodar o Claude Code pelo Termux e configurar o MiniMax M3 como modelo, usando o mesmo conceito de configuração por variáveis de ambiente que você já usa no computador.
+
+> Observação importante: no Android, o Claude Code não roda como aplicativo comum. Ele roda dentro de um terminal Linux no celular, normalmente pelo Termux.
+
+## O que vamos fazer
+
+- Instalar o Termux pelo F-Droid
+- Atualizar o ambiente Linux do Android
+- Instalar Node.js, Git e ferramentas básicas
+- Instalar o Claude Code
+- Configurar a chave da MiniMax
+- Configurar o endpoint/modelo MiniMax M3
+- Testar se o Claude Code abre usando o M3
+
+## Onde rodar
+
+Todos os comandos abaixo são para rodar dentro do Termux, no celular Android.
+
+## 1. Instalar o Termux
+
+Use a versão do Termux pelo F-Droid:
+
+```text
+https://f-droid.org/packages/com.termux/
+```
+
+Evite a versão antiga da Play Store, porque ela costuma ficar desatualizada.
+
+## 2. Atualizar o Termux
+
+```bash
+pkg update && pkg upgrade -y
+```
+
+## 3. Instalar pacotes básicos
+
+```bash
+pkg install -y nodejs git curl nano
+```
+
+Depois confira se o Node.js foi instalado:
+
+```bash
+node -v
+npm -v
+```
+
+## 4. Instalar o Claude Code
+
+Tente primeiro pelo instalador oficial:
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+Feche e abra o Termux novamente, ou rode:
+
+```bash
+source ~/.bashrc
+```
+
+Teste:
+
+```bash
+claude --version
+```
+
+Se o instalador oficial não funcionar no Termux, tente pelo npm:
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+E teste novamente:
+
+```bash
+claude --version
+```
+
+## 5. Configurar MiniMax M3 no Claude Code
+
+A MiniMax disponibiliza o M3 por API. Para usar com o Claude Code, a configuração normalmente é feita apontando o Claude Code para o endpoint compatível indicado pela MiniMax e passando a chave de API.
+
+Crie ou edite o arquivo de configuração do shell:
+
+```bash
+nano ~/.bashrc
+```
+
+Adicione no final do arquivo:
+
+```bash
+export ANTHROPIC_AUTH_TOKEN="COLE_SUA_CHAVE_DA_MINIMAX_AQUI"
+export ANTHROPIC_BASE_URL="COLE_A_URL_OFICIAL_DA_MINIMAX_AQUI"
+export ANTHROPIC_MODEL="MiniMax-M3"
+```
+
+Salve com:
+
+```text
+CTRL + O
+ENTER
+CTRL + X
+```
+
+Recarregue o terminal:
+
+```bash
+source ~/.bashrc
+```
+
+Confira se as variáveis foram carregadas:
+
+```bash
+echo $ANTHROPIC_BASE_URL
+echo $ANTHROPIC_MODEL
+```
+
+A chave não deve ser exibida no terminal. Para conferir apenas se ela existe:
+
+```bash
+[ -n "$ANTHROPIC_AUTH_TOKEN" ] && echo "Token configurado" || echo "Token ausente"
+```
+
+## 6. Testar o Claude Code com MiniMax M3
+
+Entre em uma pasta de teste:
+
+```bash
+mkdir -p ~/teste-claude-minimax
+cd ~/teste-claude-minimax
+```
+
+Abra o Claude Code:
+
+```bash
+claude
+```
+
+Faça um teste simples:
+
+```text
+Crie um README.md simples explicando que este projeto é um teste do Claude Code no Android usando MiniMax M3.
+```
+
+## 7. Se quiser manter a configuração separada
+
+Em vez de colocar tudo direto no `~/.bashrc`, você pode criar um arquivo separado:
+
+```bash
+nano ~/.minimax-m3.env
+```
+
+Conteúdo:
+
+```bash
+export ANTHROPIC_AUTH_TOKEN="COLE_SUA_CHAVE_DA_MINIMAX_AQUI"
+export ANTHROPIC_BASE_URL="COLE_A_URL_OFICIAL_DA_MINIMAX_AQUI"
+export ANTHROPIC_MODEL="MiniMax-M3"
+```
+
+Depois adicione ao `~/.bashrc`:
+
+```bash
+source ~/.minimax-m3.env
+```
+
+Recarregue:
+
+```bash
+source ~/.bashrc
+```
+
+## 8. Cuidados importantes
+
+Nunca publique sua chave da MiniMax no GitHub.
+
+Não coloque sua chave em prints de vídeo.
+
+No celular, o desempenho pode ser mais limitado que no PC, principalmente para projetos grandes.
+
+Se o Claude Code abrir, mas não responder, verifique:
+
+- se a chave está correta;
+- se a URL do endpoint está exatamente igual à documentação da MiniMax;
+- se o nome do modelo está correto;
+- se o celular está com internet;
+- se o Termux está com Node.js atualizado.
+
+## 9. Comandos rápidos
+
+```bash
+pkg update && pkg upgrade -y
+pkg install -y nodejs git curl nano
+npm install -g @anthropic-ai/claude-code
+claude --version
+```
+
+Configuração:
+
+```bash
+export ANTHROPIC_AUTH_TOKEN="COLE_SUA_CHAVE_DA_MINIMAX_AQUI"
+export ANTHROPIC_BASE_URL="COLE_A_URL_OFICIAL_DA_MINIMAX_AQUI"
+export ANTHROPIC_MODEL="MiniMax-M3"
+```
+
+Teste:
+
+```bash
+mkdir -p ~/teste-claude-minimax
+cd ~/teste-claude-minimax
+claude
+```
+
+## 10. Nota para revisão
+
+Este guia deixa os campos da URL oficial e da chave como placeholders para evitar publicar informação sensível. Antes de gravar o vídeo ou seguir em produção, confira a página oficial da MiniMax usada no seu PC e substitua `COLE_A_URL_OFICIAL_DA_MINIMAX_AQUI` pelo endpoint correto informado por eles.
