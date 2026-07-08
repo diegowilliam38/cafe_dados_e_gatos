@@ -1,8 +1,8 @@
 # Claude Code no celular Android com MiniMax M3
 
-Este guia mostra como preparar um celular Android para rodar o Claude Code pelo Termux e configurar o MiniMax M3 como modelo, usando o mesmo conceito de configuração por variáveis de ambiente que você já usa no computador.
+Este guia mostra como preparar um celular Android para tentar rodar o Claude Code pelo Termux e configurar o MiniMax M3 como modelo.
 
-> Observação importante: no Android, o Claude Code não roda como aplicativo comum. Ele roda dentro de um terminal Linux no celular, normalmente pelo Termux.
+> Observação importante: no Android, o Claude Code não roda como aplicativo comum. Ele roda dentro de um terminal Linux no celular, normalmente pelo Termux. A instalação no Termux pode exigir ajustes porque o Claude Code depende de binário nativo.
 
 ## Lógica da instalação
 
@@ -17,21 +17,10 @@ Por isso a ordem correta é:
 3. Instalar os pacotes básicos
 4. Criar o arquivo de configuração do Termux
 5. Instalar o Claude Code via npm
-6. Corrigir o aviso `npm warn allow-scripts`, caso apareça
-7. Configurar o MiniMax M3
-8. Testar
-
-## O que vamos fazer
-
-- Instalar o Termux pelo F-Droid
-- Atualizar o ambiente Linux do Android
-- Instalar Node.js, Git e ferramentas básicas
-- Criar o arquivo `~/.bashrc`, caso ele não exista
-- Instalar o Claude Code via npm
-- Corrigir o aviso `npm warn allow-scripts`, caso apareça
-- Configurar a chave da MiniMax
-- Configurar o endpoint/modelo MiniMax M3
-- Testar se o Claude Code abre usando o M3
+6. Testar o comando `claude`
+7. Corrigir possíveis erros de instalação
+8. Configurar o MiniMax M3
+9. Testar com o modelo
 
 ## Onde rodar
 
@@ -69,11 +58,18 @@ Agora instale as ferramentas que o Claude Code vai precisar:
 pkg install -y nodejs git curl nano
 ```
 
-Depois confira se o Node.js foi instalado:
+Depois confira se o Node.js e o npm foram instalados:
 
 ```bash
 node -v
 npm -v
+```
+
+Exemplo de saída que funcionou nos testes:
+
+```text
+node v26.3.1
+npm 11.18.0
 ```
 
 ## 4. Preparar o arquivo de configuração do Termux
@@ -108,15 +104,13 @@ No Android/Termux, use a instalação via npm:
 npm install -g @anthropic-ai/claude-code
 ```
 
-Se a instalação terminar sem avisos importantes, teste:
+Depois teste:
 
 ```bash
 claude --version
 ```
 
-Se aparecer a versão do Claude Code, a instalação deu certo.
-
-## 5.1. Se aparecer `npm warn allow-scripts`
+## 6. Se aparecer `npm warn allow-scripts`
 
 Em algumas instalações no Termux, o npm adiciona o pacote, mas bloqueia o script de instalação do Claude Code.
 
@@ -128,7 +122,7 @@ npm warn allow-scripts @anthropic-ai/claude-code@2.1.205 (postinstall: node inst
 npm warn allow-scripts Run `npm install -g --allow-scripts=@anthropic-ai/claude-code` to allow these scripts once
 ```
 
-Se isso aparecer, rode este comando completo:
+Se isso aparecer, rode o comando completo:
 
 ```bash
 npm install -g @anthropic-ai/claude-code --allow-scripts=@anthropic-ai/claude-code
@@ -142,19 +136,7 @@ Depois teste:
 claude --version
 ```
 
-Se ainda assim o comando `claude` não for encontrado, feche e abra o Termux novamente, ou rode:
-
-```bash
-source ~/.bashrc
-```
-
-Depois teste de novo:
-
-```bash
-claude --version
-```
-
-## 5.2. Se aparecer erro `ENOENT package.json`
+## 7. Se aparecer erro `ENOENT package.json`
 
 Se você rodou o comando incompleto e apareceu algo assim:
 
@@ -180,7 +162,37 @@ Depois teste:
 claude --version
 ```
 
-## Atenção: erro do instalador oficial no Termux
+## 8. Se aparecer `claude native binary not installed`
+
+Se o comando `claude --version` retornar:
+
+```text
+Error: claude native binary not installed.
+```
+
+Tente rodar o pós-instalação manualmente.
+
+Primeiro veja onde ficam os pacotes globais do npm:
+
+```bash
+npm root -g
+```
+
+Depois rode:
+
+```bash
+node $(npm root -g)/@anthropic-ai/claude-code/install.cjs
+```
+
+Agora teste novamente:
+
+```bash
+claude --version
+```
+
+Se continuar dando erro, a instalação do Claude Code no Termux ainda pode não estar funcionando por causa do binário nativo usado pelo Claude Code. Nesse caso, o caminho mais seguro é usar o celular para acessar uma máquina Linux, VPS ou PC por SSH e rodar o Claude Code lá.
+
+## 9. Atenção: instalador oficial via curl no Termux
 
 No PC Linux, macOS ou WSL, o instalador oficial pode funcionar assim:
 
@@ -196,19 +208,9 @@ O erro costuma aparecer assim:
 cannot execute: required file not found
 ```
 
-Se isso acontecer, não continue insistindo no instalador `curl`. Use o npm:
+Se isso acontecer, não continue insistindo no instalador `curl`. Use o npm e os passos de correção acima.
 
-```bash
-npm install -g @anthropic-ai/claude-code
-```
-
-Se aparecer o aviso `npm warn allow-scripts`, rode também o comando completo:
-
-```bash
-npm install -g @anthropic-ai/claude-code --allow-scripts=@anthropic-ai/claude-code
-```
-
-## 6. Configurar MiniMax M3 no Claude Code
+## 10. Configurar MiniMax M3 no Claude Code
 
 A MiniMax disponibiliza o M3 por API. Para usar com o Claude Code, a configuração normalmente é feita apontando o Claude Code para o endpoint compatível indicado pela MiniMax e passando a chave de API.
 
@@ -253,7 +255,7 @@ A chave não deve ser exibida no terminal. Para conferir apenas se ela existe:
 [ -n "$ANTHROPIC_AUTH_TOKEN" ] && echo "Token configurado" || echo "Token ausente"
 ```
 
-## 7. Testar o Claude Code com MiniMax M3
+## 11. Testar o Claude Code com MiniMax M3
 
 Entre em uma pasta de teste:
 
@@ -274,7 +276,7 @@ Faça um teste simples:
 Crie um README.md simples explicando que este projeto é um teste do Claude Code no Android usando MiniMax M3.
 ```
 
-## 8. Se quiser manter a configuração separada
+## 12. Se quiser manter a configuração separada
 
 Em vez de colocar tudo direto no `~/.bashrc`, você pode criar um arquivo separado:
 
@@ -302,27 +304,23 @@ Recarregue:
 source ~/.bashrc
 ```
 
-## 9. Cuidados importantes
+## 13. Limpar tentativa quebrada e recomeçar
 
-Nunca publique sua chave da MiniMax no GitHub.
+Se quiser remover uma tentativa anterior do Claude Code e começar de novo a partir do Termux já instalado:
 
-Não coloque sua chave em prints de vídeo.
+```bash
+rm -rf ~/.claude
+npm uninstall -g @anthropic-ai/claude-code
+clear
+```
 
-No celular, o desempenho pode ser mais limitado que no PC, principalmente para projetos grandes.
+Depois volte para o passo de atualização:
 
-Se o Claude Code abrir, mas não responder, verifique:
+```bash
+pkg update && pkg upgrade -y
+```
 
-- se a chave está correta;
-- se a URL do endpoint está exatamente igual à documentação da MiniMax;
-- se o nome do modelo está correto;
-- se o celular está com internet;
-- se o Termux está com Node.js atualizado;
-- se o arquivo `~/.bashrc` existe;
-- se o npm mostrou o aviso `allow-scripts` e se você rodou o comando completo de correção.
-
-## 10. Comandos rápidos
-
-A ordem resumida também respeita a lógica: primeiro Termux atualizado, depois dependências, depois `~/.bashrc`, depois Claude Code via npm.
+## 14. Comandos rápidos
 
 ```bash
 pkg update && pkg upgrade -y
@@ -330,38 +328,10 @@ pkg install -y nodejs git curl nano
 touch ~/.bashrc
 npm install -g @anthropic-ai/claude-code
 npm install -g @anthropic-ai/claude-code --allow-scripts=@anthropic-ai/claude-code
-source ~/.bashrc
+node $(npm root -g)/@anthropic-ai/claude-code/install.cjs
 claude --version
 ```
 
-Configuração:
-
-```bash
-nano ~/.bashrc
-```
-
-Depois adicione:
-
-```bash
-export ANTHROPIC_AUTH_TOKEN="COLE_SUA_CHAVE_DA_MINIMAX_AQUI"
-export ANTHROPIC_BASE_URL="COLE_A_URL_OFICIAL_DA_MINIMAX_AQUI"
-export ANTHROPIC_MODEL="MiniMax-M3"
-```
-
-Recarregue:
-
-```bash
-source ~/.bashrc
-```
-
-Teste:
-
-```bash
-mkdir -p ~/teste-claude-minimax
-cd ~/teste-claude-minimax
-claude
-```
-
-## 11. Nota para revisão
+## 15. Nota para revisão
 
 Este guia deixa os campos da URL oficial e da chave como placeholders para evitar publicar informação sensível. Antes de gravar o vídeo ou seguir em produção, confira a página oficial da MiniMax usada no seu PC e substitua `COLE_A_URL_OFICIAL_DA_MINIMAX_AQUI` pelo endpoint correto informado por eles.
