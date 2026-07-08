@@ -15,17 +15,18 @@ Por isso a ordem correta é:
 1. Instalar o Termux
 2. Atualizar o Termux
 3. Instalar os pacotes básicos
-4. Instalar o Claude Code
-5. Configurar o MiniMax M3
-6. Testar
+4. Criar o arquivo de configuração do Termux
+5. Instalar o Claude Code via npm
+6. Configurar o MiniMax M3
+7. Testar
 
 ## O que vamos fazer
 
 - Instalar o Termux pelo F-Droid
 - Atualizar o ambiente Linux do Android
 - Instalar Node.js, Git e ferramentas básicas
-- Instalar o Claude Code
 - Criar o arquivo `~/.bashrc`, caso ele não exista
+- Instalar o Claude Code via npm
 - Configurar a chave da MiniMax
 - Configurar o endpoint/modelo MiniMax M3
 - Testar se o Claude Code abre usando o M3
@@ -97,20 +98,12 @@ Resultado esperado:
 
 Se aparecer o arquivo, pode continuar.
 
-## 5. Instalar o Claude Code
+## 5. Instalar o Claude Code no Termux
 
-Agora sim, com o Termux instalado, atualizado, com Node.js disponível e com o `~/.bashrc` criado, instale o Claude Code.
-
-Tente primeiro pelo instalador oficial:
+No Android/Termux, use a instalação via npm:
 
 ```bash
-curl -fsSL https://claude.ai/install.sh | bash
-```
-
-Feche e abra o Termux novamente, ou rode:
-
-```bash
-source ~/.bashrc
+npm install -g @anthropic-ai/claude-code
 ```
 
 Teste:
@@ -119,16 +112,38 @@ Teste:
 claude --version
 ```
 
-Se o instalador oficial não funcionar no Termux, tente pelo npm:
+Se o comando `claude` não for encontrado, feche e abra o Termux novamente, ou rode:
 
 ```bash
-npm install -g @anthropic-ai/claude-code
+source ~/.bashrc
 ```
 
-E teste novamente:
+Depois teste de novo:
 
 ```bash
 claude --version
+```
+
+## Atenção: erro do instalador oficial no Termux
+
+No PC Linux, macOS ou WSL, o instalador oficial pode funcionar assim:
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+Mas no Android/Termux esse caminho pode baixar um binário `linux-arm64` que não executa corretamente no Android.
+
+O erro costuma aparecer assim:
+
+```text
+cannot execute: required file not found
+```
+
+Se isso acontecer, não continue insistindo no instalador `curl`. Use o npm:
+
+```bash
+npm install -g @anthropic-ai/claude-code
 ```
 
 ## 6. Configurar MiniMax M3 no Claude Code
@@ -244,7 +259,7 @@ Se o Claude Code abrir, mas não responder, verifique:
 
 ## 10. Comandos rápidos
 
-A ordem resumida também respeita a lógica: primeiro Termux atualizado, depois dependências, depois `~/.bashrc`, depois Claude Code.
+A ordem resumida também respeita a lógica: primeiro Termux atualizado, depois dependências, depois `~/.bashrc`, depois Claude Code via npm.
 
 ```bash
 pkg update && pkg upgrade -y
