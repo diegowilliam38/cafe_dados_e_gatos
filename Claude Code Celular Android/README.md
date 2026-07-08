@@ -27,6 +27,7 @@ Por isso a ordem correta é:
 - Instalar Node.js, Git e ferramentas básicas
 - Criar o arquivo `~/.bashrc`, caso ele não exista
 - Instalar o Claude Code via npm
+- Corrigir o aviso `npm warn allow-scripts`, caso apareça
 - Configurar a chave da MiniMax
 - Configurar o endpoint/modelo MiniMax M3
 - Testar se o Claude Code abre usando o M3
@@ -106,13 +107,39 @@ No Android/Termux, use a instalação via npm:
 npm install -g @anthropic-ai/claude-code
 ```
 
-Teste:
+Se a instalação terminar sem avisos importantes, teste:
 
 ```bash
 claude --version
 ```
 
-Se o comando `claude` não for encontrado, feche e abra o Termux novamente, ou rode:
+Se aparecer a versão do Claude Code, a instalação deu certo.
+
+## 5.1. Se aparecer `npm warn allow-scripts`
+
+Em algumas instalações no Termux, o npm adiciona o pacote, mas bloqueia o script de instalação do Claude Code.
+
+O aviso aparece parecido com isto:
+
+```text
+npm warn allow-scripts 1 package has install scripts not yet covered by allowScripts
+npm warn allow-scripts @anthropic-ai/claude-code@2.1.205 (postinstall: node install.cjs)
+npm warn allow-scripts Run `npm install -g --allow-scripts=@anthropic-ai/claude-code` to allow these scripts once
+```
+
+Se isso aparecer, rode:
+
+```bash
+npm install -g --allow-scripts=@anthropic-ai/claude-code
+```
+
+Depois teste:
+
+```bash
+claude --version
+```
+
+Se ainda assim o comando `claude` não for encontrado, feche e abra o Termux novamente, ou rode:
 
 ```bash
 source ~/.bashrc
@@ -144,6 +171,12 @@ Se isso acontecer, não continue insistindo no instalador `curl`. Use o npm:
 
 ```bash
 npm install -g @anthropic-ai/claude-code
+```
+
+Se aparecer o aviso `npm warn allow-scripts`, rode também:
+
+```bash
+npm install -g --allow-scripts=@anthropic-ai/claude-code
 ```
 
 ## 6. Configurar MiniMax M3 no Claude Code
@@ -255,7 +288,8 @@ Se o Claude Code abrir, mas não responder, verifique:
 - se o nome do modelo está correto;
 - se o celular está com internet;
 - se o Termux está com Node.js atualizado;
-- se o arquivo `~/.bashrc` existe.
+- se o arquivo `~/.bashrc` existe;
+- se o npm mostrou o aviso `allow-scripts` e se você rodou o comando de correção.
 
 ## 10. Comandos rápidos
 
@@ -266,6 +300,7 @@ pkg update && pkg upgrade -y
 pkg install -y nodejs git curl nano
 touch ~/.bashrc
 npm install -g @anthropic-ai/claude-code
+npm install -g --allow-scripts=@anthropic-ai/claude-code
 source ~/.bashrc
 claude --version
 ```
