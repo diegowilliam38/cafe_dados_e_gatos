@@ -16,9 +16,10 @@ A versão indicada no issue do GitHub como última versão funcional no Termux �
 2.1.112
 ```
 
-Por isso, neste guia, vamos instalar fixando a versão:
+Por isso, neste guia, vamos instalar fixando a versão e desativando o auto update:
 
 ```bash
+export DISABLE_AUTOUPDATER=1
 npm install -g @anthropic-ai/claude-code@2.1.112
 ```
 
@@ -71,7 +72,38 @@ npm -v
 
 ---
 
-## 4. Instalar o Claude Code no Termux
+## 4. Desativar o auto update do Claude Code
+
+Antes de instalar o Claude Code, desative o auto update para evitar que ele atualize sozinho para a versão `2.1.113+`, que não funciona corretamente no Termux/Android.
+
+Teste temporário:
+
+```bash
+export DISABLE_AUTOUPDATER=1
+```
+
+Para deixar definitivo, salve no `.bashrc`:
+
+```bash
+touch ~/.bashrc
+nano ~/.bashrc
+```
+
+Adicione no final:
+
+```bash
+export DISABLE_AUTOUPDATER=1
+```
+
+Salve e recarregue:
+
+```bash
+source ~/.bashrc
+```
+
+---
+
+## 5. Instalar o Claude Code no Termux
 
 Não instale o `latest` no Termux, porque as versões novas podem falhar no Android.
 
@@ -91,7 +123,7 @@ Se aparecer a versão, a instalação funcionou.
 
 ---
 
-## 5. Rodar o Claude Code
+## 6. Rodar o Claude Code
 
 ```bash
 claude
@@ -103,11 +135,12 @@ Você poderá escolher assinatura, chave de API ou conexão third-party, depende
 
 ---
 
-## 6. Configurar MiniMax M3
+## 7. Configurar MiniMax M3
 
 Primeiro, teste a configuração de forma temporária no próprio Termux:
 
 ```bash
+export DISABLE_AUTOUPDATER=1
 export ANTHROPIC_AUTH_TOKEN="COLE_SUA_CHAVE_DA_MINIMAX_AQUI"
 export ANTHROPIC_BASE_URL="https://api.minimax.io/anthropic"
 export ANTHROPIC_MODEL="MiniMax-M3"
@@ -125,6 +158,7 @@ nano ~/.bashrc
 Adicione no final:
 
 ```bash
+export DISABLE_AUTOUPDATER=1
 export ANTHROPIC_AUTH_TOKEN="COLE_SUA_CHAVE_DA_MINIMAX_AQUI"
 export ANTHROPIC_BASE_URL="https://api.minimax.io/anthropic"
 export ANTHROPIC_MODEL="MiniMax-M3"
@@ -147,6 +181,7 @@ source ~/.bashrc
 Confira sem mostrar a chave:
 
 ```bash
+echo $DISABLE_AUTOUPDATER
 echo $ANTHROPIC_BASE_URL
 echo $ANTHROPIC_MODEL
 [ -n "$ANTHROPIC_AUTH_TOKEN" ] && echo "Token configurado" || echo "Token ausente"
@@ -160,7 +195,7 @@ claude
 
 ---
 
-## 7. Opção grátis com Ollama
+## 8. Opção grátis com Ollama
 
 Este caminho é opcional e experimental.
 
@@ -181,6 +216,7 @@ Deixe essa sessão aberta. Depois abra uma nova sessão no Termux.
 Configure as variáveis:
 
 ```bash
+export DISABLE_AUTOUPDATER=1
 export ANTHROPIC_AUTH_TOKEN=ollama
 export ANTHROPIC_API_KEY=""
 export ANTHROPIC_BASE_URL=http://localhost:11434
@@ -196,7 +232,7 @@ Esse modo pode ficar lento no celular. É melhor para estudo e teste.
 
 ---
 
-## 8. Teste com Python
+## 9. Teste com Python
 
 ```bash
 pkg install -y python
@@ -219,7 +255,7 @@ python hello.py
 
 ---
 
-## 9. Teste com HTML no navegador do celular
+## 10. Teste com HTML no navegador do celular
 
 Peça ao Claude Code:
 
@@ -241,7 +277,7 @@ http://localhost:8080
 
 ---
 
-## 10. Não use estes comandos com versões novas
+## 11. Não use estes comandos com versões novas
 
 Com versões novas do Claude Code, pode aparecer erro como:
 
@@ -257,19 +293,23 @@ linux-arm64-android
 
 Nesse caso, não adianta corrigir com `sed` nem forçar `install.cjs`.
 
-A solução no Termux é usar a versão funcional:
+A solução no Termux é usar a versão funcional e manter o auto update desativado:
 
 ```bash
+export DISABLE_AUTOUPDATER=1
 npm install -g @anthropic-ai/claude-code@2.1.112
 ```
 
 ---
 
-## 11. Comandos rápidos
+## 12. Comandos rápidos
 
 ```bash
 pkg update && pkg upgrade -y
 pkg install nodejs
+touch ~/.bashrc
+echo 'export DISABLE_AUTOUPDATER=1' >> ~/.bashrc
+source ~/.bashrc
 npm install -g @anthropic-ai/claude-code@2.1.112
 claude --version
 claude
