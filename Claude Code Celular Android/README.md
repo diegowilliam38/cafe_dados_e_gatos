@@ -260,7 +260,7 @@ python hello.py
 Peça ao Claude Code:
 
 ```text
-Crie um site simples em HTML com um título Hello World e um botão.
+Crie um site simples em HTML sobre saúde felina. O site deve ter título, uma seção sobre sinais de alerta em gatos, uma seção sobre hidratação, uma seção sobre alimentação e um aviso dizendo que o conteúdo não substitui consulta veterinária.
 ```
 
 Depois sirva a pasta com Python:
