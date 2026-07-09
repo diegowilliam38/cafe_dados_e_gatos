@@ -10,6 +10,21 @@ Nos testes com a versão atual `2.1.205`, o Claude Code falhou no Termux/Android
 
 O motivo é que versões a partir da `2.1.113` passaram a depender de um binário nativo Linux com glibc. O Termux roda sobre Android, que usa Bionic libc, então esse binário não funciona corretamente ali.
 
+### Issue de referência
+
+A issue abaixo documenta o problema no GitHub da Anthropic:
+
+```text
+https://github.com/anthropics/claude-code/issues/50270
+```
+
+Resumo da issue:
+
+- a partir da versão `2.1.113`, o Claude Code passou a usar binário nativo Linux com glibc;
+- o Termux/Android não usa glibc, ele usa Bionic libc;
+- por isso, versões novas podem falhar com erro de binário nativo ausente;
+- a versão indicada como última funcional no Termux é a `2.1.112`.
+
 A versão indicada no issue do GitHub como última versão funcional no Termux é:
 
 ```text
