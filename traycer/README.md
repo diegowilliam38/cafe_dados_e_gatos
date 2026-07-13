@@ -104,6 +104,7 @@ PASSO 2: Elabore um plano para a próxima etapa.
 PASSO 3: Implemente apenas essa etapa.
 PASSO 4: Teste e valide o resultado.
 PASSO 5: Se encontrar problemas, corrija e repita o ciclo.
+PASSO 6: Em caso de erro, tentar apenas 2 vezes, não solucionado o erro, para imediatamente e comunicar o erro ao usuário.
 
 Continue até que todos os critérios de sucesso sejam atendidos.
 ```
