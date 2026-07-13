@@ -111,6 +111,52 @@ Continue até que todos os critérios de sucesso sejam atendidos.
 
 ---
 
+## Prompt para revisão com o Codex
+
+Use este mesmo prompt separadamente em cada worktree, para que a avaliação de uma implementação não influencie a outra.
+
+```text
+Revise esta implementação sem alterar os arquivos inicialmente.
+
+Compare o resultado com os requisitos da Task e analise o estado atual do projeto, os arquivos modificados, o diff e os artefatos disponíveis.
+
+Identifique:
+- bugs e erros de execução;
+- funcionalidades incompletas;
+- problemas de arquitetura;
+- riscos de segurança;
+- testes ausentes ou insuficientes;
+- problemas de responsividade e experiência do usuário;
+- código desnecessariamente complexo;
+- divergências em relação aos requisitos;
+- melhorias necessárias antes de considerar a implementação concluída.
+
+Apresente primeiro um relatório objetivo, organizado por prioridade:
+1. Crítico
+2. Alto
+3. Médio
+4. Baixo
+
+Depois, dê notas de 0 a 10 para:
+- aderência aos requisitos;
+- completude;
+- qualidade do código;
+- organização da arquitetura;
+- qualidade visual e responsividade;
+- testes e confiabilidade;
+- autonomia do agente durante a execução.
+
+Ao final, informe:
+- a nota geral da implementação;
+- se ela está pronta para uso;
+- o que precisa ser corrigido antes da aprovação;
+- quais alterações você faria em uma próxima etapa.
+
+Não modifique os arquivos até concluir e apresentar toda a revisão. Aguarde autorização antes de aplicar correções.
+```
+
+---
+
 ## Matriz de compatibilidade
 
 | Ferramenta | Detectou | Funcionou | Observações |
