@@ -1,182 +1,94 @@
-# Como instalar e testar o Traycer Desktop no Linux
+# Como instalar e testar o Traycer Desktop no Windows
 
 ## Objetivo
 
-Este documento mostra como instalar e executar o **Traycer Desktop** no Linux (Ubuntu/Debian), utilizando o instalador oficial disponibilizado pela equipe do projeto.
+Este documento reúne os links oficiais e os pontos principais do teste do **Traycer Desktop no Windows**.
 
-> Este documento será atualizado conforme novos testes forem sendo realizados durante a gravação do vídeo.
+> O teste principal será realizado no Windows, por ser o sistema operacional utilizado pela maior parte do público consultado.
 
 ---
 
-## Fontes oficiais consultadas
-
-Site oficial
+## Site oficial
 
 https://traycer.ai/
 
-GitHub
+## Download oficial
+
+https://traycer.ai/download
+
+## Documentação oficial
+
+https://docs.traycer.ai/
+
+## GitHub oficial
 
 https://github.com/traycerai/traycer
 
-Releases
+## Releases oficiais
 
-https://github.com/traycerai/traycer/releases
+https://github.com/traycerai/traycer/releases/latest
 
 ---
 
-## Ambiente testado no vídeo
+## Download para Windows
 
-- Sistema Operacional: Ubuntu 24.04 LTS
-- Arquitetura: x86_64
-- Desktop: GNOME
-- Terminal: Bash
-- Data do teste: Julho/2026
+Na página oficial de download, selecione a versão para **Windows x64**.
+
+Link direto para o instalador oficial:
+
+https://github.com/traycerai/traycer/releases/latest/download/traycer-desktop-windows-x64.exe
 
 ---
 
 ## Promessa oficial da ferramenta
 
-Segundo os desenvolvedores, o Traycer é um ambiente de desenvolvimento colaborativo para agentes de IA e programadores humanos, permitindo que múltiplos agentes trabalhem em paralelo no mesmo projeto, compartilhem contexto, revisem código entre si e colaborem em um workspace único.
+O Traycer é uma aplicação gratuita e de código aberto voltada para orquestração de agentes de inteligência artificial.
 
-Neste repositório vamos verificar, na prática, se essas funcionalidades realmente funcionam como prometido.
+A proposta é permitir que diferentes agentes trabalhem em paralelo no mesmo projeto, compartilhem contexto, conversem entre si e colaborem com desenvolvedores humanos em um workspace comum.
 
----
+Entre os agentes listados oficialmente como compatíveis estão:
 
-## Observação sobre os métodos de instalação
-
-No momento desta documentação, o Traycer disponibiliza oficialmente:
-
-- Linux (.deb)
-- Linux (AppImage)
-- Linux (.rpm)
-- macOS
-
-O suporte para Windows ainda aparece como **Coming Soon** no repositório oficial.
+- Claude Code
+- Codex
+- Cursor
+- OpenCode
+- Traycer
 
 ---
 
-## Pré-requisitos
+## Ambiente testado no vídeo
 
-Ubuntu ou Debian baseado em arquitetura AMD64 (x86_64).
-
-Acesso à internet.
-
----
-
-## Instalação no Linux (.deb)
-
-Baixar o instalador oficial
-
-```bash
-cd ~/Downloads
-
-wget https://github.com/traycerai/traycer/releases/latest/download/traycer-desktop-linux-amd64.deb
-```
-
-Instalar
-
-```bash
-sudo apt install ./traycer-desktop-linux-amd64.deb
-```
+- Sistema operacional: Windows
+- Arquitetura: x64
+- Data do teste: Julho/2026
 
 ---
 
-## Instalação alternativa (AppImage)
+## O que será testado
 
-Baixar
-
-```bash
-cd ~/Downloads
-
-wget https://github.com/traycerai/traycer/releases/latest/download/traycer-desktop-linux-x86_64.AppImage
-```
-
-Dar permissão
-
-```bash
-chmod +x traycer-desktop-linux-x86_64.AppImage
-```
-
-Executar
-
-```bash
-./traycer-desktop-linux-x86_64.AppImage
-```
-
----
-
-## Como iniciar
-
-Caso o ícone apareça no menu do sistema, basta abrir o Traycer normalmente.
-
-Ou pelo terminal:
-
-```bash
-traycer
-```
-
----
-
-## Como verificar se funcionou
-
-O aplicativo deverá abrir a interface gráfica.
-
-Na primeira execução poderão ser solicitadas autenticação e configuração dos provedores de IA.
-
----
-
-## Teste rápido
-
-Durante o vídeo serão avaliados:
-
+- Instalação no Windows
 - Interface
 - Compatibilidade com Claude Code
 - Compatibilidade com Codex
 - Compatibilidade com Cursor
-- Compatibilidade com modelos locais
 - Comunicação entre agentes
-- Workspace compartilhado
+- Compartilhamento de contexto
+- Trabalho com múltiplos agentes
+- Consumo de memória
 - Experiência geral
-
----
-
-## Como remover
-
-```bash
-sudo apt remove traycer
-```
-
-Caso tenha utilizado AppImage, basta apagar o arquivo.
 
 ---
 
 ## Erros encontrados e ajustes necessários
 
-> Esta seção será preenchida durante os testes reais.
+> Esta seção será atualizada conforme os testes reais forem realizados.
 
 ---
 
 ## O que ficou pendente
 
-- Testar integração com Claude Code
-- Testar integração com Codex
-- Testar múltiplos agentes trabalhando simultaneamente
-- Testar compartilhamento de contexto
-- Testar consumo de memória
-- Testar projetos grandes
-
----
-
-## Links úteis
-
-Site oficial
-
-https://traycer.ai/
-
-GitHub
-
-https://github.com/traycerai/traycer
-
-Releases
-
-https://github.com/traycerai/traycer/releases
+- Configurar os agentes
+- Executar o primeiro projeto
+- Testar agentes trabalhando em paralelo
+- Validar compartilhamento de contexto
+- Verificar limitações no Windows
