@@ -7,7 +7,4 @@ Guia direto para executar o **HKUDS/nanobot** no Windows usando **PowerShell 7**
 ## Pré-requisitos
 
 - Windows 10 ou Windows 11
-- PowerShell 7
-- Docker Desktop em execução
-- Git
-- Oll
+- PowerShell 
