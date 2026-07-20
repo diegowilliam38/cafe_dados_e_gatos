@@ -1,8 +1,8 @@
 # Nanobot no Windows com Docker Desktop
 
-Guia testado para executar o **HKUDS/nanobot** no Windows com **PowerShell 7**, **Docker Desktop**, **Ollama Cloud com `gemma4:cloud`** e **MiniMax**.
+Guia testado para executar o **HKUDS/nanobot** no Windows com **PowerShell 7**, **Docker Desktop** e **Ollama Cloud usando `gemma4:cloud`**.
 
-> O Ollama é usado como cliente para um modelo hospedado na nuvem.
+> Para começar, configure apenas o Ollama com o Gemma 4 Cloud. Outros provedores e modelos podem ser adicionados depois pela própria WebUI.
 
 ## Pré-requisitos
 
@@ -11,7 +11,6 @@ Guia testado para executar o **HKUDS/nanobot** no Windows com **PowerShell 7**, 
 - Docker Desktop em execução
 - Git
 - Ollama instalado e conectado a uma conta
-- Chave de API MiniMax, caso esse provedor seja usado
 
 ## Verificar o ambiente
 
@@ -85,7 +84,7 @@ O fluxo oficial usa:
 docker compose run --rm nanobot-cli onboard
 ```
 
-No Docker Desktop para Windows, o comando pode terminar com:
+No Docker Desktop para Windows, esse comando pode terminar com:
 
 ```text
 [entrypoint] warning: chown /home/nanobot/.nanobot failed
@@ -98,9 +97,7 @@ O contêiner inicia como `root`, mas não consegue reduzir os privilégios. Exec
 docker compose run --rm --user 1000:1000 nanobot-cli onboard --wizard
 ```
 
-No wizard, escolha **Quick Start** ou **Advanced Settings**.
-
-## Configurar o Ollama Cloud
+## Configurar o Ollama Cloud com Gemma 4
 
 No Windows, faça login:
 
@@ -116,7 +113,7 @@ ollama run gemma4:cloud
 
 Use `/bye` para sair.
 
-No Nanobot, configure:
+No wizard do Nanobot, configure:
 
 ```text
 Model: gemma4:cloud
@@ -124,11 +121,43 @@ Provider: ollama
 API Base: http://host.docker.internal:11434/v1
 ```
 
-Dentro do contêiner, `localhost` aponta para o próprio contêiner. `host.docker.internal` permite alcançar o Ollama instalado no Windows.
+Dentro do contêiner, `localhost` aponta para o próprio contêiner. Por isso usamos `host.docker.internal` para alcançar o Ollama instalado no Windows.
 
-## Configurar o MiniMax
+## Alterar o Gateway no próprio wizard
 
-Crie um preset separado e informe o identificador exato do modelo disponível em sua conta, a chave de API e o provedor correspondente. Não mostre credenciais durante a gravação.
+Depois de configurar o Gemma, continue no wizard e entre em:
+
+```text
+Advanced Settings
+```
+
+Em seguida, escolha:
+
+```text
+Gateway
+```
+
+Altere apenas o campo:
+
+```text
+Host: 127.0.0.1
+```
+
+para:
+
+```text
+Host: 0.0.0.0
+```
+
+Mantenha a porta padrão:
+
+```text
+Port: 18790
+```
+
+Finalize em **Done** e depois escolha **Save and Exit**.
+
+Essa alteração deve ser feita diretamente pelo wizard. Não é necessário editar manualmente o arquivo `config.json`.
 
 ## Verificar a configuração
 
@@ -144,9 +173,9 @@ docker compose run --rm --user 1000:1000 nanobot-cli agent -m "Responda apenas: 
 
 O teste precisa responder antes de iniciar a WebUI.
 
-## Iniciar o gateway: segundo erro de privilégios
+## Iniciar o gateway
 
-O comando abaixo pode criar o serviço, mas o gateway entra em reinicialização pelo mesmo erro de `setpriv`:
+O comando abaixo pode criar o serviço, mas o gateway pode entrar em reinicialização pelo mesmo erro de `setpriv`:
 
 ```powershell
 docker compose up -d nanobot-gateway
@@ -176,59 +205,15 @@ Confirme que o contêiner está ativo:
 docker ps
 ```
 
-## Corrigir a WebUI em branco no Docker
+## Confirmar o acesso da WebUI
 
-Mesmo com o gateway saudável, a WebUI pode ficar em branco porque o WebSocket está ouvindo em `127.0.0.1:8765` **dentro do contêiner**. O Docker publica a porta, mas não alcança o loopback interno.
-
-Evidência típica:
-
-```text
-WebSocket server listening on ws://127.0.0.1:8765/
-```
-
-O endpoint de saúde pode funcionar normalmente em `http://127.0.0.1:18790/health`, retornando:
-
-```json
-{"status":"ok"}
-```
-
-Nesta etapa, os comandos PowerShell abaixo pertencem ao mesmo procedimento e podem ser colados juntos:
-
-```powershell
-$configPath = "$env:USERPROFILE\.nanobot\config.json"
-Copy-Item $configPath "$configPath.bak" -Force
-
-$config = Get-Content -Raw -LiteralPath $configPath | ConvertFrom-Json
-$config.channels.websocket.host = "0.0.0.0"
-
-$json = $config | ConvertTo-Json -Depth 100
-$utf8SemBom = New-Object System.Text.UTF8Encoding($false)
-[System.IO.File]::WriteAllText($configPath, $json, $utf8SemBom)
-```
-
-> Não use `Set-Content -Encoding utf8` nesse trecho. Dependendo da versão do PowerShell, ele pode gravar um marcador UTF-8 BOM, e o Nanobot pode recusar o arquivo com o erro `Unexpected UTF-8 BOM`.
-
-O `tokenIssueSecret` precisa estar configurado para o Nanobot aceitar `0.0.0.0` com proteção.
-
-Primeiro remova o contêiner anterior:
-
-```powershell
-docker rm -f nanobot-gateway
-```
-
-Espere a remoção terminar. Depois recrie o gateway:
-
-```powershell
-docker compose run -d --name nanobot-gateway --service-ports --user 1000:1000 nanobot-gateway
-```
-
-Confirme nos logs:
+Confira os logs:
 
 ```powershell
 docker logs --tail 40 nanobot-gateway
 ```
 
-O resultado correto é:
+O resultado correto deve mostrar o serviço ouvindo em uma interface acessível pelo Docker, por exemplo:
 
 ```text
 WebSocket server listening on ws://0.0.0.0:8765/
@@ -240,32 +225,44 @@ Teste a WebUI:
 curl.exe -I http://127.0.0.1:8765/
 ```
 
-Depois abra:
+Depois abra no navegador:
 
 ```text
 http://localhost:8765
 ```
 
-## Restringir a WebUI ao próprio computador
+## O que causava a WebUI em branco
 
-Para não publicar a porta 8765 em toda a rede, posteriormente altere no `docker-compose.yml`:
+O gateway e o modelo podiam funcionar normalmente, mas a interface permanecia em branco porque o serviço estava vinculado ao loopback interno do contêiner.
 
-```yaml
-- "8765:8765"
+No Docker:
+
+```text
+127.0.0.1 dentro do contêiner não é o localhost do Windows
 ```
 
-para:
+Ao alterar o host para `0.0.0.0` pelo wizard, o Docker consegue encaminhar a porta publicada até o serviço dentro do contêiner.
 
-```yaml
-- "127.0.0.1:8765:8765"
+## Configurar outros modelos depois
+
+Depois que a WebUI abrir, outros provedores e modelos podem ser configurados diretamente pela interface, em:
+
+```text
+Settings → Models
 ```
 
-Prefira fazer essa mudança em um `docker-compose.override.yml` para preservar o arquivo oficial.
+Para a instalação inicial, o `gemma4:cloud` pelo Ollama é suficiente.
 
 ## Verificar o gateway
 
 ```powershell
 curl.exe http://127.0.0.1:18790/health
+```
+
+A resposta esperada é:
+
+```json
+{"status":"ok"}
 ```
 
 ## Parar o Nanobot
