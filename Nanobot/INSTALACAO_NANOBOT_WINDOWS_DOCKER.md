@@ -38,19 +38,13 @@ $PSVersionTable.PSVersion
 
 ## Baixar o repositório oficial
 
-Primeiro vá para a pasta Documentos:
-
 ```powershell
 Set-Location "$HOME\Documents"
 ```
 
-Depois clone o projeto:
-
 ```powershell
 git clone https://github.com/HKUDS/nanobot.git
 ```
-
-Quando o download terminar, entre na pasta:
 
 ```powershell
 Set-Location nanobot
@@ -131,13 +125,13 @@ Depois de configurar o Gemma, continue no wizard e entre em:
 Advanced Settings
 ```
 
-Em seguida, escolha:
+Escolha:
 
 ```text
 Gateway
 ```
 
-Altere apenas o campo:
+Altere:
 
 ```text
 Host: 127.0.0.1
@@ -149,15 +143,15 @@ para:
 Host: 0.0.0.0
 ```
 
-Mantenha a porta padrão:
+Mantenha:
 
 ```text
 Port: 18790
 ```
 
-Finalize em **Done** e depois escolha **Save and Exit**.
+Finalize em **Done** e depois em **Save and Exit**.
 
-Essa alteração deve ser feita diretamente pelo wizard. Não é necessário editar manualmente o arquivo `config.json`.
+Essa é a forma preferencial, porque evita editar o `config.json` manualmente.
 
 ## Verificar a configuração
 
@@ -173,7 +167,7 @@ docker compose run --rm --user 1000:1000 nanobot-cli agent -m "Responda apenas: 
 
 O teste precisa responder antes de iniciar a WebUI.
 
-## Iniciar o gateway
+## Iniciar o gateway e segundo erro encontrado
 
 O comando abaixo pode criar o serviço, mas o gateway pode entrar em reinicialização pelo mesmo erro de `setpriv`:
 
@@ -181,31 +175,130 @@ O comando abaixo pode criar o serviço, mas o gateway pode entrar em reinicializ
 docker compose up -d nanobot-gateway
 ```
 
-Confira os logs somente depois que o comando anterior terminar:
+Confira os logs depois que o comando terminar:
 
 ```powershell
 docker compose logs --tail 80 nanobot-gateway
 ```
 
-Se aparecer novamente `refusing to run as root`, primeiro pare o Compose:
+Se aparecer novamente `refusing to run as root`, pare o Compose:
 
 ```powershell
 docker compose down
 ```
 
-Espere o comando terminar. Depois inicie o gateway como usuário `1000:1000`:
+Depois inicie o gateway como usuário `1000:1000`:
 
 ```powershell
 docker compose run -d --name nanobot-gateway --service-ports --user 1000:1000 nanobot-gateway
 ```
 
-Confirme que o contêiner está ativo:
+Confirme:
 
 ```powershell
 docker ps
 ```
 
-## Confirmar o acesso da WebUI
+## Erro da WebUI em branco
+
+Mesmo com o modelo e o gateway funcionando, a WebUI pode continuar em branco.
+
+Evidência típica nos logs:
+
+```text
+WebSocket server listening on ws://127.0.0.1:8765/
+```
+
+O endpoint de saúde pode funcionar normalmente:
+
+```text
+http://127.0.0.1:18790/health
+```
+
+com:
+
+```json
+{"status":"ok"}
+```
+
+A causa é:
+
+```text
+127.0.0.1 dentro do contêiner não é o localhost do Windows
+```
+
+Quando o serviço fica preso ao loopback interno do contêiner, o Docker publica a porta, mas não consegue encaminhar o navegador do Windows até ela.
+
+## Correção preferencial pelo wizard
+
+Execute novamente:
+
+```powershell
+docker compose run --rm --user 1000:1000 nanobot-cli onboard --wizard
+```
+
+Entre em:
+
+```text
+Advanced Settings → Gateway
+```
+
+Confirme:
+
+```text
+Host: 0.0.0.0
+Port: 18790
+```
+
+Salve em **Done** e **Save and Exit**.
+
+## Correção manual de emergência
+
+Use este procedimento apenas se o wizard não salvar a alteração ou se os logs continuarem mostrando `127.0.0.1:8765`.
+
+O bloco abaixo pertence ao mesmo procedimento e pode ser colado inteiro no PowerShell:
+
+```powershell
+$configPath = "$env:USERPROFILE\.nanobot\config.json"
+Copy-Item $configPath "$configPath.bak" -Force
+
+$config = Get-Content -Raw -LiteralPath $configPath | ConvertFrom-Json
+$config.channels.websocket.host = "0.0.0.0"
+
+$json = $config | ConvertTo-Json -Depth 100
+$utf8SemBom = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText($configPath, $json, $utf8SemBom)
+```
+
+O comando cria um backup em:
+
+```text
+config.json.bak
+```
+
+Não substitua a gravação final por `Set-Content -Encoding utf8`. Dependendo da versão do PowerShell, ele pode inserir um marcador UTF-8 BOM, e o Nanobot pode recusar o arquivo com:
+
+```text
+Unexpected UTF-8 BOM
+```
+
+Se esse erro já tiver acontecido, o mesmo bloco acima regrava o JSON como UTF-8 sem BOM.
+
+O `tokenIssueSecret` precisa estar configurado para o Nanobot aceitar `0.0.0.0` com proteção.
+
+## Recriar o gateway após a alteração
+
+Primeiro remova o contêiner anterior:
+
+```powershell
+docker rm -f nanobot-gateway
+```
+
+Depois recrie:
+
+```powershell
+docker compose run -d --name nanobot-gateway --service-ports --user 1000:1000 nanobot-gateway
+```
 
 Confira os logs:
 
@@ -213,7 +306,7 @@ Confira os logs:
 docker logs --tail 40 nanobot-gateway
 ```
 
-O resultado correto deve mostrar o serviço ouvindo em uma interface acessível pelo Docker, por exemplo:
+O resultado correto é:
 
 ```text
 WebSocket server listening on ws://0.0.0.0:8765/
@@ -231,21 +324,21 @@ Depois abra no navegador:
 http://localhost:8765
 ```
 
-## O que causava a WebUI em branco
+## Verificar o gateway
 
-O gateway e o modelo podiam funcionar normalmente, mas a interface permanecia em branco porque o serviço estava vinculado ao loopback interno do contêiner.
-
-No Docker:
-
-```text
-127.0.0.1 dentro do contêiner não é o localhost do Windows
+```powershell
+curl.exe http://127.0.0.1:18790/health
 ```
 
-Ao alterar o host para `0.0.0.0` pelo wizard, o Docker consegue encaminhar a porta publicada até o serviço dentro do contêiner.
+Resposta esperada:
+
+```json
+{"status":"ok"}
+```
 
 ## Configurar outros modelos depois
 
-Depois que a WebUI abrir, outros provedores e modelos podem ser configurados diretamente pela interface, em:
+Depois que a WebUI abrir, outros provedores e modelos podem ser configurados em:
 
 ```text
 Settings → Models
@@ -253,21 +346,7 @@ Settings → Models
 
 Para a instalação inicial, o `gemma4:cloud` pelo Ollama é suficiente.
 
-## Verificar o gateway
-
-```powershell
-curl.exe http://127.0.0.1:18790/health
-```
-
-A resposta esperada é:
-
-```json
-{"status":"ok"}
-```
-
 ## Parar o Nanobot
-
-Como o gateway foi criado com `docker compose run`, remova-o com:
 
 ```powershell
 docker rm -f nanobot-gateway
@@ -275,19 +354,13 @@ docker rm -f nanobot-gateway
 
 ## Atualizar o projeto
 
-Entre na pasta do projeto:
-
 ```powershell
 Set-Location "$HOME\Documents\nanobot"
 ```
 
-Atualize o código:
-
 ```powershell
 git pull
 ```
-
-Quando terminar, reconstrua a imagem:
 
 ```powershell
 docker compose build --no-cache
@@ -295,25 +368,17 @@ docker compose build --no-cache
 
 ## Remover o projeto
 
-Primeiro remova o gateway:
-
 ```powershell
 docker rm -f nanobot-gateway
 ```
-
-Depois encerre os serviços restantes:
 
 ```powershell
 docker compose down
 ```
 
-Saia da pasta do projeto:
-
 ```powershell
 Set-Location "$HOME\Documents"
 ```
-
-Por último, remova a pasta:
 
 ```powershell
 Remove-Item -Recurse -Force ".\nanobot"
