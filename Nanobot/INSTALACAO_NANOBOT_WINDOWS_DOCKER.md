@@ -113,6 +113,19 @@ A documentação de deployment apresenta Docker Compose como runtime para manter
 
 O uso oficial com Docker exige construir a imagem diretamente a partir do repositório clonado. Imagens de terceiros no Docker Hub não são mantidas nem verificadas pelo projeto.
 
+## Baixar o código-fonte antes de construir a imagem
+
+```bash
+git clone https://github.com/HKUDS/nanobot.git
+cd nanobot
+```
+
+O primeiro comando baixa o repositório oficial.
+
+O segundo entra na raiz do projeto, onde estão o `Dockerfile` e o arquivo `docker-compose.yml`.
+
+Todos os comandos Docker abaixo devem ser executados dentro dessa pasta. Executar `docker build -t nanobot .` em outra pasta produz o erro `failed to read dockerfile: open Dockerfile: no such file or directory`.
+
 ## Construir a imagem
 
 ```bash
