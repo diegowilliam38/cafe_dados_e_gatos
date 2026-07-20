@@ -1,158 +1,80 @@
-# Nanobot — instalação oficial e implantação com Docker
+# Nanobot no Windows com Docker Desktop
 
-Este documento separa os métodos de **instalação** publicados no README oficial do Nanobot da opção de **implantação e execução com Docker** publicada no guia de deployment.
+Guia direto para executar o **HKUDS/nanobot** no Windows usando **PowerShell 7** e **Docker Desktop**.
 
-> Docker não aparece na documentação principal como método de instalação. A instalação a partir do código-fonte é feita clonando o repositório com Git. O Docker é usado depois como runtime de implantação e execução.
+## Pré-requisitos
 
-## Fontes oficiais
+- Windows 10 ou Windows 11
+- PowerShell 7
+- Docker Desktop em execução
+- Git
+- Uma chave de API de provedor compatível
 
-- Repositório: `https://github.com/HKUDS/nanobot`
-- README: `https://github.com/HKUDS/nanobot/blob/main/README.md`
-- Guia de implantação: `https://github.com/HKUDS/nanobot/blob/main/docs/deployment.md`
-
-## Instalação oficial em um comando
-
-### macOS ou Linux
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/HKUDS/nanobot/main/scripts/install.sh | sh
-```
-
-Instala ou atualiza o pacote `nanobot-ai` e inicia o assistente `nanobot onboard --wizard`.
-
-### Windows PowerShell
+## Verificar o ambiente
 
 ```powershell
-irm https://raw.githubusercontent.com/HKUDS/nanobot/main/scripts/install.ps1 | iex
+docker version
+docker compose version
+git --version
+$PSVersionTable.PSVersion
 ```
 
-Instala ou atualiza o pacote `nanobot-ai` e inicia o assistente `nanobot onboard --wizard`.
+Confirma que Docker, Docker Compose, Git e PowerShell 7 estão disponíveis.
 
-## Instalação com uv
-
-```bash
-uv tool install nanobot-ai
-```
-
-Instala o pacote oficial publicado no PyPI usando `uv`.
-
-## Instalação pelo PyPI com pip
-
-```bash
-python -m pip install nanobot-ai
-```
-
-Instala o pacote oficial publicado no PyPI usando o Python do ambiente atual.
-
-## Instalação a partir do código-fonte com Git
-
-O método chamado **Install from source** no README oficial clona o código-fonte com Git.
-
-`bun` ou `npm` precisa estar disponível. Execute dentro de um ambiente virtual ativado:
-
-```bash
-git clone https://github.com/HKUDS/nanobot.git
-cd nanobot
-python -m pip install .
-```
-
-O primeiro comando clona o repositório oficial.
-
-O segundo entra na pasta clonada.
-
-O terceiro instala o Nanobot a partir do código-fonte local.
-
-### Ajuste oficial para Windows quando o pip não consegue iniciar o npm
+## Baixar o repositório oficial
 
 ```powershell
-cd webui
-npm.cmd install --package-lock=false
-npm.cmd run build
-cd ..
-python -m pip install .
-```
-
-Constrói a WebUI manualmente e repete a instalação a partir do código-fonte.
-
-## Verificar a instalação
-
-```bash
-nanobot --version
-```
-
-Mostra a versão instalada do Nanobot.
-
-## Inicializar
-
-```bash
-nanobot onboard
-```
-
-Cria a configuração e o workspace.
-
-Para usar o assistente interativo:
-
-```bash
-nanobot onboard --wizard
-```
-
-## Verificar configuração e modelo antes de implantar
-
-```bash
-nanobot status
-nanobot agent -m "Hello!"
-```
-
-O primeiro comando mostra a configuração e o workspace usados pela instância.
-
-O segundo confirma que instalação, configuração, provedor, modelo e escrita no workspace estão funcionando.
-
-# Implantação oficial com Docker
-
-A documentação de deployment apresenta Docker Compose como runtime para manter WebUI, canais, heartbeat, Dream, tarefas cron e conexões do agente em execução.
-
-O uso oficial com Docker exige construir a imagem diretamente a partir do repositório clonado. Imagens de terceiros no Docker Hub não são mantidas nem verificadas pelo projeto.
-
-## Baixar o código-fonte antes de construir a imagem
-
-```bash
+Set-Location "$HOME\Documents"
 git clone https://github.com/HKUDS/nanobot.git
-cd nanobot
+Set-Location nanobot
 ```
 
-O primeiro comando baixa o repositório oficial.
+Baixa o código-fonte oficial e entra na pasta onde estão o `Dockerfile` e o `docker-compose.yml`.
 
-O segundo entra na raiz do projeto, onde estão o `Dockerfile` e o arquivo `docker-compose.yml`.
+## Confirmar que está na pasta correta
 
-Todos os comandos Docker abaixo devem ser executados dentro dessa pasta. Executar `docker build -t nanobot .` em outra pasta produz o erro `failed to read dockerfile: open Dockerfile: no such file or directory`.
+```powershell
+Get-ChildItem Dockerfile
+Get-ChildItem docker-compose.yml
+```
+
+Os dois arquivos precisam aparecer antes de continuar.
 
 ## Construir a imagem
 
-```bash
+```powershell
 docker build -t nanobot .
 ```
 
-Constrói localmente a imagem usando o `Dockerfile` incluído no repositório.
+Constrói localmente a imagem Docker usando o `Dockerfile` oficial do projeto.
 
-## Inicializar a configuração com Docker
+## Criar a configuração inicial
 
-```bash
-docker run -v ~/.nanobot:/home/nanobot/.nanobot --rm nanobot onboard
+```powershell
+docker compose run --rm nanobot-cli onboard
 ```
 
-Cria a configuração inicial e mantém os dados no diretório persistente `~/.nanobot` do host.
+Cria a configuração e o workspace persistente na pasta `.nanobot` do usuário.
 
-## Editar a configuração
+Para usar o assistente interativo:
 
-```bash
-vim ~/.nanobot/config.json
+```powershell
+docker compose run --rm nanobot-cli onboard --wizard
 ```
 
-Abre o arquivo de configuração para adicionar provedores, modelos, chaves e canais.
+## Abrir a configuração
+
+```powershell
+notepad "$HOME\.nanobot\config.json"
+```
+
+Abre o arquivo para configurar provedor, modelo, chave de API e WebUI.
+
+Não publique esse arquivo caso ele contenha credenciais.
 
 ## Configuração necessária para a WebUI no Docker
 
-Por padrão, o gateway e o canal WebSocket usam `127.0.0.1` dentro do contêiner. Para acessar a WebUI pelo host, a documentação oficial orienta definir os hosts como `0.0.0.0` e proteger a emissão de token:
+Adicione ou ajuste os blocos abaixo no `config.json`:
 
 ```json
 {
@@ -163,73 +85,122 @@ Por padrão, o gateway e o canal WebSocket usam `127.0.0.1` dentro do contêiner
     "websocket": {
       "host": "0.0.0.0",
       "port": 8765,
-      "tokenIssueSecret": "your-secret-here"
+      "tokenIssueSecret": "troque-por-um-segredo-forte"
     }
   }
 }
 ```
 
-Quando o WebSocket usa `0.0.0.0`, o canal não inicia sem `token` ou `tokenIssueSecret`.
+O `tokenIssueSecret` deve ser substituído por um valor forte e exclusivo.
 
-## Executar o gateway com Docker
+## Verificar a configuração
 
-```bash
-docker run \
-  --cap-drop ALL \
-  -v ~/.nanobot:/home/nanobot/.nanobot \
-  -p 18790:18790 -p 8765:8765 \
-  nanobot gateway
+```powershell
+docker compose run --rm nanobot-cli status
 ```
 
-Publica o endpoint de saúde na porta `18790` e o WebSocket/WebUI na porta `8765`.
-
-## Fluxo oficial com Docker Compose
-
-```bash
-docker compose run --rm nanobot-cli onboard
-vim ~/.nanobot/config.json
-docker compose up -d nanobot-gateway
-```
-
-Inicializa a configuração, abre o arquivo de configuração e inicia o gateway em segundo plano.
+Mostra o estado da configuração, do workspace, dos provedores e dos canais.
 
 ## Testar o agente pela CLI
 
-```bash
-docker compose run --rm nanobot-cli agent -m "Hello!"
+```powershell
+docker compose run --rm nanobot-cli agent -m "Responda apenas: Nanobot funcionando."
 ```
 
-Executa uma mensagem de teste usando o serviço de CLI.
+Confirma que o provedor, o modelo e a configuração estão funcionando.
+
+## Iniciar o gateway e a WebUI
+
+```powershell
+docker compose up -d nanobot-gateway
+```
+
+Abra no navegador:
+
+```text
+http://localhost:8765
+```
+
+## Verificar os contêineres
+
+```powershell
+docker compose ps
+```
+
+Mostra os serviços e o estado dos contêineres.
 
 ## Acompanhar os logs
 
-```bash
+```powershell
 docker compose logs -f nanobot-gateway
 ```
 
-Exibe os logs do gateway continuamente.
+Use `Ctrl+C` para sair dos logs sem parar o contêiner.
+
+## Iniciar a API compatível com OpenAI
+
+```powershell
+docker compose up -d nanobot-api
+```
+
+A API fica disponível em:
+
+```text
+http://localhost:8900
+```
+
+## Reiniciar após alterar a configuração
+
+```powershell
+docker compose restart nanobot-gateway
+```
+
+Reinicia o gateway para aplicar alterações feitas no `config.json`.
 
 ## Parar os serviços
 
-```bash
+```powershell
 docker compose down
 ```
 
-Para e remove os contêineres e a rede criados pelo Docker Compose.
+Para e remove os contêineres e a rede do projeto.
 
-## Portas padrão
+A configuração e o workspace permanecem em:
 
 ```text
-8765  WebSocket e WebUI
-18790 Endpoint de saúde do gateway
-8900  nanobot serve
+C:\Users\SEU_USUARIO\.nanobot
 ```
 
-## Observações oficiais de segurança
+## Atualizar o Nanobot
 
-- A imagem executa o Nanobot como usuário não-root `nanobot`, UID `1000`.
-- A configuração deve ser montada em `/home/nanobot/.nanobot`, e não em `/root/.nanobot`.
-- A imagem deve ser construída a partir do repositório oficial.
-- Não monte chaves de API ou tokens em imagens de terceiros sem confiar no responsável pela publicação.
-- O endpoint de saúde do gateway é mínimo e não possui autenticação.
-- Reinicie o processo depois de alterar `config.json`, pois os processos de longa duração leem a configuração durante a inicialização.
+```powershell
+Set-Location "$HOME\Documents\nanobot"
+git pull
+docker compose build --no-cache
+docker compose up -d nanobot-gateway
+```
+
+Baixa as alterações do repositório, reconstrói a imagem e inicia novamente o gateway.
+
+## Remover o projeto
+
+```powershell
+docker compose down
+Set-Location "$HOME\Documents"
+Remove-Item -Recurse -Force ".\nanobot"
+```
+
+Remove os contêineres e os arquivos clonados do projeto.
+
+## Remover também configuração, memória e workspace
+
+```powershell
+Remove-Item -Recurse -Force "$HOME\.nanobot"
+```
+
+Apaga permanentemente configuração, credenciais, memória, sessões e workspace do Nanobot.
+
+## Fonte oficial
+
+- Repositório: `https://github.com/HKUDS/nanobot`
+- Guia de deployment: `https://github.com/HKUDS/nanobot/blob/main/docs/deployment.md`
