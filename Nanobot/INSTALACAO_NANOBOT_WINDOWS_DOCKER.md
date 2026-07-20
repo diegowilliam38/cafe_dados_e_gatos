@@ -15,19 +15,45 @@ Guia testado para executar o **HKUDS/nanobot** no Windows com **PowerShell 7**, 
 
 ## Verificar o ambiente
 
+Execute um comando por vez:
+
 ```powershell
 docker version
+```
+
+```powershell
 docker compose version
+```
+
+```powershell
 git --version
+```
+
+```powershell
 ollama --version
+```
+
+```powershell
 $PSVersionTable.PSVersion
 ```
 
 ## Baixar o repositório oficial
 
+Primeiro vá para a pasta Documentos:
+
 ```powershell
 Set-Location "$HOME\Documents"
+```
+
+Depois clone o projeto:
+
+```powershell
 git clone https://github.com/HKUDS/nanobot.git
+```
+
+Quando o download terminar, entre na pasta:
+
+```powershell
 Set-Location nanobot
 ```
 
@@ -35,6 +61,9 @@ Set-Location nanobot
 
 ```powershell
 Get-ChildItem Dockerfile
+```
+
+```powershell
 Get-ChildItem docker-compose.yml
 ```
 
@@ -45,6 +74,8 @@ Os dois arquivos precisam aparecer.
 ```powershell
 docker build -t nanobot .
 ```
+
+Espere a construção terminar antes de continuar.
 
 ## Primeiro comando oficial e erro encontrado
 
@@ -71,10 +102,15 @@ No wizard, escolha **Quick Start** ou **Advanced Settings**.
 
 ## Configurar o Ollama Cloud
 
-No Windows:
+No Windows, faça login:
 
 ```powershell
 ollama signin
+```
+
+Depois teste o modelo:
+
+```powershell
 ollama run gemma4:cloud
 ```
 
@@ -116,16 +152,21 @@ O comando abaixo pode criar o serviço, mas o gateway entra em reinicialização
 docker compose up -d nanobot-gateway
 ```
 
-Confira:
+Confira os logs somente depois que o comando anterior terminar:
 
 ```powershell
 docker compose logs --tail 80 nanobot-gateway
 ```
 
-Se aparecer novamente `refusing to run as root`, pare o Compose e inicie o gateway como usuário `1000:1000`:
+Se aparecer novamente `refusing to run as root`, primeiro pare o Compose:
 
 ```powershell
 docker compose down
+```
+
+Espere o comando terminar. Depois inicie o gateway como usuário `1000:1000`:
+
+```powershell
 docker compose run -d --name nanobot-gateway --service-ports --user 1000:1000 nanobot-gateway
 ```
 
@@ -151,7 +192,7 @@ O endpoint de saúde pode funcionar normalmente em `http://127.0.0.1:18790/healt
 {"status":"ok"}
 ```
 
-Crie um backup, altere somente o host do WebSocket e salve o JSON como **UTF-8 sem BOM**:
+Nesta etapa, os comandos PowerShell abaixo pertencem ao mesmo procedimento e podem ser colados juntos:
 
 ```powershell
 $configPath = "$env:USERPROFILE\.nanobot\config.json"
@@ -169,10 +210,15 @@ $utf8SemBom = New-Object System.Text.UTF8Encoding($false)
 
 O `tokenIssueSecret` precisa estar configurado para o Nanobot aceitar `0.0.0.0` com proteção.
 
-Reinicie o contêiner criado manualmente:
+Primeiro remova o contêiner anterior:
 
 ```powershell
 docker rm -f nanobot-gateway
+```
+
+Espere a remoção terminar. Depois recrie o gateway:
+
+```powershell
 docker compose run -d --name nanobot-gateway --service-ports --user 1000:1000 nanobot-gateway
 ```
 
@@ -232,18 +278,47 @@ docker rm -f nanobot-gateway
 
 ## Atualizar o projeto
 
+Entre na pasta do projeto:
+
 ```powershell
 Set-Location "$HOME\Documents\nanobot"
+```
+
+Atualize o código:
+
+```powershell
 git pull
+```
+
+Quando terminar, reconstrua a imagem:
+
+```powershell
 docker compose build --no-cache
 ```
 
 ## Remover o projeto
 
+Primeiro remova o gateway:
+
 ```powershell
 docker rm -f nanobot-gateway
+```
+
+Depois encerre os serviços restantes:
+
+```powershell
 docker compose down
+```
+
+Saia da pasta do projeto:
+
+```powershell
 Set-Location "$HOME\Documents"
+```
+
+Por último, remova a pasta:
+
+```powershell
 Remove-Item -Recurse -Force ".\nanobot"
 ```
 
