@@ -139,33 +139,33 @@ docker ps
 
 Mesmo com o gateway saudável, a WebUI pode ficar em branco porque o WebSocket está ouvindo em `127.0.0.1:8765` **dentro do contêiner**. O Docker publica a porta, mas não alcança o loopback interno.
 
-Evidências típicas:
+Evidência típica:
 
 ```text
 WebSocket server listening on ws://127.0.0.1:8765/
 ```
 
-O endpoint de saúde pode funcionar normalmente:
-
-```text
-http://127.0.0.1:18790/health
-```
-
-com a resposta:
+O endpoint de saúde pode funcionar normalmente em `http://127.0.0.1:18790/health`, retornando:
 
 ```json
 {"status":"ok"}
 ```
 
-Crie um backup e altere somente o host do WebSocket:
+Crie um backup, altere somente o host do WebSocket e salve o JSON como **UTF-8 sem BOM**:
 
 ```powershell
 $configPath = "$env:USERPROFILE\.nanobot\config.json"
 Copy-Item $configPath "$configPath.bak" -Force
+
 $config = Get-Content -Raw -LiteralPath $configPath | ConvertFrom-Json
 $config.channels.websocket.host = "0.0.0.0"
-$config | ConvertTo-Json -Depth 100 | Set-Content -LiteralPath $configPath -Encoding utf8
+
+$json = $config | ConvertTo-Json -Depth 100
+$utf8SemBom = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText($configPath, $json, $utf8SemBom)
 ```
+
+> Não use `Set-Content -Encoding utf8` nesse trecho. Dependendo da versão do PowerShell, ele pode gravar um marcador UTF-8 BOM, e o Nanobot pode recusar o arquivo com o erro `Unexpected UTF-8 BOM`.
 
 O `tokenIssueSecret` precisa estar configurado para o Nanobot aceitar `0.0.0.0` com proteção.
 
