@@ -8,6 +8,7 @@ O Claude Code Router permite encaminhar as solicitações do Claude Code para di
 
 ## Fontes oficiais consultadas
 
+- Site do Claude Code Router: https://ccrdesk.top/
 - Claude Code Router no GitHub: https://github.com/musistudio/claude-code-router
 - Pacote oficial no npm: https://www.npmjs.com/package/@musistudio/claude-code-router
 - Documentação oficial do Claude Code: https://docs.anthropic.com/en/docs/claude-code/getting-started
