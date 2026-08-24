@@ -21,18 +21,18 @@ jobs:
       - name: Download English materials from Google Drive
         run: |
           mkdir -p "cursos/Hermes Agent/English"
-          gdown --id 1KQCW5LTY69vtf5fn6lqXH1l3dnb-3T4I -O "cursos/Hermes Agent/English/Hermes_on_WSL2_Lesson_1_Installation_and_First_Use_EN.pdf"
-          gdown --id 1hxy3xlWJ-SfqG8XF4ztm-uBIvTyyUuEf -O "cursos/Hermes Agent/English/Hermes_Agent_Lesson_02_Interfaces_EN.pptx"
-          gdown --id 1sn7KWBqL54f6FA28LixD1hlMx2bK35Af -O "cursos/Hermes Agent/English/Hermes_Agent_Technical_Guide_Desktop_Dashboard_CLI_TUI_Gateway_EN.pdf"
-          gdown --id 1ckZwzTOrGjPSdVPkHiMJKDlDR1tJm0OW -O "cursos/Hermes Agent/English/Hermes_Lesson_03_Advanced_Setup_and_Testing_EN.pdf"
+          gdown 1KQCW5LTY69vtf5fn6lqXH1l3dnb-3T4I -O "cursos/Hermes Agent/English/Hermes_on_WSL2_Lesson_1_Installation_and_First_Use_EN.pdf"
+          gdown 1hxy3xlWJ-SfqG8XF4ztm-uBIvTyyUuEf -O "cursos/Hermes Agent/English/Hermes_Agent_Lesson_02_Interfaces_EN.pptx"
+          gdown 1sn7KWBqL54f6FA28LixD1hlMx2bK35Af -O "cursos/Hermes Agent/English/Hermes_Agent_Technical_Guide_Desktop_Dashboard_CLI_TUI_Gateway_EN.pdf"
+          gdown 1ckZwzTOrGjPSdVPkHiMJKDlDR1tJm0OW -O "cursos/Hermes Agent/English/Hermes_Lesson_03_Advanced_Setup_and_Testing_EN.pdf"
 
       - name: Download Spanish materials from Google Drive
         run: |
           mkdir -p "cursos/Hermes Agent/Español"
-          gdown --id 1vqc_SUe08gvYakMA3-O-4zvOFc8mfsXm -O "cursos/Hermes Agent/Español/Hermes_en_WSL2_Clase_1_Instalacion_y_Primer_Uso_ES.pdf"
-          gdown --id 1c8z_A9GZy0QFE6m_qLpBURQT9F6lezJh -O "cursos/Hermes Agent/Español/Hermes_Agent_Leccion_02_Interfaces_ES.pptx"
-          gdown --id 17IQLohLmBXjpCkwChbtQcbWOzRucZ_TA -O "cursos/Hermes Agent/Español/Hermes_Agent_Guia_Tecnica_Desktop_Dashboard_CLI_TUI_Gateway_ES.pdf"
-          gdown --id 17OfSWVWz0ETxRIhxe4Q_olIVdH7_YLPt -O "cursos/Hermes Agent/Español/Hermes_Clase_03_Configuracion_Avanzada_y_Pruebas_ES.pdf"
+          gdown 1vqc_SUe08gvYakMA3-O-4zvOFc8mfsXm -O "cursos/Hermes Agent/Español/Hermes_en_WSL2_Clase_1_Instalacion_y_Primer_Uso_ES.pdf"
+          gdown 1c8z_A9GZy0QFE6m_qLpBURQT9F6lezJh -O "cursos/Hermes Agent/Español/Hermes_Agent_Leccion_02_Interfaces_ES.pptx"
+          gdown 17IQLohLmBXjpCkwChbtQcbWOzRucZ_TA -O "cursos/Hermes Agent/Español/Hermes_Agent_Guia_Tecnica_Desktop_Dashboard_CLI_TUI_Gateway_ES.pdf"
+          gdown 17OfSWVWz0ETxRIhxe4Q_olIVdH7_YLPt -O "cursos/Hermes Agent/Español/Hermes_Clase_03_Configuracion_Avanzada_y_Pruebas_ES.pdf"
 
       - name: Commit imported materials
         run: |
